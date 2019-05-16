@@ -95,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147906740149146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4, y: -233, z: 0}
+  m_LocalPosition: {x: -420, y: 436, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4043578974739562}
@@ -165,6 +165,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
+  dead: 0
 --- !u!114 &114780755331920318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -194,8 +195,7 @@ MonoBehaviour:
   startDeltaTime: 0
   targetDeltaTime: 0
   targetTimeScale: 0
-  landingParticle: {fileID: 1350374086244790, guid: 9c1a82e535ce8e847a193e98cd7aac3f,
-    type: 2}
+  landingParticle: {fileID: 0}
 --- !u!120 &120921767453741660
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -254,7 +254,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 1}
+      key0: {r: 0.3803922, g: 0.3803922, b: 0.3803922, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
