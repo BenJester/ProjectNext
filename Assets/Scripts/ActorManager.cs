@@ -14,7 +14,7 @@ public class ActorManager : MonoBehaviour {
 
 	public static List<GameObject> enemies;
 	public static List<GameObject> obj;
-
+	public static List<GameObject> bullets;
 
 	void Awake () {
 		if (ActorManager._instance == null) {
@@ -30,7 +30,7 @@ public class ActorManager : MonoBehaviour {
 	private void Init () {
 		enemies = new List<GameObject> ();
 		obj = new List<GameObject> ();
-
+		bullets = new List<GameObject> ();
 	}
 
 

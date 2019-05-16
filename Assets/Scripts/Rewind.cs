@@ -70,9 +70,11 @@ public class Rewind : MonoBehaviour {
 
 	private GameObject[] enemies;
 	private GameObject[] obj;
+	private GameObject[] bullets;
 
 	private List<Rigidbody2D> enemyBody;
 	private List<Rigidbody2D> objBody;
+	private List<Rigidbody2D> bulletBody;
 	private Rigidbody2D playerBody;
 
 	public SpriteRenderer arrow;
@@ -106,6 +108,9 @@ public class Rewind : MonoBehaviour {
 		foreach (GameObject obj in ActorManager.obj) {
 			objBody.Add (obj.GetComponent<Rigidbody2D> ());
 		}
+		foreach (GameObject bullet in ActorManager.bullets) {
+			objBody.Add (bullet.GetComponent<Rigidbody2D> ());
+		}
 	}
 
 	void Update () {
@@ -117,4 +122,47 @@ public class Rewind : MonoBehaviour {
 			arrow.color = new Color (255f, 255f, 255f, Mathf.Clamp(arrow.color.a - 0.07f, 0f, 0.7f));
 		}
 	}
+
+	bool shouldRecord() {
+		// if nothing is moving, should not record
+		if (states.Count == 0)
+			return true;
+		
+		GameState last = states[states.Count - 1];
+
+		for (int i = 0; i < ActorManager.obj.Count; i ++) {
+			if (obj [i].transform.position != last.objPos [i])
+				return true;
+		}
+
+		for (int i = 0; i < ActorManager.enemies.Count; i ++) {
+			if (enemies [i].transform.position != last.enemyPos [i])
+				return true;
+		}
+		for (int i = 0; i < ActorManager.bullets.Count; i ++) {
+			if (enemies [i].transform.position != last.enemyPos [i])
+				return true;
+		}
+		if (player.transform.position != last.playerPos) {
+			return true;
+		}
+
+		return false;
+	}
+
+//	public void Record() {
+//		if (!active)
+//			return;
+//
+//		if (!shouldRecord ())
+//			return;
+//
+//		GameState state = new GameState ();
+//		state.playerPos = player.transform.position;
+//		state.playerV = playerBody.velocity;
+//		for (int i = 0; i < obj.Length; i ++) {
+//			if (obj [i].transform.position != last.objPos [i])
+//				return true;
+//		}
+//	}
 }

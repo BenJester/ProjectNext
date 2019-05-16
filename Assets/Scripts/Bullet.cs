@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindWithTag ("player");
 		playerBody = player.GetComponent<Rigidbody2D> ();
+		ActorManager.bullets.Add (gameObject);
 	}
 
 	void Update () {
