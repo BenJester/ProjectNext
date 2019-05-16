@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\FollowPlayer.cs" />
+     <Compile Include="Assets\PhysicalButton.cs" />
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\PixelCamera2DActivator.cs" />
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\Rotator.cs" />
      <Compile Include="Assets\Scripts\ActorManager.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\PlayerControl.cs" />
      <Compile Include="Assets\Scripts\Rewind.cs" />
      <Compile Include="Assets\Scripts\Thing.cs" />
+     <Compile Include="Assets\SetActiveTrigger.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

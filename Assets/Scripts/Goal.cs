@@ -18,8 +18,8 @@ public class Goal : MonoBehaviour {
 	
 	void Update () {
 		if (enemyCount <= 0) {
-			active = true;
-			sr.sprite = activeSprite;
+            active = true;
+            sr.sprite = activeSprite;
 		}
 	}
 
