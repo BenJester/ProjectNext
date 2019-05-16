@@ -31,7 +31,11 @@ public class PlayerControl : MonoBehaviour {
 	public float targetDeltaTime;
 	public float targetTimeScale;
 
-	void Awake()
+    //
+    private bool isGroundTemp;
+    public GameObject landingParticle;
+
+    void Awake()
 	{
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
@@ -52,8 +56,25 @@ public class PlayerControl : MonoBehaviour {
 		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
 		rb.velocity = new Vector2(h * speed, rb.velocity.y);
 
-		isTouchingGround = Physics2D.OverlapCircle (groundCheckPoint1.position, groundCheckRadius, groundLayer) || Physics2D.OverlapCircle (groundCheckPoint2.position, groundCheckRadius, groundLayer);
-		if (Input.GetKeyDown (KeyCode.W) && isTouchingGround) {
+
+        
+        
+
+
+        isTouchingGround = Physics2D.OverlapCircle (groundCheckPoint1.position, groundCheckRadius, groundLayer) || Physics2D.OverlapCircle (groundCheckPoint2.position, groundCheckRadius, groundLayer);
+
+        //暂时没有生效不知道为什么
+        if (isTouchingGround!=isGroundTemp && isTouchingGround==true && landingParticle!=null)
+        {
+            Instantiate(landingParticle, transform);
+            isGroundTemp = isTouchingGround;
+        }
+      
+
+
+
+
+        if (Input.GetKeyDown (KeyCode.W) && isTouchingGround) {
 			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		}
 
