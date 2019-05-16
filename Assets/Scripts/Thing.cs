@@ -25,6 +25,19 @@ public class Thing : MonoBehaviour {
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
+		switch (type) {
+			case Type.box:
+				ActorManager.obj.Add (gameObject);
+				break;
+			case Type.enemy:
+				ActorManager.enemies.Add (gameObject);
+				break;
+			default:
+				break;
+		}
+
+		ActorManager.enemies.Add (gameObject);
+
 	}
 	
 	public void Update () {

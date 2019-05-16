@@ -12,7 +12,7 @@ public class Box : MonoBehaviour {
 
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
-		thing = GetComponent<Thing> ();
+		thing = GetComponent<Thing> ();	
 	}
 	
 	void FixedUpdate () {

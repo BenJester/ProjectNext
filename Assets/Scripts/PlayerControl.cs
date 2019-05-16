@@ -27,13 +27,18 @@ public class PlayerControl : MonoBehaviour {
 
 	Rigidbody2D rb;
 
+	public float startDeltaTime;
+	public float targetDeltaTime;
+	public float targetTimeScale;
 
 	void Awake()
 	{
+		startDeltaTime = Time.fixedDeltaTime;
+		targetDeltaTime = startDeltaTime;
+		targetTimeScale = 1f;
+
 		lr = GetComponent<LineRenderer> ();
-
 		lr.enabled = false;
-
 	}
 
 	void Start() {
@@ -59,19 +64,25 @@ public class PlayerControl : MonoBehaviour {
 			lr.SetPosition (1, transform.position+ (Vector3) mousePosition.normalized * 9999);
 			 
  			Time.timeScale = 0.1f;
-			Time.fixedDeltaTime*=0.02f;
+			targetTimeScale = 0.1f;
+			Time.fixedDeltaTime = startDeltaTime * 0.02f;
 			IncreaseBulletSpeed ();
 		}
 		if (Input.GetMouseButtonUp (0)) {
-			Time.timeScale = 1f;
-			Time.fixedDeltaTime *= 50;
+			targetTimeScale = 1f;
+			targetDeltaTime = startDeltaTime;
 			lr.enabled = false;
 			Shoot ();
 		}
 		if (Input.GetKeyDown(KeyCode.R))
 		{
+			Time.fixedDeltaTime = startDeltaTime;
+			Time.timeScale = 1f;
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
+
+		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.02f : -0.02f), 0.1f, 1f);
+		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.02f * startDeltaTime : -0.02f * startDeltaTime), 0.02f * startDeltaTime, startDeltaTime);
 
 	}
 
