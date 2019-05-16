@@ -19,24 +19,22 @@ public class Thing : MonoBehaviour {
 	public Vector2 prevVelocity;
 
 	Goal goal;
-	bool dead = false;
+	public bool dead = false;
 
-	public void Start () {
+	public void Awake () {
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		switch (type) {
 			case Type.box:
-				ActorManager.obj.Add (gameObject);
+				Rewind.obj.Add (gameObject);
 				break;
 			case Type.enemy:
-				ActorManager.enemies.Add (gameObject);
+				Rewind.enemies.Add (gameObject);
 				break;
 			default:
 				break;
 		}
-
-		ActorManager.enemies.Add (gameObject);
 
 	}
 	

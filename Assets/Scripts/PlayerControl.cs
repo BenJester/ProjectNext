@@ -71,7 +71,26 @@ public class PlayerControl : MonoBehaviour {
         }
       
 
+		if (Rewind.Instance != null) {
+			if (Input.GetKey(KeyCode.Space)) {
 
+				Rewind.Instance.isReverting = true;
+			} else {
+				Rewind.Instance.Record ();
+				Rewind.Instance.isReverting = false;
+			}
+
+			if (!Rewind.Instance.isReverting) { //TODO: if no char or mushroom is moving, don't record
+
+
+
+			} else {
+				if (Rewind.Instance.states.Count == 0) {
+					return;
+				}
+				Rewind.Instance.Revert ();
+			}
+		}
 
 
         if (Input.GetKeyDown (KeyCode.W) && isTouchingGround) {
@@ -87,6 +106,7 @@ public class PlayerControl : MonoBehaviour {
  			Time.timeScale = 0.1f;
 			targetTimeScale = 0.1f;
 			Time.fixedDeltaTime = startDeltaTime * 0.02f;
+			targetDeltaTime = startDeltaTime * 0.02f;
 			IncreaseBulletSpeed ();
 		}
 		if (Input.GetMouseButtonUp (0)) {
