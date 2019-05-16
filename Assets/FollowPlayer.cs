@@ -13,9 +13,9 @@ public class FollowPlayer : MonoBehaviour {
     void Awake()
     {
         
-            player = GameObject.FindGameObjectWithTag("player");
-        
-        
+        player = GameObject.FindGameObjectWithTag("player");
+        transform.parent = null;
+        transform.position = Vector3.zero;
 
     }
 	void Start () {

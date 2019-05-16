@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour {
 
+    public GameObject textEnd;
 	public bool active;
 	public float enemyCount;
 	public Sprite activeSprite;
@@ -14,12 +15,16 @@ public class Goal : MonoBehaviour {
 	SpriteRenderer sr;
 	bool won;
 
+
+    
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
+        textEnd = GameObject.FindGameObjectWithTag("leveltitle");
 		black = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
-		black.color = Color.white;
-		StartCoroutine (FadeOutBlack (0.15f));
-	}
+        textEnd.SetActive(false);
+
+
+    }
 	
 	void Update () {
 		if (enemyCount <= 0) {
@@ -40,17 +45,15 @@ public class Goal : MonoBehaviour {
 
 	IEnumerator NextLevel(float duration) {
 		while (black.color.a < 1f) {
-			black.color = new Color (black.color.r, black.color.g, black.color.b, Mathf.Clamp01 (black.color.a + Time.deltaTime / duration));
+            textEnd.SetActive(true);
+            textEnd.transform.GetChild(0).gameObject.SetActive(true);
+
+            black.color = new Color (black.color.r, black.color.g, black.color.b, Mathf.Clamp01 (black.color.a + Time.deltaTime / duration));
 			yield return new WaitForSeconds (0.02f);
 		}
 
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
 	}
-	IEnumerator FadeOutBlack(float duration) {
-		while (black.color.a > 0f) {
-			black.color = new Color (black.color.r, black.color.g, black.color.b, Mathf.Clamp01 (black.color.a - Time.deltaTime / duration));
-			yield return new WaitForSeconds (0.02f);
-		}
-	}
+	
 }

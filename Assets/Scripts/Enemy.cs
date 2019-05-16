@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour{
 	public float dropKillSpeed;
 	Goal goal;
 
+    public bool canShuaisi = true;
+
 	void Start () {
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
@@ -21,7 +23,9 @@ public class Enemy : MonoBehaviour{
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
-		if (thing.prevVelocity.y < -dropKillSpeed) {
+
+
+		if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi) {
 			thing.collider.enabled = false;
 			thing.Die ();
 		}

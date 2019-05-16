@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1150684747408802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -161, y: -280, z: 0}
+  m_LocalPosition: {x: 0, y: 607, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropKillSpeed: 600
+  canShuaisi: 1
 --- !u!114 &114830638801076940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,12 +114,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieParticle: {fileID: 1350374086244790, guid: c2242adac658b514ca449d2c0ee0fd2a,
+    type: 2}
   type: 2
   lowerY: 0
   upperY: 0
   collider: {fileID: 0}
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
+  dead: 0
 --- !u!212 &212482642542153190
 SpriteRenderer:
   m_ObjectHideFlags: 1

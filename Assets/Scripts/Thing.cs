@@ -9,7 +9,9 @@ public enum Type {
 }
 
 public class Thing : MonoBehaviour {
-	
+
+
+    public GameObject dieParticle;
 	public Type type;
 	public float lowerY;
 	public float upperY;
@@ -26,7 +28,7 @@ public class Thing : MonoBehaviour {
 		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
-		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
+		goal = GameObject.FindWithTag ("goal").GetComponent<Goal>();
 		switch (type) {
 			case Type.box:
 				Rewind.Instance.obj.Add (gameObject);
@@ -55,6 +57,10 @@ public class Thing : MonoBehaviour {
 		dead = true;
 		if (type == Type.enemy)
 			goal.enemyCount -= 1;
+        if (dieParticle!=null)
+        {
+            Instantiate(dieParticle, transform);
+        }
 
 		StartCoroutine (ScaleDown(0.2f));
 	}
