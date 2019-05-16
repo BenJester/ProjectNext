@@ -22,17 +22,17 @@ public class Thing : MonoBehaviour {
 	Goal goal;
 	public bool dead = false;
 
-	public void Awake () {
+	public void Start () {
 		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		switch (type) {
 			case Type.box:
-				Rewind.obj.Add (gameObject);
+				Rewind.Instance.obj.Add (gameObject);
 				break;
 			case Type.enemy:
-				Rewind.enemies.Add (gameObject);
+				Rewind.Instance.enemies.Add (gameObject);
 				break;
 			default:
 				break;

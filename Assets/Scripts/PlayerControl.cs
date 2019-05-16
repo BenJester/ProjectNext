@@ -57,10 +57,6 @@ public class PlayerControl : MonoBehaviour {
 		rb.velocity = new Vector2(h * speed, rb.velocity.y);
 
 
-        
-        
-
-
         isTouchingGround = Physics2D.OverlapCircle (groundCheckPoint1.position, groundCheckRadius, groundLayer) || Physics2D.OverlapCircle (groundCheckPoint2.position, groundCheckRadius, groundLayer);
 
         //暂时没有生效不知道为什么
@@ -71,6 +67,49 @@ public class PlayerControl : MonoBehaviour {
         }
       
 
+		HandleRewind ();
+
+
+        if (Input.GetKeyDown (KeyCode.W) && isTouchingGround) {
+			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+		}
+
+		if (Input.GetMouseButton (0)) {
+			lr.enabled = true;
+			lr.SetPosition (0, transform.position);
+			Vector2 mousePosition = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+			lr.SetPosition (1, transform.position+ (Vector3) mousePosition.normalized * 9999);
+			 
+ 			Time.timeScale = 0.1f;
+			targetTimeScale = 0.1f;
+			Time.fixedDeltaTime = startDeltaTime * 0.1f;
+			targetDeltaTime = startDeltaTime * 0.1f;
+			IncreaseBulletSpeed ();
+		}
+		if (Input.GetMouseButtonUp (0)) {
+			targetTimeScale = 1f;
+			targetDeltaTime = startDeltaTime;
+			lr.enabled = false;
+			Shoot ();
+		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			Time.fixedDeltaTime = startDeltaTime;
+			Time.timeScale = 1f;
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
+
+		if (!Rewind.Instance.isReverting) {
+			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.02f : -0.02f), 0.1f, 1f);
+			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.02f * startDeltaTime : -0.02f * startDeltaTime), 0.02f * startDeltaTime, startDeltaTime);
+		}
+	}
+
+	void FixedUpdate() {
+		
+	}
+
+	void HandleRewind() {
 		if (Rewind.Instance != null) {
 			if (Input.GetKey(KeyCode.Space)) {
 
@@ -91,40 +130,6 @@ public class PlayerControl : MonoBehaviour {
 				Rewind.Instance.Revert ();
 			}
 		}
-
-
-        if (Input.GetKeyDown (KeyCode.W) && isTouchingGround) {
-			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
-		}
-
-		if (Input.GetMouseButton (0)) {
-			lr.enabled = true;
-			lr.SetPosition (0, transform.position);
-			Vector2 mousePosition = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-			lr.SetPosition (1, transform.position+ (Vector3) mousePosition.normalized * 9999);
-			 
- 			Time.timeScale = 0.1f;
-			targetTimeScale = 0.1f;
-			Time.fixedDeltaTime = startDeltaTime * 0.02f;
-			targetDeltaTime = startDeltaTime * 0.02f;
-			IncreaseBulletSpeed ();
-		}
-		if (Input.GetMouseButtonUp (0)) {
-			targetTimeScale = 1f;
-			targetDeltaTime = startDeltaTime;
-			lr.enabled = false;
-			Shoot ();
-		}
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			Time.fixedDeltaTime = startDeltaTime;
-			Time.timeScale = 1f;
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		}
-
-		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.02f : -0.02f), 0.1f, 1f);
-		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.02f * startDeltaTime : -0.02f * startDeltaTime), 0.02f * startDeltaTime, startDeltaTime);
-
 	}
 
 	void IncreaseBulletSpeed() {

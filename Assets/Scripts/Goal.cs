@@ -20,6 +20,9 @@ public class Goal : MonoBehaviour {
 		if (enemyCount <= 0) {
             active = true;
             sr.sprite = activeSprite;
+		} else {
+			active = false;
+			sr.sprite = inactiveSprite;
 		}
 	}
 

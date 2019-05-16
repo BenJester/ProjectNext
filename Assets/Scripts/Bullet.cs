@@ -14,12 +14,12 @@ public class Bullet : MonoBehaviour {
 	Rigidbody2D playerBody;
 	Collider2D collider;
 
-	void Awake () {
+	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
 		player = GameObject.FindWithTag ("player");
 		playerBody = player.GetComponent<Rigidbody2D> ();
-		Rewind.bullets.Add (gameObject);
-		Rewind.bulletBody.Add(GetComponent<Rigidbody2D>());
+		Rewind.Instance.bullets.Add (gameObject);
+		Rewind.Instance.bulletBody.Add(GetComponent<Rigidbody2D>());
 		body = GetComponent<Rigidbody2D> ();
 		collider = GetComponent<Collider2D> ();
 	}

@@ -19,21 +19,8 @@ public class GameState {
 	public List<Vector3> bulletPos;
 	public List<Vector2> bulletV;
 
-//	public int bluePillCount;
-//	public int orangePillCount;
-//
-//	public bool blueFacingRight;
-//	public bool orangeFacingRight;
-
-//	public List<bool> bluePillState;
-//	public List<bool> orangePillState;
-//
-//	public List<bool> trapBlockState;
-//
-//	public bool blueTeleporting;
-//	public bool orangeTeleporting;
-
-//	public List<GameObject> blocks;
+	public float timeScale;
+	public float fixedDeltaTime;
 
 	public GameState () {
 		
@@ -54,6 +41,8 @@ public class Rewind : MonoBehaviour {
 
 	public bool active;
 
+	int counter;
+
 	private static Rewind _instance;
 	public static Rewind Instance { 
 		get { 	
@@ -68,19 +57,20 @@ public class Rewind : MonoBehaviour {
 	public bool isReverting;
 	public List<GameState> states;
 
-	public static List<GameObject> enemies;
-	public static List<GameObject> obj;
-	public static List<GameObject> bullets;
+	public List<GameObject> enemies;
+	public List<GameObject> obj;
+	public List<GameObject> bullets;
 
-	public static List<Rigidbody2D> enemyBody;
-	public static List<Rigidbody2D> objBody;
-	public static List<Rigidbody2D> bulletBody;
+	public List<Rigidbody2D> enemyBody;
+	public List<Rigidbody2D> objBody;
+	public List<Rigidbody2D> bulletBody;
 
 	private Rigidbody2D playerBody;
 
 	public SpriteRenderer arrow;
 	public SpriteRenderer blackBg;
 
+	bool lateInit;
 
 	void Awake () {
 		player = GameObject.FindWithTag ("player");
@@ -114,20 +104,23 @@ public class Rewind : MonoBehaviour {
 		playerBody = player.GetComponent<Rigidbody2D> ();
 
 	}
-
-	void Start() {
-		foreach (GameObject enemy in enemies) {
-			enemyBody.Add (enemy.GetComponent<Rigidbody2D> ());
-		}
-		foreach (GameObject obj in obj) {
-			objBody.Add (obj.GetComponent<Rigidbody2D> ());
-		}
-		foreach (GameObject bullet in bullets) {
-			bulletBody.Add (bullet.GetComponent<Rigidbody2D> ());
-		}
-	}
+		
 
 	void Update () {
+
+		if (!lateInit) {
+			lateInit = true;
+			foreach (GameObject enemy in enemies) {
+				enemyBody.Add (enemy.GetComponent<Rigidbody2D> ());
+			}
+			foreach (GameObject obj in obj) {
+				objBody.Add (obj.GetComponent<Rigidbody2D> ());
+			}
+			foreach (GameObject bullet in bullets) {
+				bulletBody.Add (bullet.GetComponent<Rigidbody2D> ());
+			}
+		}
+
 		if (isReverting) {
 			blackBg.color = new Color (255f, 255f, 255f, Mathf.Clamp(blackBg.color.a + 0.02f, 0f, 0.2f));
 			arrow.color = new Color (255f, 255f, 255f, Mathf.Clamp(arrow.color.a + 0.07f, 0f, 0.7f));
@@ -174,9 +167,19 @@ public class Rewind : MonoBehaviour {
 		if (!shouldRecord ())
 			return;
 
+		int threshold = Mathf.CeilToInt (1 / Time.timeScale);
+		if (counter < threshold / 3.0f) {
+			counter += 1;
+			return;
+		}
+		counter = 0;
+
 		GameState state = new GameState ();
 		state.playerPos = player.transform.position;
 		state.playerV = playerBody.velocity;
+
+		state.timeScale = Time.timeScale;
+		state.fixedDeltaTime = Time.fixedDeltaTime;
 
 		for (int i = 0; i < enemies.Count; i++) {
 			state.enemyPos.Add (enemies [i].transform.position);
@@ -209,6 +212,9 @@ public class Rewind : MonoBehaviour {
 			return;
 		
 		GameState last = states[states.Count - 1];
+
+		//Time.timeScale = 1f / last.timeScale;
+		//Time.fixedDeltaTime = 1f / last.timeScale * last.fixedDeltaTime;
 
 		player.transform.position = last.playerPos;
 		playerBody.velocity = last.playerV;
