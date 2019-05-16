@@ -12,7 +12,10 @@ public class FollowPlayer : MonoBehaviour {
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("player");
+        
+            player = GameObject.FindGameObjectWithTag("player");
+        
+        
 
     }
 	void Start () {
