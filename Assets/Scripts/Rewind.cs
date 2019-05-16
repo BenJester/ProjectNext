@@ -216,7 +216,13 @@ public class Rewind : MonoBehaviour {
 		for (int i = 0; i < enemies.Count; i++) {
 			enemies [i].transform.position = last.enemyPos[i];
 			enemyBody [i].velocity = last.enemyV[i];
-			enemies [i].GetComponent<Thing> ().dead = last.enemyState[i];
+			Thing thing = enemies [i].GetComponent<Thing> ();
+			if (thing.dead != last.enemyState [i]) {
+				if (!last.enemyState [i])
+					thing.Revive ();
+				else
+					thing.Die();
+			}
 		}
 
 		for (int i = 0; i < last.bulletPos.Count; i++) {
@@ -229,6 +235,7 @@ public class Rewind : MonoBehaviour {
 				else
 					bul.Deactivate();
 			}
+			
 		}
 
 		if (last.bulletPos.Count < bullets.Count) {
