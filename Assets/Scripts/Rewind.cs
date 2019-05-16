@@ -63,24 +63,28 @@ public class Rewind : MonoBehaviour {
 
 	public GameObject player;
 
-	public int maxLength = 100;
+	public int maxLength = 500;
 
 	public bool isReverting;
 	public List<GameState> states;
 
-	private GameObject[] enemies;
-	private GameObject[] obj;
-	private GameObject[] bullets;
+	public static List<GameObject> enemies;
+	public static List<GameObject> obj;
+	public static List<GameObject> bullets;
 
-	private List<Rigidbody2D> enemyBody;
-	private List<Rigidbody2D> objBody;
-	private List<Rigidbody2D> bulletBody;
+	public static List<Rigidbody2D> enemyBody;
+	public static List<Rigidbody2D> objBody;
+	public static List<Rigidbody2D> bulletBody;
+
 	private Rigidbody2D playerBody;
 
 	public SpriteRenderer arrow;
 	public SpriteRenderer blackBg;
 
+
 	void Awake () {
+		player = GameObject.FindWithTag ("player");
+
 		if (Rewind._instance == null) {
 			Rewind._instance = this;
 			_instance.Init ();
@@ -91,25 +95,35 @@ public class Rewind : MonoBehaviour {
 		}
 	}
 
+
+
 	private void Init () {
 		if (!active)
 			return;
+
+		enemies = new List<GameObject> ();
+		obj = new List<GameObject> ();
+		bullets = new List<GameObject> ();
 
 		states = new List<GameState> ();
 
 		enemyBody = new List<Rigidbody2D> ();
 		objBody = new List<Rigidbody2D> ();
+		bulletBody = new List<Rigidbody2D>();
 
 		playerBody = player.GetComponent<Rigidbody2D> ();
 
-		foreach (GameObject enemy in ActorManager.enemies) {
+	}
+
+	void Start() {
+		foreach (GameObject enemy in enemies) {
 			enemyBody.Add (enemy.GetComponent<Rigidbody2D> ());
 		}
-		foreach (GameObject obj in ActorManager.obj) {
+		foreach (GameObject obj in obj) {
 			objBody.Add (obj.GetComponent<Rigidbody2D> ());
 		}
-		foreach (GameObject bullet in ActorManager.bullets) {
-			objBody.Add (bullet.GetComponent<Rigidbody2D> ());
+		foreach (GameObject bullet in bullets) {
+			bulletBody.Add (bullet.GetComponent<Rigidbody2D> ());
 		}
 	}
 
@@ -130,17 +144,20 @@ public class Rewind : MonoBehaviour {
 		
 		GameState last = states[states.Count - 1];
 
-		for (int i = 0; i < ActorManager.obj.Count; i ++) {
+		for (int i = 0; i < obj.Count; i ++) {
 			if (obj [i].transform.position != last.objPos [i])
 				return true;
 		}
 
-		for (int i = 0; i < ActorManager.enemies.Count; i ++) {
+		for (int i = 0; i < enemies.Count; i ++) {
 			if (enemies [i].transform.position != last.enemyPos [i])
 				return true;
 		}
-		for (int i = 0; i < ActorManager.bullets.Count; i ++) {
-			if (enemies [i].transform.position != last.enemyPos [i])
+		if (bullets.Count != last.bulletPos.Count)
+			return true;
+		
+		for (int i = 0; i < bullets.Count; i ++) {
+			if (bullets [i].transform.position != last.bulletPos [i])
 				return true;
 		}
 		if (player.transform.position != last.playerPos) {
@@ -150,19 +167,88 @@ public class Rewind : MonoBehaviour {
 		return false;
 	}
 
-//	public void Record() {
-//		if (!active)
-//			return;
-//
-//		if (!shouldRecord ())
-//			return;
-//
-//		GameState state = new GameState ();
-//		state.playerPos = player.transform.position;
-//		state.playerV = playerBody.velocity;
-//		for (int i = 0; i < obj.Length; i ++) {
-//			if (obj [i].transform.position != last.objPos [i])
-//				return true;
-//		}
-//	}
+	public void Record() {
+		if (!active)
+			return;
+
+		if (!shouldRecord ())
+			return;
+
+		GameState state = new GameState ();
+		state.playerPos = player.transform.position;
+		state.playerV = playerBody.velocity;
+
+		for (int i = 0; i < enemies.Count; i++) {
+			state.enemyPos.Add (enemies [i].transform.position);
+			state.enemyV.Add (enemyBody [i].velocity);
+			state.enemyState.Add (enemies [i].GetComponent<Thing> ().dead);
+		}
+
+		for (int i = 0; i < bullets.Count; i++) {
+			state.bulletPos.Add (bullets [i].transform.position);
+			state.bulletV.Add (bulletBody [i].velocity);
+			state.bulletState.Add (bullets [i].GetComponent<Bullet> ().active);
+		}
+
+		for (int i = 0; i < obj.Count; i++) {
+			state.objPos.Add (obj [i].transform.position);
+			state.objV.Add (objBody [i].velocity);
+		}
+		states.Add (state);
+
+		if (states.Count > maxLength) {
+			states.RemoveAt (0);
+		}
+	}
+
+	public void Revert() {
+		if (!active)
+			return;
+		
+		if (states.Count < 3)
+			return;
+		
+		GameState last = states[states.Count - 1];
+
+		player.transform.position = last.playerPos;
+		playerBody.velocity = last.playerV;
+
+		for (int i = 0; i < enemies.Count; i++) {
+			enemies [i].transform.position = last.enemyPos[i];
+			enemyBody [i].velocity = last.enemyV[i];
+			Thing thing = enemies [i].GetComponent<Thing> ();
+			if (thing.dead != last.enemyState [i]) {
+				if (!last.enemyState [i])
+					thing.Revive ();
+				else
+					thing.Die();
+			}
+		}
+
+		for (int i = 0; i < last.bulletPos.Count; i++) {
+			bullets [i].transform.position = last.bulletPos[i];
+			bulletBody [i].velocity = last.bulletV[i];
+			Bullet bul = bullets [i].GetComponent<Bullet> ();
+			if (bul.active != last.bulletState [i]) {
+				if (last.bulletState [i])
+					bul.Activate();
+				else
+					bul.Deactivate();
+			}
+			
+		}
+
+		if (last.bulletPos.Count < bullets.Count) {
+			for (int i = last.bulletPos.Count; i < bullets.Count; i++) {
+				bullets [i].GetComponent<Bullet> ().Deactivate ();
+			}
+		}
+
+		for (int i = 0; i < obj.Count; i++) {
+			obj [i].transform.position = last.objPos[i];
+			objBody [i].velocity = last.objV[i];
+		}
+
+		states.RemoveAt (states.Count - 1);
+	}
 }

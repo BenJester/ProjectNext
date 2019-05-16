@@ -18,25 +18,25 @@ public class Thing : MonoBehaviour {
 	public Rigidbody2D body;
 	public Vector2 prevVelocity;
 
+	Vector3 originalScale;
 	Goal goal;
-	bool dead = false;
+	public bool dead = false;
 
-	public void Start () {
+	public void Awake () {
+		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		switch (type) {
 			case Type.box:
-				ActorManager.obj.Add (gameObject);
+				Rewind.obj.Add (gameObject);
 				break;
 			case Type.enemy:
-				ActorManager.enemies.Add (gameObject);
+				Rewind.enemies.Add (gameObject);
 				break;
 			default:
 				break;
 		}
-
-		ActorManager.enemies.Add (gameObject);
 
 	}
 	
@@ -60,12 +60,35 @@ public class Thing : MonoBehaviour {
 	}
 
 	IEnumerator ScaleDown(float duration) {
-		Vector3 originalScale = transform.localScale;
+		gameObject.GetComponent<BoxCollider2D>().enabled = false;
+		gameObject.GetComponent<SpriteRenderer>().enabled = false;
+		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
+
 		while (transform.localScale.x >= 0.02) {
 			float perc = Time.deltaTime / duration;
 			transform.localScale -= perc * originalScale;
 			yield return new WaitForEndOfFrame ();
 		}
-		Destroy (gameObject);
+	}
+
+	IEnumerator ScaleUp(float duration) {
+		gameObject.GetComponent<BoxCollider2D>().enabled = true;
+		gameObject.GetComponent<SpriteRenderer>().enabled = true;
+		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
+		while (transform.localScale.x <= originalScale.x) {
+			float perc = Time.deltaTime / duration;
+			transform.localScale += perc * originalScale;
+			yield return new WaitForEndOfFrame ();
+		}
+		transform.localScale = originalScale;
+
+	}
+
+	public void Revive() {
+		dead = false;
+		if (type == Type.enemy)
+			goal.enemyCount += 1;
+
+		StartCoroutine (ScaleUp(0.2f));
 	}
 }
