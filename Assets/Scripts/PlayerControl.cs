@@ -70,7 +70,7 @@ public class PlayerControl : MonoBehaviour {
 		HandleRewind ();
 
 
-        if (Input.GetKeyDown (KeyCode.W) && isTouchingGround) {
+        if (Input.GetKeyDown (KeyCode.W)||Input.GetKeyDown(KeyCode.Space) && isTouchingGround) {
 			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		}
 
@@ -92,6 +92,12 @@ public class PlayerControl : MonoBehaviour {
 			lr.enabled = false;
 			Shoot ();
 		}
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            SceneManager.LoadScene(0);
+        }
+
 		if (Input.GetKeyDown(KeyCode.R))
 		{
 			Time.fixedDeltaTime = startDeltaTime;
@@ -111,7 +117,7 @@ public class PlayerControl : MonoBehaviour {
 
 	void HandleRewind() {
 		if (Rewind.Instance != null) {
-			if (Input.GetKey(KeyCode.Space)) {
+			if (Input.GetKey(KeyCode.Q)) {
 
 				Rewind.Instance.isReverting = true;
 			} else {

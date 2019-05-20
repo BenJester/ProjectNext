@@ -19,7 +19,10 @@ public class Enemy : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (thing.upperY<-600f)
+        {
+            thing.Die();
+        }
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
