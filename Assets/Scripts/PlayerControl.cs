@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour {
 
 	public float speed;
 	public float jumpSpeed;
+	public float maxSpeed = 10000f;
 
 	public GameObject bullet;
 	public float minBulletSpeed;
@@ -52,9 +53,13 @@ public class PlayerControl : MonoBehaviour {
 
 	void Update()
 	{
-		
 		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
-		rb.velocity = new Vector2(h * speed, rb.velocity.y);
+
+		if (Mathf.Abs(rb.velocity.x) <= speed) {
+			rb.velocity = new Vector2 (h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+		} else {
+			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+		}
 
 
         isTouchingGround = Physics2D.OverlapCircle (groundCheckPoint1.position, groundCheckRadius, groundLayer) || Physics2D.OverlapCircle (groundCheckPoint2.position, groundCheckRadius, groundLayer);
@@ -78,7 +83,7 @@ public class PlayerControl : MonoBehaviour {
 			lr.enabled = true;
 			lr.SetPosition (0, transform.position);
 			Vector2 mousePosition = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-			lr.SetPosition (1, transform.position+ (Vector3) mousePosition.normalized * 9999);
+			lr.SetPosition (1, transform.position + (Vector3) mousePosition.normalized * 9999);
 			 
  			Time.timeScale = 0.1f;
 			targetTimeScale = 0.1f;
@@ -87,8 +92,9 @@ public class PlayerControl : MonoBehaviour {
 			IncreaseBulletSpeed ();
 		}
 		if (Input.GetMouseButtonUp (0)) {
-			targetTimeScale = 1f;
-			targetDeltaTime = startDeltaTime;
+//			targetTimeScale = 1f;
+//			targetDeltaTime = startDeltaTime;
+			StartCoroutine(RestoreTimeScale(0.035f));
 			lr.enabled = false;
 			Shoot ();
 		}
@@ -100,13 +106,22 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (!Rewind.Instance.isReverting) {
-			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.02f : -0.02f), 0.1f, 1f);
-			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.02f * startDeltaTime : -0.02f * startDeltaTime), 0.02f * startDeltaTime, startDeltaTime);
+			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
+			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
 		}
 	}
 
 	void FixedUpdate() {
 		
+	}
+
+	IEnumerator RestoreTimeScale(float duration) {
+		yield return new WaitForSeconds (duration);
+		if (!Input.GetMouseButton (0)) {
+			targetTimeScale = 1f;
+			targetDeltaTime = startDeltaTime;
+		}
+			
 	}
 
 	void HandleRewind() {
@@ -140,7 +155,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	void Shoot() {
-		
+		Debug.Log (Input.mousePosition);
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		GameObject newBullet = Instantiate (bullet, transform.position, Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();

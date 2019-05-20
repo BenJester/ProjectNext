@@ -40,6 +40,7 @@ public class GameState {
 public class Rewind : MonoBehaviour {
 
 	public bool active;
+	public bool watching;
 
 	int counter;
 
@@ -71,6 +72,8 @@ public class Rewind : MonoBehaviour {
 	public SpriteRenderer blackBg;
 
 	bool lateInit;
+
+	int watchIndex = 0;
 
 	void Awake () {
 		player = GameObject.FindWithTag ("player");
@@ -128,6 +131,9 @@ public class Rewind : MonoBehaviour {
 			blackBg.color = new Color (255f, 255f, 255f, Mathf.Clamp(blackBg.color.a - 0.02f, 0f, 0.2f));
 			arrow.color = new Color (255f, 255f, 255f, Mathf.Clamp(arrow.color.a - 0.07f, 0f, 0.7f));
 		}
+
+		if (watching)
+			Watch ();
 	}
 
 	bool shouldRecord() {
@@ -168,11 +174,12 @@ public class Rewind : MonoBehaviour {
 			return;
 
 		int threshold = Mathf.CeilToInt (1 / Time.timeScale);
-		if (counter < threshold / 3.0f) {
+
+		if (counter < threshold) {
 			counter += 1;
 			return;
 		}
-		counter = 0;
+		counter = 1;
 
 		GameState state = new GameState ();
 		state.playerPos = player.transform.position;
@@ -202,6 +209,56 @@ public class Rewind : MonoBehaviour {
 		if (states.Count > maxLength) {
 			states.RemoveAt (0);
 		}
+	}
+
+	public void Watch() {
+		if (states == null || watchIndex > states.Count - 1) {
+			watching = false;
+			return;
+		}
+
+
+
+		GameState curr = states [watchIndex];
+		player.transform.position = curr.playerPos;
+		playerBody.velocity = curr.playerV;
+
+		for (int i = 0; i < enemies.Count; i++) {
+			enemies [i].transform.position = curr.enemyPos[i];
+			enemyBody [i].velocity = curr.enemyV[i];
+			Thing thing = enemies [i].GetComponent<Thing> ();
+			if (thing.dead != curr.enemyState [i]) {
+				if (!curr.enemyState [i])
+					thing.Revive ();
+				else
+					thing.Die();
+			}
+		}
+
+		for (int i = 0; i < curr.bulletPos.Count; i++) {
+			bullets [i].transform.position = curr.bulletPos[i];
+			bulletBody [i].velocity = curr.bulletV[i];
+			Bullet bul = bullets [i].GetComponent<Bullet> ();
+			if (bul.active != curr.bulletState [i]) {
+				if (curr.bulletState [i])
+					bul.Activate();
+				else
+					bul.Deactivate();
+			}
+
+		}
+
+		if (curr.bulletPos.Count < bullets.Count) {
+			for (int i = curr.bulletPos.Count; i < bullets.Count; i++) {
+				bullets [i].GetComponent<Bullet> ().Deactivate ();
+			}
+		}
+
+		for (int i = 0; i < obj.Count; i++) {
+			obj [i].transform.position = curr.objPos[i];
+			objBody [i].velocity = curr.objV[i];
+		}
+		watchIndex += 1;
 	}
 
 	public void Revert() {

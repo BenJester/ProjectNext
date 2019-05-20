@@ -15,7 +15,8 @@ public class Thing : MonoBehaviour {
 	public Type type;
 	public float lowerY;
 	public float upperY;
-
+	public float leftX;
+	public float rightX;
 	public BoxCollider2D collider;
 	public Rigidbody2D body;
 	public Vector2 prevVelocity;
@@ -28,7 +29,9 @@ public class Thing : MonoBehaviour {
 		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
-		goal = GameObject.FindWithTag ("goal").GetComponent<Goal>();
+		GameObject goalObject = GameObject.FindWithTag ("goal");
+		if (goalObject != null)
+			goal = goalObject.GetComponent<Goal>();
 		switch (type) {
 			case Type.box:
 				Rewind.Instance.obj.Add (gameObject);
@@ -45,6 +48,11 @@ public class Thing : MonoBehaviour {
 	public void Update () {
 		lowerY = transform.position.y - collider.size.y / 2f;
 		upperY = transform.position.y + collider.size.y / 2f;
+		leftX = transform.position.x - collider.size.x / 2f;
+		rightX = transform.position.x + collider.size.x / 2f;
+
+		if (transform.position.y < -2000f)
+			Die ();
 	}
 
 	void FixedUpdate () {

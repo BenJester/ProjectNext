@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum ClickState
+{
+	NoClick,
+	BeingClick,
+	IsClick,
+	BeingUp,
+
+}
+
+
 public class PhysicalButton : MonoBehaviour {
 
     
@@ -16,23 +27,18 @@ public class PhysicalButton : MonoBehaviour {
     private Vector3 targetPosition;
     private Vector3 originalPosition;
 
+	Goal goal;
 
     public ClickState state;
     [HideInInspector]
-    public enum ClickState
-    {
-        NoClick,
-        BeingClick,
-        IsClick,
-        BeingUp,
 
-    }
 
     // Use this for initialization
     void Start () {
         originalPosition = transform.position;
         targetPosition = transform.position + offset;
-
+		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
+		goal.buttonList.Add(GetComponent<PhysicalButton>());
     }
 	
 	// Update is called once per frame
@@ -49,7 +55,7 @@ public class PhysicalButton : MonoBehaviour {
                     state = ClickState.IsClick;
                 }
                 break;
-            case ClickState.IsClick:
+			case ClickState.IsClick:
                 break;
             case ClickState.BeingUp:
                 transform.position = Vector3.Lerp(transform.position, originalPosition, 0.2f);
@@ -62,7 +68,7 @@ public class PhysicalButton : MonoBehaviour {
                 break;
         }
 
-        
+
            
         
 	}

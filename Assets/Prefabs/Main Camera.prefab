@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4903724701853420}
   - component: {fileID: 212474750265864254}
+  - component: {fileID: 114923171793717750}
   m_Layer: 0
   m_Name: black
   m_TagString: black
@@ -207,7 +208,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 0}
+  m_BackGroundColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -321,7 +322,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "2-1 \u4F3C\u66FE\u76F8\u8B58\u6575\u4EBA\u6B78\u4F86"
+  m_Text: "0-1 \u266A"
 --- !u!114 &114762434731340022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,6 +346,17 @@ MonoBehaviour:
   bulletBody: []
   arrow: {fileID: 212167487503657450}
   blackBg: {fileID: 212700687862604650}
+--- !u!114 &114923171793717750
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1213345821920694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e59ddd96a3fb4a54b5fc26916d28357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212167487503657450
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -426,7 +438,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 5fd86f20e5a4541e8ac3519bf2df4557, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
