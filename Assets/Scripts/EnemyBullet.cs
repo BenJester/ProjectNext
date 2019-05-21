@@ -40,16 +40,17 @@ public class EnemyBullet : Bullet {
 		if (col.CompareTag ("thing")) {
 			if (col.GetComponent<Thing> ().type != Type.box)
 				col.GetComponent<Thing> ().Die ();
-			
+			Deactivate ();
 				
 
 		} else if (col.CompareTag ("player")) {
 			
 			pc.Die ();
+			Deactivate ();
 		}
 		else if (col.CompareTag ("floor")) {
-			
+			Deactivate ();
 		}
-		Deactivate ();
+
 	}
 }

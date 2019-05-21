@@ -39,8 +39,11 @@ public class PlayerControl : MonoBehaviour {
     private bool isGroundTemp;
     public GameObject landingParticle;
 
+	public Vector3 originalScale;
+
     void Awake()
 	{
+		originalScale = transform.localScale;
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
 		targetTimeScale = 1f;
@@ -181,8 +184,39 @@ public class PlayerControl : MonoBehaviour {
 		chargeFrame = 0;
 
 	}
-
+		
 	public void Die() {
 		active = false;
+		StartCoroutine (ScaleDown(0.2f));
+	}
+
+	IEnumerator ScaleDown(float duration) {
+		gameObject.GetComponent<BoxCollider2D>().enabled = false;
+		gameObject.GetComponent<SpriteRenderer>().enabled = false;
+		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
+
+		while (transform.localScale.x >= 0.02) {
+			float perc = Time.deltaTime / duration;
+			transform.localScale -= perc * originalScale;
+			yield return new WaitForEndOfFrame ();
+		}
+	}
+
+	IEnumerator ScaleUp(float duration) {
+		gameObject.GetComponent<BoxCollider2D>().enabled = true;
+		gameObject.GetComponent<SpriteRenderer>().enabled = true;
+		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
+		while (transform.localScale.x <= originalScale.x) {
+			float perc = Time.deltaTime / duration;
+			transform.localScale += perc * originalScale;
+			yield return new WaitForEndOfFrame ();
+		}
+		transform.localScale = originalScale;
+
+	}
+
+	public void Revive() {
+		active = true;
+		StartCoroutine (ScaleUp(0.2f));
 	}
 }

@@ -8,7 +8,7 @@ public class ShooterEnemy : Enemy {
 	public bool faceRight;
 	public GameObject bullet;
 	public float bulletSpeed;
-	public int shootPeriod;
+	public float shootInterval = 1f;
 
 	int count;
 
@@ -28,7 +28,7 @@ public class ShooterEnemy : Enemy {
 
 	IEnumerator HandleShoot() {
 		while (true) {
-			yield return new WaitForSeconds (1f);
+			yield return new WaitForSeconds (shootInterval);
 			Shoot ();
 		}
 

@@ -280,6 +280,9 @@ public class Rewind : MonoBehaviour {
 		//Time.timeScale = 1f / last.timeScale;
 		//Time.fixedDeltaTime = 1f / last.timeScale * last.fixedDeltaTime;
 
+		if (!pc.active && last.playerActive)
+			pc.Revive ();
+
 		player.transform.position = last.playerPos;
 		pc.active = last.playerActive;
 		playerBody.velocity = last.playerV;
