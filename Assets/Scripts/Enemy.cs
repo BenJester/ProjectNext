@@ -19,13 +19,16 @@ public class Enemy : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (thing.upperY<-600f)
+        {
+            thing.Die();
+        }
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
 
 
-		if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi) {
+		if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && col.transform.position.y < transform.position.y) {
 			thing.collider.enabled = false;
 			thing.Die ();
 		}

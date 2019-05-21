@@ -9,6 +9,8 @@ public class Goal : MonoBehaviour {
 	public bool active;
 	public float enemyCount;
 	public List<PhysicalButton> buttonList;
+	public List<Thing> hostageList;
+
 	public Sprite activeSprite;
 	public Sprite inactiveSprite;
 	public SpriteRenderer black;
@@ -29,7 +31,7 @@ public class Goal : MonoBehaviour {
     }
 	
 	void Update () {
-		if (enemyCount <= 0 && checkButtons()) {
+		if (enemyCount <= 0 && checkButtons() && checkHostages()) {
             active = true;
             sr.sprite = activeSprite;
 		} else {
@@ -42,6 +44,17 @@ public class Goal : MonoBehaviour {
 		for (int i = 0; i < buttonList.Count; i++) {
 			if (buttonList [i].state != ClickState.IsClick)
 				return false;
+		}
+		return true;
+	}
+
+	bool checkHostages() {
+		for (int i = 0; i < buttonList.Count; i++) {
+			Debug.Log (hostageList [i].dead);
+			if (hostageList [i].dead) {
+				return false;
+
+			}
 		}
 		return true;
 	}

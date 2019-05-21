@@ -5,7 +5,8 @@ using UnityEngine;
 public enum Type {
 	player = 1,
 	enemy = 2,
-	box = 3
+	box = 3,
+	hostage = 4
 }
 
 public class Thing : MonoBehaviour {
@@ -37,6 +38,9 @@ public class Thing : MonoBehaviour {
 				Rewind.Instance.obj.Add (gameObject);
 				break;
 			case Type.enemy:
+				Rewind.Instance.enemies.Add (gameObject);
+				break;
+			case Type.hostage:
 				Rewind.Instance.enemies.Add (gameObject);
 				break;
 			default:
