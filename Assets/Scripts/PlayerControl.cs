@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour {
 
+	public bool active;
+
 	public float speed;
 	public float jumpSpeed;
 	public float maxSpeed = 10000f;
@@ -15,6 +17,7 @@ public class PlayerControl : MonoBehaviour {
 	public float bulletChargeSpeed;
 	public Transform groundCheckPoint1;
 	public Transform groundCheckPoint2;
+	public Transform groundCheckPoint3;
 
 	public float groundCheckRadius;
 	public LayerMask groundLayer;
@@ -53,16 +56,7 @@ public class PlayerControl : MonoBehaviour {
 
 	void Update()
 	{
-		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
-
-		if (Mathf.Abs(rb.velocity.x) <= speed) {
-			rb.velocity = new Vector2 (h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
-		} else {
-			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
-		}
-
-
-        isTouchingGround = Physics2D.OverlapCircle (groundCheckPoint1.position, groundCheckRadius, groundLayer) || Physics2D.OverlapCircle (groundCheckPoint2.position, groundCheckRadius, groundLayer);
+		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, groundLayer);
 
         //暂时没有生效不知道为什么
         if (isTouchingGround!=isGroundTemp && isTouchingGround==true && landingParticle!=null)
@@ -74,6 +68,33 @@ public class PlayerControl : MonoBehaviour {
 
 		HandleRewind ();
 
+		if (Input.GetKeyDown(KeyCode.F1))
+		{
+			SceneManager.LoadScene(0);
+		}
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			Time.fixedDeltaTime = startDeltaTime;
+			Time.timeScale = 1f;
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
+
+		if (!Rewind.Instance.isReverting) {
+			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
+			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
+		}
+
+		if (!active)
+			return;
+
+		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
+
+		if (Mathf.Abs(rb.velocity.x) <= speed) {
+			rb.velocity = new Vector2 (h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+		} else {
+			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+		}
 
 		if ((Input.GetKeyDown (KeyCode.W)||Input.GetKeyDown(KeyCode.Space)) && isTouchingGround) {
 			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
@@ -81,9 +102,7 @@ public class PlayerControl : MonoBehaviour {
 
 		if (Input.GetMouseButton (0)) {
 			lr.enabled = true;
-			lr.SetPosition (0, transform.position);
-			Vector2 mousePosition = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-			lr.SetPosition (1, transform.position + (Vector3) mousePosition.normalized * 9999);
+			HandleLineRenderer ();
 			 
  			Time.timeScale = 0.1f;
 			targetTimeScale = 0.1f;
@@ -99,26 +118,17 @@ public class PlayerControl : MonoBehaviour {
 			Shoot ();
 		}
 
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            SceneManager.LoadScene(0);
-        }
-
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			Time.fixedDeltaTime = startDeltaTime;
-			Time.timeScale = 1f;
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		}
-
-		if (!Rewind.Instance.isReverting) {
-			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
-			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
-		}
+        
 	}
 
 	void FixedUpdate() {
 		
+	}
+
+	void HandleLineRenderer() {
+		lr.SetPosition (0, transform.position);
+		Vector2 mousePosition = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+		lr.SetPosition (1, transform.position + (Vector3) mousePosition.normalized * 9999);
 	}
 
 	IEnumerator RestoreTimeScale(float duration) {
@@ -163,12 +173,16 @@ public class PlayerControl : MonoBehaviour {
 	void Shoot() {
 		Debug.Log (Input.mousePosition);
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		GameObject newBullet = Instantiate (bullet, transform.position, Quaternion.identity);
+		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
 		bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
 
 		bulletSpeed = minBulletSpeed;
 		chargeFrame = 0;
 
+	}
+
+	public void Die() {
+		active = false;
 	}
 }

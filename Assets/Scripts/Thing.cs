@@ -50,10 +50,10 @@ public class Thing : MonoBehaviour {
 	}
 	
 	public void Update () {
-		lowerY = transform.position.y - collider.size.y / 2f;
-		upperY = transform.position.y + collider.size.y / 2f;
-		leftX = transform.position.x - collider.size.x / 2f;
-		rightX = transform.position.x + collider.size.x / 2f;
+		lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
+		upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
+		leftX = transform.position.x - collider.size.x / 2f * transform.localScale.x;
+		rightX = transform.position.x + collider.size.x / 2f * transform.localScale.x;
 
 		if (transform.position.y < -2000f)
 			Die ();

@@ -7,14 +7,14 @@ public class Bullet : MonoBehaviour {
 	public float lifespan;
 	public bool active;
 
-	SpriteRenderer sr;
-	Rigidbody2D body;
-	int age = 0;
-	GameObject player;
-	Rigidbody2D playerBody;
-	Collider2D collider;
+	protected SpriteRenderer sr;
+	protected Rigidbody2D body;
+	protected int age = 0;
+	protected GameObject player;
+	protected Rigidbody2D playerBody;
+	protected Collider2D collider;
 
-	void Start () {
+	protected void Start () {
 		sr = GetComponent<SpriteRenderer> ();
 		player = GameObject.FindWithTag ("player");
 		playerBody = player.GetComponent<Rigidbody2D> ();
@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour {
 		collider.enabled = false;
 	}
 
-	void OnTriggerEnter2D(Collider2D col) {
+	public virtual void OnTriggerEnter2D(Collider2D col) {
 		
 		if (col.CompareTag ("thing")) {
 			Rigidbody2D thingBody = col.gameObject.GetComponent<Rigidbody2D> ();

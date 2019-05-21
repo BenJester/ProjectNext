@@ -5,13 +5,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour{
 
 	// Use this for initialization
-	Thing thing;
+	public Thing thing;
 	public float dropKillSpeed;
-	Goal goal;
+	public Goal goal;
 
     public bool canShuaisi = true;
 
-	void Start () {
+	protected void Start () {
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.enemyCount += 1;

@@ -5,6 +5,7 @@ using System;
 
 public class GameState {
 
+	public bool playerActive;
 	public Vector3 playerPos;
 	public Vector2 playerV;
 
@@ -52,6 +53,7 @@ public class Rewind : MonoBehaviour {
 	}
 
 	public GameObject player;
+	public PlayerControl pc;
 
 	public int maxLength = 500;
 
@@ -77,7 +79,7 @@ public class Rewind : MonoBehaviour {
 
 	void Awake () {
 		player = GameObject.FindWithTag ("player");
-
+		pc = player.GetComponent<PlayerControl> ();
 		if (Rewind._instance == null) {
 			Rewind._instance = this;
 			_instance.Init ();
@@ -162,6 +164,9 @@ public class Rewind : MonoBehaviour {
 		if (player.transform.position != last.playerPos) {
 			return true;
 		}
+		if (pc.active != last.playerActive) {
+			return true;
+		}
 
 		return false;
 	}
@@ -183,6 +188,7 @@ public class Rewind : MonoBehaviour {
 
 		GameState state = new GameState ();
 		state.playerPos = player.transform.position;
+		state.playerActive = pc.active;
 		state.playerV = playerBody.velocity;
 
 		state.timeScale = Time.timeScale;
@@ -221,6 +227,7 @@ public class Rewind : MonoBehaviour {
 
 		GameState curr = states [watchIndex];
 		player.transform.position = curr.playerPos;
+		pc.active = curr.playerActive;
 		playerBody.velocity = curr.playerV;
 
 		for (int i = 0; i < enemies.Count; i++) {
@@ -274,6 +281,7 @@ public class Rewind : MonoBehaviour {
 		//Time.fixedDeltaTime = 1f / last.timeScale * last.fixedDeltaTime;
 
 		player.transform.position = last.playerPos;
+		pc.active = last.playerActive;
 		playerBody.velocity = last.playerV;
 
 		for (int i = 0; i < enemies.Count; i++) {
