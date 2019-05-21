@@ -49,8 +49,7 @@ public class Goal : MonoBehaviour {
 	}
 
 	bool checkHostages() {
-		for (int i = 0; i < buttonList.Count; i++) {
-			Debug.Log (hostageList [i].dead);
+		for (int i = 0; i < hostageList.Count; i++) {
 			if (hostageList [i].dead) {
 				return false;
 

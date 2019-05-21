@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1208489609243562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.4, y: -19.600006, z: 0}
+  m_LocalPosition: {x: 15.3, y: -19.600006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4906589617144064}
@@ -100,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1771158550374382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.97, y: -19.6, z: 0}
+  m_LocalPosition: {x: -18, y: -19.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4906589617144064}
@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147906740149146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 502, y: 540, z: 0}
+  m_LocalPosition: {x: 135, y: -300, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4043578974739562}
@@ -207,6 +207,8 @@ MonoBehaviour:
   type: 1
   lowerY: 0
   upperY: 0
+  leftX: 0
+  rightX: 0
   collider: {fileID: 0}
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
@@ -224,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 400
   jumpSpeed: 500
+  maxSpeed: 10000
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 2}
   minBulletSpeed: 450
   maxBulletSpeed: 2000

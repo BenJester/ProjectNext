@@ -47,22 +47,10 @@ public class PhysicalButton : MonoBehaviour {
         switch (state)
         {
             case ClickState.NoClick:
-                break;
-            case ClickState.BeingClick:
-                transform.position = Vector3.Lerp(transform.position, targetPosition, 0.6f);
-                if ((transform.position - targetPosition).magnitude<=0.02f)
-                {
-                    state = ClickState.IsClick;
-                }
+				transform.position = Vector3.Lerp(transform.position, originalPosition, 0.2f);
                 break;
 			case ClickState.IsClick:
-                break;
-            case ClickState.BeingUp:
-                transform.position = Vector3.Lerp(transform.position, originalPosition, 0.2f);
-                if (transform.position == originalPosition)
-                {
-                    state = ClickState.NoClick;
-                }
+				transform.position = Vector3.Lerp(transform.position, targetPosition, 0.6f);
                 break;
             default:
                 break;
@@ -75,13 +63,14 @@ public class PhysicalButton : MonoBehaviour {
 
 
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
 
-        state = ClickState.BeingClick;
 
         if (!col.CompareTag("floor"))
         {
+			state = ClickState.IsClick;
+
             foreach (var objectToActive in objectToActives)
             {
                 objectToActive.SetActive(true);
@@ -98,13 +87,12 @@ public class PhysicalButton : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
+		
+
         if (!col.CompareTag("floor"))
         {
-            if (animationRevert)
-            {
-                state = ClickState.BeingUp;
-            }
-            
+
+			state = ClickState.NoClick;
 
             if (canRevert)
             {

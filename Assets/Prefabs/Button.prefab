@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1373724081911814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 166, y: -310, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4281809523698614}
@@ -130,9 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canRevert: 1
   animationRevert: 1
-  objectToActives:
-  - {fileID: 0}
-  - {fileID: 0}
+  objectToActives: []
   objectToDisactives: []
   offset: {x: 0, y: -11, z: 0}
   state: 0
