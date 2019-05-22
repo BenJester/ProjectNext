@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class ActorManager : MonoBehaviour {
 
     private SpriteRenderer black;
-
+	Text text;
 	//private static ActorManager _instance;
 	//public static ActorManager Instance { 
 	//	get { 	
@@ -20,6 +21,7 @@ public class ActorManager : MonoBehaviour {
 
 	void Awake () {
         black = GameObject.FindGameObjectWithTag("black").GetComponent<SpriteRenderer>();
+		text = GameObject.FindWithTag("Respawn").GetComponent<Text>();
 		//if (ActorManager._instance == null) {
 		//	ActorManager._instance = this;
 		//	_instance.Init ();
@@ -40,7 +42,8 @@ public class ActorManager : MonoBehaviour {
 	void Start () {
         black.color = Color.white;
 
-        StartCoroutine(FadeOutBlack(0.15f));
+        StartCoroutine(FadeOutBlack(0.5f));
+		StartCoroutine(FadeInText(0.1f,0.1f,0.2f));
     }
 	
 	// Update is called once per frame
@@ -54,7 +57,22 @@ public class ActorManager : MonoBehaviour {
         while (black.color.a > 0f)
         {
             black.color = new Color(black.color.r, black.color.g, black.color.b, Mathf.Clamp01(black.color.a - Time.deltaTime / duration));
-            yield return new WaitForSeconds(0.02f);
+			yield return new WaitForSeconds(0.02f);
         }
     }
+	IEnumerator FadeInText(float duration1, float duration2, float duration3)
+	{
+		while (text.color.a < 1f)
+		{
+			text.color = new Color(text.color.r, text.color.g, text.color.b, Mathf.Clamp01(text.color.a + Time.deltaTime / duration1));
+			yield return new WaitForSeconds(0.02f);
+		}
+		yield return new WaitForSeconds(duration2);
+
+		while (text.color.a > 0f)
+		{
+			text.color = new Color(text.color.r, text.color.g, text.color.b, Mathf.Clamp01(text.color.a - Time.deltaTime / duration3));
+			yield return new WaitForSeconds(0.02f);
+		}
+	}
 }

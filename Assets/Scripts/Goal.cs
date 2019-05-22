@@ -24,9 +24,9 @@ public class Goal : MonoBehaviour {
 	}
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
-        textEnd = GameObject.FindGameObjectWithTag("leveltitle");
+        
 		black = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
-        textEnd.SetActive(false);
+        //textEnd.SetActive(false);
 
     }
 	
@@ -63,7 +63,7 @@ public class Goal : MonoBehaviour {
 			won = true;
 //			Rewind.Instance.watching = true;
 			Rewind.Instance.active = false;
-			StartCoroutine (NextLevel (0.7f));
+			StartCoroutine (NextLevel (0.3f));
 
 		}
 	}
@@ -73,8 +73,8 @@ public class Goal : MonoBehaviour {
 			yield return new WaitForEndOfFrame();
 		}
 		while (black.color.a < 1f) {
-            textEnd.SetActive(true);
-            textEnd.transform.GetChild(0).gameObject.SetActive(true);
+//            textEnd.SetActive(true);
+//            textEnd.transform.GetChild(0).gameObject.SetActive(true);
 
             black.color = new Color (black.color.r, black.color.g, black.color.b, Mathf.Clamp01 (black.color.a + Time.deltaTime / duration));
 			yield return new WaitForSeconds (0.02f);
