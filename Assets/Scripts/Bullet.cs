@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 	
 	public float lifespan;
-	public bool active;
+	public bool active = true;
 
 	protected SpriteRenderer sr;
 	protected Rigidbody2D body;

@@ -133,9 +133,15 @@ public class Rewind : MonoBehaviour {
 			blackBg.color = new Color (255f, 255f, 255f, Mathf.Clamp(blackBg.color.a - 0.02f, 0f, 0.2f));
 			arrow.color = new Color (255f, 255f, 255f, Mathf.Clamp(arrow.color.a - 0.07f, 0f, 0.7f));
 		}
+	}
 
-		if (watching)
+	void FixedUpdate() {
+		
+		if (watching) {
+			Time.fixedDeltaTime = 0.016f * 5f;
+
 			Watch ();
+		}
 	}
 
 	bool shouldRecord() {
@@ -280,11 +286,11 @@ public class Rewind : MonoBehaviour {
 		//Time.timeScale = 1f / last.timeScale;
 		//Time.fixedDeltaTime = 1f / last.timeScale * last.fixedDeltaTime;
 
-		if (!pc.active && last.playerActive)
+		if (!pc.active && last.playerActive) {
 			pc.Revive ();
+		}
 
 		player.transform.position = last.playerPos;
-		pc.active = last.playerActive;
 		playerBody.velocity = last.playerV;
 
 		for (int i = 0; i < enemies.Count; i++) {
@@ -303,9 +309,11 @@ public class Rewind : MonoBehaviour {
 			bullets [i].transform.position = last.bulletPos[i];
 			bulletBody [i].velocity = last.bulletV[i];
 			Bullet bul = bullets [i].GetComponent<Bullet> ();
+
 			if (bul.active != last.bulletState [i]) {
-				if (last.bulletState [i])
-					bul.Activate();
+				if (last.bulletState [i]) {
+					bul.Activate ();
+				}
 				else
 					bul.Deactivate();
 			}

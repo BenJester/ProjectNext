@@ -187,36 +187,18 @@ public class PlayerControl : MonoBehaviour {
 		
 	public void Die() {
 		active = false;
-		StartCoroutine (ScaleDown(0.2f));
-	}
-
-	IEnumerator ScaleDown(float duration) {
-		gameObject.GetComponent<BoxCollider2D>().enabled = false;
-		gameObject.GetComponent<SpriteRenderer>().enabled = false;
-		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
-
-		while (transform.localScale.x >= 0.02) {
-			float perc = Time.deltaTime / duration;
-			transform.localScale -= perc * originalScale;
-			yield return new WaitForEndOfFrame ();
-		}
-	}
-
-	IEnumerator ScaleUp(float duration) {
-		gameObject.GetComponent<BoxCollider2D>().enabled = true;
-		gameObject.GetComponent<SpriteRenderer>().enabled = true;
-		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
-		while (transform.localScale.x <= originalScale.x) {
-			float perc = Time.deltaTime / duration;
-			transform.localScale += perc * originalScale;
-			yield return new WaitForEndOfFrame ();
-		}
-		transform.localScale = originalScale;
+		GetComponent<BoxCollider2D>().enabled = false;
+		GetComponent<SpriteRenderer>().enabled = false;
+		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
+		//transform.localScale = Vector3.zero;
 
 	}
-
+		
 	public void Revive() {
 		active = true;
-		StartCoroutine (ScaleUp(0.2f));
+		GetComponent<BoxCollider2D>().enabled = true;
+		GetComponent<SpriteRenderer>().enabled = true;
+		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
+		//transform.localScale = originalScale;
 	}
 }
