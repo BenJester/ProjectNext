@@ -18,6 +18,8 @@ public class PlayerControl : MonoBehaviour {
 	public Transform groundCheckPoint1;
 	public Transform groundCheckPoint2;
 	public Transform groundCheckPoint3;
+	public Transform groundCheckPoint4;
+	public Transform groundCheckPoint5;
 
 	public float groundCheckRadius;
 	public LayerMask groundLayer;
@@ -41,6 +43,12 @@ public class PlayerControl : MonoBehaviour {
 
 	public Vector3 originalScale;
 
+	private Animator anim;
+	private int chargeCounter = 0;
+
+	SpriteRenderer blackSr;
+	bool leftPressed;
+
     void Awake()
 	{
 		originalScale = transform.localScale;
@@ -53,13 +61,15 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	void Start() {
+		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer>();
 		bulletSpeed = minBulletSpeed;
 		rb = GetComponent<Rigidbody2D> ();
+		anim = GetComponent<Animator> ();
 	}
 
 	void Update()
 	{
-		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, groundLayer);
+		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, groundLayer);
 
         //暂时没有生效不知道为什么
         if (isTouchingGround!=isGroundTemp && isTouchingGround==true && landingParticle!=null)
@@ -83,10 +93,10 @@ public class PlayerControl : MonoBehaviour {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 
-		if (!Rewind.Instance.isReverting) {
-			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
-			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
-		}
+//		if (!Rewind.Instance.isReverting) {
+//			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
+//			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
+//		}
 
 		if (!active)
 			return;
@@ -103,29 +113,80 @@ public class PlayerControl : MonoBehaviour {
 			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		}
 
-		if (Input.GetMouseButton (0)) {
-			lr.enabled = true;
-			HandleLineRenderer ();
-			 
- 			Time.timeScale = 0.1f;
+		if (Input.GetMouseButtonDown (1)) {
+			blackSr.color = new Color (1, 1, 1, 0.1f);
+			Time.timeScale = 0.1f;
 			targetTimeScale = 0.1f;
 			Time.fixedDeltaTime = startDeltaTime * 0.1f;
 			targetDeltaTime = startDeltaTime * 0.1f;
+		}
+		if (Input.GetMouseButton (1)) {
+			lr.enabled = true;
+			HandleLineRenderer ();
+			 
+
+			//IncreaseBulletSpeed ();
+		}
+		if (Input.GetMouseButtonUp (1)) {
+			blackSr.color = new Color (1, 1, 1, 0f);
+
+			targetTimeScale = 1f;
+			targetDeltaTime = startDeltaTime;
+			Time.timeScale = 1f;
+			Time.fixedDeltaTime = startDeltaTime;
+			//bulletSpeed = minBulletSpeed;
+			//StartCoroutine(RestoreTimeScale(0.035f));
+			lr.enabled = false;
+
+//			Shoot ();
+		}
+		if (Input.GetMouseButtonDown (0)) {
+			
+		}
+		if (Input.GetMouseButton (0)) {
+			lr.enabled = true;
+			HandleLineRenderer ();
+//
+//			Time.timeScale = 0.1f;
+//			targetTimeScale = 0.1f;
+//			Time.fixedDeltaTime = startDeltaTime * 0.1f;
+//			targetDeltaTime = startDeltaTime * 0.1f;
 			IncreaseBulletSpeed ();
 		}
+		else
+			anim.SetBool ("Charge",false);
 		if (Input.GetMouseButtonUp (0)) {
+			chargeCounter = 0;
 //			targetTimeScale = 1f;
 //			targetDeltaTime = startDeltaTime;
-			StartCoroutine(RestoreTimeScale(0.035f));
+//			//bulletSpeed = minBulletSpeed;
+//			StartCoroutine(RestoreTimeScale(0.035f));
+			lr.startColor = Color.black;
 			lr.enabled = false;
 			Shoot ();
 		}
 
-        
+		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+			if (bulletSpeed == maxBulletSpeed)
+				bulletSpeed = minBulletSpeed;
+			else
+				bulletSpeed = maxBulletSpeed;
+		}
+			
 	}
+		
 
 	void FixedUpdate() {
-		
+		if (Input.GetMouseButton(0)) {
+			chargeCounter += 1;
+			if (chargeCounter > 25f) {
+				anim.SetBool ("Charge", true);
+				lr.startColor = Color.red;
+				chargeCounter = 0;
+			}
+		} else {
+			chargeCounter = 0;
+		}
 	}
 
 	void HandleLineRenderer() {
