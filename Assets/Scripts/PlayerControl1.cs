@@ -214,7 +214,7 @@ public class PlayerControl1 : PlayerControl {
 
 	void IncreaseBulletSpeed() {
 		if (chargeFrame > startChargeFrame)
-			bulletSpeed = Mathf.Clamp (bulletSpeed + bulletChargeSpeed, minBulletSpeed, maxBulletSpeed);
+			bulletSpeed = maxBulletSpeed;
 		else
 			chargeFrame += 1;
 	}
