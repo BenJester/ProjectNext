@@ -53,12 +53,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4906589617144064}
   - component: {fileID: 212636800582740606}
-  - component: {fileID: 114780755331920318}
   - component: {fileID: 50720975013831332}
   - component: {fileID: 61395146402256906}
   - component: {fileID: 114667413169427506}
   - component: {fileID: 120921767453741660}
   - component: {fileID: 95301921925913516}
+  - component: {fileID: 114260691191748520}
+  - component: {fileID: 114415816227692440}
   m_Layer: 0
   m_Name: player
   m_TagString: player
@@ -240,7 +241,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147906740149146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 524, y: 87, z: 0}
+  m_LocalPosition: {x: 293, y: 777, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4043578974739562}
@@ -316,6 +317,78 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114260691191748520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1147906740149146}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e69b2d8a4524367915904f242dbe81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  speed: 400
+  jumpSpeed: 500
+  maxSpeed: 10000
+  bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 2}
+  minBulletSpeed: 450
+  maxBulletSpeed: 2000
+  bulletChargeSpeed: 250
+  groundCheckPoint1: {fileID: 4043578974739562}
+  groundCheckPoint2: {fileID: 4289337571101460}
+  groundCheckPoint3: {fileID: 4405996985490282}
+  groundCheckPoint4: {fileID: 4882908818510406}
+  groundCheckPoint5: {fileID: 4894416746588494}
+  groundCheckRadius: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  bulletSpeed: 900
+  startChargeFrame: 15
+  lr: {fileID: 0}
+  startDeltaTime: 0
+  targetDeltaTime: 0
+  targetTimeScale: 0
+  landingParticle: {fileID: 0}
+  originalScale: {x: 0, y: 0, z: 0}
+--- !u!114 &114415816227692440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1147906740149146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a75d08d145f414fb19a37365e029eb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  speed: 400
+  jumpSpeed: 500
+  maxSpeed: 10000
+  bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 2}
+  minBulletSpeed: 450
+  maxBulletSpeed: 2000
+  bulletChargeSpeed: 250
+  groundCheckPoint1: {fileID: 4043578974739562}
+  groundCheckPoint2: {fileID: 4289337571101460}
+  groundCheckPoint3: {fileID: 4405996985490282}
+  groundCheckPoint4: {fileID: 4882908818510406}
+  groundCheckPoint5: {fileID: 4894416746588494}
+  groundCheckRadius: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  bulletSpeed: 0
+  startChargeFrame: 0
+  lr: {fileID: 0}
+  startDeltaTime: 0
+  targetDeltaTime: 0
+  targetTimeScale: 0
+  landingParticle: {fileID: 0}
+  originalScale: {x: 0, y: 0, z: 0}
 --- !u!114 &114509206964436026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,42 +422,6 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
---- !u!114 &114780755331920318
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1147906740149146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3300c0768ef9c47648504c82f93549c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  speed: 400
-  jumpSpeed: 500
-  maxSpeed: 10000
-  bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 2}
-  minBulletSpeed: 450
-  maxBulletSpeed: 2000
-  bulletChargeSpeed: 250
-  groundCheckPoint1: {fileID: 4289337571101460}
-  groundCheckPoint2: {fileID: 4043578974739562}
-  groundCheckPoint3: {fileID: 4405996985490282}
-  groundCheckPoint4: {fileID: 4882908818510406}
-  groundCheckPoint5: {fileID: 4894416746588494}
-  groundCheckRadius: 5
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  bulletSpeed: 900
-  startChargeFrame: 15
-  lr: {fileID: 0}
-  startDeltaTime: 0
-  targetDeltaTime: 0
-  targetTimeScale: 0
-  landingParticle: {fileID: 0}
-  originalScale: {x: 0, y: 0, z: 0}
 --- !u!120 &120921767453741660
 LineRenderer:
   m_ObjectHideFlags: 1
