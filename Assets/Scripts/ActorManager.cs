@@ -50,7 +50,7 @@ public class ActorManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyUp (KeyCode.Escape)) {
-			SceneManager.LoadScene (17);
+			SceneManager.LoadScene (19);
 		}
 	}
 
