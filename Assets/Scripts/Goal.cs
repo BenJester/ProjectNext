@@ -68,7 +68,7 @@ public class Goal : MonoBehaviour {
 		}
 	}
 
-	IEnumerator NextLevel(float duration) {
+	public IEnumerator NextLevel(float duration, string level = "") {
 		while (Rewind.Instance.watching) {
 			yield return new WaitForEndOfFrame();
 		}
@@ -79,9 +79,10 @@ public class Goal : MonoBehaviour {
             black.color = new Color (black.color.r, black.color.g, black.color.b, Mathf.Clamp01 (black.color.a + Time.deltaTime / duration));
 			yield return new WaitForSeconds (0.02f);
 		}
-
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
+		if (level == "")
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		else
+			SceneManager.LoadScene(level);
 	}
 	
 }

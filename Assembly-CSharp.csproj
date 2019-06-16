@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\PixelCamera2DActivator.cs" />
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\Rotator.cs" />
+     <Compile Include="Assets\rigid.cs" />
      <Compile Include="Assets\Scripts\ActorManager.cs" />
      <Compile Include="Assets\Scripts\BlackStart.cs" />
      <Compile Include="Assets\Scripts\Box.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\FollowPlayer.cs" />
      <Compile Include="Assets\Scripts\Goal.cs" />
      <Compile Include="Assets\Scripts\Hostage.cs" />
+     <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\Move.cs" />
      <Compile Include="Assets\Scripts\PhysicalButton.cs" />
      <Compile Include="Assets\Scripts\PlayerControl.cs" />

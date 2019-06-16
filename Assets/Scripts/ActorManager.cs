@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ActorManager : MonoBehaviour {
 
@@ -48,7 +49,9 @@ public class ActorManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+		if (Input.GetKeyUp (KeyCode.Escape)) {
+			SceneManager.LoadScene (17);
+		}
 	}
 
 
