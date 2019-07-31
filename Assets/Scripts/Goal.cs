@@ -3,86 +3,106 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Goal : MonoBehaviour {
+public class Goal : MonoBehaviour
+{
 
     public GameObject textEnd;
-	public bool active;
-	public float enemyCount;
-	public List<PhysicalButton> buttonList;
-	public List<Thing> hostageList;
+    public bool active;
+    public float enemyCount;
+    public List<PhysicalButton> buttonList;
+    public List<Thing> hostageList;
 
-	public Sprite activeSprite;
-	public Sprite inactiveSprite;
-	public SpriteRenderer black;
+    public Sprite activeSprite;
+    public Sprite inactiveSprite;
+    public SpriteRenderer black;
 
-	SpriteRenderer sr;
-	bool won;
-	 
-	void Awake() {
-		buttonList = new List<PhysicalButton> ();
+    public Animator anim;
 
-	}
-	void Start () {
-		sr = GetComponent<SpriteRenderer> ();
-        
-		black = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
+    SpriteRenderer sr;
+    bool won;
+
+    void Awake()
+    {
+        buttonList = new List<PhysicalButton>();
+        anim = GetComponent<Animator>();
+
+    }
+    void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+
+        black = GameObject.FindWithTag("black").GetComponent<SpriteRenderer>();
         //textEnd.SetActive(false);
 
     }
-	
-	void Update () {
-		if (enemyCount <= 0 && checkButtons() && checkHostages()) {
+
+    void Update()
+    {
+        if (enemyCount <= 0 && checkButtons() && checkHostages())
+        {
             active = true;
-            sr.sprite = activeSprite;
-		} else {
-			active = false;
-			sr.sprite = inactiveSprite;
-		}
-	}
+            anim.SetBool("Active", true);
+        }
+        else
+        {
+            active = false;
+            anim.SetBool("Active", false);
+        }
+    }
 
-	bool checkButtons() {
-		for (int i = 0; i < buttonList.Count; i++) {
-			if (buttonList [i].state != ClickState.IsClick)
-				return false;
-		}
-		return true;
-	}
+    bool checkButtons()
+    {
+        for (int i = 0; i < buttonList.Count; i++)
+        {
+            if (buttonList[i].state != ClickState.IsClick)
+                return false;
+        }
+        return true;
+    }
 
-	bool checkHostages() {
-		for (int i = 0; i < hostageList.Count; i++) {
-			if (hostageList [i].dead) {
-				return false;
+    bool checkHostages()
+    {
+        for (int i = 0; i < hostageList.Count; i++)
+        {
+            if (hostageList[i].dead)
+            {
+                return false;
 
-			}
-		}
-		return true;
-	}
+            }
+        }
+        return true;
+    }
 
-	void OnTriggerStay2D(Collider2D col) {
-		if (col.CompareTag("player") && active && !won) {
-			won = true;
-//			Rewind.Instance.watching = true;
-			Rewind.Instance.active = false;
-			StartCoroutine (NextLevel (0.3f));
+    void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.CompareTag("player") && active && !won)
+        {
+            won = true;
+            //			Rewind.Instance.watching = true;
+            Rewind.Instance.active = false;
+            StartCoroutine(NextLevel(0.3f));
 
-		}
-	}
+        }
+    }
 
-	public IEnumerator NextLevel(float duration, string level = "") {
-		while (Rewind.Instance.watching) {
-			yield return new WaitForEndOfFrame();
-		}
-		while (black.color.a < 1f) {
-//            textEnd.SetActive(true);
-//            textEnd.transform.GetChild(0).gameObject.SetActive(true);
+    public IEnumerator NextLevel(float duration, string level = "")
+    {
+        while (Rewind.Instance.watching)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        while (black.color.a < 1f)
+        {
+            //            textEnd.SetActive(true);
+            //            textEnd.transform.GetChild(0).gameObject.SetActive(true);
 
-            black.color = new Color (black.color.r, black.color.g, black.color.b, Mathf.Clamp01 (black.color.a + Time.deltaTime / duration));
-			yield return new WaitForSeconds (0.02f);
-		}
-		if (level == "")
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-		else
-			SceneManager.LoadScene(level);
-	}
-	
+            black.color = new Color(black.color.r, black.color.g, black.color.b, Mathf.Clamp01(black.color.a + Time.deltaTime / duration));
+            yield return new WaitForSeconds(0.02f);
+        }
+        if (level == "")
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else
+            SceneManager.LoadScene(level);
+    }
+
 }

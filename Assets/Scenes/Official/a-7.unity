@@ -628,7 +628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
+  m_Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -636,11 +636,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ea8b496feef30ac478ac3db32e12ff1b, type: 3}
-    m_FontSize: 50
+    m_Font: {fileID: 12800000, guid: a6c90797df73fd04984854fd6cb62f25, type: 3}
+    m_FontSize: 35
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 5
+    m_MinSize: 3
     m_MaxSize: 50
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -648,7 +648,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9577\u6309Q\u53EF\u4EE5\u56DE\u9000"
+  m_Text: 'Hold Q can rewind time
+
+    (have bug sometimes)'
 --- !u!222 &1411159528
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -795,6 +797,12 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2.2060225
       objectReference: {fileID: 0}
+    - target: {fileID: 212794717589712436, guid: d036aaa9aeb254e30b741ee39a6db351,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bf05f7e6a94ba204891dd5e5741d377b,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}
   m_IsPrefabParent: 0
