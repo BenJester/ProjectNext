@@ -352,7 +352,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -768, y: -334}
-  m_SizeDelta: {x: 626.4, y: 477.4}
+  m_SizeDelta: {x: 619.6, y: 477.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &867437163
 MonoBehaviour:
@@ -384,11 +384,12 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hold the left button to enter the bullet-time mode to have more time to
-    get more precise control
+  m_Text: 'Left click and hold to perform precise actions
+
+'
 --- !u!222 &867437164
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -581,7 +582,7 @@ Prefab:
     - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
       propertyPath: m_Text
-      value: "1-5 \u589C\u843D"
+      value: 1-5 The Fall
       objectReference: {fileID: 0}
     - target: {fileID: 1213345821920694, guid: f5f1116c990e0493e9cd45bf098d08e7, type: 2}
       propertyPath: m_IsActive

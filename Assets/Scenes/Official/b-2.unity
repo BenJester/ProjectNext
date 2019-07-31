@@ -1055,7 +1055,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -566, y: -268}
+  m_AnchoredPosition: {x: -811, y: -279}
   m_SizeDelta: {x: 626.4, y: 254.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1349724991
@@ -1091,7 +1091,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u77ED\u6309\u9F20\u6A19\u5B50\u5F48\u6162\n\u5229\u7528\u597D\u98DB\u884C\u6642\u9593"
+  m_Text: 'Left click (but not hold) to release a slow bullet.
+
+    Make good use of its flight time.'
 --- !u!222 &1349724992
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1502,7 +1504,7 @@ Prefab:
     - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
       propertyPath: m_Text
-      value: "2-2 \u6642\u9593\u5DEE"
+      value: 2-2 Time Interval
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5f1116c990e0493e9cd45bf098d08e7, type: 2}

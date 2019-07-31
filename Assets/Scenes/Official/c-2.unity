@@ -1115,7 +1115,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -117, y: -573}
+  m_AnchoredPosition: {x: -50, y: -573}
   m_SizeDelta: {x: 253, y: 40.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1662412230
@@ -1150,7 +1150,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Gunner Enemy (real gun !)
+  m_Text: Gunner
 --- !u!222 &1662412231
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1245,7 +1245,7 @@ Prefab:
     - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
       propertyPath: m_Text
-      value: "3-2 \u69CD\u624B"
+      value: 3-2 Gunner
       objectReference: {fileID: 0}
     - target: {fileID: 1213345821920694, guid: f5f1116c990e0493e9cd45bf098d08e7, type: 2}
       propertyPath: m_IsActive

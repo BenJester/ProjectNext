@@ -231,7 +231,7 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
-	public void Die() {
+	public override void Die() {
 		active = false;
 		GetComponent<BoxCollider2D>().enabled = false;
 		GetComponent<SpriteRenderer>().enabled = false;
@@ -240,7 +240,7 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
-	public void Revive() {
+	public override void Revive() {
 		active = true;
 		GetComponent<BoxCollider2D>().enabled = true;
 		GetComponent<SpriteRenderer>().enabled = true;

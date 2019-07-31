@@ -690,7 +690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 22.776001}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 127, y: -32}
+  m_AnchoredPosition: {x: 132, y: -30}
   m_SizeDelta: {x: 1503.3, y: 461.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &891832801
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7264151, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.8490566, g: 0.30838373, b: 0.30838373, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1196,7 +1196,7 @@ Prefab:
     - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
       propertyPath: m_Text
-      value: 1-2 Aim Fin
+      value: 1-2 Aim
       objectReference: {fileID: 0}
     - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
@@ -1415,9 +1415,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Hold the Left Button to Enter the bullet-time,
+  m_Text: 'Left click and hold to enter bullet time
 
-    Shoot the high-speed bullet when line turn'
+    Shoot high-speed bullets when the line turns'
 --- !u!222 &2032314166
 CanvasRenderer:
   m_ObjectHideFlags: 0
