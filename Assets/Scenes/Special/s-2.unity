@@ -320,6 +320,17 @@ Prefab:
       propertyPath: m_Text
       value: S-2 Hook
       objectReference: {fileID: 0}
+    - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 02a648aa910d8ff4eaed67a08dcce693,
+        type: 3}
+    - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5f1116c990e0493e9cd45bf098d08e7, type: 2}
   m_IsPrefabParent: 0
@@ -688,7 +699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 76, y: 66}
+  m_AnchoredPosition: {x: 154, y: 66}
   m_SizeDelta: {x: 312.1, y: 193.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1307690548
@@ -768,21 +779,6 @@ Prefab:
     - target: {fileID: 4474259594136676, guid: 869c0811169264ce18aee41aae14bc4d, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 212493445986179162, guid: 869c0811169264ce18aee41aae14bc4d,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.8584906
-      objectReference: {fileID: 0}
-    - target: {fileID: 212493445986179162, guid: 869c0811169264ce18aee41aae14bc4d,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.51428443
-      objectReference: {fileID: 0}
-    - target: {fileID: 212493445986179162, guid: 869c0811169264ce18aee41aae14bc4d,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.6735289
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 869c0811169264ce18aee41aae14bc4d, type: 2}

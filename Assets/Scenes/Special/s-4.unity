@@ -307,6 +307,12 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 02a648aa910d8ff4eaed67a08dcce693,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5f1116c990e0493e9cd45bf098d08e7, type: 2}
   m_IsPrefabParent: 0
@@ -342,7 +348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -431, y: 174}
+  m_AnchoredPosition: {x: -349, y: 174}
   m_SizeDelta: {x: 611.8, y: 221.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &345501004
@@ -853,6 +859,23 @@ Prefab:
     - target: {fileID: 4269029785634980, guid: a4e435df008bc49b58177d0678c67388, type: 2}
       propertyPath: m_LocalScale.y
       value: 1.4125042
+      objectReference: {fileID: 0}
+    - target: {fileID: 212796734774710518, guid: a4e435df008bc49b58177d0678c67388,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029239728398420, guid: a4e435df008bc49b58177d0678c67388, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029239728398420, guid: a4e435df008bc49b58177d0678c67388, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029239728398420, guid: a4e435df008bc49b58177d0678c67388, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4e435df008bc49b58177d0678c67388, type: 2}

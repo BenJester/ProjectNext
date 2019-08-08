@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50998838046545470}
   - component: {fileID: 61888637047408814}
   - component: {fileID: 114471047470865652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Anchor
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -99,12 +99,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieParticle: {fileID: 0}
   type: 3
   lowerY: 0
   upperY: 0
+  leftX: 0
+  rightX: 0
   collider: {fileID: 0}
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
+  dead: 0
 --- !u!212 &212493445986179162
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -141,7 +145,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 8e9516e0c219f49ebbc3b21d2b166184, type: 3}
-  m_Color: {r: 0.7012549, g: 0.9056604, b: 0.6707013, a: 1}
+  m_Color: {r: 0.8584906, g: 0.51428443, b: 0.6735289, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
