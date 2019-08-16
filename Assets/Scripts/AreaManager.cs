@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class AreaManager : MonoBehaviour {
 
-	int areaID;
+	public int areaID;
 	int playerArea;
 
+	GameObject player;
+	public GameObject respawnPoint;
+
 	void Start () {
+		player = GameObject.FindWithTag ("player");
+		DontDestroyOnLoad (player);
+		player.transform.position = respawnPoint.transform.position;
+	}
+
+	public void HandleRestart() {
 		
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		
+
 	}
 }
