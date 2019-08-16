@@ -142,10 +142,6 @@ public class PlayerControl1 : PlayerControl {
 		if (Input.GetMouseButton (0)) {
 			lr.enabled = true;
 			HandleLineRenderer ();
-			Time.timeScale = 0.1f;
-			targetTimeScale = 0.1f;
-			Time.fixedDeltaTime = startDeltaTime * 0.1f;
-			targetDeltaTime = startDeltaTime * 0.1f;
 			IncreaseBulletSpeed ();
 		}
 		else
@@ -182,6 +178,11 @@ public class PlayerControl1 : PlayerControl {
 				anim.SetBool ("Charge", true);
 				lr.startColor = Color.red;
 				chargeCounter = 0;
+			} else if (chargeCounter > 15f) {
+				Time.timeScale = 0.1f;
+				targetTimeScale = 0.1f;
+				Time.fixedDeltaTime = startDeltaTime * 0.1f;
+				targetDeltaTime = startDeltaTime * 0.1f;
 			}
 		} else {
 			chargeCounter = 0;
