@@ -47,6 +47,8 @@ public class PlayerControl1 : PlayerControl {
 	SpriteRenderer blackSr;
 	bool leftPressed;
 
+	public GameObject pointer;
+
 	void Awake()
 	{
 		originalScale = transform.localScale;
@@ -156,10 +158,22 @@ public class PlayerControl1 : PlayerControl {
 			lr.enabled = false;
 			Shoot ();
 		}
-			
 
+		// 动量指示器
+		HandlePointer();
 	}
 
+	void HandlePointer() {
+		Vector2 rbNormal = rb.velocity.normalized;
+		if (Time.timeScale == 1f || rbNormal == Vector2.zero) {
+			pointer.GetComponent<SpriteRenderer> ().enabled = false;
+			return;
+		}
+		pointer.GetComponent<SpriteRenderer> ().enabled = true;
+		float angle = Vector2.SignedAngle (Vector2.right, rbNormal);
+		Debug.Log (angle);
+		pointer.transform.rotation = Quaternion.Euler(0f,0f,angle);
+	}
 
 	void FixedUpdate() {
 		if (Input.GetMouseButton(0)) {
