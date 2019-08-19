@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour {
 	protected GameObject player;
 	protected Rigidbody2D playerBody;
 	protected Collider2D collider;
+	public GameObject dashParticle;
 
 	protected void Start () {
 		sr = GetComponent<SpriteRenderer> ();
@@ -62,7 +63,10 @@ public class Bullet : MonoBehaviour {
 				Vector3 temp = col.gameObject.transform.position;
 				col.gameObject.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y - playerRadiusY + (thing.upperY - thing.lowerY) / 2f, player.transform.position.z);
 				player.transform.position = new Vector3 (temp.x, col.gameObject.transform.position.y + playerRadiusY + (thing.upperY - thing.lowerY) / 2f, player.transform.position.z);
-//				} else {
+
+				
+//				
+					//	} else {
 //					Vector3 temp = player.transform.position;
 //					player.transform.position = new Vector3 (col.gameObject.transform.position.x, col.gameObject.transform.position.y + player.GetComponent<BoxCollider2D> ().size.y / 2f - (thing.upperY - thing.lowerY) / 2f, player.transform.position.z);
 //					col.gameObject.transform.position = new Vector3 (temp.x, player.gameObject.transform.position.y + player.GetComponent<BoxCollider2D> ().size.y / 2f + (thing.upperY - thing.lowerY) / 2f, player.transform.position.z);
@@ -70,8 +74,15 @@ public class Bullet : MonoBehaviour {
 
 			} else {
 				Vector3 tempPos = new Vector3 (pos.x, pos.y + heightDiff, pos.z);
+				GameObject par1 = Instantiate(dashParticle,player.transform.position,Quaternion.identity);
+				GameObject par2 = Instantiate(dashParticle,thingPos,Quaternion.identity);
+				Destroy(par1,1f);
+				Destroy(par2,1f);
 				player.transform.position = new Vector3 (thingPos.x, thingPos.y - heightDiff, thingPos.z);
 				col.gameObject.transform.position = tempPos;
+				//交换的瞬间
+				
+				PostEffectManager.instance.Blink(0.03f);
 			}
 
 

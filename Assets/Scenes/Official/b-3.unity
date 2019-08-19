@@ -430,7 +430,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ea8b496feef30ac478ac3db32e12ff1b, type: 3}
+    m_Font: {fileID: 12800000, guid: a6c90797df73fd04984854fd6cb62f25, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 1
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dampTime: 0.15
-  target: {fileID: 2120420785}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &915499694
 Prefab:
   m_ObjectHideFlags: 0
@@ -1532,8 +1532,3 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &2120420785 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4906589617144064, guid: ddd120821b15a425c9b02b395cdbbbb3,
-    type: 2}
-  m_PrefabInternal: {fileID: 190569828}

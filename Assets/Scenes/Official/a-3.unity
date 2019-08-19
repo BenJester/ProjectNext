@@ -123,7 +123,7 @@ Prefab:
     - target: {fileID: 114520426510490504, guid: 7a5f19e1b4b4ce745b9fa4d817f84db3,
         type: 2}
       propertyPath: objectToActives.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4940104352154400, guid: 7a5f19e1b4b4ce745b9fa4d817f84db3, type: 2}
       propertyPath: m_LocalPosition.x
@@ -161,10 +161,15 @@ Prefab:
         type: 2}
       propertyPath: objectToActives.Array.data[0]
       value: 
-      objectReference: {fileID: 239766494}
+      objectReference: {fileID: 0}
     - target: {fileID: 4281809523698614, guid: 7a5f19e1b4b4ce745b9fa4d817f84db3, type: 2}
       propertyPath: m_LocalPosition.y
       value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114520426510490504, guid: 7a5f19e1b4b4ce745b9fa4d817f84db3,
+        type: 2}
+      propertyPath: objectToActives.Array.data[1]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a5f19e1b4b4ce745b9fa4d817f84db3, type: 2}
@@ -338,11 +343,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddd120821b15a425c9b02b395cdbbbb3, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &239766494 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1299402395069978, guid: aa524867f5afe4dabbc4d44258356f72,
-    type: 2}
-  m_PrefabInternal: {fileID: 915499694}
 --- !u!1 &295958963
 GameObject:
   m_ObjectHideFlags: 0

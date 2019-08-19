@@ -5,15 +5,12 @@ using UnityEngine;
 public class AreaManager : MonoBehaviour {
 
 	public int areaID;
-	int playerArea;
+	public bool checkited=false;
 
-	GameObject player;
-	public GameObject respawnPoint;
+	
 
 	void Start () {
-		player = GameObject.FindWithTag ("player");
-		DontDestroyOnLoad (player);
-		player.transform.position = respawnPoint.transform.position;
+		DontDestroyOnLoad(gameObject);
 	}
 
 	public void HandleRestart() {
@@ -23,4 +20,16 @@ public class AreaManager : MonoBehaviour {
 	void Update () {
 
 	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag=="player")
+		{
+			checkited=true;
+			print("enter!");
+			if(CheckPointTotalManager.instance)
+			CheckPointTotalManager.instance.savedPos=transform.position;
+		}
+	}
+
+
 }

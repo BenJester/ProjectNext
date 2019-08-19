@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl1 : PlayerControl {
 
+	public bool HasRepawnPoint = false;
 	public float speed;
 	public float jumpSpeed;
 	public float maxSpeed = 10000f;
 
+	public Vector3 playerRespawnPoint;
 	public GameObject bullet;
 	public float minBulletSpeed;
 	public float maxBulletSpeed;
@@ -26,6 +28,7 @@ public class PlayerControl1 : PlayerControl {
 	public float bulletSpeed;
 	public int startChargeFrame;
 	float chargeFrame = 0;
+	
 
 	public LineRenderer lr;
 
@@ -42,6 +45,10 @@ public class PlayerControl1 : PlayerControl {
 	public Vector3 originalScale;
 
 	private Animator anim;
+	public Animator legAnim;
+	public SpriteRenderer legsSpriteRenderer;
+	private SpriteRenderer spriteRenderer;
+
 	private int chargeCounter = 0;
 
 	SpriteRenderer blackSr;
@@ -49,48 +56,51 @@ public class PlayerControl1 : PlayerControl {
 
 	public GameObject pointer;
 
-	void Awake()
-	{
+	void Awake () {
+
 		originalScale = transform.localScale;
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
 		targetTimeScale = 1f;
 
 		lr = GetComponent<LineRenderer> ();
+		spriteRenderer = GetComponent<SpriteRenderer> ();
 		lr.enabled = false;
+		
 	}
 
-	void Start() {
-		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer>();
+	void Start () {
+
+		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
 		bulletSpeed = minBulletSpeed;
 		rb = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
+		if (HasRepawnPoint)
+			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
+
 	}
 
-	void Update()
-	{
+	void Update () {
+		//print (rb.velocity.y);
+		anim.SetFloat ("SpeedY", rb.velocity.y);
 		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, groundLayer);
 
 		//暂时没有生效不知道为什么
-		if (isTouchingGround!=isGroundTemp && isTouchingGround==true && landingParticle!=null)
-		{
-			Instantiate(landingParticle, transform);
+		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null) {
+			Instantiate (landingParticle, transform);
 			isGroundTemp = isTouchingGround;
 		}
 
-
 		HandleRewind ();
 
-		if (Input.GetKeyDown(KeyCode.F1))
-		{
-			SceneManager.LoadScene(0);
+		if (Input.GetKeyDown (KeyCode.F1)) {
+			SceneManager.LoadScene (0);
 		}
 
-		if (Input.GetKeyDown(KeyCode.R))
-		{
+		if (Input.GetKeyDown (KeyCode.R)) {
 			Time.fixedDeltaTime = startDeltaTime;
 			Time.timeScale = 1f;
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		}
 
 		if (!Rewind.Instance.isReverting) {
@@ -101,65 +111,87 @@ public class PlayerControl1 : PlayerControl {
 		if (!active)
 			return;
 
-		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
-
-		if (Mathf.Abs(rb.velocity.x) <= speed) {
-			rb.velocity = new Vector2 (h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+		//左右移动
+		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
+		if (Mathf.Abs (h) > 0) {
+			anim.SetBool ("Moving", true);
+			legAnim.SetBool ("Moving", true);
+			if (h > 0) legsSpriteRenderer.flipX = true;
+			else legsSpriteRenderer.flipX = false;
 		} else {
-			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+			anim.SetBool ("Moving", false);
+			legAnim.SetBool ("Moving", false);
 		}
 
-		if ((Input.GetKeyDown (KeyCode.W)||Input.GetKeyDown(KeyCode.Space)) && isTouchingGround) {
+		if (Mathf.Abs (rb.velocity.x) <= speed) {
+			rb.velocity = new Vector2 (h * speed, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
+		} else {
+			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
+		}
+
+		if ((Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.Space)) && isTouchingGround) {
 			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		}
 
-//		if (Input.GetMouseButtonDown (1)) {
-//			blackSr.color = new Color (1, 1, 1, 0.1f);
-//			Time.timeScale = 0.1f;
-//			targetTimeScale = 0.1f;
-//			Time.fixedDeltaTime = startDeltaTime * 0.1f;
-//			targetDeltaTime = startDeltaTime * 0.1f;
-//		}
-//		if (Input.GetMouseButton (1)) {
-//			lr.enabled = true;
-//			HandleLineRenderer ();
-//
-//
-//			//IncreaseBulletSpeed ();
-//		}
-//		if (Input.GetMouseButtonUp (1)) {
-//			blackSr.color = new Color (1, 1, 1, 0f);
-//
-//			targetTimeScale = 1f;
-//			targetDeltaTime = startDeltaTime;
-//			bulletSpeed = minBulletSpeed;
-//			StartCoroutine(RestoreTimeScale(0.035f));
-//			lr.enabled = false;
-//
-//			Shoot ();
-//		}
-//}
+		if (isTouchingGround) {
+			anim.SetBool ("Jumping", false);
+			legAnim.SetBool ("Jumping", false);
+		} else {
+			anim.SetBool ("Jumping", true);
+			legAnim.SetBool ("Jumping", true);
+		}
+		//		if (Input.GetMouseButtonDown (1)) {
+		//			blackSr.color = new Color (1, 1, 1, 0.1f);
+		//			Time.timeScale = 0.1f;
+		//			targetTimeScale = 0.1f;
+		//			Time.fixedDeltaTime = startDeltaTime * 0.1f;
+		//			targetDeltaTime = startDeltaTime * 0.1f;
+		//		}
+		//		if (Input.GetMouseButton (1)) {
+		//			lr.enabled = true;
+		//			HandleLineRenderer ();
+		//
+		//
+		//			//IncreaseBulletSpeed ();
+		//		}
+		//		if (Input.GetMouseButtonUp (1)) {
+		//			blackSr.color = new Color (1, 1, 1, 0f);
+		//
+		//			targetTimeScale = 1f;
+		//			targetDeltaTime = startDeltaTime;
+		//			bulletSpeed = minBulletSpeed;
+		//			StartCoroutine(RestoreTimeScale(0.035f));
+		//			lr.enabled = false;
+		//
+		//			Shoot ();
+		//		}
+		//}
 		if (Input.GetMouseButton (0)) {
 			lr.enabled = true;
 			HandleLineRenderer ();
 			IncreaseBulletSpeed ();
-		}
-		else
-			anim.SetBool ("Charge",false);
-		if (Input.GetMouseButtonUp (0)) {
-			chargeCounter = 0;
-			//bulletSpeed = minBulletSpeed;
-			StartCoroutine(RestoreTimeScale(0.035f));
-			lr.startColor = Color.black;
-			lr.enabled = false;
-			Shoot ();
-		}
+
+		} else
+			//anim.SetBool ("Charge",false);
+			if (Input.GetMouseButtonUp (0)) {
+
+				anim.SetTrigger ("Shot");
+				anim.SetBool ("IsCharging", false);
+				chargeCounter = 0;
+				//bulletSpeed = minBulletSpeed;
+				StartCoroutine (RestoreTimeScale (0.035f));
+				lr.startColor = Color.black;
+				lr.enabled = false;
+				Shoot ();
+			}
 
 		// 动量指示器
-		HandlePointer();
+		HandlePointer ();
+		// 转向动画
+		FlipFace ();
 	}
 
-	void HandlePointer() {
+	void HandlePointer () {
 		Vector2 rbNormal = rb.velocity.normalized;
 		if (Time.timeScale == 1f || rbNormal == Vector2.zero) {
 			pointer.GetComponent<SpriteRenderer> ().enabled = false;
@@ -168,34 +200,40 @@ public class PlayerControl1 : PlayerControl {
 		pointer.GetComponent<SpriteRenderer> ().enabled = true;
 		float angle = Vector2.SignedAngle (Vector2.right, rbNormal);
 		Debug.Log (angle);
-		pointer.transform.rotation = Quaternion.Euler(0f,0f,angle);
+		pointer.transform.rotation = Quaternion.Euler (0f, 0f, angle);
 	}
 
-	void FixedUpdate() {
-		if (Input.GetMouseButton(0)) {
+	void FixedUpdate () {
+		if (Input.GetMouseButton (0)) {
+
+			anim.SetBool ("IsCharging", true);
+
 			chargeCounter += 1;
 			if (chargeCounter > 25f) {
-				anim.SetBool ("Charge", true);
 				lr.startColor = Color.red;
 				chargeCounter = 0;
+				
+
 			} else if (chargeCounter > 15f) {
 				Time.timeScale = 0.1f;
 				targetTimeScale = 0.1f;
 				Time.fixedDeltaTime = startDeltaTime * 0.1f;
 				targetDeltaTime = startDeltaTime * 0.1f;
+				//TODO:之后会写成渐变的感觉
+				//PostEffect.SetActive (true);
 			}
 		} else {
 			chargeCounter = 0;
 		}
 	}
 
-	void HandleLineRenderer() {
+	void HandleLineRenderer () {
 		lr.SetPosition (0, transform.position);
-		Vector2 mousePosition = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+		Vector2 mousePosition = (Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position);
 		lr.SetPosition (1, transform.position + (Vector3) mousePosition.normalized * 9999);
 	}
 
-	IEnumerator RestoreTimeScale(float duration) {
+	IEnumerator RestoreTimeScale (float duration) {
 		yield return new WaitForSeconds (duration);
 		if (!Input.GetMouseButton (0)) {
 			targetTimeScale = 1f;
@@ -204,9 +242,9 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
-	void HandleRewind() {
+	void HandleRewind () {
 		if (Rewind.Instance != null) {
-			if (Input.GetKey(KeyCode.Q)) {
+			if (Input.GetKey (KeyCode.Q)) {
 
 				Rewind.Instance.isReverting = true;
 			} else {
@@ -215,8 +253,6 @@ public class PlayerControl1 : PlayerControl {
 			}
 
 			if (!Rewind.Instance.isReverting) { //TODO: if no char or mushroom is moving, don't record
-
-
 
 			} else {
 				if (Rewind.Instance.states.Count == 0) {
@@ -227,16 +263,16 @@ public class PlayerControl1 : PlayerControl {
 		}
 	}
 
-	void IncreaseBulletSpeed() {
+	void IncreaseBulletSpeed () {
 		if (chargeFrame > startChargeFrame)
 			bulletSpeed = maxBulletSpeed;
 		else
 			chargeFrame += 1;
 	}
 
-	void Shoot() {
-		
-		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+	void Shoot () {
+
+		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
 		bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
@@ -246,20 +282,27 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
-	public override void Die() {
+	public override void Die () {
 		active = false;
-		GetComponent<BoxCollider2D>().enabled = false;
-		GetComponent<SpriteRenderer>().enabled = false;
+		GetComponent<BoxCollider2D> ().enabled = false;
+		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
 		//transform.localScale = Vector3.zero;
 
 	}
 
-	public override void Revive() {
+	public override void Revive () {
 		active = true;
-		GetComponent<BoxCollider2D>().enabled = true;
-		GetComponent<SpriteRenderer>().enabled = true;
+		GetComponent<BoxCollider2D> ().enabled = true;
+		GetComponent<SpriteRenderer> ().enabled = true;
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
 		//transform.localScale = originalScale;
+	}
+
+	private void FlipFace () {
+		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		if (mouseWorldPos.x > transform.position.x) {
+			spriteRenderer.flipX = true;
+		} else spriteRenderer.flipX = false;
 	}
 }

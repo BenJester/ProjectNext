@@ -47,7 +47,7 @@ public class ActorManager : MonoBehaviour
     {
         black.color = Color.white;
 
-        StartCoroutine(FadeOutBlack(1f));
+        StartCoroutine(FadeOutBlack(0.5f));
         StartCoroutine(FadeInText(0.1f, 1f, 0.2f));
     }
 

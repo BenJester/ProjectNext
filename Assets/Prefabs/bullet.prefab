@@ -91,6 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifespan: 1000
   active: 1
+  dashParticle: {fileID: 1687702180867944, guid: f78704b402a79d441a40f842a022390f,
+    type: 2}
 --- !u!212 &212712828080317068
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -127,7 +129,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8585b52abb85f478daae872a79d0c82b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9716981, g: 0.041251317, b: 0.041251317, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
