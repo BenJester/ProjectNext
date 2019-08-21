@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dampTime: 0.15
-  target: {fileID: 2120420785}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &915499694
 Prefab:
   m_ObjectHideFlags: 0
@@ -1191,17 +1191,17 @@ Prefab:
     - target: {fileID: 20674109995937394, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
       propertyPath: m_BackGroundColor.r
-      value: 0.09433961
+      value: 0.7924528
       objectReference: {fileID: 0}
     - target: {fileID: 20674109995937394, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
       propertyPath: m_BackGroundColor.g
-      value: 0.09433961
+      value: 0.7924528
       objectReference: {fileID: 0}
     - target: {fileID: 20674109995937394, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
       propertyPath: m_BackGroundColor.b
-      value: 0.09433961
+      value: 0.7924528
       objectReference: {fileID: 0}
     - target: {fileID: 114739820927771960, guid: f5f1116c990e0493e9cd45bf098d08e7,
         type: 2}
@@ -1380,8 +1380,3 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2fd81728576940748d4c5b038271f3f, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &2120420785 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4906589617144064, guid: ddd120821b15a425c9b02b395cdbbbb3,
-    type: 2}
-  m_PrefabInternal: {fileID: 190569828}

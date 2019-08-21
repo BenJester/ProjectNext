@@ -91,7 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifespan: 1000
   active: 1
-  dashParticle: {fileID: 1687702180867944, guid: f78704b402a79d441a40f842a022390f,
+  smokeOffset: {x: 0, y: 15, z: 0}
+  dashParticle: {fileID: 1447157706495034, guid: 108ad1cecb0e29e46ab8ff7a79084a6a,
     type: 2}
 --- !u!212 &212712828080317068
 SpriteRenderer:

@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour {
 
 	protected SpriteRenderer sr;
 	protected Rigidbody2D body;
+	public Vector3 smokeOffset;
 	protected int age = 0;
 	protected GameObject player;
 	protected Rigidbody2D playerBody;
@@ -74,8 +75,8 @@ public class Bullet : MonoBehaviour {
 
 			} else {
 				Vector3 tempPos = new Vector3 (pos.x, pos.y + heightDiff, pos.z);
-				GameObject par1 = Instantiate(dashParticle,player.transform.position,Quaternion.identity);
-				GameObject par2 = Instantiate(dashParticle,thingPos,Quaternion.identity);
+				GameObject par1 = Instantiate(dashParticle,player.transform.position+smokeOffset,Quaternion.identity);
+				GameObject par2 = Instantiate(dashParticle,thingPos+smokeOffset,Quaternion.identity);
 				Destroy(par1,1f);
 				Destroy(par2,1f);
 				player.transform.position = new Vector3 (thingPos.x, thingPos.y - heightDiff, thingPos.z);

@@ -56,7 +56,9 @@
      <Compile Include="Assets\BeginTheGame.cs" />
      <Compile Include="Assets\CheckPointTotalManager.cs" />
      <Compile Include="Assets\ColliderAdapter.cs" />
+     <Compile Include="Assets\EventManager.cs" />
      <Compile Include="Assets\EYE.cs" />
+     <Compile Include="Assets\ForceManager.cs" />
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\PixelCamera2DActivator.cs" />
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\Rotator.cs" />
      <Compile Include="Assets\PlayTestCapacity.cs" />
@@ -112,14 +114,14 @@
  <Reference Include="Unity.PackageManagerUI.Editor">
  <HintPath>E:/_Project/13_LaDureewithBen/ProjectNext/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>E:/_Project/13_LaDureewithBen/ProjectNext/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Postprocessing.Editor">
  <HintPath>E:/_Project/13_LaDureewithBen/ProjectNext/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Postprocessing.Runtime">
  <HintPath>E:/_Project/13_LaDureewithBen/ProjectNext/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.TextMeshPro">
+ <HintPath>E:/_Project/13_LaDureewithBen/ProjectNext/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>E:/Unity/2018.1.9f2/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
