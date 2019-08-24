@@ -10,6 +10,8 @@ public class PlayerControl1 : PlayerControl {
 	public float jumpSpeed;
 	public float maxSpeed = 10000f;
 
+	public bool canMove;
+
 	public Vector3 playerRespawnPoint;
 	public GameObject bullet;
 	public float minBulletSpeed;
@@ -55,6 +57,15 @@ public class PlayerControl1 : PlayerControl {
 	bool leftPressed;
 
 	public GameObject pointer;
+	public GameObject swapTarget;
+
+	public Swap swap;
+	public Dash dash;
+
+	public void InitSkills(){
+		swap = GetComponent<Swap> ();
+		dash = GetComponent<Dash> ();
+	}
 
 	void Awake () {
 
@@ -77,7 +88,7 @@ public class PlayerControl1 : PlayerControl {
 		anim = GetComponent<Animator> ();
 		if (HasRepawnPoint)
 			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
-
+		InitSkills ();
 	}
 
 	void Update () {
@@ -111,35 +122,39 @@ public class PlayerControl1 : PlayerControl {
 		if (!active)
 			return;
 
-		//左右移动
-		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
-		if (Mathf.Abs (h) > 0) {
-			anim.SetBool ("Moving", true);
-			legAnim.SetBool ("Moving", true);
-			if (h > 0) legsSpriteRenderer.flipX = true;
-			else legsSpriteRenderer.flipX = false;
-		} else {
-			anim.SetBool ("Moving", false);
-			legAnim.SetBool ("Moving", false);
+		if (canMove) {
+			//左右移动
+			float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
+			if (Mathf.Abs (h) > 0) {
+				anim.SetBool ("Moving", true);
+				legAnim.SetBool ("Moving", true);
+				if (h > 0) legsSpriteRenderer.flipX = true;
+				else legsSpriteRenderer.flipX = false;
+			} else {
+				anim.SetBool ("Moving", false);
+				legAnim.SetBool ("Moving", false);
+			}
+
+			if (Mathf.Abs (rb.velocity.x) <= speed) {
+				rb.velocity = new Vector2 (h * speed, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
+			} else {
+				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
+			}
+
+			if ((Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.Space)) && isTouchingGround) {
+				rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+			}
+
+			if (isTouchingGround) {
+				anim.SetBool ("Jumping", false);
+				legAnim.SetBool ("Jumping", false);
+			} else {
+				anim.SetBool ("Jumping", true);
+				legAnim.SetBool ("Jumping", true);
+			}
 		}
 
-		if (Mathf.Abs (rb.velocity.x) <= speed) {
-			rb.velocity = new Vector2 (h * speed, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
-		} else {
-			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
-		}
 
-		if ((Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.Space)) && isTouchingGround) {
-			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
-		}
-
-		if (isTouchingGround) {
-			anim.SetBool ("Jumping", false);
-			legAnim.SetBool ("Jumping", false);
-		} else {
-			anim.SetBool ("Jumping", true);
-			legAnim.SetBool ("Jumping", true);
-		}
 		//		if (Input.GetMouseButtonDown (1)) {
 		//			blackSr.color = new Color (1, 1, 1, 0.1f);
 		//			Time.timeScale = 0.1f;
@@ -184,6 +199,16 @@ public class PlayerControl1 : PlayerControl {
 				lr.enabled = false;
 				Shoot ();
 			}
+
+		if (Input.GetKeyDown (KeyCode.Space)) 
+		{
+			swap.Do ();
+		}
+
+		if (Input.GetMouseButtonDown (1)) 
+		{
+			dash.Do ();
+		}
 
 		// 动量指示器
 		HandlePointer ();
