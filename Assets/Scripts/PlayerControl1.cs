@@ -65,8 +65,11 @@ public class PlayerControl1 : PlayerControl {
 	public float cursorSnapThreshold;
 	public GameObject marker;
 
+	public GameObject targetMarker;
+
 	public Swap swap;
 	public Dash dash;
+	public bool doubleSwap;
 
 	public void InitSkills(){
 		swap = GetComponent<Swap> ();
@@ -147,7 +150,7 @@ public class PlayerControl1 : PlayerControl {
 				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
 			}
 
-			if ((Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.Space)) && isTouchingGround) {
+			if ((Input.GetKeyDown (KeyCode.W)) && isTouchingGround) {
 				rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 			}
 
@@ -206,8 +209,9 @@ public class PlayerControl1 : PlayerControl {
 				Shoot ();
 			}
 
-		if (Input.GetKeyDown (KeyCode.Space)) 
+		if (Input.GetKeyDown (KeyCode.Space) && doubleSwap) 
 		{
+			doubleSwap = false;
 			swap.Do ();
 		}
 
@@ -241,11 +245,19 @@ public class PlayerControl1 : PlayerControl {
 				closestObjectToCursor = thing.gameObject;
 			}
 		}
+
+		// 记号圆圈
 		if (closestObjectToCursor != null) {
 			marker.transform.position = new Vector3(closestObjectToCursor.transform.position.x,closestObjectToCursor.transform.position.y,-1f);
 		} else
 		{
 			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
+		}
+		if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing>().dead) {
+			targetMarker.transform.position = new Vector3 (swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
+		} else 
+		{
+			targetMarker.transform.position = new Vector3 (-10000f, 0f, 0f);
 		}
 
 	}
