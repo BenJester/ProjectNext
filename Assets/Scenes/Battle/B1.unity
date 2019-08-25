@@ -113,6 +113,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &42009088 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1985203045356008, guid: 22dc3fc931fa04cc089ca3fc7db83520,
+    type: 2}
+  m_PrefabInternal: {fileID: 352068845}
 --- !u!1001 &190569828
 Prefab:
   m_ObjectHideFlags: 0
@@ -162,8 +167,80 @@ Prefab:
       propertyPath: canMove
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
+        type: 2}
+      propertyPath: closestDistance
+      value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
+        type: 2}
+      propertyPath: minBulletSpeed
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 212636800582740606, guid: ddd120821b15a425c9b02b395cdbbbb3,
+        type: 2}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
+        type: 2}
+      propertyPath: marker
+      value: 
+      objectReference: {fileID: 42009088}
+    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
+        type: 2}
+      propertyPath: cursorSnapThreshold
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddd120821b15a425c9b02b395cdbbbb3, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &352068845
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1884463585}
+    m_Modifications:
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152641701667224, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 212841933160765174, guid: 22dc3fc931fa04cc089ca3fc7db83520,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 22dc3fc931fa04cc089ca3fc7db83520, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &915499694
 Prefab:
@@ -517,6 +594,11 @@ MonoBehaviour:
   dashParticle: {fileID: 1447157706495034, guid: 108ad1cecb0e29e46ab8ff7a79084a6a,
     type: 2}
   smokeOffset: {x: 0, y: 15, z: 0}
+--- !u!4 &1884463585 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4906589617144064, guid: ddd120821b15a425c9b02b395cdbbbb3,
+    type: 2}
+  m_PrefabInternal: {fileID: 190569828}
 --- !u!114 &1884463586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,9 +614,10 @@ MonoBehaviour:
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
-  DashSpeed: 1800
-  DashDuration: 0.1
+  DashSpeed: 1200
+  DashDuration: 0.16
   pauseDuration: 0.1
+  maxCharge: 1
 --- !u!1001 &1892125926
 Prefab:
   m_ObjectHideFlags: 0
@@ -573,6 +656,21 @@ Prefab:
     - target: {fileID: 4132620557557860, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 212794717589712436, guid: d036aaa9aeb254e30b741ee39a6db351,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212794717589712436, guid: d036aaa9aeb254e30b741ee39a6db351,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212794717589712436, guid: d036aaa9aeb254e30b741ee39a6db351,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}

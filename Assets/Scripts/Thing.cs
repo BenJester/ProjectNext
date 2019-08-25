@@ -21,12 +21,15 @@ public class Thing : MonoBehaviour {
 	public BoxCollider2D collider;
 	public Rigidbody2D body;
 	public Vector2 prevVelocity;
-
+	PlayerControl1 playerControl;
 	Vector3 originalScale;
 	Goal goal;
 	public bool dead = false;
 
+	public float distanceToCursor = Mathf.Infinity;
+
 	public void Start () {
+		playerControl = GameObject.FindWithTag ("player").GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
@@ -47,6 +50,12 @@ public class Thing : MonoBehaviour {
 				break;
 		}
 
+
+		if (type != Type.player) 
+		{
+			playerControl.thingList.Add (this);
+		}
+
 	}
 	
 	public void Update () {
@@ -57,6 +66,18 @@ public class Thing : MonoBehaviour {
 
 		if (transform.position.y < -2000f)
 			Die ();
+
+//		if (type != Type.player) 
+//		{
+//			distanceToCursor = Vector2.Distance(((Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition)), (Vector2) transform.position);
+//			if (distanceToCursor < playerControl.closestDistance) 
+//			{
+//				playerControl.closestObjectToCursor = gameObject;
+//				playerControl.closestDistance = distanceToCursor;
+//			}
+//				
+//		}
+
 	}
 
 	void FixedUpdate () {

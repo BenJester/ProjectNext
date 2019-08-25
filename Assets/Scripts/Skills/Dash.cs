@@ -8,9 +8,29 @@ public class Dash : Skill {
 	public float DashDuration;
 	public float pauseDuration;
 
+	public int maxCharge;
+	int charge;
+
+	public override void Init()
+	{
+		charge = maxCharge;
+	}
+
+	public override bool Check()
+	{
+		return charge > 0;
+	}
+
+	void Update() {
+		if (playerControl.isTouchingGround) 
+		{
+			charge = maxCharge;
+		}
+	}
+
 	public override void Do()
 	{
-		if (!active || !playerControl.canMove)
+		if (!active || !playerControl.canMove || !Check())
 			return;
 		
 		playerControl.canMove = false;
@@ -40,6 +60,7 @@ public class Dash : Skill {
 			curr += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
 		}
+		charge -= 1;
 		playerBody.velocity = dir * playerControl.speed;
 		playerControl.canMove = true;
 	}

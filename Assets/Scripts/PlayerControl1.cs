@@ -25,7 +25,7 @@ public class PlayerControl1 : PlayerControl {
 
 	public float groundCheckRadius;
 	public LayerMask groundLayer;
-	private bool isTouchingGround;
+	public bool isTouchingGround;
 
 	public float bulletSpeed;
 	public int startChargeFrame;
@@ -59,6 +59,12 @@ public class PlayerControl1 : PlayerControl {
 	public GameObject pointer;
 	public GameObject swapTarget;
 
+	public List<Thing> thingList;
+	public GameObject closestObjectToCursor;
+	public float closestDistance = Mathf.Infinity;
+	public float cursorSnapThreshold;
+	public GameObject marker;
+
 	public Swap swap;
 	public Dash dash;
 
@@ -77,7 +83,7 @@ public class PlayerControl1 : PlayerControl {
 		lr = GetComponent<LineRenderer> ();
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		lr.enabled = false;
-		
+
 	}
 
 	void Start () {
@@ -214,6 +220,34 @@ public class PlayerControl1 : PlayerControl {
 		HandlePointer ();
 		// 转向动画
 		FlipFace ();
+		// 找到离鼠标最近单位
+		HandleObjectDistance();
+	}
+
+	void HandleObjectDistance()
+	{
+		closestDistance = Mathf.Infinity;
+		closestObjectToCursor = null;
+		foreach (var thing in thingList) {
+			float distanceToCursor = Vector2.Distance(((Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition)), (Vector2) thing.transform.position);
+			//			if (distanceToCursor < playerControl.closestDistance) 
+			//			{
+			//				playerControl.closestObjectToCursor = gameObject;
+			//				playerControl.closestDistance = distanceToCursor;
+			//			}
+			if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) 
+			{
+				closestDistance = distanceToCursor;
+				closestObjectToCursor = thing.gameObject;
+			}
+		}
+		if (closestObjectToCursor != null) {
+			marker.transform.position = new Vector3(closestObjectToCursor.transform.position.x,closestObjectToCursor.transform.position.y,-1f);
+		} else
+		{
+			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
+		}
+
 	}
 
 	void HandlePointer () {
@@ -296,14 +330,20 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Shoot () {
-
+		
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
-		bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
-		Debug.Log (bulletBody.velocity);
+		//bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
+		//Debug.Log (bulletBody.velocity);
+		if (closestObjectToCursor)
+			bulletBody.velocity = ((Vector2) closestObjectToCursor.transform.position - (Vector2) transform.position).normalized * bulletSpeed;
+		else
+			bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
+
 		bulletSpeed = minBulletSpeed;
 		chargeFrame = 0;
+
 
 	}
 
