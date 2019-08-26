@@ -382,4 +382,5 @@ public class PlayerControl1 : PlayerControl {
 			spriteRenderer.flipX = true;
 		} else spriteRenderer.flipX = false;
 	}
+		
 }

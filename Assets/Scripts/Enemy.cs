@@ -8,10 +8,13 @@ public class Enemy : MonoBehaviour{
 	public Thing thing;
 	public float dropKillSpeed;
 	public Goal goal;
-
+	public int maxHealth = 1;
+	public int health;
     public bool canShuaisi = true;
 
 	protected void Start () {
+		maxHealth = 1;
+		health = maxHealth;
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.enemyCount += 1;
@@ -19,7 +22,7 @@ public class Enemy : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
-        if (thing.upperY<-600f)
+		if (thing.upperY < -600f)
         {
             thing.Die();
         }
@@ -34,4 +37,10 @@ public class Enemy : MonoBehaviour{
 		}
 	}
 
+	public void TakeDamage(int damage)
+	{
+		health -= damage;
+		if (health <= 0)
+			thing.Die ();
+	}
 }
