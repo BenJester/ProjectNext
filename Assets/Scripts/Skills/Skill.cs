@@ -5,14 +5,21 @@ using UnityEngine;
 public class Skill : MonoBehaviour {
 
 	public bool active;
+	[HideInInspector]
 	public GameObject player;
+	[HideInInspector]
 	public Rigidbody2D playerBody;
+	[HideInInspector]
 	public PlayerControl1 playerControl;
 
-	void Start() {
+
+	private void Awake() {
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		playerBody = player.GetComponent<Rigidbody2D> ();
+	}
+	void Start() {
+		
 		Init ();
 	}
 

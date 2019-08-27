@@ -53,13 +53,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AimCursor.cs" />
      <Compile Include="Assets\BeginTheGame.cs" />
      <Compile Include="Assets\BulletTime.cs" />
      <Compile Include="Assets\CheckPointTotalManager.cs" />
      <Compile Include="Assets\ColliderAdapter.cs" />
+     <Compile Include="Assets\Enemy_IronFoot.cs" />
      <Compile Include="Assets\EventManager.cs" />
      <Compile Include="Assets\EYE.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Demo\Sample Scripts\ShakeByDistance.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Demo\Sample Scripts\ShakeOnKeyPress.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Demo\Sample Scripts\ShakeOnTrigger.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Demo\ShakeDemo.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Scripts\CameraShakeInstance.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Scripts\CameraShakePresets.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Scripts\CameraShaker.cs" />
+     <Compile Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\Assets\EZ Camera Shake\Scripts\Utilities\CameraUtilities.cs" />
      <Compile Include="Assets\ForceManager.cs" />
+     <Compile Include="Assets\HeavyThing.cs" />
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\PixelCamera2DActivator.cs" />
      <Compile Include="Assets\PixelCamera2D-master\Assets\PixelCamera2DDemo\Scripts\Rotator.cs" />
      <Compile Include="Assets\PlayTestCapacity.cs" />
@@ -99,6 +110,7 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\EZ-Camera-Shake\EZ-Camera-Shake-Unity-master\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />

@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114816388366545296}
   - component: {fileID: 114421915999999926}
   - component: {fileID: 251502878661237464}
+  - component: {fileID: 114178955524013548}
   m_Layer: 8
   m_Name: box
   m_TagString: thing
@@ -39,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1198197432663322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 278, y: 107, z: 0}
+  m_LocalPosition: {x: 501, y: 197, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,7 +60,7 @@ Rigidbody2D:
   m_Mass: 800
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 200
+  m_GravityScale: 400
   m_Material: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -77,19 +78,35 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 1.3800659, y: -2.06987}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 67, y: 67}
+    oldSize: {x: 142.85715, y: 142.85715}
     newSize: {x: 67, y: 67}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 67, y: 67}
+  m_Size: {x: 69.76013, y: 71.13974}
   m_EdgeRadius: 0
+--- !u!114 &114178955524013548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1198197432663322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82b511e0a549744db3e7bf12dc7cc9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFastFall: 0
+  threshold: 100
+  yOffset: -10
+  landingParticle: {fileID: 1760684535814648, guid: ee50c78203c1d9544b65bf8cef6cd6e7,
+    type: 2}
 --- !u!114 &114421915999999926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,6 +141,7 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  distanceToCursor: Infinity
 --- !u!212 &212794717589712436
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -159,7 +177,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2d9ed8081500040b4927e1b443fb7ad3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 555cb8f812eca244aaa16c578083d820, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

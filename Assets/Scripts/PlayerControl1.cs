@@ -5,18 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl1 : PlayerControl {
 
-
-	
 	public bool HasRepawnPoint = false;
+
+	[Header ("基本参数")]
 	public float speed;
 	public float jumpSpeed;
 	public float maxSpeed = 10000f;
-
-	public Vector3 playerRespawnPoint;
-	public GameObject bullet;
-	public float minBulletSpeed;
-	public float maxBulletSpeed;
-	public float bulletChargeSpeed;
 	public Transform groundCheckPoint1;
 	public Transform groundCheckPoint2;
 	public Transform groundCheckPoint3;
@@ -24,24 +18,46 @@ public class PlayerControl1 : PlayerControl {
 	public Transform groundCheckPoint5;
 
 	public float groundCheckRadius;
-	public LayerMask groundLayer;
-	private bool isTouchingGround;
 
+	public bool canMove;
+
+	public Vector3 playerRespawnPoint;
+
+	[Header ("子弹参数")]
+	public GameObject bullet;
+	public float minBulletSpeed;
+	public float maxBulletSpeed;
+	public float bulletChargeSpeed;
 	public float bulletSpeed;
+
+	[Space]
+	public LayerMask groundLayer;
+	public bool isTouchingGround;
+
 	public int startChargeFrame;
 	float chargeFrame = 0;
-	
 
+	[Header ("瞄准表现")]
+
+	public bool useLineRenderer = false;
+	public bool useCursor = false;
 	public LineRenderer lr;
+	public GameObject cursor;
 
 	Rigidbody2D rb;
 
-	private float startDeltaTime;
-	float targetDeltaTime;
-	float targetTimeScale;
+	[HideInInspector]
+	public float startDeltaTime;
+	[HideInInspector]
+	public float targetDeltaTime;
+	[HideInInspector]
+	public float targetTimeScale;
 
 	//
 	private bool isGroundTemp;
+
+	[Space]
+	[Space]
 	public GameObject landingParticle;
 
 	public Vector3 originalScale;
@@ -57,18 +73,36 @@ public class PlayerControl1 : PlayerControl {
 	bool leftPressed;
 
 	public GameObject pointer;
+	public GameObject swapTarget;
+
+	public List<Thing> thingList;
+	public GameObject closestObjectToCursor;
+	public float closestDistance = Mathf.Infinity;
+	public float cursorSnapThreshold;
+	public GameObject marker;
+
+	public GameObject targetMarker;
+
+	public Swap swap;
+	public Dash dash;
+	public bool doubleSwap;
+
+	public void InitSkills () {
+		swap = GetComponent<Swap> ();
+		dash = GetComponent<Dash> ();
+	}
 
 	void Awake () {
 
 		originalScale = transform.localScale;
-		
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
 		targetTimeScale = 1f;
+
 		lr = GetComponent<LineRenderer> ();
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		lr.enabled = false;
-		
+
 	}
 
 	void Start () {
@@ -79,7 +113,7 @@ public class PlayerControl1 : PlayerControl {
 		anim = GetComponent<Animator> ();
 		if (HasRepawnPoint)
 			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
-
+		InitSkills ();
 	}
 
 	void Update () {
@@ -89,9 +123,12 @@ public class PlayerControl1 : PlayerControl {
 
 		//暂时没有生效不知道为什么
 		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null) {
-			Instantiate (landingParticle, transform);
-			isGroundTemp = isTouchingGround;
+			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
+			Destroy (part, 2f);
+			print ("landing");
 		}
+
+		isGroundTemp = isTouchingGround;
 
 		HandleRewind ();
 
@@ -113,64 +150,46 @@ public class PlayerControl1 : PlayerControl {
 		if (!active)
 			return;
 
-		//左右移动
-		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
-		if (Mathf.Abs (h) > 0) {
-			anim.SetBool ("Moving", true);
-			legAnim.SetBool ("Moving", true);
-			if (h > 0) legsSpriteRenderer.flipX = true;
-			else legsSpriteRenderer.flipX = false;
-		} else {
-			anim.SetBool ("Moving", false);
-			legAnim.SetBool ("Moving", false);
+		if (canMove) {
+			//左右移动
+			float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
+			if (Mathf.Abs (h) > 0) {
+				anim.SetBool ("Moving", true);
+				legAnim.SetBool ("Moving", true);
+				if (h > 0) legsSpriteRenderer.flipX = true;
+				else legsSpriteRenderer.flipX = false;
+			} else {
+				anim.SetBool ("Moving", false);
+				legAnim.SetBool ("Moving", false);
+			}
+
+			if (Mathf.Abs (rb.velocity.x) <= speed) {
+				rb.velocity = new Vector2 (h * speed, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
+			} else {
+				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
+			}
+
+			if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
+				if (isTouchingGround)
+					rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+			}
+
+			if (isTouchingGround) {
+				anim.SetBool ("Jumping", false);
+				legAnim.SetBool ("Jumping", false);
+			} else {
+				anim.SetBool ("Jumping", true);
+				legAnim.SetBool ("Jumping", true);
+			}
 		}
 
-		if (Mathf.Abs (rb.velocity.x) <= speed) {
-			rb.velocity = new Vector2 (h * speed, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
-		} else {
-			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
-		}
-
-		if ((Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.Space)) && isTouchingGround) {
-			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
-		}
-
-		if (isTouchingGround) {
-			anim.SetBool ("Jumping", false);
-			legAnim.SetBool ("Jumping", false);
-		} else {
-			anim.SetBool ("Jumping", true);
-			legAnim.SetBool ("Jumping", true);
-		}
-		//		if (Input.GetMouseButtonDown (1)) {
-		//			blackSr.color = new Color (1, 1, 1, 0.1f);
-		//			Time.timeScale = 0.1f;
-		//			targetTimeScale = 0.1f;
-		//			Time.fixedDeltaTime = startDeltaTime * 0.1f;
-		//			targetDeltaTime = startDeltaTime * 0.1f;
-		//		}
-		//		if (Input.GetMouseButton (1)) {
-		//			lr.enabled = true;
-		//			HandleLineRenderer ();
-		//
-		//
-		//			//IncreaseBulletSpeed ();
-		//		}
-		//		if (Input.GetMouseButtonUp (1)) {
-		//			blackSr.color = new Color (1, 1, 1, 0f);
-		//
-		//			targetTimeScale = 1f;
-		//			targetDeltaTime = startDeltaTime;
-		//			bulletSpeed = minBulletSpeed;
-		//			StartCoroutine(RestoreTimeScale(0.035f));
-		//			lr.enabled = false;
-		//
-		//			Shoot ();
-		//		}
-		//}
+		//处理按下的指示器
 		if (Input.GetMouseButton (0)) {
-			lr.enabled = true;
-			HandleLineRenderer ();
+			if (useLineRenderer) {
+				lr.enabled = true;
+				HandleLineRenderer ();
+			}
+
 			IncreaseBulletSpeed ();
 
 		} else
@@ -182,15 +201,60 @@ public class PlayerControl1 : PlayerControl {
 				chargeCounter = 0;
 				//bulletSpeed = minBulletSpeed;
 				StartCoroutine (RestoreTimeScale (0.035f));
-				lr.startColor = Color.black;
-				lr.enabled = false;
+
+				if (useLineRenderer) {
+					lr.startColor = Color.black;
+					lr.enabled = false;
+				} else if (useCursor) cursor.GetComponent<AimCursor> ().SetAim (false);
+
 				Shoot ();
 			}
+
+		if (Input.GetKeyDown (KeyCode.E) && doubleSwap) {
+			doubleSwap = false;
+			swap.Do ();
+		}
+
+		if (Input.GetMouseButtonDown (1)) {
+			dash.Do ();
+		}
 
 		// 动量指示器
 		HandlePointer ();
 		// 转向动画
 		FlipFace ();
+		// 找到离鼠标最近单位
+		HandleObjectDistance ();
+	}
+
+	void HandleObjectDistance () {
+		closestDistance = Mathf.Infinity;
+		closestObjectToCursor = null;
+		foreach (var thing in thingList) {
+			float distanceToCursor = Vector2.Distance (((Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition)), (Vector2) thing.transform.position);
+			//			if (distanceToCursor < playerControl.closestDistance) 
+			//			{
+			//				playerControl.closestObjectToCursor = gameObject;
+			//				playerControl.closestDistance = distanceToCursor;
+			//			}
+			if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) {
+				closestDistance = distanceToCursor;
+				closestObjectToCursor = thing.gameObject;
+			}
+		}
+
+		// 记号圆圈
+		if (closestObjectToCursor != null) {
+			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
+		} else {
+			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
+		}
+		if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing> ().dead) {
+			targetMarker.transform.position = new Vector3 (swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
+		} else {
+			targetMarker.transform.position = new Vector3 (-10000f, 0f, 0f);
+		}
+
 	}
 
 	void HandlePointer () {
@@ -201,7 +265,7 @@ public class PlayerControl1 : PlayerControl {
 		}
 		pointer.GetComponent<SpriteRenderer> ().enabled = true;
 		float angle = Vector2.SignedAngle (Vector2.right, rbNormal);
-		Debug.Log (angle);
+		//Debug.Log (angle);
 		pointer.transform.rotation = Quaternion.Euler (0f, 0f, angle);
 	}
 
@@ -212,9 +276,13 @@ public class PlayerControl1 : PlayerControl {
 
 			chargeCounter += 1;
 			if (chargeCounter > 25f) {
-				lr.startColor = Color.red;
+				if (useLineRenderer) {
+					lr.startColor = Color.red;
+				} else if (useCursor) {
+					cursor.GetComponent<AimCursor> ().SetAim (true);
+				}
+
 				chargeCounter = 0;
-				
 
 			} else if (chargeCounter > 15f) {
 				// Time.timeScale = 0.1f;
@@ -275,10 +343,21 @@ public class PlayerControl1 : PlayerControl {
 	void Shoot () {
 
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.identity);
+
+		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler (0, 0, -AngleBetween (Vector2.left, ((Vector2) mouseWorldPos - (Vector2) transform.position).normalized)));
+
+		//修改Bullet的动画
+		if (bulletSpeed == maxBulletSpeed) {
+			newBullet.GetComponent<Bullet> ().SetBulletType (Bullet.BulletType.fast);
+		} else newBullet.GetComponent<Bullet> ().SetBulletType (Bullet.BulletType.slow);
+
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
-		bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
-		Debug.Log (bulletBody.velocity);
+
+		if (closestObjectToCursor)
+			bulletBody.velocity = ((Vector2) closestObjectToCursor.transform.position - (Vector2) transform.position).normalized * bulletSpeed;
+		else
+			bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
+
 		bulletSpeed = minBulletSpeed;
 		chargeFrame = 0;
 
@@ -307,4 +386,25 @@ public class PlayerControl1 : PlayerControl {
 			spriteRenderer.flipX = true;
 		} else spriteRenderer.flipX = false;
 	}
+
+	//李昊明的数学公式计算*1
+	public static Vector3 RotatePointAroundPivot (Vector3 point, Vector3 pivot, float angle) {
+		angle = angle * (Mathf.PI / 180f);
+		var rotatedX = Mathf.Cos (angle) * (point.x - pivot.x) - Mathf.Sin (angle) * (point.y - pivot.y) + pivot.x;
+		var rotatedY = Mathf.Sin (angle) * (point.x - pivot.x) + Mathf.Cos (angle) * (point.y - pivot.y) + pivot.y;
+		return new Vector3 (rotatedX, rotatedY, 0);
+	}
+
+	//李昊明的数学公式计算*2
+	public static float AngleBetween (Vector2 vectorA, Vector2 vectorB) {
+		float angle = Vector2.Angle (vectorA, vectorB);
+		Vector3 cross = Vector3.Cross (vectorA, vectorB);
+
+		if (cross.z > 0) {
+			angle = 360 - angle;
+		}
+
+		return angle;
+	}
+
 }

@@ -14,8 +14,7 @@ public class FollowPlayer : MonoBehaviour {
     {
         
         player = GameObject.FindGameObjectWithTag("player");
-        transform.parent = null;
-        transform.position = Vector3.zero;
+        
 
     }
 	void Start () {

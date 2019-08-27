@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BulletTime : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class BulletTime : MonoBehaviour {
 	private float targetDeltaTime;
 	private float targetTimeScale;
 
+	public  PostProcessVolume bulletTimePostEffect;
 	public inputMode mode = inputMode.ClickToInOut;
 	public bool bulletTimeActive = false;
 	public enum inputMode {
@@ -20,6 +22,7 @@ public class BulletTime : MonoBehaviour {
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
 		targetTimeScale = 1f;
+		bulletTimePostEffect=GameObject.FindGameObjectWithTag("BulletTimeEffect").GetComponent<PostProcessVolume>();
 	}
 	void Start () {
 
@@ -48,9 +51,11 @@ public class BulletTime : MonoBehaviour {
 			targetTimeScale = 0.1f;
 			Time.fixedDeltaTime = startDeltaTime * 0.1f;
 			targetDeltaTime = startDeltaTime * 0.1f;
+			bulletTimePostEffect.enabled=true;
 		} else {
 			targetTimeScale = 1f;
 			targetDeltaTime = startDeltaTime;
+			bulletTimePostEffect.enabled=false;
 		}
 
 	}
