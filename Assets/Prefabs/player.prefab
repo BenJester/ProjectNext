@@ -368,7 +368,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147906740149146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1369, y: 189, z: 0}
+  m_LocalPosition: {x: -277, y: -297.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4043578974739562}
@@ -538,10 +538,13 @@ MonoBehaviour:
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
+  swapDamageOn: 1
+  swapDamage: 1
   col: {fileID: 0}
   dashParticle: {fileID: 1447157706495034, guid: 108ad1cecb0e29e46ab8ff7a79084a6a,
     type: 2}
   smokeOffset: {x: 0, y: 15, z: 0}
+  scanBoxHeight: 40
 --- !u!114 &114260691191748520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -625,7 +628,7 @@ MonoBehaviour:
   thingList: []
   closestObjectToCursor: {fileID: 0}
   closestDistance: 9999
-  cursorSnapThreshold: 200
+  cursorSnapThreshold: 125
   marker: {fileID: 1948678748210214}
   targetMarker: {fileID: 1193951111751896}
   swap: {fileID: 0}
