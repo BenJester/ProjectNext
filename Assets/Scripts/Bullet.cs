@@ -84,15 +84,15 @@ public class Bullet : MonoBehaviour {
 //
 //			} else {
 //				Vector3 tempPos = new Vector3 (pos.x, pos.y + heightDiff, pos.z);
-//				GameObject par1 = Instantiate(dashParticle,player.transform.position+smokeOffset,Quaternion.identity);
-//				GameObject par2 = Instantiate(dashParticle,thingPos+smokeOffset,Quaternion.identity);
-//				Destroy(par1,1f);
-//				Destroy(par2,1f);
-//				player.transform.position = new Vector3 (thingPos.x, thingPos.y - heightDiff, thingPos.z);
-//				col.gameObject.transform.position = tempPos;
-//				//交换的瞬间
-//				
-//				PostEffectManager.instance.Blink(0.03f);
+// 				GameObject par1 = Instantiate(dashParticle,player.transform.position+smokeOffset,Quaternion.identity);
+// 				GameObject par2 = Instantiate(dashParticle,thingPos+smokeOffset,Quaternion.identity);
+// 				Destroy(par1,1f);
+// 				Destroy(par2,1f);
+// //				player.transform.position = new Vector3 (thingPos.x, thingPos.y - heightDiff, thingPos.z);
+// //				col.gameObject.transform.position = tempPos;
+// //				//交换的瞬间
+// //				
+// 				PostEffectManager.instance.Blink(0.03f);
 //			}
 //
 //
