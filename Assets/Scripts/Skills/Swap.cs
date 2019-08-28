@@ -28,6 +28,7 @@ public class Swap : Skill {
 		//屏幕震动	
 		CameraShaker.Instance.ShakeOnce(10f,0.1f,0.02f,0.05f);
 
+		ScanEnemies ();
 
 		Rigidbody2D thingBody = col.gameObject.GetComponent<Rigidbody2D> ();
 		Thing thing = col.gameObject.GetComponent<Thing> ();
@@ -57,7 +58,7 @@ public class Swap : Skill {
 		playerBody.velocity = thingBody.velocity;
 		thingBody.velocity = tempV;
 
-		ScanEnemies ();
+
 	}
 		
 	void ScanEnemies () {
@@ -66,9 +67,10 @@ public class Swap : Skill {
 
 		
 		//Collider2D[] cols = Physics2D.OverlapAreaAll ((Vector2) (player.transform.position + scanBoxHeight / 2f * Vector3.up), (Vector2) (col.transform.position - scanBoxHeight / 2f * Vector3.down));
-		Vector3 midPoint = (player.transform.position + col.transform.position) / 2f;
-		Vector2 size = new Vector2 (Vector2.Distance ((Vector2)player.transform.position, (Vector2)col.transform.position), scanBoxHeight);
+		Vector2 midPoint = (player.transform.position + col.transform.position) / 2f;
+		Vector2 size = new Vector2 (Vector2.Distance ((Vector2)player.transform.position, (Vector2)col.transform.position)/2f, scanBoxHeight/2f);
 		float angle = Vector2.SignedAngle (player.transform.position, col.transform.position);
+		//RaycastHit2D[] cols = Physics2D.LinecastAll ((Vector2)player.transform.position, (Vector2)col.transform.position);
 
 		Collider2D[] cols = Physics2D.OverlapBoxAll (midPoint, size, angle);
 
