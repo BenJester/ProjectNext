@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Head: {fileID: 21300000, guid: 1f1244d0593ec5b458e97fbb95611088, type: 3}
   Body: {fileID: 21300000, guid: 6935687610b502043be63edf3b63d58a, type: 3}
+  PlayerLegs: {fileID: 0}
 --- !u!1001 &569560755
 Prefab:
   m_ObjectHideFlags: 0
@@ -491,6 +492,7 @@ GameObject:
   - component: {fileID: 859615665}
   - component: {fileID: 859615664}
   - component: {fileID: 859615676}
+  - component: {fileID: 859615678}
   m_Layer: 0
   m_Name: player
   m_TagString: player
@@ -788,8 +790,8 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
-  isDivedeDead: 0
-  force: 2500
+  isDivedeDead: 1
+  force: 25000
   distanceToCursor: 0
 --- !u!61 &859615672
 BoxCollider2D:
@@ -924,6 +926,20 @@ MonoBehaviour:
   bulletTimePostEffect: {fileID: 0}
   mode: 0
   bulletTimeActive: 0
+--- !u!114 &859615678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 859615663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 21300000, guid: 2d47947487b32a24f999edc64582a605, type: 3}
+  Body: {fileID: 21300000, guid: 8e22091177f0c764ab0d434ab632cd02, type: 3}
+  PlayerLegs: {fileID: 21300000, guid: 69a3ac0a4bcfa8246ad7af283d0acaf2, type: 3}
 --- !u!1001 &915499694
 Prefab:
   m_ObjectHideFlags: 0
@@ -1240,7 +1256,7 @@ Prefab:
     - target: {fileID: 114830638801076940, guid: a4e435df008bc49b58177d0678c67388,
         type: 2}
       propertyPath: force
-      value: 25000
+      value: 50000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4e435df008bc49b58177d0678c67388, type: 2}
