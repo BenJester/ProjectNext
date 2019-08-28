@@ -288,7 +288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -515, y: -979}
+  m_AnchoredPosition: {x: -589, y: -921}
   m_SizeDelta: {x: 626.4, y: 477.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &847850184
@@ -324,7 +324,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enemy can fall to its death...
+  m_Text: 'Enemy can fall to its death...
+
+    Press Shift to enter/exit bullet time'
 --- !u!222 &847850185
 CanvasRenderer:
   m_ObjectHideFlags: 0

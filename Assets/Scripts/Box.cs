@@ -15,7 +15,7 @@ public class Box : MonoBehaviour {
 		thing = GetComponent<Thing> ();	
 	}
 	
-	void FixedUpdate () {
+	void Update () {
 		prevVelocity = body.velocity;
 	}
 

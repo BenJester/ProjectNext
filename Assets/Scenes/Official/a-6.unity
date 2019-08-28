@@ -213,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &443612323
 RectTransform:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -852, y: -198}
-  m_SizeDelta: {x: 742, y: 254.3}
+  m_SizeDelta: {x: 742, y: 352.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &754167917
 MonoBehaviour:
@@ -615,7 +615,10 @@ MonoBehaviour:
   m_Text: 'Swapping also swaps momentum.
 
     If you want the object to fall vertically, release arrow keys when the swapping
-    happens.'
+    happens.
+
+
+    Press Shift to enter/exit bullet time'
 --- !u!222 &754167918
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1007,24 +1010,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 4132620557557860, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132620557557860, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132620557557860, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212794717589712436, guid: d036aaa9aeb254e30b741ee39a6db351,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: bf05f7e6a94ba204891dd5e5741d377b,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d036aaa9aeb254e30b741ee39a6db351, type: 2}
   m_IsPrefabParent: 0

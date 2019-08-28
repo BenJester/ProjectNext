@@ -369,7 +369,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1147906740149146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -277, y: -297.6, z: 0}
+  m_LocalPosition: {x: 684, y: 380, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4043578974739562}
@@ -539,7 +539,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
-  swapDamageOn: 1
+  swapDamageOn: 0
   swapDamage: 1
   smokeOn: 0
   damageEffectOn: 1
@@ -615,25 +615,28 @@ MonoBehaviour:
   speed: 400
   jumpSpeed: 500
   maxSpeed: 10000
-  canMove: 1
-  playerRespawnPoint: {x: 0, y: 0, z: 0}
-  bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 2}
-  minBulletSpeed: 2000
-  maxBulletSpeed: 2000
-  bulletChargeSpeed: 250
   groundCheckPoint1: {fileID: 4043578974739562}
   groundCheckPoint2: {fileID: 4289337571101460}
   groundCheckPoint3: {fileID: 4405996985490282}
   groundCheckPoint4: {fileID: 4882908818510406}
   groundCheckPoint5: {fileID: 4894416746588494}
   groundCheckRadius: 5
+  canMove: 1
+  playerRespawnPoint: {x: 0, y: 0, z: 0}
+  bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 2}
+  minBulletSpeed: 2000
+  maxBulletSpeed: 2000
+  bulletChargeSpeed: 250
+  bulletSpeed: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
   isTouchingGround: 0
-  bulletSpeed: 0
   startChargeFrame: 10
+  useLineRenderer: 0
+  useCursor: 0
   lr: {fileID: 0}
+  cursorPrefab: {fileID: 0}
   startDeltaTime: 0
   targetDeltaTime: 0
   targetTimeScale: 0
@@ -698,7 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7df4b34944514099a1fbf736137b60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
@@ -727,6 +730,8 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  isDivedeDead: 0
+  force: 25000
   distanceToCursor: 0
 --- !u!114 &114717237027278080
 MonoBehaviour:
