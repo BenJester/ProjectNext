@@ -59,13 +59,19 @@ public class Swap : Skill {
 
 		ScanEnemies ();
 	}
-
+		
 	void ScanEnemies () {
 		if (!swapDamageOn)
 			return;
 
 		
-		Collider2D[] cols = Physics2D.OverlapAreaAll ((Vector2) (player.transform.position + scanBoxHeight / 2f * Vector3.up), (Vector2) (col.transform.position - scanBoxHeight / 2f * Vector3.down));
+		//Collider2D[] cols = Physics2D.OverlapAreaAll ((Vector2) (player.transform.position + scanBoxHeight / 2f * Vector3.up), (Vector2) (col.transform.position - scanBoxHeight / 2f * Vector3.down));
+		Vector3 midPoint = (player.transform.position + col.transform.position) / 2f;
+		Vector2 size = new Vector2 (Vector2.Distance ((Vector2)player.transform.position, (Vector2)col.transform.position), scanBoxHeight);
+		float angle = Vector2.SignedAngle (player.transform.position, col.transform.position);
+
+		Collider2D[] cols = Physics2D.OverlapBoxAll (midPoint, size, angle);
+
 		foreach (var item in cols) {
 			if (item == col)
 				continue;
