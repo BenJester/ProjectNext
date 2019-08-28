@@ -45,7 +45,6 @@ public class Swap : Skill {
 			
 			Smoke ();
 		} else {
-			
 			Vector3 tempPos = new Vector3 (pos.x, pos.y + heightDiff, pos.z);
 			player.transform.position = new Vector3 (thingPos.x, thingPos.y - heightDiff, thingPos.z);
 			col.gameObject.transform.position = tempPos;

@@ -28,6 +28,7 @@ public class PlayerControl1 : PlayerControl {
 	public Vector3 playerRespawnPoint;
 
 	[Header ("子弹参数")]
+	
 	public GameObject bullet;
 	public float minBulletSpeed;
 	public float maxBulletSpeed;
@@ -263,6 +264,7 @@ public class PlayerControl1 : PlayerControl {
 		if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing> ().dead) {
 			targetMarker.transform.position = new Vector3 (swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
 		} else {
+			//交换播放动画并且移走；
 			targetMarker.transform.position = new Vector3 (-10000f, 0f, 0f);
 		}
 
