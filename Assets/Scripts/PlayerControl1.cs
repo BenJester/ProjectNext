@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using EZCameraShake;
 
 public class PlayerControl1 : PlayerControl {
 
@@ -11,6 +12,9 @@ public class PlayerControl1 : PlayerControl {
 	public float speed;
 	public float jumpSpeed;
 	public float maxSpeed = 10000f;
+
+	//玩家死亡粒子
+	public GameObject PlayerDieParticle;
 	public Transform groundCheckPoint1;
 	public Transform groundCheckPoint2;
 	public Transform groundCheckPoint3;
@@ -42,7 +46,7 @@ public class PlayerControl1 : PlayerControl {
 	public bool useLineRenderer = false;
 	public bool useCursor = false;
 	public LineRenderer lr;
-	 GameObject cursor;
+	GameObject cursor;
 	public GameObject cursorPrefab;
 
 	Rigidbody2D rb;
@@ -109,14 +113,13 @@ public class PlayerControl1 : PlayerControl {
 
 	void Start () {
 
-		if(useCursor && cursor==null) 
-		{
-			cursor =  Instantiate(cursorPrefab,null);
-		} 
+		if (useCursor && cursor == null) {
+			cursor = Instantiate (cursorPrefab, null);
+		}
 
 		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
 		bulletSpeed = minBulletSpeed;
-		
+
 		if (HasRepawnPoint)
 			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
 		InitSkills ();
@@ -251,7 +254,9 @@ public class PlayerControl1 : PlayerControl {
 
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
+			
 			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
+			
 		} else {
 			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
 		}
@@ -376,8 +381,17 @@ public class PlayerControl1 : PlayerControl {
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
 
-		foreach(var sr in GetComponentsInChildren<SpriteRenderer>()) sr.enabled = false;
-		if(GetComponent<HeadBodySeparation>()!=null) GetComponent<HeadBodySeparation>().PlayerDead(Random.Range(20000,35000));
+		if (PlayerDieParticle!=null)
+		{
+			GameObject part1 =  Instantiate(PlayerDieParticle,transform.position,Quaternion.identity);
+			Destroy(part1,2f);
+
+		}
+		
+		CameraShaker.Instance.ShakeOnce(15,1f,0.02f,0.05f);
+
+		foreach (var sr in GetComponentsInChildren<SpriteRenderer> ()) sr.enabled = false;
+		if (GetComponent<HeadBodySeparation> () != null) GetComponent<HeadBodySeparation> ().PlayerDead (Random.Range (20000, 35000));
 		//transform.localScale = Vector3.zero;
 
 	}

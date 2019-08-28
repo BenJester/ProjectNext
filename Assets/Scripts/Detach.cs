@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Detach : MonoBehaviour {
 
+	
 	void Start () {
 		transform.parent = null;
 	}
+
+
+		
 
 }

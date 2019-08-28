@@ -9,9 +9,15 @@ public class ShooterEnemy : Enemy {
 	public GameObject bullet;
 	public float bulletSpeed;
 	public float shootInterval = 1f;
+	public float animationPreload=0.1f;
+	private Animator animator;
 
 	int count;
 
+
+	private void Awake() {
+		animator= GetComponent<Animator>();
+	}
 	void Start () {
 		base.Start ();
 		StartCoroutine(HandleShoot());
@@ -32,7 +38,9 @@ public class ShooterEnemy : Enemy {
 
 	IEnumerator HandleShoot() {
 		while (true) {
-			yield return new WaitForSeconds (shootInterval);
+			yield return new WaitForSeconds (shootInterval-animationPreload);
+			animator.CrossFade("Enemy_Shooter_Shot",0.001f);
+			yield return new WaitForSeconds(animationPreload);
 			Shoot ();
 		}
 

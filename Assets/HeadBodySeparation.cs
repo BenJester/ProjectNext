@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class HeadBodySeparation : MonoBehaviour {
 
 	public Sprite Head;
@@ -30,6 +31,7 @@ public class HeadBodySeparation : MonoBehaviour {
 		headPart.AddComponent<SpriteRenderer> ().sprite = Head;
 		headPart.GetComponent<SpriteRenderer> ().sortingLayerName = "UpText";
 		headPart.AddComponent<BoxCollider2D> ().isTrigger = true;
+		headPart.AddComponent<SelfRotate>();
 		headPart.transform.position = transform.position;
 		Rigidbody2D rb1 = headPart.AddComponent<Rigidbody2D> ();
 		rb1.AddForce (randomV21 * force);
@@ -39,13 +41,14 @@ public class HeadBodySeparation : MonoBehaviour {
 		bodyPart.AddComponent<SpriteRenderer> ().sprite = Body;
 		bodyPart.GetComponent<SpriteRenderer> ().sortingLayerName = "UpText";
 		bodyPart.AddComponent<BoxCollider2D> ().isTrigger = true;
+		bodyPart.AddComponent<SelfRotate>();
 		bodyPart.transform.position = transform.position;
 		Rigidbody2D rb2 = bodyPart.AddComponent<Rigidbody2D> ();
 		rb2.AddForce (randomV22 * force);
 		rb2.gravityScale = 100f;
 
-		Destroy (headPart, 1f);
-		Destroy (bodyPart, 1f);
+		Destroy (headPart, 2.5f);
+		Destroy (bodyPart, 2.5f);
 
 	}
 
@@ -67,6 +70,7 @@ public class HeadBodySeparation : MonoBehaviour {
 		headPart.AddComponent<SpriteRenderer> ().sprite = Head;
 		headPart.GetComponent<SpriteRenderer> ().sortingLayerName = "UpText";
 		headPart.AddComponent<BoxCollider2D> ().isTrigger = true;
+		headPart.AddComponent<SelfRotate>();
 		headPart.transform.position = transform.position;
 		Rigidbody2D rb1 = headPart.AddComponent<Rigidbody2D> ();
 		rb1.AddForce (randomV21 * force);
@@ -77,6 +81,7 @@ public class HeadBodySeparation : MonoBehaviour {
 		bodyPart.GetComponent<SpriteRenderer> ().sortingLayerName = "UpText";
 		bodyPart.AddComponent<BoxCollider2D> ().isTrigger = true;
 		bodyPart.transform.position = transform.position;
+		bodyPart.AddComponent<SelfRotate>();
 		Rigidbody2D rb2 = bodyPart.AddComponent<Rigidbody2D> ();
 		rb2.AddForce (randomV22 * force);
 		rb2.gravityScale = 100f;
@@ -86,6 +91,7 @@ public class HeadBodySeparation : MonoBehaviour {
 		legPart.GetComponent<SpriteRenderer> ().sortingLayerName = "UpText";
 		legPart.AddComponent<BoxCollider2D> ().isTrigger = true;
 		legPart.transform.position = transform.position;
+		legPart.AddComponent<SelfRotate>();
 		Rigidbody2D rb3 = legPart.AddComponent<Rigidbody2D> ();
 		rb3.AddForce (randomV23 * force);
 		rb3.gravityScale = 100f;

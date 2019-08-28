@@ -104,6 +104,7 @@ public class Thing : MonoBehaviour {
         }
 		if(isDivedeDead){
 			GetComponent<HeadBodySeparation>().Dead(force);
+			print("die");
 		}
 
 		StartCoroutine (ScaleDown(0.2f));

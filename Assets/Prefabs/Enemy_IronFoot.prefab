@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 251992742197475452}
   - component: {fileID: 95215393240900514}
   - component: {fileID: 114290735421415666}
+  - component: {fileID: 114114998234883514}
   m_Layer: 8
   m_Name: Enemy_IronFoot
   m_TagString: thing
@@ -110,6 +111,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114114998234883514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1150684747408802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 21300000, guid: ac69fa991d6434341912b9f4672edae7, type: 3}
+  Body: {fileID: 21300000, guid: 6b16bddcd63c198469c129989b129ca1, type: 3}
+  PlayerLegs: {fileID: 0}
 --- !u!114 &114290735421415666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieParticle: {fileID: 1350374086244790, guid: c2242adac658b514ca449d2c0ee0fd2a,
+  dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
     type: 2}
   type: 2
   lowerY: 0
@@ -162,6 +177,8 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  isDivedeDead: 1
+  force: 25000
   distanceToCursor: Infinity
 --- !u!212 &212482642542153190
 SpriteRenderer:
