@@ -11,7 +11,7 @@ public enum Type {
 
 public class Thing : MonoBehaviour {
 
-	public bool isDivedeDead=false;
+	
     public GameObject dieParticle;
 	public Type type;
 	public float lowerY;
@@ -25,6 +25,13 @@ public class Thing : MonoBehaviour {
 	Vector3 originalScale;
 	Goal goal;
 	public bool dead = false;
+
+	[Header("死亡动画，需要有HeadBodySeparation脚本")]
+	public bool isDivedeDead=false;
+	public float force = 25000f;
+	
+	
+	[HideInInspector]
 
 	public float distanceToCursor = Mathf.Infinity;
 
@@ -95,7 +102,7 @@ public class Thing : MonoBehaviour {
             Instantiate(dieParticle, transform);
         }
 		if(isDivedeDead){
-			GetComponent<HeadBodySeparation>().Dead(10000f);
+			GetComponent<HeadBodySeparation>().Dead(force);
 		}
 
 		StartCoroutine (ScaleDown(0.2f));

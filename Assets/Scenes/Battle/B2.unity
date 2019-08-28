@@ -778,7 +778,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDivedeDead: 0
   dieParticle: {fileID: 0}
   type: 1
   lowerY: 0
@@ -789,6 +788,8 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  isDivedeDead: 0
+  force: 2500
   distanceToCursor: 0
 --- !u!61 &859615672
 BoxCollider2D:
@@ -1225,6 +1226,21 @@ Prefab:
         type: 2}
       propertyPath: isDivedeDead
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50267576637612702, guid: a4e435df008bc49b58177d0678c67388,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61590542451043172, guid: a4e435df008bc49b58177d0678c67388,
+        type: 2}
+      propertyPath: m_UsedByComposite
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114830638801076940, guid: a4e435df008bc49b58177d0678c67388,
+        type: 2}
+      propertyPath: force
+      value: 25000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4e435df008bc49b58177d0678c67388, type: 2}
