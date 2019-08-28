@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1198197432663322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 501, y: 197, z: 0}
+  m_LocalPosition: {x: -67, y: -266, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49c125c8b43143458a834ca1ad9be98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killDropSpeed: 500
-  killRange: 25
+  killDropSpeed: 400
+  killRange: 40
 --- !u!114 &114816388366545296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,6 +141,8 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  isDivedeDead: 0
+  force: 25000
   distanceToCursor: Infinity
 --- !u!212 &212794717589712436
 SpriteRenderer:
