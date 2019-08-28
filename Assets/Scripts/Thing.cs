@@ -11,7 +11,7 @@ public enum Type {
 
 public class Thing : MonoBehaviour {
 
-
+	public bool isDivedeDead=false;
     public GameObject dieParticle;
 	public Type type;
 	public float lowerY;
@@ -94,6 +94,9 @@ public class Thing : MonoBehaviour {
         {
             Instantiate(dieParticle, transform);
         }
+		if(isDivedeDead){
+			GetComponent<HeadBodySeparation>().Dead(10000f);
+		}
 
 		StartCoroutine (ScaleDown(0.2f));
 	}

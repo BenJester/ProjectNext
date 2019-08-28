@@ -42,7 +42,8 @@ public class PlayerControl1 : PlayerControl {
 	public bool useLineRenderer = false;
 	public bool useCursor = false;
 	public LineRenderer lr;
-	public GameObject cursor;
+	 GameObject cursor;
+	public GameObject cursorPrefab;
 
 	Rigidbody2D rb;
 
@@ -98,7 +99,8 @@ public class PlayerControl1 : PlayerControl {
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
 		targetTimeScale = 1f;
-
+		rb = GetComponent<Rigidbody2D> ();
+		anim = GetComponent<Animator> ();
 		lr = GetComponent<LineRenderer> ();
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		lr.enabled = false;
@@ -107,10 +109,14 @@ public class PlayerControl1 : PlayerControl {
 
 	void Start () {
 
+		if(useCursor && cursor==null) 
+		{
+			cursor =  Instantiate(cursorPrefab,null);
+		} 
+
 		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
 		bulletSpeed = minBulletSpeed;
-		rb = GetComponent<Rigidbody2D> ();
-		anim = GetComponent<Animator> ();
+		
 		if (HasRepawnPoint)
 			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
 		InitSkills ();

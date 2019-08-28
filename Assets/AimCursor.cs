@@ -13,7 +13,7 @@ public class AimCursor : MonoBehaviour {
 	private SpriteRenderer sr;
 	private void Awake() {
 		sr=GetComponent<SpriteRenderer>();
-		
+
     	Cursor.visible = false;
 	}
 	void Start () {

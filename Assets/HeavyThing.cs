@@ -32,7 +32,8 @@ public class HeavyThing : MonoBehaviour {
 			CameraShaker.Instance.ShakeOnce(15,1f,0.02f,0.05f);
 			isFastFall=false;
 			print("HeavyThingLanding!");
-			Instantiate(landingParticle,transform.position+new Vector3(0,yOffset,0),Quaternion.identity);
+			GameObject par = Instantiate(landingParticle,transform.position+new Vector3(0,yOffset,0),Quaternion.identity);
+			Destroy(par,1f);
 		}
 	}
 }
