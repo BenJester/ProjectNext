@@ -192,6 +192,25 @@ MonoBehaviour:
   Head: {fileID: 21300000, guid: 1f1244d0593ec5b458e97fbb95611088, type: 3}
   Body: {fileID: 21300000, guid: 6935687610b502043be63edf3b63d58a, type: 3}
   PlayerLegs: {fileID: 0}
+--- !u!1 &436983016 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1150684747408802, guid: a4e435df008bc49b58177d0678c67388,
+    type: 2}
+  m_PrefabInternal: {fileID: 1911500443}
+--- !u!114 &436983017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 436983016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 21300000, guid: 1f1244d0593ec5b458e97fbb95611088, type: 3}
+  Body: {fileID: 21300000, guid: 6935687610b502043be63edf3b63d58a, type: 3}
+  PlayerLegs: {fileID: 0}
 --- !u!1001 &569560755
 Prefab:
   m_ObjectHideFlags: 0
@@ -279,6 +298,23 @@ Prefab:
         type: 2}
       propertyPath: m_Size.x
       value: 46.70172
+      objectReference: {fileID: 0}
+    - target: {fileID: 114490880879902160, guid: d2fd81728576940748d4c5b038271f3f,
+        type: 2}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134,
+        type: 2}
+    - target: {fileID: 114976307081109828, guid: d2fd81728576940748d4c5b038271f3f,
+        type: 2}
+      propertyPath: dieParticle
+      value: 
+      objectReference: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
+        type: 2}
+    - target: {fileID: 114976307081109828, guid: d2fd81728576940748d4c5b038271f3f,
+        type: 2}
+      propertyPath: isDivedeDead
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2fd81728576940748d4c5b038271f3f, type: 2}
@@ -940,6 +976,25 @@ MonoBehaviour:
   Head: {fileID: 21300000, guid: 2d47947487b32a24f999edc64582a605, type: 3}
   Body: {fileID: 21300000, guid: 8e22091177f0c764ab0d434ab632cd02, type: 3}
   PlayerLegs: {fileID: 21300000, guid: 69a3ac0a4bcfa8246ad7af283d0acaf2, type: 3}
+--- !u!1 &890142285 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1946822830465342, guid: d2fd81728576940748d4c5b038271f3f,
+    type: 2}
+  m_PrefabInternal: {fileID: 569560755}
+--- !u!114 &890142286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 890142285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 21300000, guid: aa5cbcd9825458744a473858a5d70376, type: 3}
+  Body: {fileID: 21300000, guid: 0711ea0dc2f712e4ba8f9d8d268dd1fd, type: 3}
+  PlayerLegs: {fileID: 0}
 --- !u!1001 &915499694
 Prefab:
   m_ObjectHideFlags: 0
@@ -1258,6 +1313,12 @@ Prefab:
       propertyPath: force
       value: 50000
       objectReference: {fileID: 0}
+    - target: {fileID: 114830638801076940, guid: a4e435df008bc49b58177d0678c67388,
+        type: 2}
+      propertyPath: dieParticle
+      value: 
+      objectReference: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4e435df008bc49b58177d0678c67388, type: 2}
   m_IsPrefabParent: 0
@@ -1539,6 +1600,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114830638801076940, guid: 9028ab840f5528441bfa0dc021d15903,
+        type: 2}
+      propertyPath: dieParticle
+      value: 
+      objectReference: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
+        type: 2}
+    - target: {fileID: 114830638801076940, guid: 9028ab840f5528441bfa0dc021d15903,
+        type: 2}
+      propertyPath: isDivedeDead
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9028ab840f5528441bfa0dc021d15903, type: 2}
   m_IsPrefabParent: 0
@@ -1774,6 +1846,17 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 1.1
       objectReference: {fileID: 0}
+    - target: {fileID: 114830638801076940, guid: a4e435df008bc49b58177d0678c67388,
+        type: 2}
+      propertyPath: dieParticle
+      value: 
+      objectReference: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
+        type: 2}
+    - target: {fileID: 114830638801076940, guid: a4e435df008bc49b58177d0678c67388,
+        type: 2}
+      propertyPath: isDivedeDead
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4e435df008bc49b58177d0678c67388, type: 2}
   m_IsPrefabParent: 0
@@ -1807,3 +1890,22 @@ Transform:
   m_Father: {fileID: 859615675}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2069537318 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1150684747408802, guid: 9028ab840f5528441bfa0dc021d15903,
+    type: 2}
+  m_PrefabInternal: {fileID: 1794630231}
+--- !u!114 &2069537319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2069537318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 21300000, guid: ac69fa991d6434341912b9f4672edae7, type: 3}
+  Body: {fileID: 21300000, guid: 6b16bddcd63c198469c129989b129ca1, type: 3}
+  PlayerLegs: {fileID: 0}

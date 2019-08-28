@@ -100,7 +100,7 @@ public class Thing : MonoBehaviour {
 			goal.enemyCount -= 1;
         if (dieParticle!=null)
         {
-            Instantiate(dieParticle, transform);
+            Instantiate(dieParticle, transform.position, Quaternion.identity);
         }
 		if(isDivedeDead){
 			GetComponent<HeadBodySeparation>().Dead(force);
