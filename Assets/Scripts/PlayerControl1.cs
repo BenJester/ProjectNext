@@ -370,10 +370,14 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	public override void Die () {
+
 		active = false;
 		GetComponent<BoxCollider2D> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
+
+		foreach(var sr in GetComponentsInChildren<SpriteRenderer>()) sr.enabled = false;
+		if(GetComponent<HeadBodySeparation>()!=null) GetComponent<HeadBodySeparation>().PlayerDead(50000);
 		//transform.localScale = Vector3.zero;
 
 	}

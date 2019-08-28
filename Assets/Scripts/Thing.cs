@@ -95,6 +95,7 @@ public class Thing : MonoBehaviour {
 		if (dead)
 			return;
 		dead = true;
+		
 		if (type == Type.enemy)
 			goal.enemyCount -= 1;
         if (dieParticle!=null)
