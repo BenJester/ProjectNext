@@ -16,10 +16,18 @@ public class Swap : Skill {
 	public GameObject damageParticle;
 	public Vector3 smokeOffset;
 	public float scanBoxHeight;
-
-	public override void Do () {
+	public bool delay;
+	public float waitTime;
+	public float reducedTimeScale;
+	public override void Do()
+	{
 		if (!active || !col || col.GetComponent<Thing> ().dead)
 			return;
+		StartCoroutine(DelayedSwap(waitTime));
+	}
+
+	public void DoSwap () {
+		
 
 
 		//就是放在这边，有些时候不知道为什么没有立刻触发
@@ -114,5 +122,15 @@ public class Swap : Skill {
 			yield return null;
 		}
 
+	}
+	IEnumerator DelayedSwap (float waitTime) {
+		if (delay) {
+			Time.timeScale = reducedTimeScale;
+			playerControl.targetTimeScale = reducedTimeScale;
+			yield return new WaitForSecondsRealtime (waitTime);
+			Time.timeScale = 1f;
+			playerControl.targetTimeScale = 1f;
+		}
+		DoSwap ();
 	}
 }

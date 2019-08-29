@@ -8,13 +8,13 @@ public class CheckPointTotalManager : MonoBehaviour {
 	public Vector3 savedPos;
 	public GameObject pivot;
 	// Use this for initialization
-	private void Awake() {
-		savedPos=pivot.transform.position;
-		
-	}
-	void Start () {
+
+	void Awake () {
+		if (instance)
+			Destroy (this);
 		if (!instance)instance=this;
 		DontDestroyOnLoad(gameObject);
+		savedPos=pivot.transform.position;
 	}
 	
 	// Update is called once per frame

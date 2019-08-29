@@ -55,8 +55,8 @@ namespace EZCameraShake
                 }
             }
 
-            transform.localPosition = posAddShake;
-            transform.localEulerAngles = rotAddShake;
+            //transform.localPosition += posAddShake;
+            transform.localEulerAngles += rotAddShake;
         }
 
         /// <summary>

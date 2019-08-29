@@ -12,6 +12,7 @@ public class SmoothCamera2D : MonoBehaviour {
 	void Start() 
 	{
 		target = GameObject.FindWithTag ("player").transform;
+		transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
 	}
 	void Update () 
 	{

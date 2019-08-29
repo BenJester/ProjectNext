@@ -25,7 +25,7 @@ public class Thing : MonoBehaviour {
 	Vector3 originalScale;
 	Goal goal;
 	public bool dead = false;
-
+	GameObject player;
 	[Header("死亡动画，需要有HeadBodySeparation脚本")]
 	public bool isDivedeDead=false;
 	public float force = 25000f;
@@ -36,7 +36,8 @@ public class Thing : MonoBehaviour {
 	public float distanceToCursor = Mathf.Infinity;
 
 	public void Start () {
-		playerControl = GameObject.FindWithTag ("player").GetComponent<PlayerControl1> ();
+		player = GameObject.FindWithTag ("player");
+		playerControl = player.GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
 		body = GetComponent<Rigidbody2D> ();
@@ -92,6 +93,10 @@ public class Thing : MonoBehaviour {
 	}
 
 	public void Die() {
+//		if (type == Type.player && playerControl.isWorld) {
+//			player.transform.position = CheckPointTotalManager.instance.savedPos;
+//			return;
+//		}
 		if (dead)
 			return;
 		dead = true;
@@ -106,6 +111,7 @@ public class Thing : MonoBehaviour {
 			GetComponent<HeadBodySeparation>().Dead(force);
 			print("die");
 		}
+
 
 		StartCoroutine (ScaleDown(0.2f));
 	}
