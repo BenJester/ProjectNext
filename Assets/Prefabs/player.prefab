@@ -556,9 +556,9 @@ MonoBehaviour:
   canMove: 1
   playerRespawnPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 2}
-  minBulletSpeed: 400
-  maxBulletSpeed: 2000
-  bulletChargeSpeed: 250
+  minBulletSpeed: 2000
+  maxBulletSpeed: 400
+  bulletChargeSpeed: -250
   bulletSpeed: 0
   groundLayer:
     serializedVersion: 2
