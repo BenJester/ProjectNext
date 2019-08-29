@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
 	void Awake()
 	{
 		origin = transform.position;
-		buttonList = new List<PhysicalButton>();
+		//buttonList = new List<PhysicalButton>();
 	}
 	void Start()
 	{
