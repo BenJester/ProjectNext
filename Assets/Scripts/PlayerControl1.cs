@@ -10,6 +10,7 @@ public class PlayerControl1 : PlayerControl {
 	[Header ("基本参数")]
 	public float speed;
 	public float jumpSpeed;
+	public float coyoteTime;
 	public float maxSpeed = 10000f;
 	public Transform groundCheckPoint1;
 	public Transform groundCheckPoint2;
@@ -33,6 +34,7 @@ public class PlayerControl1 : PlayerControl {
 	[Space]
 	public LayerMask groundLayer;
 	public bool isTouchingGround;
+	bool canJump;
 
 	public int startChargeFrame;
 	float chargeFrame = 0;
@@ -176,7 +178,7 @@ public class PlayerControl1 : PlayerControl {
 			}
 
 			if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
-				if (isTouchingGround)
+				if (canJump)
 					rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 			}
 
@@ -231,6 +233,8 @@ public class PlayerControl1 : PlayerControl {
 		FlipFace ();
 		// 找到离鼠标最近单位
 		HandleObjectDistance ();
+		// coyote
+		HandleJump ();
 	}
 
 	void HandleObjectDistance () {
@@ -413,4 +417,27 @@ public class PlayerControl1 : PlayerControl {
 		return angle;
 	}
 
+	void HandleJump()
+	{
+		if (!isTouchingGround)
+			StartCoroutine (JumpTolerence ());
+		else
+			canJump = true;
+	}
+
+	IEnumerator JumpTolerence()
+	{
+		int curr = 0;
+		while (curr <= coyoteTime) {
+			if (isTouchingGround) {
+				
+					canJump = true;
+					yield return null;
+				}
+
+			yield return new WaitForEndOfFrame();
+			curr++;
+		}
+			canJump = false;
+	}
 }

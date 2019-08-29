@@ -477,7 +477,8 @@ MonoBehaviour:
     type: 2}
   smokeOffset: {x: 0, y: 15, z: 0}
   scanBoxHeight: 40
-  waitTime: 0.24
+  delay: 1
+  waitTime: 0.27
   reducedTimeScale: 0.3
 --- !u!114 &114260691191748520
 MonoBehaviour:
@@ -541,12 +542,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
-  HasRepawnPoint: 0
+  HasRepawnPoint: 1
   speed: 400
   jumpSpeed: 500
+  coyoteTime: 5
   maxSpeed: 10000
-  PlayerDieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
-    type: 2}
   groundCheckPoint1: {fileID: 4043578974739562}
   groundCheckPoint2: {fileID: 4289337571101460}
   groundCheckPoint3: {fileID: 4405996985490282}
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7df4b34944514099a1fbf736137b60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
