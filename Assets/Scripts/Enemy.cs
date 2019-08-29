@@ -5,12 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour{
 
 	// Use this for initialization
+	[HideInInspector]
 	public Thing thing;
-	public float dropKillSpeed;
+	public float dropKillSpeed=50f;
+	[HideInInspector]
 	public Goal goal;
 	public int maxHealth = 1;
-	public int health;
-    public bool canShuaisi = true;
+	public int health=1;
+    public bool canShuaisi = false;
 
 	protected void Start () {
 		maxHealth = 1;
