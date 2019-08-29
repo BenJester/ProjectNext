@@ -11,6 +11,8 @@ public class PlayerControl1 : PlayerControl {
 	public float speed;
 	public float jumpSpeed;
 	public float coyoteTime;
+	public float cacheJumpTime;
+	bool cachedJump;
 	public float maxSpeed = 10000f;
 	public Transform groundCheckPoint1;
 	public Transform groundCheckPoint2;
@@ -179,7 +181,12 @@ public class PlayerControl1 : PlayerControl {
 
 			if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
 				if (canJump)
-					rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+					Jump ();
+				else {
+					cachedJump = true;
+					StartCoroutine (CacheJump ());
+				}
+
 			}
 
 			if (isTouchingGround) {
@@ -235,6 +242,11 @@ public class PlayerControl1 : PlayerControl {
 		HandleObjectDistance ();
 		// coyote
 		HandleJump ();
+	}
+
+	void Jump()
+	{
+		rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 	}
 
 	void HandleObjectDistance () {
@@ -439,5 +451,21 @@ public class PlayerControl1 : PlayerControl {
 			curr++;
 		}
 			canJump = false;
+	}
+
+	IEnumerator CacheJump()
+	{
+		int curr = 0;
+		while (curr <= cacheJumpTime) {
+			if (canJump) {
+				Jump ();
+				cachedJump = false;
+				yield return null;
+			}
+
+			yield return new WaitForEndOfFrame();
+			curr++;
+		}
+		cachedJump = false;
 	}
 }
