@@ -250,6 +250,7 @@ public class PlayerControl1 : PlayerControl {
 	void Jump()
 	{
 		rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+		canJump = false;
 	}
 
 	void HandleObjectDistance () {
