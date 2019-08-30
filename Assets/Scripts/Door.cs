@@ -53,7 +53,7 @@ public class Door : MonoBehaviour
 
 	void Close()
 	{
-		if (transform.position.y < origin.y)
+		if (transform.position.y <= origin.y)
 			return;
 		transform.Translate (0f, -speed, 0f);
 	}

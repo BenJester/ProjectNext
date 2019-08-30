@@ -11,7 +11,7 @@ public class CheckPointTotalManager : MonoBehaviour {
 
 	void Awake () {
 		if (instance)
-			Destroy (this);
+			Destroy (gameObject);
 		if (!instance)instance=this;
 		DontDestroyOnLoad(gameObject);
 		savedPos=pivot.transform.position;
