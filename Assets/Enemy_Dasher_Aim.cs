@@ -113,9 +113,12 @@ public class Enemy_Dasher_Aim :  Enemy {
 				lr.endColor = Color.yellow;
 				break;
 
-			case PlayerState.dash:
-				if (stateActiveFrames[(int) PlayerState.recover] == 0) lr.enabled = false;
+		case PlayerState.dash:
+			if (stateActiveFrames [(int)PlayerState.recover] == 0) {
 				EnemyDash ();
+				lr.enabled = false;
+			} 
+				
 				break;
 
 			case PlayerState.recover:
@@ -155,8 +158,8 @@ public class Enemy_Dasher_Aim :  Enemy {
 
 		//TODO:这部分不知道怎么移动
 		
-		transform.GetComponent<Rigidbody2D>().AddForce(transform.position+(Vector3)direction*dashSpeed);
-		
+		//transform.GetComponent<Rigidbody2D>().AddForce(transform.position+(Vector3)direction*dashSpeed);
+		transform.GetComponent<Rigidbody2D>().velocity = (Vector2) (direction * dashSpeed);
 		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, direction, 50, (1 << 10) | (1 << 8) | (1 << 9));
 		RaycastHit2D hitNear;
 		if (hits.Length >= 2) {

@@ -38,11 +38,11 @@ public class Bullet : MonoBehaviour {
 		
 	}
 
-	void Update () {
+	public void Update () {
 		UpdateLife ();
 	}
 
-	void UpdateLife () {
+	public void UpdateLife () {
 		age += 1;
 		if (age > lifespan) {
 			Deactivate ();
