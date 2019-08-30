@@ -24,11 +24,16 @@ public class PostEffectManager : MonoBehaviour {
 		StartCoroutine(BlinkEffect(time));
 	}
 	IEnumerator BlinkEffect(float time){
-		effect.SetActive(true);
+
+		if (effect!=null)
+		{
+			effect.SetActive(true);
 		print("effectOn");
 		yield return new WaitForSeconds(time);
 		effect.SetActive(false);
 		
 		print("effectOff");
+		}
+		
 	}
 }

@@ -33,7 +33,7 @@ namespace EZCameraShake
 
         void Update()
         {
-            posAddShake = Vector3.zero+Vector3.back*10;
+            posAddShake = Vector3.zero;
             rotAddShake = Vector3.zero;
 
             for (int i = 0; i < cameraShakeInstances.Count; i++)
@@ -55,7 +55,7 @@ namespace EZCameraShake
                 }
             }
 
-            //transform.localPosition += posAddShake;
+            transform.localPosition += posAddShake;
             transform.localEulerAngles += rotAddShake;
         }
 

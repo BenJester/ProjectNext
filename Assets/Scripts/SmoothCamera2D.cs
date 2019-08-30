@@ -16,6 +16,9 @@ public class SmoothCamera2D : MonoBehaviour {
 	}
 	void Update () 
 	{
+
+
+		//跟随玩家移动
 		if (target)
 		{
 			Vector3 point = Camera.main.WorldToViewportPoint(target.position);
@@ -25,5 +28,19 @@ public class SmoothCamera2D : MonoBehaviour {
 			transform.position = new Vector3(damp.x, offset.y, damp.z);
 		}
 
+	}
+
+	public void offsetLery(Vector3 offsetTarget){
+		StartCoroutine(lerpv3(offset,offsetTarget));
+	}
+
+	IEnumerator lerpv3(Vector3 offsetit,Vector3 offsetTarget){
+		if (offsetit!=offsetTarget)
+		{
+			offsetit = Vector3.Lerp(offsetit,offsetTarget,0.1f);
+			yield return new WaitForSeconds(0.02f);
+			offset = offsetit;
+
+		}
 	}
 }
