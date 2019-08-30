@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class PlayerControl1 : PlayerControl {
 
 	public bool HasRepawnPoint = false;
@@ -121,9 +122,11 @@ public class PlayerControl1 : PlayerControl {
 		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
 		bulletSpeed = minBulletSpeed;
 		
+		InitSkills ();
+		
 		if (HasRepawnPoint)
 			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
-		InitSkills ();
+		
 	}
 
 	void Update () {
@@ -389,7 +392,14 @@ public class PlayerControl1 : PlayerControl {
 		active = false;
 		GetComponent<BoxCollider2D> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
+		GetComponent<SpriteRenderer> ().enabled = false;
+		foreach(var sr in GetComponentsInChildren<SpriteRenderer>()){
+			sr.enabled=false;
+		}
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
+		GetComponent<HeadBodySeparation>().PlayerDead (25000);
+		
+
 		//transform.localScale = Vector3.zero;
 
 	}
@@ -399,6 +409,9 @@ public class PlayerControl1 : PlayerControl {
 		GetComponent<BoxCollider2D> ().enabled = true;
 		GetComponent<SpriteRenderer> ().enabled = true;
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
+		foreach(var sr in GetComponentsInChildren<SpriteRenderer>()){
+			sr.enabled=true;
+		}
 		//transform.localScale = originalScale;
 	}
 

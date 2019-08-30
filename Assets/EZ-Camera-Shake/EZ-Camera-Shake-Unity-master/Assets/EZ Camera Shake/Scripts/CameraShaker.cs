@@ -10,6 +10,7 @@ namespace EZCameraShake
         /// The single instance of the CameraShake in the current scene. Do not use if you have multiple instances.
         /// </summary>
         public static CameraShaker Instance;
+        public bool isFollowingCamera;
         static Dictionary<string, CameraShaker> instanceList = new Dictionary<string, CameraShaker>();
 
         /// <summary>
@@ -33,7 +34,11 @@ namespace EZCameraShake
 
         void Update()
         {
-            posAddShake = Vector3.zero;
+            if (isFollowingCamera)
+            {
+                posAddShake=transform.position;
+            }
+            
             rotAddShake = Vector3.zero;
 
             for (int i = 0; i < cameraShakeInstances.Count; i++)
@@ -55,8 +60,8 @@ namespace EZCameraShake
                 }
             }
 
-            transform.localPosition += posAddShake;
-            transform.localEulerAngles += rotAddShake;
+            transform.localPosition = posAddShake;
+            transform.localEulerAngles = rotAddShake;
         }
 
         /// <summary>

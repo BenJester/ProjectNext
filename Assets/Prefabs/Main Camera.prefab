@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 114738620530903310}
   - component: {fileID: 114066335331160740}
   - component: {fileID: 114631137081415244}
-  - component: {fileID: 114655525448846278}
+  - component: {fileID: 114512902775864578}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -448,6 +448,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114512902775864578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1968990446697776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4973154ddf3081e41a99c0174c9379f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFollowingCamera: 1
+  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0}
+  DefaultRotInfluence: {x: 0, y: 0, z: 1}
 --- !u!114 &114573281112546324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -476,19 +490,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 1017599095465676}
---- !u!114 &114655525448846278
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1968990446697776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ab8353b5ebd32545867da143199a814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefaultPosInfluence: {x: 0.15, y: 0.15, z: 0}
-  DefaultRotInfluence: {x: 0, y: 0, z: 1}
 --- !u!114 &114657759891288640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -561,7 +562,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1-2 \u534A\u500B\u6F22\u5821\u5305"
+  m_Text: 
 --- !u!114 &114762434731340022
 MonoBehaviour:
   m_ObjectHideFlags: 1
