@@ -123,7 +123,7 @@ public class PlayerControl1 : PlayerControl {
 		bulletSpeed = minBulletSpeed;
 		
 		InitSkills ();
-		
+
 		if (HasRepawnPoint)
 			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
 		
