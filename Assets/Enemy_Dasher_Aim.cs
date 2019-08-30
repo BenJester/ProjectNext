@@ -174,7 +174,7 @@ public class Enemy_Dasher_Aim :  Enemy {
 		RaycastHit2D hitNear;
 		foreach (var item in hits)
 		{
-			print(item.collider.name);
+			//print(item.collider.name);
 		}
 		if (hits.Length >= 2) {
 			hitNear = hits[1];

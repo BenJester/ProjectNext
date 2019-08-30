@@ -31,10 +31,12 @@ public class SmoothCamera2D : MonoBehaviour {
 	}
 
 	IEnumerator lerpv3 (Vector3 offsetit, Vector3 offsetTarget) {
-		while (offsetit != offsetTarget) {
-			offsetit = Vector3.Lerp (offsetit, offsetTarget, 0.1f);
+		if (offsetit != offsetTarget) {
+			offsetit = offsetTarget;
+			offset = offsetTarget;
+//			offsetit = Vector3.Lerp (offsetit, offsetTarget, 0.1f);
 			yield return new WaitForSeconds (0.02f);
-			offset = offsetit;
+//			offset = offsetit;
 
 		}
 	}
