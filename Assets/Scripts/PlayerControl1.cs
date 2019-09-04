@@ -29,6 +29,7 @@ public class PlayerControl1 : PlayerControl {
 
 	[Header ("子弹参数")]
 	public GameObject bullet;
+    public bool instantBullet;
 	public float minBulletSpeed;
 	public float maxBulletSpeed;
 	public float bulletChargeSpeed;
@@ -366,7 +367,20 @@ public class PlayerControl1 : PlayerControl {
 			chargeFrame += 1;
 	}
 
+    void HandleInstantBullet()
+    {
+        if (!closestObjectToCursor) return;
+        swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
+        swap.Do();
+    }
+
 	void Shoot () {
+
+        if (instantBullet)
+        {
+            HandleInstantBullet();
+            return;
+        }
 
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
