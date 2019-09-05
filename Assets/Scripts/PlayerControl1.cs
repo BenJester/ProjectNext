@@ -38,7 +38,7 @@ public class PlayerControl1 : PlayerControl {
 	[Space]
 	public LayerMask groundLayer;
 	public bool isTouchingGround;
-	bool canJump;
+	public bool canJump;
 
 	public int startChargeFrame;
 	float chargeFrame = 0;
