@@ -34,6 +34,7 @@ public class Thing : MonoBehaviour {
 	[HideInInspector]
 
 	public float distanceToCursor = Mathf.Infinity;
+    public float distanceToPlayer = Mathf.Infinity;
 
 	public void Start () {
 		player = GameObject.FindWithTag ("player");

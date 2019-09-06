@@ -84,7 +84,9 @@ public class PlayerControl1 : PlayerControl {
 
 	public List<Thing> thingList;
 	public GameObject closestObjectToCursor;
+    public GameObject closestObjectToPlayer;
 	public float closestDistance = Mathf.Infinity;
+    public float closestPlayerDistance = Mathf.Infinity;
 	public float cursorSnapThreshold;
 	public GameObject marker;
 
@@ -253,22 +255,31 @@ public class PlayerControl1 : PlayerControl {
 		rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		canJump = false;
 	}
-
+    
+    // 计算与鼠标和玩家最近的物体
 	void HandleObjectDistance () {
+
 		closestDistance = Mathf.Infinity;
+        closestPlayerDistance = Mathf.Infinity;
+
 		closestObjectToCursor = null;
+        closestObjectToPlayer = null;
+
 		foreach (var thing in thingList) {
 			float distanceToCursor = Vector2.Distance (((Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition)), (Vector2) thing.transform.position);
-			//			if (distanceToCursor < playerControl.closestDistance) 
-			//			{
-			//				playerControl.closestObjectToCursor = gameObject;
-			//				playerControl.closestDistance = distanceToCursor;
-			//			}
-			if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) {
+            float distanceToPlayer = Vector2.Distance((Vector2) transform.position, (Vector2)thing.transform.position);
+
+            if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) {
 				closestDistance = distanceToCursor;
 				closestObjectToCursor = thing.gameObject;
 			}
-		}
+
+            if (!thing.dead && distanceToPlayer < closestPlayerDistance)
+            {
+                closestPlayerDistance = distanceToPlayer;
+                closestObjectToPlayer = thing.gameObject;
+            }
+        }
 
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
