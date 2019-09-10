@@ -133,11 +133,11 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Update () {
-		//print (rb.velocity.y);
+		
 		anim.SetFloat ("SpeedY", rb.velocity.y);
 		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, groundLayer);
 
-		//暂时没有生效不知道为什么
+		
 		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null) {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
@@ -167,6 +167,7 @@ public class PlayerControl1 : PlayerControl {
 			return;
 
 		if (canMove) {
+			
 			//左右移动
 			float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
 			if (Mathf.Abs (h) > 0) {
@@ -185,6 +186,8 @@ public class PlayerControl1 : PlayerControl {
 				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
 			}
 
+
+			//跳跃代码
 			if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
 				if (canJump)
 					Jump ();
@@ -214,9 +217,7 @@ public class PlayerControl1 : PlayerControl {
 			IncreaseBulletSpeed ();
 
 		} else
-			//anim.SetBool ("Charge",false);
 			if (Input.GetMouseButtonUp (0)) {
-
 				anim.SetTrigger ("Shot");
 				anim.SetBool ("IsCharging", false);
 				chargeCounter = 0;
@@ -231,11 +232,13 @@ public class PlayerControl1 : PlayerControl {
 				Shoot ();
 			}
 
+		//双重交换
 		if (Input.GetKeyDown (KeyCode.E) && doubleSwap) {
 			doubleSwap = false;
 			swap.Do ();
 		}
 
+		//冲刺触发
 		if (Input.GetMouseButtonDown (1)) {
 			dash.Do ();
 		}
