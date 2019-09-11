@@ -20,7 +20,6 @@ public class MoveToPlayAnimation : MonoBehaviour {
 
 		if(temp != now){
 			GetComponent<Animator>().CrossFade("Focus",0.001f);
-			Debug.Log("MOVE");
 		}
 		temp=transform.position;
 	}

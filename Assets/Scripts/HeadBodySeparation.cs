@@ -20,7 +20,7 @@ public class HeadBodySeparation : MonoBehaviour {
 
 	public void Dead (float force) {
 
-		print ("Dead");
+		//print ("Dead");
 		float x1 = Random.Range (-1f, 1f);
 		float x2 = Random.Range (-1f, 1f);
 
@@ -58,9 +58,9 @@ public class HeadBodySeparation : MonoBehaviour {
 
 		float x2 = Random.Range (-.5f, .5f);
 		float x3 = Random.Range (-.5f, .5f);
-		print (x1);
-		print (x2);
-		print (x3);
+		//print (x1);
+		//print (x2);
+		//print (x3);
 
 		Vector2 randomV21 = new Vector2 (x1, 1).normalized;
 		Vector2 randomV22 = new Vector2 (x2, 1).normalized;

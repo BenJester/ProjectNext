@@ -28,11 +28,11 @@ public class PostEffectManager : MonoBehaviour {
 		if (effect!=null)
 		{
 			effect.SetActive(true);
-		print("effectOn");
+		//print("effectOn");
 		yield return new WaitForSeconds(time);
 		effect.SetActive(false);
 		
-		print("effectOff");
+		//print("effectOff");
 		}
 		
 	}
