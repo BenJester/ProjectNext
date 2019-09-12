@@ -158,12 +158,15 @@ public class PlayerControl1 : PlayerControl {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		}
 
-		if (!Rewind.Instance.isReverting) {
-			Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
-			Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
-		}
+		//if (!Rewind.Instance.isReverting) {
+		//	Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
+		//	Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
+		//}
 
-		if (!active)
+        Time.timeScale = Mathf.Clamp(Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
+        Time.fixedDeltaTime = Mathf.Clamp(Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
+
+        if (!active)
 			return;
 
 		if (canMove) {
@@ -354,6 +357,9 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void HandleRewind () {
+
+        return;
+
 		if (Rewind.Instance != null) {
 			if (Input.GetKey (KeyCode.Q)) {
 

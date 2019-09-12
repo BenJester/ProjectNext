@@ -31,8 +31,8 @@ public class Bullet : MonoBehaviour {
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		playerBody = player.GetComponent<Rigidbody2D> ();
-		Rewind.Instance.bullets.Add (gameObject);
-		Rewind.Instance.bulletBody.Add (GetComponent<Rigidbody2D> ());
+		//Rewind.Instance.bullets.Add (gameObject);
+		//Rewind.Instance.bulletBody.Add (GetComponent<Rigidbody2D> ());
 		body = GetComponent<Rigidbody2D> ();
 		collider = GetComponent<Collider2D> ();
 		

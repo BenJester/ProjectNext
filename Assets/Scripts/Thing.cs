@@ -45,28 +45,35 @@ public class Thing : MonoBehaviour {
 		GameObject goalObject = GameObject.FindWithTag ("goal");
 		if (goalObject != null)
 			goal = goalObject.GetComponent<Goal>();
-		switch (type) {
-			case Type.box:
-				Rewind.Instance.obj.Add (gameObject);
-				break;
-			case Type.enemy:
-				Rewind.Instance.enemies.Add (gameObject);
-				break;
-			case Type.hostage:
-				Rewind.Instance.enemies.Add (gameObject);
-				break;
-			default:
-				break;
-		}
 
 
-		if (type != Type.player) 
+        //HandleRewind();
+
+        if (type != Type.player) 
 		{
 			playerControl.thingList.Add (this);
 		}
 
 	}
 	
+    void HandleRewind()
+    {
+        switch (type)
+        {
+            case Type.box:
+                Rewind.Instance.obj.Add(gameObject);
+                break;
+            case Type.enemy:
+                Rewind.Instance.enemies.Add(gameObject);
+                break;
+            case Type.hostage:
+                Rewind.Instance.enemies.Add(gameObject);
+                break;
+            default:
+                break;
+        }
+    }
+
 	public void Update () {
 		lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
 		upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
