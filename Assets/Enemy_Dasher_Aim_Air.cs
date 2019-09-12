@@ -9,11 +9,11 @@ public class Enemy_Dasher_Aim_Air : Enemy {
     [Header ("动态敌人————会主动瞄准玩家进行冲刺，不带重力，会停止")]
 
     public PlayerState state;
-    public int aimFrame = 120;
-    public int lockFrame = 30;
-    public int dashFrame = 300;
+    public float aimFrame = 120;
+    public float lockFrame = 30;
+    public float dashFrame = 300;
     public float dashSpeed = 20;
-    public int recoverFrame = 120;
+    public float recoverFrame = 120;
 
     public enum PlayerState {
         idle = 0,
@@ -26,16 +26,16 @@ public class Enemy_Dasher_Aim_Air : Enemy {
     }
 
     //Extra
-    [System.NonSerialized] public int[] stateActiveFrames = new int[5] { 0, 0, 0, 0, 0 };
-    [System.NonSerialized] public int[] stateInactiveFrames = new int[5] { 0, 0, 0, 0, 0 };
+    [System.NonSerialized] public float[] stateActiveFrames = new float[5] { 0, 0, 0, 0, 0 };
+    [System.NonSerialized] public float[] stateInactiveFrames = new float[5] { 0, 0, 0, 0, 0 };
 
     private void TimeFixedUpdate () {
         for (int i = 0; i < stateInactiveFrames.Length; i++) {
-            stateInactiveFrames[i] = ((int) state == i) ? 0 : stateInactiveFrames[i] + 1;
+            stateInactiveFrames[i] = ((int) state == i) ? 0 : stateInactiveFrames[i] + Time.deltaTime;
         }
 
         for (int i = 0; i < stateActiveFrames.Length; i++) {
-            stateActiveFrames[i] = ((int) state == i) ? stateActiveFrames[i] + 1 : 0;
+            stateActiveFrames[i] = ((int) state == i) ? stateActiveFrames[i] + Time.deltaTime : 0;
         }
     }
 
@@ -87,11 +87,7 @@ public class Enemy_Dasher_Aim_Air : Enemy {
 
     private void FixedUpdate () {
 
-
-    
-
-
-        print(Time.fixedDeltaTime);
+        //print(Time.fixedDeltaTime);
         if (thing.dead) {
             lr.enabled = false;
             return;
@@ -146,7 +142,7 @@ public class Enemy_Dasher_Aim_Air : Enemy {
         //TODO:这部分不知道怎么移动
 
         //transform.GetComponent<Rigidbody2D>().AddForce(transform.position+(Vector3)direction*dashSpeed);
-        transform.GetComponent<Rigidbody2D> ().velocity = (Vector2) (direction * dashSpeed/Time.fixedDeltaTime*fixedUpdateDeltaTime);
+        transform.GetComponent<Rigidbody2D>().velocity = (Vector2)(direction * dashSpeed);///Time.fixedDeltaTime*fixedUpdateDeltaTime);
         RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, direction, 50, (1 << 10) | (1 << 8) | (1 << 9));
         RaycastHit2D hitNear;
         if (hits.Length >= 2) {
