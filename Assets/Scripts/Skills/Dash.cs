@@ -9,7 +9,8 @@ public class Dash : Skill {
 	public float DashDuration;
 	public float pauseDuration;
     public float reducedTimeScale;
-
+    public int waitTime;
+    public int currWaitTime;
     public int maxCharge;
 	int charge;
 
@@ -23,8 +24,9 @@ public class Dash : Skill {
 
 	void Update () {
         //Debug.Log(Time.timeScale);
-        if (Input.GetMouseButtonDown(1) && charge >= 1)
-        {   
+        if (Input.GetMouseButton(1) && charge >= 1 && currWaitTime >= waitTime)
+        {
+            
             Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
             Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
             playerControl.targetDeltaTime = Time.fixedDeltaTime;
@@ -33,6 +35,7 @@ public class Dash : Skill {
 
         if (Input.GetMouseButtonUp(1))
         {
+            currWaitTime = 0;
             Do();
             Time.timeScale = 1f;
             playerControl.targetTimeScale = 1f;
@@ -43,6 +46,11 @@ public class Dash : Skill {
 			charge = maxCharge;
 		}
 	}
+    void FixedUpdate()
+    {
+        if (Input.GetMouseButton(1))
+            currWaitTime += 1;
+    }
 
 	public override void Do () {
 		if (!active || !playerControl.canMove || !Check ())
