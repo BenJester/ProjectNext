@@ -7,6 +7,10 @@ public class Bullet : MonoBehaviour {
 	public float lifespan;
 	public bool active = true;
 
+
+	public bool hasDistanceLimite=false;
+	public float distanceLimite=500f;
+
 	public enum BulletType {
 		slow = 0,
 		fast = 1,
@@ -40,6 +44,12 @@ public class Bullet : MonoBehaviour {
 
 	public void Update () {
 		UpdateLife ();
+
+		//距离玩家太远摧毁
+		//或许自身地飞行距离比较合适？
+
+		//应该要写在Player身上，顺便修改灯光半径
+		if(hasDistanceLimite && !CheckPlayerPosition()) Deactivate ();
 	}
 
 	public void UpdateLife () {
@@ -47,6 +57,10 @@ public class Bullet : MonoBehaviour {
 		if (age > lifespan) {
 			Deactivate ();
 		}
+	}
+
+	public bool CheckPlayerPosition(){
+		return Vector2.Distance(player.transform.position,transform.position)<=distanceLimite;
 	}
 
 	public void Activate () {
