@@ -141,7 +141,7 @@ public class PlayerControl1 : PlayerControl {
 		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null) {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
-			print ("landing");
+			//print ("landing");
 		}
 
 		isGroundTemp = isTouchingGround;

@@ -9,7 +9,7 @@ public class Swap : Skill {
 	public int swapDamage;
 	public bool smokeOn;
 	public bool damageEffectOn = true;
-
+    bool delaying;
 	public Collider2D col;
 
 	public GameObject smokeParticle;
@@ -19,7 +19,7 @@ public class Swap : Skill {
 	public bool delay;
 	public float waitTime;
 	public float reducedTimeScale;
-    float realWaitTime;
+    public float realWaitTime;
 
 	public override void Do()
 	{
@@ -59,7 +59,7 @@ public class Swap : Skill {
 			player.transform.position = new Vector3 (thingPos.x, thingPos.y - heightDiff, thingPos.z);
 			col.gameObject.transform.position = tempPos;
 			PostEffectManager.instance.Blink (0.03f);
-			print ("Exchange!");
+			//print ("Exchange!");
 			Smoke ();
 		}
 
@@ -127,6 +127,7 @@ public class Swap : Skill {
 	}
 	IEnumerator DelayedSwap (float waitTime) {
 		if (delay) {
+            delaying = true;
 			Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
 			playerControl.targetTimeScale = Time.timeScale;
             Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
@@ -146,14 +147,30 @@ public class Swap : Skill {
             Time.timeScale = 1f;
 			playerControl.targetTimeScale = 1f;
 		}
+        Debug.Log("wtf");
+        delaying = false;
 		DoSwap ();
 	}
 
+    IEnumerator CancelDelay()
+    {
+        delaying = false;
+        yield return new WaitForSecondsRealtime(0.1f);
+        Time.fixedDeltaTime = playerControl.startDeltaTime;
+        playerControl.targetDeltaTime = playerControl.startDeltaTime;
+        //yield return new WaitForSeconds (waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f));
+        Time.timeScale = 1f;
+        playerControl.targetTimeScale = 1f;
+        DoSwap();
+    }
+
     void FixedUpdate()
     {
-        if (Input.GetMouseButton(1))
-            realWaitTime = waitTime;
-        else
-            realWaitTime = waitTime * Time.timeScale;
+        if (Input.GetMouseButtonUp(1) && delaying)
+        {
+            Debug.Log("should not appear first");
+            StopAllCoroutines();
+            StartCoroutine(CancelDelay());
+        }
     }
 }

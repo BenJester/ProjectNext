@@ -26,6 +26,7 @@ public class Dash : Skill {
         //Debug.Log(Time.timeScale);
         if (Input.GetMouseButton(1) && charge >= 1 && currWaitTime >= waitTime)
         {
+            playerControl.swap.realWaitTime = playerControl.swap.waitTime;
             Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
             Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
             playerControl.targetDeltaTime = Time.fixedDeltaTime;

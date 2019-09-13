@@ -467,8 +467,9 @@ MonoBehaviour:
   smokeOffset: {x: 0, y: 15, z: 0}
   scanBoxHeight: 40
   delay: 1
-  waitTime: 0.27
+  waitTime: 0.4
   reducedTimeScale: 0.3
+  realWaitTime: 0
 --- !u!114 &114591261722450940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +491,7 @@ MonoBehaviour:
   DashDuration: 0.14
   pauseDuration: 0.1
   reducedTimeScale: 0.02
-  waitTime: 6
+  waitTime: 4
   currWaitTime: 0
   maxCharge: 1
 --- !u!114 &114325612499970784
