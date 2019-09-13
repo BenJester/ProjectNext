@@ -3208,76 +3208,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &387944120
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 387944122}
-  - component: {fileID: 387944121}
-  m_Layer: 0
-  m_Name: Point Light 2D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &387944121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387944120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LightType: 3
-  m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0
-  m_Color: {r: 0.73333335, g: 0.76386625, b: 1, a: 1}
-  m_Intensity: 1.01
-  m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 000000008d5ba437b5dde548c50fd826
-  m_LightCookieSprite: {fileID: 0}
-  m_UseNormalMap: 0
-  m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 1
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 300
-  m_PointLightDistance: 3
-  m_PointLightQuality: 1
-  m_ShapeLightParametricSides: 5
-  m_ShapeLightParametricAngleOffset: 0
-  m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.5
-  m_ShapeLightFalloffOffset: {x: 0, y: 0}
-  m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
---- !u!4 &387944122
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387944120}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: -6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 970893965}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &439528593 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408170391358474, guid: a86cf5f50f531fa43a90dd4c43ac5fa6,
@@ -6768,81 +6698,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114163332939612696, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: waitTime
-      value: 0.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 114591261722450940, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: isShadowDash
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114591261722450940, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: maxCharge
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 120921767453741660, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.r
-      value: 0.272748
-      objectReference: {fileID: 0}
-    - target: {fileID: 120921767453741660, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 120921767453741660, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Parameters.colorGradient.key0.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 120921767453741660, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.r
-      value: 0.21921301
-      objectReference: {fileID: 0}
-    - target: {fileID: 120921767453741660, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 120921767453741660, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212636800582740606, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 212105170672423868, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 212537181181947440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 212719088510221836, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 212659216073197252, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 212423156405185300, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddd120821b15a425c9b02b395cdbbbb3, type: 3}
 --- !u!1001 &915499694
@@ -6891,12 +6746,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa524867f5afe4dabbc4d44258356f72, type: 3}
---- !u!4 &970893965 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4906589617144064, guid: ddd120821b15a425c9b02b395cdbbbb3,
-    type: 3}
-  m_PrefabInstance: {fileID: 664162556}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1054078482
 PrefabInstance:
   m_ObjectHideFlags: 0
