@@ -19,6 +19,8 @@ public class Swap : Skill {
 	public bool delay;
 	public float waitTime;
 	public float reducedTimeScale;
+    float realWaitTime;
+
 	public override void Do()
 	{
 		if (!active || !col || col.GetComponent<Thing> ().dead)
@@ -127,10 +129,31 @@ public class Swap : Skill {
 		if (delay) {
 			Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
 			playerControl.targetTimeScale = Time.timeScale;
-			yield return new WaitForSeconds (waitTime);
-			Time.timeScale = 1f;
+            Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
+            playerControl.targetDeltaTime = reducedTimeScale;
+            realWaitTime = waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f);
+            float curr = 0f;
+            while (curr < realWaitTime)
+            {
+                if (Input.GetMouseButtonUp(1))
+                    continue;
+                curr += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            Time.fixedDeltaTime = playerControl.startDeltaTime;
+            playerControl.targetDeltaTime = playerControl.startDeltaTime;
+            //yield return new WaitForSeconds (waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f));
+            Time.timeScale = 1f;
 			playerControl.targetTimeScale = 1f;
 		}
 		DoSwap ();
 	}
+
+    void FixedUpdate()
+    {
+        if (Input.GetMouseButton(1))
+            realWaitTime = waitTime;
+        else
+            realWaitTime = waitTime * Time.timeScale;
+    }
 }
