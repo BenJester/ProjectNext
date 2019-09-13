@@ -52,12 +52,13 @@ public class Smash : Skill {
 
 	IEnumerator DoSmash()
 	{
-		Debug.Log("Smash!");
+        charge -= 1;
+        Debug.Log("Smash!");
 		playerBody.velocity=Vector2.zero;
 		playerBody.gravityScale=0f;
 		yield return new WaitForSeconds(smashTransitionTime);
 		playerBody.gravityScale=200f;
-		playerBody.velocity = Vector2.down *smashSpeed;
+		//playerBody.velocity = Vector2.down *smashSpeed;
 		playerControl.canMove = true;
 	}
 }

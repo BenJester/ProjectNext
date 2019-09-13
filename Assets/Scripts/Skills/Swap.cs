@@ -125,9 +125,9 @@ public class Swap : Skill {
 	}
 	IEnumerator DelayedSwap (float waitTime) {
 		if (delay) {
-			Time.timeScale = reducedTimeScale;
-			playerControl.targetTimeScale = reducedTimeScale;
-			yield return new WaitForSecondsRealtime (waitTime);
+			Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
+			playerControl.targetTimeScale = Time.timeScale;
+			yield return new WaitForSeconds (waitTime);
 			Time.timeScale = 1f;
 			playerControl.targetTimeScale = 1f;
 		}

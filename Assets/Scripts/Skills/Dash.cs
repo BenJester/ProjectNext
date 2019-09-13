@@ -8,8 +8,9 @@ public class Dash : Skill {
 	public float DashSpeed;
 	public float DashDuration;
 	public float pauseDuration;
+    public float reducedTimeScale;
 
-	public int maxCharge;
+    public int maxCharge;
 	int charge;
 
 	public override void Init () {
@@ -21,7 +22,24 @@ public class Dash : Skill {
 	}
 
 	void Update () {
-		if (playerControl.isTouchingGround) {
+        //Debug.Log(Time.timeScale);
+        if (Input.GetMouseButtonDown(1) && charge >= 1)
+        {   
+            Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
+            Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
+            playerControl.targetDeltaTime = Time.fixedDeltaTime;
+            playerControl.targetTimeScale = Time.timeScale;
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            Do();
+            Time.timeScale = 1f;
+            playerControl.targetTimeScale = 1f;
+            Time.fixedDeltaTime = playerControl.startDeltaTime;
+            playerControl.targetDeltaTime = Time.fixedDeltaTime;
+        }
+        if (playerControl.isTouchingGround) {
 			charge = maxCharge;
 		}
 	}
