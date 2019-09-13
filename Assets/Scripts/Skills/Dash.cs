@@ -8,13 +8,16 @@ public class Dash : Skill {
 	public float DashSpeed;
 	public float DashDuration;
 	public float pauseDuration;
-    public float reducedTimeScale;
-    public int waitTime;
-    public int currWaitTime;
-    public int maxCharge;
+	public float reducedTimeScale;
+	public int waitTime;
+	public int currWaitTime;
+	public int maxCharge;
 	int charge;
 
+	LineRenderer lr;
+
 	public override void Init () {
+		lr = GetComponent<LineRenderer> ();
 		charge = maxCharge;
 	}
 
@@ -23,34 +26,43 @@ public class Dash : Skill {
 	}
 
 	void Update () {
-        //Debug.Log(Time.timeScale);
-        if (Input.GetMouseButton(1) && charge >= 1 && currWaitTime >= waitTime)
-        {
-            playerControl.swap.realWaitTime = playerControl.swap.waitTime;
-            Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
-            Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
-            playerControl.targetDeltaTime = Time.fixedDeltaTime;
-            playerControl.targetTimeScale = Time.timeScale;
-        }
+		//Debug.Log(Time.timeScale);
+		if (Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) {
+			playerControl.swap.realWaitTime = playerControl.swap.waitTime;
+			Time.timeScale = Mathf.Min (Time.timeScale, reducedTimeScale);
+			Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
+			playerControl.targetDeltaTime = Time.fixedDeltaTime;
+			playerControl.targetTimeScale = Time.timeScale;
 
-        if (Input.GetMouseButtonUp(1))
-        {
-            currWaitTime = 0;
-            Do();
-            Time.timeScale = 1f;
-            playerControl.targetTimeScale = 1f;
-            Time.fixedDeltaTime = playerControl.startDeltaTime;
-            playerControl.targetDeltaTime = Time.fixedDeltaTime;
-        }
-        if (playerControl.isTouchingGround) {
+
+			//辅助线指示
+			Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			Vector2 dir = (mouseWorldPos - (Vector2) player.transform.position).normalized;
+			lr.enabled = true;
+			lr.SetPosition (0, transform.position);
+			lr.SetPosition (1, transform.position + (Vector3)dir*170 );
+		}
+
+		if (Input.GetMouseButtonUp (1)) {
+			currWaitTime = 0;
+			Do ();
+			Time.timeScale = 1f;
+			playerControl.targetTimeScale = 1f;
+			Time.fixedDeltaTime = playerControl.startDeltaTime;
+			playerControl.targetDeltaTime = Time.fixedDeltaTime;
+
+
+			//辅助线取消
+			lr.enabled = false;
+		}
+		if (playerControl.isTouchingGround) {
 			charge = maxCharge;
 		}
 	}
-    void FixedUpdate()
-    {
-        if (Input.GetMouseButton(1))
-            currWaitTime += 1;
-    }
+	void FixedUpdate () {
+		if (Input.GetMouseButton (1))
+			currWaitTime += 1;
+	}
 
 	public override void Do () {
 		if (!active || !playerControl.canMove || !Check ())
@@ -65,7 +77,9 @@ public class Dash : Skill {
 
 		if (isShadowDash) {
 			player.GetComponent<SpriteRenderer> ().color = Color.black;
-			player.GetComponent<Collider2D> ().enabled = false;
+			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),true);
+			
+			
 		}
 
 		float curr = 0f;
@@ -89,7 +103,8 @@ public class Dash : Skill {
 		charge -= 1;
 		playerBody.velocity = dir * playerControl.speed;
 		if (isShadowDash) {
-			player.GetComponent<Collider2D> ().enabled = true;
+			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
+			
 			player.GetComponent<SpriteRenderer> ().color = Color.white;
 		}
 		playerControl.canMove = true;

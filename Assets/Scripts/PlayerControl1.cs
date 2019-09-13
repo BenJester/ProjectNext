@@ -36,7 +36,7 @@ public class PlayerControl1 : PlayerControl {
 	public float bulletSpeed;
 
 	[Space]
-	public LayerMask groundLayer;
+	//public LayerMask groundLayer;
 	public bool isTouchingGround;
 	public bool canJump;
 
@@ -135,7 +135,7 @@ public class PlayerControl1 : PlayerControl {
 	void Update () {
 		
 		anim.SetFloat ("SpeedY", rb.velocity.y);
-		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, groundLayer) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, groundLayer);
+		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, (1 << 11) | (1 << 8));
 
 		
 		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null) {
