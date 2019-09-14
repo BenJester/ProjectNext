@@ -13,7 +13,7 @@ public class EnemyBullet_Homing : MonoBehaviour
     public bool floorCollide=true;
     public bool playerAsTarget=true;
     public Transform target;
-    public float speed =5f;
+    public float speed =250f;
     public float rotateSpeed = 200f;
 
     private Rigidbody2D rb;

@@ -8,9 +8,6 @@ public class Bullet : MonoBehaviour {
 	public bool active = true;
 
 
-	public bool hasDistanceLimite=false;
-	public float distanceLimite=500f;
-
 	public enum BulletType {
 		slow = 0,
 		fast = 1,
@@ -28,6 +25,18 @@ public class Bullet : MonoBehaviour {
 	public Color fastColor;
 	PlayerControl1 playerControl;
 
+	public bool isHomingBullet=false;
+	
+	private float speed;
+	private float rotateSpeed;
+	private Transform target = null;
+	
+	public bool CountDistanceSelf=false;
+	Vector2 beginPos;
+
+	
+	
+
 	protected void Start () {
 		//anim=GetComponent<Animator>();
 		
@@ -39,6 +48,10 @@ public class Bullet : MonoBehaviour {
 		//Rewind.Instance.bulletBody.Add (GetComponent<Rigidbody2D> ());
 		body = GetComponent<Rigidbody2D> ();
 		collider = GetComponent<Collider2D> ();
+
+		isHomingBullet=playerControl.isHomingBullet;
+		CountDistanceSelf = !playerControl.countDistanceToPlayer;
+		beginPos = transform.position;
 		
 	}
 
@@ -47,11 +60,39 @@ public class Bullet : MonoBehaviour {
 
 		//距离玩家太远摧毁
 		//或许自身地飞行距离比较合适？
-
-		//应该要写在Player身上，顺便修改灯光半径
-		if(hasDistanceLimite && !CheckPlayerPosition()) Deactivate ();
+		if(playerControl.hasShootDistance)
+		{
+			//计算自己开始与飞行的距离；
+			if(CountDistanceSelf){
+				if (!CheckSelfPosition()) Deactivate ();
+			}else
+			{//时刻计算与玩家之间的距离；
+				if (!CheckPlayerPosition()) Deactivate ();
+			}
+			
+		}
 	}
 
+	/// <summary>
+	/// This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
+	/// </summary>
+	void FixedUpdate()
+	{
+		
+		if(isHomingBullet && target!=null &&active){
+		Vector2 direcion = ((Vector2)target.position - body.position).normalized;
+        float rotateAmount = Vector3.Cross(direcion,transform.up).z;
+        body.angularVelocity = -rotateAmount*rotateSpeed;
+        body.velocity = transform.up*speed;
+		}
+	}
+
+
+	public void SetHomingBullet(Transform targetIn, float rotateSpeedIn,float speedIn ){
+		target = targetIn;
+		rotateSpeed = rotateSpeedIn;
+		speed =speedIn;
+	}
 	public void UpdateLife () {
 		age += 1;
 		if (age > lifespan) {
@@ -60,7 +101,10 @@ public class Bullet : MonoBehaviour {
 	}
 
 	public bool CheckPlayerPosition(){
-		return Vector2.Distance(player.transform.position,transform.position)<=distanceLimite;
+		return Vector2.Distance(player.transform.position,transform.position)<=playerControl.shootDistance;
+	}
+	public bool CheckSelfPosition(){
+		return Vector2.Distance(beginPos,transform.position)<=playerControl.shootDistance;
 	}
 
 	public void Activate () {

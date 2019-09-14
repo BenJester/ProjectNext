@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+//using UnityEngine.Rendering.LWRP;
 
 public class PlayerControl1 : PlayerControl {
 
@@ -27,13 +27,42 @@ public class PlayerControl1 : PlayerControl {
 
 	public Vector3 playerRespawnPoint;
 
+	#region 符咒相关内容
 	[Header ("子弹参数")]
 	public GameObject bullet;
-    public bool instantBullet;
+
+	[Space]
+	[Header ("点击直接瞬间交换，不会被阻挡")]
+	public bool ClickChangeDirectly;
+
+	[Header ("激光枪射击，瞬间交换，会被阻挡")]
+	public bool laserBullet = false;
+
+	[Header ("带有跟踪效果")]
+	public bool isHomingBullet = false;
+	public float homingBulletSpeed=10f;
+	public float homingBulletRotateSpeed=200f;
+
+	[Header ("带有射击距离限制")]
+	public bool hasShootDistance = true;
+	//按照玩家的距离来计算
+	public bool countDistanceToPlayer=true;
+	public float shootDistance = 500f;
+
+	[SerializeField]
+	UnityEngine.Experimental.Rendering.LWRP.Light2D shootDistanceLight;
+
+	[Space]
+
+	[Header ("子弹速度")]
 	public float minBulletSpeed;
 	public float maxBulletSpeed;
 	public float bulletChargeSpeed;
 	public float bulletSpeed;
+
+	[Space]
+
+	#endregion
 
 	[Space]
 	//public LayerMask groundLayer;
@@ -48,7 +77,7 @@ public class PlayerControl1 : PlayerControl {
 	public bool useLineRenderer = false;
 	public bool useCursor = false;
 	public LineRenderer lr;
-	 GameObject cursor;
+	GameObject cursor;
 	public GameObject cursorPrefab;
 
 	Rigidbody2D rb;
@@ -84,9 +113,9 @@ public class PlayerControl1 : PlayerControl {
 
 	public List<Thing> thingList;
 	public GameObject closestObjectToCursor;
-    public GameObject closestObjectToPlayer;
+	public GameObject closestObjectToPlayer;
 	public float closestDistance = Mathf.Infinity;
-    public float closestPlayerDistance = Mathf.Infinity;
+	public float closestPlayerDistance = Mathf.Infinity;
 	public float cursorSnapThreshold;
 	public GameObject marker;
 
@@ -117,27 +146,27 @@ public class PlayerControl1 : PlayerControl {
 
 	void Start () {
 
-		if(useCursor && cursor==null) 
-		{
-			cursor =  Instantiate(cursorPrefab,null);
-		} 
+		if (useCursor && cursor == null) {
+			cursor = Instantiate (cursorPrefab, null);
+		}
 
 		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
 		bulletSpeed = minBulletSpeed;
-		
+
 		InitSkills ();
 
 		if (HasRepawnPoint)
 			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
-		
+
+		//设置射程和灯光
+		if (hasShootDistance) HandleShootDistanceAndLight ();
 	}
 
 	void Update () {
-		
+
 		anim.SetFloat ("SpeedY", rb.velocity.y);
 		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, (1 << 11) | (1 << 8));
 
-		
 		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null) {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
@@ -163,14 +192,14 @@ public class PlayerControl1 : PlayerControl {
 		//	Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
 		//}
 
-        Time.timeScale = Mathf.Clamp(Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.01f, 1f);
-        Time.fixedDeltaTime = Mathf.Clamp(Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
+		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.01f, 1f);
+		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
 
-        if (!active)
+		if (!active)
 			return;
 
 		if (canMove) {
-			
+
 			//左右移动
 			float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
 			if (Mathf.Abs (h) > 0) {
@@ -188,7 +217,6 @@ public class PlayerControl1 : PlayerControl {
 			} else {
 				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
 			}
-
 
 			//跳跃代码
 			if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
@@ -220,20 +248,20 @@ public class PlayerControl1 : PlayerControl {
 			IncreaseBulletSpeed ();
 
 		} else
-			if (Input.GetMouseButtonUp (0)) {
-				anim.SetTrigger ("Shot");
-				anim.SetBool ("IsCharging", false);
-				chargeCounter = 0;
-				//bulletSpeed = minBulletSpeed;
-				StartCoroutine (RestoreTimeScale (0.035f));
+		if (Input.GetMouseButtonUp (0)) {
+			anim.SetTrigger ("Shot");
+			anim.SetBool ("IsCharging", false);
+			chargeCounter = 0;
+			//bulletSpeed = minBulletSpeed;
+			StartCoroutine (RestoreTimeScale (0.035f));
 
-				if (useLineRenderer) {
-					lr.startColor = Color.black;
-					lr.enabled = false;
-				} else if (useCursor) cursor.GetComponent<AimCursor> ().SetAim (false);
+			if (useLineRenderer) {
+				lr.startColor = Color.black;
+				lr.enabled = false;
+			} else if (useCursor) cursor.GetComponent<AimCursor> ().SetAim (false);
 
-				Shoot ();
-			}
+			Shoot ();
+		}
 
 		//双重交换
 		if (Input.GetKeyDown (KeyCode.E) && doubleSwap) {
@@ -242,7 +270,6 @@ public class PlayerControl1 : PlayerControl {
 		}
 
 		//冲刺触发
-
 
 		// 动量指示器
 		HandlePointer ();
@@ -254,36 +281,34 @@ public class PlayerControl1 : PlayerControl {
 		HandleJump ();
 	}
 
-	void Jump()
-	{
+	void Jump () {
 		rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		canJump = false;
 	}
-    
-    // 计算与鼠标和玩家最近的物体
+
+	// 计算与鼠标和玩家最近的物体
 	void HandleObjectDistance () {
 
 		closestDistance = Mathf.Infinity;
-        closestPlayerDistance = Mathf.Infinity;
+		closestPlayerDistance = Mathf.Infinity;
 
 		closestObjectToCursor = null;
-        closestObjectToPlayer = null;
+		closestObjectToPlayer = null;
 
 		foreach (var thing in thingList) {
 			float distanceToCursor = Vector2.Distance (((Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition)), (Vector2) thing.transform.position);
-            float distanceToPlayer = Vector2.Distance((Vector2) transform.position, (Vector2)thing.transform.position);
+			float distanceToPlayer = Vector2.Distance ((Vector2) transform.position, (Vector2) thing.transform.position);
 
-            if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) {
+			if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) {
 				closestDistance = distanceToCursor;
 				closestObjectToCursor = thing.gameObject;
 			}
 
-            if (!thing.dead && distanceToPlayer < closestPlayerDistance)
-            {
-                closestPlayerDistance = distanceToPlayer;
-                closestObjectToPlayer = thing.gameObject;
-            }
-        }
+			if (!thing.dead && distanceToPlayer < closestPlayerDistance) {
+				closestPlayerDistance = distanceToPlayer;
+				closestObjectToPlayer = thing.gameObject;
+			}
+		}
 
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
@@ -356,7 +381,7 @@ public class PlayerControl1 : PlayerControl {
 
 	void HandleRewind () {
 
-        return;
+		return;
 
 		if (Rewind.Instance != null) {
 			if (Input.GetKey (KeyCode.Q)) {
@@ -378,6 +403,10 @@ public class PlayerControl1 : PlayerControl {
 		}
 	}
 
+	void HandleShootDistanceAndLight () {
+		shootDistanceLight.pointLightOuterRadius = shootDistance;
+	}
+
 	void IncreaseBulletSpeed () {
 		if (chargeFrame > startChargeFrame)
 			bulletSpeed = maxBulletSpeed;
@@ -385,24 +414,58 @@ public class PlayerControl1 : PlayerControl {
 			chargeFrame += 1;
 	}
 
-    void HandleInstantBullet()
-    {
-        if (!closestObjectToCursor) return;
-        swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
-        swap.Do();
-    }
+	//狙击枪，点击直线瞬间交换；
+	void HandleLaserChange () {
+		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+
+		RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, ~(1 << 9));
+
+		if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D> ()) {
+			swap.col = closestObjectToCursor.GetComponent<BoxCollider2D> ();
+			swap.Do ();
+		}
+
+		StartCoroutine (laserLine ());
+	}
+	//狙击枪的弹道
+	IEnumerator laserLine () {
+		lr.enabled = true;
+		lr.SetPosition (0, transform.position);
+		lr.SetPosition (1, transform.position + (closestObjectToCursor.transform.position - transform.position).normalized * shootDistance);
+		yield return new WaitForSeconds (0.3f);
+		lr.enabled = false;
+	}
+
+	//龙王，直接点击直接交换
+	void HandleChangeDirectly () {
+		if (!closestObjectToCursor) return;
+		swap.col = closestObjectToCursor.GetComponent<BoxCollider2D> ();
+		swap.Do ();
+	}
 
 	void Shoot () {
 
-        if (instantBullet)
-        {
-            HandleInstantBullet();
-            return;
-        }
+		if (ClickChangeDirectly) {
+			HandleChangeDirectly ();
+			return;
+		}
+
+		if (laserBullet) {
+			HandleLaserChange ();
+			return;
+		}
+
+		
 
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
 		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler (0, 0, -AngleBetween (Vector2.left, ((Vector2) mouseWorldPos - (Vector2) transform.position).normalized)));
+
+		if (isHomingBullet && closestObjectToCursor!=null)
+		{
+			newBullet.GetComponent<Bullet> ().SetHomingBullet(closestObjectToCursor.transform,homingBulletRotateSpeed,homingBulletSpeed);
+			return;
+		}
 
 		//修改Bullet的动画
 		if (bulletSpeed == maxBulletSpeed) {
@@ -426,12 +489,11 @@ public class PlayerControl1 : PlayerControl {
 		GetComponent<BoxCollider2D> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
-		foreach(var sr in GetComponentsInChildren<SpriteRenderer>()){
-			sr.enabled=false;
+		foreach (var sr in GetComponentsInChildren<SpriteRenderer> ()) {
+			sr.enabled = false;
 		}
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
-		GetComponent<HeadBodySeparation>().PlayerDead (25000);
-		
+		GetComponent<HeadBodySeparation> ().PlayerDead (25000);
 
 		//transform.localScale = Vector3.zero;
 
@@ -442,8 +504,8 @@ public class PlayerControl1 : PlayerControl {
 		GetComponent<BoxCollider2D> ().enabled = true;
 		GetComponent<SpriteRenderer> ().enabled = true;
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
-		foreach(var sr in GetComponentsInChildren<SpriteRenderer>()){
-			sr.enabled=true;
+		foreach (var sr in GetComponentsInChildren<SpriteRenderer> ()) {
+			sr.enabled = true;
 		}
 		//transform.localScale = originalScale;
 	}
@@ -475,32 +537,29 @@ public class PlayerControl1 : PlayerControl {
 		return angle;
 	}
 
-	void HandleJump()
-	{
+	void HandleJump () {
 		if (!isTouchingGround)
 			StartCoroutine (JumpTolerence ());
 		else
 			canJump = true;
 	}
 
-	IEnumerator JumpTolerence()
-	{
+	IEnumerator JumpTolerence () {
 		int curr = 0;
 		while (curr <= coyoteTime) {
 			if (isTouchingGround) {
-				
-					canJump = true;
-					yield return null;
-				}
 
-			yield return new WaitForEndOfFrame();
+				canJump = true;
+				yield return null;
+			}
+
+			yield return new WaitForEndOfFrame ();
 			curr++;
 		}
-			canJump = false;
+		canJump = false;
 	}
 
-	IEnumerator CacheJump()
-	{
+	IEnumerator CacheJump () {
 		int curr = 0;
 		while (curr <= cacheJumpTime) {
 			if (canJump) {
@@ -509,7 +568,7 @@ public class PlayerControl1 : PlayerControl {
 				yield return null;
 			}
 
-			yield return new WaitForEndOfFrame();
+			yield return new WaitForEndOfFrame ();
 			curr++;
 		}
 		cachedJump = false;
