@@ -145,7 +145,7 @@ public class Bullet : MonoBehaviour {
 
 	public virtual void OnTriggerEnter2D (Collider2D col) {
 
-		if (col.CompareTag ("thing")) {
+		if (col.CompareTag ("thing") && !col.GetComponent<Thing>().hasShield) {
 			playerControl.swap.col = col;
 			playerControl.swap.Do ();
 			playerControl.doubleSwap = true;
