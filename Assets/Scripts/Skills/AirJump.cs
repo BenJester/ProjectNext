@@ -6,7 +6,9 @@ public class AirJump : Skill
 {
     public int maxCharge;
     int charge;
-
+    public float CoyoteDelay;
+    public float CoyoteDuration;
+    
     public override void Init()
     {
         charge = maxCharge;
@@ -36,5 +38,19 @@ public class AirJump : Skill
 			return;
         charge -= 1;
         playerBody.velocity = new Vector2(playerBody.velocity.x, playerControl.jumpSpeed);
+        StartCoroutine(Coyote());
+    }
+
+    IEnumerator Coyote()
+    {
+        yield return new WaitForSeconds(CoyoteDelay);
+        float curr = 0f;
+        while (curr < CoyoteDuration)
+        {
+            playerBody.gravityScale = 75f;
+            curr += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        playerBody.gravityScale = gravity;
     }
 }

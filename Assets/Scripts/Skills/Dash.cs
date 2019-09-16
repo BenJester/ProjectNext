@@ -7,7 +7,8 @@ public class Dash : Skill {
 	public bool isShadowDash = false;
 	public float DashSpeed;
 	public float DashDuration;
-	public float pauseDuration;
+    public float CoyoteDuration;
+    public float pauseDuration;
 	public float reducedTimeScale;
 	public int waitTime;
 	public int currWaitTime;
@@ -95,14 +96,25 @@ public class Dash : Skill {
 		//		Vector2 dir = new Vector2(h, v).normalized;
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Vector2 dir = (mouseWorldPos - (Vector2) player.transform.position).normalized;
-		playerBody.velocity = dir * DashSpeed;
+
 		while (curr < DashDuration) {
-			curr += Time.deltaTime;
+            playerBody.velocity = dir * DashSpeed;
+            curr += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
 		}
 		charge -= 1;
 		playerBody.velocity = dir * playerControl.speed;
-		if (isShadowDash) {
+        curr = 0f;
+
+        while (curr < CoyoteDuration)
+        {
+            playerBody.gravityScale = 75f;
+            curr += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        playerBody.gravityScale = gravity;
+
+        if (isShadowDash) {
 			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
 			
 			player.GetComponent<SpriteRenderer> ().color = Color.white;

@@ -5456,46 +5456,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: laserBullet
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: laserDistance
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: shootDistanceLight
-      value: 
-      objectReference: {fileID: 1540742747}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: shootDistance
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: isHomingBullet
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: homingBulletSpeed
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: homingBulletRotateSpeed
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114415816227692440, guid: ddd120821b15a425c9b02b395cdbbbb3,
-        type: 3}
-      propertyPath: hasShootDistance
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddd120821b15a425c9b02b395cdbbbb3, type: 3}
 --- !u!1001 &915499694
@@ -5663,18 +5623,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1941317304}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1540742747 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 387944121, guid: ddd120821b15a425c9b02b395cdbbbb3,
-    type: 3}
-  m_PrefabInstance: {fileID: 664162556}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1601734838
 PrefabInstance:
   m_ObjectHideFlags: 0

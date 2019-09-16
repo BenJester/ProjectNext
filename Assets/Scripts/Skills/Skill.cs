@@ -11,12 +11,13 @@ public class Skill : MonoBehaviour {
 	public Rigidbody2D playerBody;
 	[HideInInspector]
 	public PlayerControl1 playerControl;
-
+    protected float gravity;
 
 	private void Awake() {
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		playerBody = player.GetComponent<Rigidbody2D> ();
+        gravity = playerBody.gravityScale;
 	}
 	void Start() {
 		

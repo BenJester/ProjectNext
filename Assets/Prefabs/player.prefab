@@ -222,7 +222,7 @@ Rigidbody2D:
   m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 200
+  m_GravityScale: 185
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -276,6 +276,7 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  hasShield: 0
   isDivedeDead: 1
   force: 25000
   distanceToCursor: 0
@@ -423,7 +424,15 @@ MonoBehaviour:
   canMove: 1
   playerRespawnPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 3}
-  instantBullet: 0
+  ClickChangeDirectly: 0
+  laserBullet: 0
+  isHomingBullet: 0
+  homingBulletSpeed: 2000
+  homingBulletRotateSpeed: 1000
+  hasShootDistance: 0
+  countDistanceToPlayer: 1
+  shootDistance: 250
+  shootDistanceLight: {fileID: 387944121}
   minBulletSpeed: 2300
   maxBulletSpeed: 400
   bulletChargeSpeed: -250
@@ -555,8 +564,9 @@ MonoBehaviour:
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
   isShadowDash: 1
-  DashSpeed: 1200
-  DashDuration: 0.14
+  DashSpeed: 950
+  DashDuration: 0.12
+  CoyoteDuration: 0.15
   pauseDuration: 0.1
   reducedTimeScale: 0.02
   waitTime: 4
@@ -665,6 +675,8 @@ MonoBehaviour:
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
   maxCharge: 1
+  CoyoteDelay: 0.2
+  CoyoteDuration: 0.16
 --- !u!1 &1193951111751896
 GameObject:
   m_ObjectHideFlags: 0

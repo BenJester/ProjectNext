@@ -64,7 +64,7 @@ public class Swap : Skill {
 		}
 
 		Vector2 tempV = playerBody.velocity;
-		playerBody.velocity = thingBody.velocity;
+		playerBody.velocity += thingBody.velocity;
 		thingBody.velocity = tempV;
 
 
