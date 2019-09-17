@@ -20,12 +20,12 @@ public class Mech_ThingRespawner : MonoBehaviour {
             
             if (nowEnergy >= respawnColdDown) {
                 respawnedThingInstance = Instantiate (respawnThing, transform.position, Quaternion.identity) as GameObject;
-                hasRespawn=true;
+                hasRespawn = true;
                 nowEnergy = 0;
             }
         }
 
-        if ( respawnedThingInstance!=null && !respawnedThingInstance.GetComponent<ChangedDispearThing>().active)
+        if (respawnedThingInstance !=null && respawnedThingInstance.GetComponent<ChangedDispearThing>().dead)
         {
             hasRespawn=false;
         }

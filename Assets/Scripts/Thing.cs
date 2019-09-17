@@ -37,7 +37,7 @@ public class Thing : MonoBehaviour {
 	public float distanceToCursor = Mathf.Infinity;
     public float distanceToPlayer = Mathf.Infinity;
 
-	public void Start () {
+	public virtual void Start () {
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
@@ -75,7 +75,7 @@ public class Thing : MonoBehaviour {
         }
     }
 
-	public void Update () {
+	public virtual void Update () {
 		lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
 		upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
 		leftX = transform.position.x - collider.size.x / 2f * transform.localScale.x;
