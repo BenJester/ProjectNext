@@ -150,6 +150,9 @@ public class Bullet : MonoBehaviour {
 			playerControl.swap.Do ();
 			playerControl.doubleSwap = true;
 
+		
+			
+
 			//			Rigidbody2D thingBody = col.gameObject.GetComponent<Rigidbody2D> ();
 			//			Thing thing = col.gameObject.GetComponent<Thing> ();
 			//			Vector3 pos = player.transform.position;

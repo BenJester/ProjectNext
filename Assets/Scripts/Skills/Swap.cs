@@ -21,18 +21,27 @@ public class Swap : Skill {
 	public float reducedTimeScale;
     public float realWaitTime;
 
+
 	public override void Do()
 	{
 		if (!active || !col || col.GetComponent<Thing> ().dead)
 			return;
 		StartCoroutine(DelayedSwap(waitTime));
+
+
+
 	}
 
+
+	public void SetPowerParticle(GameObject powerParticle){
+		powerParticle.transform.position=col.transform.position;
+		powerParticle.transform.SetParent(col.transform);
+		Destroy(powerParticle,0.5f);
+	}
 	public void DoSwap () {
 		
 
-
-		//就是放在这边，有些时候不知道为什么没有立刻触发
+		
 		StartCoroutine (SwapDamageEffect ());
 
 		//屏幕震动	
@@ -44,6 +53,9 @@ public class Swap : Skill {
 		Thing thing = col.gameObject.GetComponent<Thing> ();
 		Vector3 pos = player.transform.position;
 		Vector3 thingPos = col.transform.position;
+
+		SetPowerParticle(player.GetComponent<PlayerControl1>().powerParticleInstance);
+		
 		float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
 		float heightDiff = (col.GetComponent<BoxCollider2D> ().size.y * col.transform.localScale.y - playerRadiusY * 2f) / 2f;
 

@@ -53,6 +53,12 @@ public class PlayerControl1 : PlayerControl {
 	UnityEngine.Experimental.Rendering.LWRP.Light2D shootDistanceLight;
 
 	[Space]
+	[Header("风之力量的展现")]
+	public GameObject powerParticle;
+	[HideInInspector]
+	public GameObject powerParticleInstance;
+
+	[Space]
 
 	[Header ("子弹速度")]
 	public float minBulletSpeed;
@@ -455,7 +461,10 @@ public class PlayerControl1 : PlayerControl {
 			return;
 		}
 
-		
+		//玩家自己出现力量
+		 powerParticleInstance =  Instantiate(powerParticle,transform.position,Quaternion.identity);
+		powerParticleInstance.transform.SetParent(transform);
+
 
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
