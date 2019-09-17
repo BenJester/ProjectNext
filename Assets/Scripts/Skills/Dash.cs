@@ -105,7 +105,7 @@ public class Dash : Skill {
 		charge -= 1;
 		playerBody.velocity = dir * playerControl.speed;
         curr = 0f;
-
+        playerControl.canMove = true;
         while (curr < CoyoteDuration)
         {
             playerBody.gravityScale = 75f;
@@ -119,6 +119,6 @@ public class Dash : Skill {
 			
 			player.GetComponent<SpriteRenderer> ().color = Color.white;
 		}
-		playerControl.canMove = true;
+		
 	}
 }
