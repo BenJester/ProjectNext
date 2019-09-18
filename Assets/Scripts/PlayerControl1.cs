@@ -462,7 +462,7 @@ public class PlayerControl1 : PlayerControl {
 		}
 
 		//玩家自己出现力量
-		 powerParticleInstance =  Instantiate(powerParticle,transform.position,Quaternion.identity);
+		powerParticleInstance = Instantiate(powerParticle,transform.position,Quaternion.identity);
 		powerParticleInstance.transform.SetParent(transform);
 
 
