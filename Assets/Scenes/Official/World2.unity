@@ -1298,7 +1298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 387944121, guid: ddd120821b15a425c9b02b395cdbbbb3, type: 3}
       propertyPath: m_Intensity
-      value: 1.4
+      value: 1.73
       objectReference: {fileID: 0}
     - target: {fileID: 1899453179180814, guid: ddd120821b15a425c9b02b395cdbbbb3, type: 3}
       propertyPath: m_Layer
@@ -12478,6 +12478,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 4dcebcf3ee1494a33a16aa3efa049e02,
         type: 3}
+    - target: {fileID: 114258746232064660, guid: d1bb77a3021744c328a5ebd225e727ab,
+        type: 3}
+      propertyPath: dashOn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114258746232064660, guid: d1bb77a3021744c328a5ebd225e727ab,
+        type: 3}
+      propertyPath: slowBulletOn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114994501971589028, guid: d1bb77a3021744c328a5ebd225e727ab,
         type: 3}
       propertyPath: m_Text

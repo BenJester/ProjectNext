@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using EZCameraShake;
+
 //using UnityEngine.Rendering.LWRP;
 
 public class PlayerControl1 : PlayerControl {
 
 	public bool HasRepawnPoint = false;
 
-	[Header ("基本参数")]
+    [Header("基本参数")]
+    public int maxhp = 1;
+    public int hp;
+    bool invincible;
 	public float speed;
 	public float jumpSpeed;
 	public float coyoteTime;
@@ -166,6 +171,7 @@ public class PlayerControl1 : PlayerControl {
 
 		//设置射程和灯光
 		if (hasShootDistance) HandleShootDistanceAndLight ();
+        hp = maxhp;
 	}
 
 	void Update () {
@@ -461,12 +467,12 @@ public class PlayerControl1 : PlayerControl {
 			return;
 		}
 
-		//玩家自己出现力量
-		powerParticleInstance = Instantiate(powerParticle,transform.position,Quaternion.identity);
+        //玩家自己出现力量
+		powerParticleInstance = Instantiate(powerParticle, transform.position, Quaternion.identity);
 		powerParticleInstance.transform.SetParent(transform);
+        Destroy(powerParticleInstance, 1f);
 
-
-		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
 		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler (0, 0, -AngleBetween (Vector2.left, ((Vector2) mouseWorldPos - (Vector2) transform.position).normalized)));
 
@@ -493,8 +499,16 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
-	public override void Die () {
-		active = false;
+	public override void Die () 
+    {
+        if (invincible) return;
+        StartCoroutine(OnHit());
+        if (hp > 1)
+        {
+            hp -= 1;
+            return;
+        }
+        active = false;
 		GetComponent<BoxCollider2D> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
@@ -582,4 +596,16 @@ public class PlayerControl1 : PlayerControl {
 		}
 		cachedJump = false;
 	}
+
+    IEnumerator OnHit()
+    {
+        invincible = true;
+        Color hitColor = new Color(1f, 0.4f, 0f);
+        CameraShaker.Instance.ShakeOnce(30, 5f, 0.1f, 0.1f);
+
+        GetComponent<SpriteRenderer>().color = hitColor;
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        invincible = false;
+    }
 }

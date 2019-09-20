@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour{
 	void OnCollisionEnter2D (Collision2D col) {
 
 
-		if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && col.transform.position.y < transform.position.y) {
+		if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && col.transform.transform.TransformPoint(Vector3.zero).y < transform.transform.TransformPoint(Vector3.zero).y) {
 			thing.collider.enabled = false;
 			thing.Die ();
 		}
