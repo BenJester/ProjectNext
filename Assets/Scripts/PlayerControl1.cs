@@ -601,7 +601,7 @@ public class PlayerControl1 : PlayerControl {
     {
         invincible = true;
         Color hitColor = new Color(1f, 0.4f, 0f);
-        CameraShaker.Instance.ShakeOnce(30, 5f, 0.1f, 0.1f);
+        CameraShaker.Instance.ShakeOnce(40f, 5f, 0.1f, 0.1f);
 
         GetComponent<SpriteRenderer>().color = hitColor;
         yield return new WaitForSeconds(0.3f);

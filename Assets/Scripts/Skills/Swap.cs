@@ -38,10 +38,8 @@ public class Swap : Skill {
 		powerParticle.transform.SetParent(col.transform);
 		Destroy(powerParticle,0.5f);
 	}
-	public void DoSwap () {
-		
-
-		
+	public void DoSwap ()
+    {	
 		StartCoroutine (SwapDamageEffect ());
 
 		//屏幕震动	
@@ -77,6 +75,7 @@ public class Swap : Skill {
 
 		Vector2 tempV = playerBody.velocity;
 		playerBody.velocity += thingBody.velocity;
+        playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
 		thingBody.velocity = tempV;
 
 
