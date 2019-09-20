@@ -410,16 +410,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   HasRepawnPoint: 0
+  maxhp: 3
+  hp: 0
   speed: 400
   jumpSpeed: 580
   coyoteTime: 4
   cacheJumpTime: 10
-  maxSpeed: 10000
+  maxSpeed: 1200
   groundCheckPoint1: {fileID: 4043578974739562}
   groundCheckPoint2: {fileID: 4289337571101460}
   groundCheckPoint3: {fileID: 4405996985490282}
   groundCheckPoint4: {fileID: 4882908818510406}
   groundCheckPoint5: {fileID: 4894416746588494}
+  slipperyMat: {fileID: 6200000, guid: 55e753de05c02462eaae2b6a311903f2, type: 2}
+  roughMat: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
   groundCheckRadius: 5
   canMove: 1
   playerRespawnPoint: {x: 0, y: 0, z: 0}
@@ -433,6 +437,9 @@ MonoBehaviour:
   countDistanceToPlayer: 1
   shootDistance: 250
   shootDistanceLight: {fileID: 387944121}
+  powerParticle: {fileID: 6911502101407736678, guid: dd603c0f770acd947939e2e3f6ac600e,
+    type: 3}
+  powerParticleInstance: {fileID: 0}
   minBulletSpeed: 2300
   maxBulletSpeed: 400
   bulletChargeSpeed: -250

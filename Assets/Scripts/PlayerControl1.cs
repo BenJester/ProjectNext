@@ -25,7 +25,9 @@ public class PlayerControl1 : PlayerControl {
 	public Transform groundCheckPoint3;
 	public Transform groundCheckPoint4;
 	public Transform groundCheckPoint5;
-
+    public PhysicsMaterial2D slipperyMat;
+    public PhysicsMaterial2D roughMat;
+    BoxCollider2D box;
 	public float groundCheckRadius;
 
 	public bool canMove;
@@ -152,7 +154,7 @@ public class PlayerControl1 : PlayerControl {
 		lr = GetComponent<LineRenderer> ();
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		lr.enabled = false;
-
+        box = GetComponent<BoxCollider2D>();
 	}
 
 	void Start () {
@@ -184,6 +186,8 @@ public class PlayerControl1 : PlayerControl {
 			Destroy (part, 2f);
 			//print ("landing");
 		}
+
+        box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;
 
 		isGroundTemp = isTouchingGround;
 
