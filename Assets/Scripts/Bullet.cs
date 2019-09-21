@@ -195,7 +195,7 @@ public class Bullet : MonoBehaviour {
 			//			thingBody.velocity = tempV;
 			Deactivate ();
 
-		} else if (col.CompareTag ("floor")) {
+		} else if (col.CompareTag ("floor") || col.CompareTag("shield")) {
 			Deactivate ();
 		}
 

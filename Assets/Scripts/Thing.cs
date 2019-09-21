@@ -81,7 +81,7 @@ public class Thing : MonoBehaviour {
 		leftX = transform.position.x - collider.size.x / 2f * transform.localScale.x;
 		rightX = transform.position.x + collider.size.x / 2f * transform.localScale.x;
 
-		if (transform.position.y < -2000f)
+		if (transform.position.y < -3000f)
 			Die ();
 
 //		if (type != Type.player) 
