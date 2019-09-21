@@ -13,14 +13,32 @@ public class Enemy : MonoBehaviour{
 	public int maxHealth = 1;
 	public int health=1;
     public bool canShuaisi = false;
+    BoxCollider2D box;
+    bool grounded;
+    Vector2 groundCheckTopLeft;
+    Vector2 groundCheckBottomRight;
+    float groundCheckBoxIndent = 2f;
+    public float groundCheckBoxHeight = 60f;
+    public LayerMask floorLayer = 8;
 
-	protected void Start () {
+    protected void Start () {
 		maxHealth = 1;
 		health = maxHealth;
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.enemyCount += 1;
-	}
+        box = GetComponent<BoxCollider2D>();
+        groundCheckTopLeft = new Vector2
+                                 (
+                                    -(box.size.x / 2f - groundCheckBoxIndent),
+                                    -(box.size.y / 2f - groundCheckBoxHeight / 2f)
+                                 );
+        groundCheckBottomRight = new Vector2
+                                 (
+                                    box.size.x / 2f - groundCheckBoxIndent,
+                                    -(box.size.y / 2f + groundCheckBoxHeight / 2f)
+                                 );
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -32,8 +50,14 @@ public class Enemy : MonoBehaviour{
 
 	void OnCollisionEnter2D (Collision2D col) {
 
+        grounded = Physics2D.OverlapArea
+    (
+        (Vector2)transform.position + groundCheckTopLeft,
+        (Vector2)transform.position + groundCheckBottomRight,
+        floorLayer
+    );
 
-		if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && col.transform.transform.TransformPoint(Vector3.zero).y < transform.transform.TransformPoint(Vector3.zero).y) {
+        if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && grounded) {
 			thing.collider.enabled = false;
 			thing.Die ();
 		}
