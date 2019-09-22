@@ -118,6 +118,7 @@ public class Bullet : MonoBehaviour {
 		sr.enabled = false;
 		collider.enabled = false;
 		body.velocity = Vector2.zero;
+        Destroy(gameObject);
 	}
 
 	public void SetBulletType (BulletType type) {
