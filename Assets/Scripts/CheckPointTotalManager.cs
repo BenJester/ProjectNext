@@ -7,8 +7,9 @@ public class CheckPointTotalManager : MonoBehaviour {
 	public static CheckPointTotalManager instance;
 	public Vector3 savedPos;
 	public GameObject pivot;
-	// Use this for initialization
-
+    // Use this for initialization
+    public int strawberryCount = 0;
+    public int maxStrawberryCount = 0;
 	void Awake () {
 		if (instance)
 			Destroy (gameObject);

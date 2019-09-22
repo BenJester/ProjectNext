@@ -42,6 +42,7 @@ public class Mech_LevelTimerDoor : MonoBehaviour
         {
             //开始起跑，目标点开始计时
             lt.StartTimer(otherTimerID);
+            lt.StartTimer(thisTimerID);
         }
     }
 }
