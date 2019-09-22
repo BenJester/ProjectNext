@@ -13,6 +13,7 @@ public class PlayerUI : MonoBehaviour
     private void Awake()
     {
         pc = GetComponent<PlayerControl1>();
+        playerHealthText = GameObject.FindWithTag("playerHealth").GetComponent<Text>();
     }
     void Start()
     {
@@ -22,7 +23,7 @@ public class PlayerUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(hasHpUI)  playerHealthText.text = pc.hp.ToString() + "/" + pc.maxhp;
+        if(hasHpUI && playerHealthText)  playerHealthText.text = pc.hp.ToString() + "/" + pc.maxhp.ToString();
     }
 
     

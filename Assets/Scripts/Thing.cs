@@ -102,10 +102,12 @@ public class Thing : MonoBehaviour {
 	}
 
 	public void Die() {
-//		if (type == Type.player && playerControl.isWorld) {
-//			player.transform.position = CheckPointTotalManager.instance.savedPos;
-//			return;
-//		}
+        //		if (type == Type.player && playerControl.isWorld) {
+        //			player.transform.position = CheckPointTotalManager.instance.savedPos;
+        //			return;
+        //		}
+        if (type == Type.player)
+            playerControl.hp = 0;
 		if (dead)
 			return;
 		dead = true;
