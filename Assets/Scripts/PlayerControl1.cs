@@ -193,9 +193,7 @@ public class PlayerControl1 : PlayerControl {
 
 		HandleRewind ();
 
-		if (Input.GetKeyDown (KeyCode.F1)) {
-			SceneManager.LoadScene (0);
-		}
+		
 
 		if (Input.GetKeyDown (KeyCode.R)) {
 			Time.fixedDeltaTime = startDeltaTime;
