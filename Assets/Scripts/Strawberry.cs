@@ -27,6 +27,7 @@ public class Strawberry : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             StartCoroutine(Anim(animDuration));
             worldManager.strawberryCount += 1;
+            worldManager.SetStrawBerryText();
             active = false;
         }
     }

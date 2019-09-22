@@ -8,6 +8,7 @@ public class Mech_LevelTimer : MonoBehaviour
 
     public TextMesh timer1;
     public TextMesh timer2;
+    public Text levelTimer;
 
     public float timer1Time=0;
     public float timer2Time=0;
@@ -16,7 +17,7 @@ public class Mech_LevelTimer : MonoBehaviour
     public bool timer2Counting=false;
     void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -28,6 +29,7 @@ public class Mech_LevelTimer : MonoBehaviour
             float y = timer1Time;
             string text = string.Format("{0:0.00}", y);
             timer1.text = text;
+            levelTimer.text = text +"s";
         }
 
         if (timer2Counting)
