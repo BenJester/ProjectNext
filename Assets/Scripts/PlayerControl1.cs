@@ -510,6 +510,8 @@ public class PlayerControl1 : PlayerControl {
             hp -= 1;
             return;
         }
+        StartCoroutine(DelayRestart());
+
         active = false;
 		GetComponent<BoxCollider2D> ().enabled = false;
 		GetComponent<SpriteRenderer> ().enabled = false;
@@ -520,10 +522,16 @@ public class PlayerControl1 : PlayerControl {
 		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
 		GetComponent<HeadBodySeparation> ().PlayerDead (25000);
 
-		//transform.localScale = Vector3.zero;
-
+        //transform.localScale = Vector3.zero;
 	}
+    public IEnumerator DelayRestart()
+    {
+        yield return new WaitForSeconds(0.25f);
+        Time.fixedDeltaTime = startDeltaTime;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
+    }
 	public override void Revive () {
 		active = true;
 		GetComponent<BoxCollider2D> ().enabled = true;

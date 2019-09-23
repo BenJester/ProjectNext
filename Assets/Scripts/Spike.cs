@@ -20,6 +20,10 @@ public class Spike : MonoBehaviour {
 			if (colThing.type == Type.enemy ||  colThing.type == Type.player) {
 				colThing.Die ();
 			}
+            if (colThing.type == Type.player)
+            {
+                StartCoroutine(colThing.GetComponent<PlayerControl1>().DelayRestart());
+            }
 		}
 	}
 }

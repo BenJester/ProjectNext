@@ -9,10 +9,11 @@ public class Swap : Skill {
 	public int swapDamage;
 	public bool smokeOn;
 	public bool damageEffectOn = true;
-    bool delaying;
+    
 	public Collider2D col;
+    public bool delaying;
 
-	public GameObject smokeParticle;
+    public GameObject smokeParticle;
 	public GameObject damageParticle;
 	public Vector3 smokeOffset;
 	public float scanBoxHeight;
