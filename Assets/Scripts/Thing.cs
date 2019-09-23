@@ -113,7 +113,10 @@ public class Thing : MonoBehaviour {
 		dead = true;
 		
 		if (type == Type.enemy)
-			goal.enemyCount -= 1;
+        {
+            goal.enemyCount -= 1;
+            hasShield = false;
+        }
         if (dieParticle!=null)
         {
             Instantiate(dieParticle, transform.position, Quaternion.identity);
