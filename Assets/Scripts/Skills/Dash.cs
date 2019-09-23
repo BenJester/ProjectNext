@@ -14,6 +14,7 @@ public class Dash : Skill {
 	public int currWaitTime;
 	public int maxCharge;
 	int charge;
+    public float multiplier;
 
 	LineRenderer lr;
 
@@ -123,36 +124,39 @@ public class Dash : Skill {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
         lr.enabled = true;
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, transform.position + (Vector3)dir * 170);
-        //if (!playerControl.swap.delaying)
-        //{
-        //    lr.SetPosition(0, transform.position);
-        //    lr.SetPosition(1, transform.position + (Vector3)dir * 170);
-        //}
-        //else
-        //{
-        //    GameObject target = playerControl.swap.col.gameObject;
-        //    lr.SetPositions(Plot(target.GetComponent<Rigidbody2D>(),
-        //                         target.transform.position,
-        //                         dir * DashSpeed,
-        //                         20));
-        //}
+
+        if (!playerControl.swap.delaying)
+        {
+            lr.SetPosition(0, transform.position);
+            for (int i = 1; i < 100; i ++)
+            {
+                lr.SetPosition(i, transform.position + (Vector3)dir * 170);
+            }
+
+        }
+        else
+        {
+            GameObject target = gameObject;// playerControl.swap.col.gameObject;
+            lr.SetPositions(Plot(playerControl.swap.col.GetComponent<Rigidbody2D>(),
+                                 target.transform.position,
+                                 dir * DashSpeed,
+                                 100));
+        }
     }
 
     public Vector3[] Plot(Rigidbody2D rigidbody, Vector3 pos, Vector2 velocity, int steps)
     {
         Vector3[] results = new Vector3[steps];
-
-        float timestep = Time.fixedDeltaTime / Physics2D.velocityIterations;
-        Vector2 gravityAccel = Physics2D.gravity * rigidbody.gravityScale * timestep * timestep;
-        float drag = 1f - timestep * rigidbody.drag;
+        
+        float timestep = Time.fixedDeltaTime * multiplier; /// (1f * Physics2D.velocityIterations);
+        Vector2 gravityAccel = Physics2D.gravity * rigidbody.gravityScale;// * timestep;
         Vector2 moveStep = velocity * timestep;
 
         for (int i = 0; i < steps; ++i)
         {
-            moveStep += gravityAccel;
-            moveStep *= drag;
+            moveStep += velocity * Time.fixedDeltaTime;
+            velocity += gravityAccel;
+            //moveStep *= drag;
             pos += (Vector3) moveStep;
             results[i] = pos;
         }
