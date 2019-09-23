@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using EZCameraShake;
+using UnityEngine.UI;
 
 //using UnityEngine.Rendering.LWRP;
 
@@ -29,6 +30,9 @@ public class PlayerControl1 : PlayerControl {
     public PhysicsMaterial2D roughMat;
     BoxCollider2D box;
 	public float groundCheckRadius;
+
+    public Image blood;
+    public float bloodEffectDuration;
 
 	public bool canMove;
 
@@ -501,9 +505,28 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
+    IEnumerator BloodEffect()
+    {
+        blood.color = new Color(1f, 1f, 1f, 0f);
+        float curr = 0f;
+        while (curr < 1f)
+        {
+            curr = Mathf.Clamp01(curr + Time.unscaledDeltaTime / bloodEffectDuration);
+            blood.color = new Color(1f, 1f, 1f, curr);
+            yield return new WaitForEndOfFrame();
+        }
+        while (curr > 0f)
+        {
+            curr = Mathf.Clamp01(curr - Time.unscaledDeltaTime / bloodEffectDuration);
+            blood.color = new Color(1f, 1f, 1f, curr);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
 	public override void Die () 
     {
         if (invincible) return;
+        StartCoroutine(BloodEffect());
         StartCoroutine(OnHit());
         if (hp > 1)
         {

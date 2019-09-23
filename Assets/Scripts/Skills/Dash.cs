@@ -128,7 +128,7 @@ public class Dash : Skill {
         if (!playerControl.swap.delaying)
         {
             lr.SetPosition(0, transform.position);
-            for (int i = 1; i < 100; i ++)
+            for (int i = 1; i < 25; i ++)
             {
                 lr.SetPosition(i, transform.position + (Vector3)dir * 170);
             }
@@ -140,7 +140,7 @@ public class Dash : Skill {
             lr.SetPositions(Plot(playerControl.swap.col.GetComponent<Rigidbody2D>(),
                                  target.transform.position,
                                  dir * DashSpeed,
-                                 100));
+                                 25));
         }
     }
 
