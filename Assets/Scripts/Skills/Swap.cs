@@ -149,7 +149,7 @@ public class Swap : Skill {
             while (curr < realWaitTime)
             {
                 if (Input.GetMouseButtonUp(1))
-                    continue;
+                    break;
                 curr += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }

@@ -48,10 +48,10 @@ public class Dash : Skill {
 			playerControl.targetTimeScale = 1f;
 			Time.fixedDeltaTime = playerControl.startDeltaTime;
 			playerControl.targetDeltaTime = Time.fixedDeltaTime;
+            Debug.Log("wtf9");
 
-
-			//辅助线取消
-			lr.enabled = false;
+            //辅助线取消
+            lr.enabled = false;
 		}
 		if (playerControl.isTouchingGround) {
 			charge = maxCharge;
@@ -63,7 +63,8 @@ public class Dash : Skill {
 	}
 
 	public override void Do () {
-		if (!active || !playerControl.canMove || !Check ())
+        Debug.Log("wtf8");
+        if (!active || !playerControl.canMove || !Check ())
 			return;
 
 		playerControl.canMove = false;
@@ -93,8 +94,8 @@ public class Dash : Skill {
 		//		Vector2 dir = new Vector2(h, v).normalized;
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Vector2 dir = (mouseWorldPos - (Vector2) player.transform.position).normalized;
-
-		while (curr < DashDuration) {
+        Debug.Log("wtf10");
+        while (curr < DashDuration) {
             playerBody.velocity = dir * DashSpeed;
             curr += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
