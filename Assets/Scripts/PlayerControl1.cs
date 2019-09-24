@@ -163,9 +163,6 @@ public class PlayerControl1 : PlayerControl {
 
 	void Start () {
 
-		if (useCursor && cursor == null) {
-			cursor = Instantiate (cursorPrefab, null);
-		}
 
 		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
 		bulletSpeed = minBulletSpeed;
@@ -276,7 +273,7 @@ public class PlayerControl1 : PlayerControl {
 			if (useLineRenderer) {
 				lr.startColor = Color.black;
 				lr.enabled = false;
-			} else if (useCursor) cursor.GetComponent<AimCursor> ().SetAim (false);
+			}
 
 			Shoot ();
 		}
@@ -363,8 +360,6 @@ public class PlayerControl1 : PlayerControl {
 			if (chargeCounter > 25f) {
 				if (useLineRenderer) {
 					lr.startColor = Color.red;
-				} else if (useCursor) {
-					cursor.GetComponent<AimCursor> ().SetAim (true);
 				}
 
 				chargeCounter = 0;
