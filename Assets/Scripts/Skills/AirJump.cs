@@ -39,6 +39,8 @@ public class AirJump : Skill
         charge -= 1;
         playerBody.velocity = new Vector2(playerBody.velocity.x, playerControl.jumpSpeed);
         StartCoroutine(Coyote());
+        GameObject part = Instantiate(playerControl.landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
+        Destroy(part, 2f);
     }
 
     IEnumerator Coyote()

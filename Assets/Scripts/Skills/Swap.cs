@@ -21,7 +21,7 @@ public class Swap : Skill {
 	public float waitTime;
 	public float reducedTimeScale;
     public float realWaitTime;
-
+    public float curr;
 
 	public override void Do()
 	{
@@ -144,8 +144,8 @@ public class Swap : Skill {
 			playerControl.targetTimeScale = Time.timeScale;
             Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
             playerControl.targetDeltaTime = reducedTimeScale;
-            realWaitTime = waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f);
-            float curr = 0f;
+            realWaitTime = waitTime * Time.timeScale;
+            curr = 0f;
             while (curr < realWaitTime)
             {
                 if (Input.GetMouseButtonUp(1))
@@ -159,7 +159,6 @@ public class Swap : Skill {
             Time.timeScale = 1f;
 			playerControl.targetTimeScale = 1f;
 		}
-        Debug.Log("wtf");
         delaying = false;
 		DoSwap ();
 	}

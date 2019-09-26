@@ -29,7 +29,7 @@ public class Mech_LevelTimer : MonoBehaviour
             float y = timer1Time;
             string text = string.Format("{0:0.00}", y);
             timer1.text = text;
-            levelTimer.text = text +"s";
+            
         }
 
         if (timer2Counting)
@@ -38,6 +38,7 @@ public class Mech_LevelTimer : MonoBehaviour
             float y = timer2Time;
             string text = string.Format("{0:0.00}", y);
             timer2.text = text;
+            levelTimer.text = text + "s";
         }
 
     }

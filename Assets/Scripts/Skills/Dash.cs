@@ -48,7 +48,6 @@ public class Dash : Skill {
 			playerControl.targetTimeScale = 1f;
 			Time.fixedDeltaTime = playerControl.startDeltaTime;
 			playerControl.targetDeltaTime = Time.fixedDeltaTime;
-            Debug.Log("wtf9");
 
             //辅助线取消
             lr.enabled = false;
@@ -60,10 +59,11 @@ public class Dash : Skill {
 	void FixedUpdate () {
 		if (Input.GetMouseButton (1))
 			currWaitTime += 1;
-	}
+        if (Input.GetMouseButtonDown(1))
+            playerControl.swap.curr = 0f;
+    }
 
 	public override void Do () {
-        Debug.Log("wtf8");
         if (!active || !playerControl.canMove || !Check ())
 			return;
 
@@ -94,7 +94,6 @@ public class Dash : Skill {
 		//		Vector2 dir = new Vector2(h, v).normalized;
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Vector2 dir = (mouseWorldPos - (Vector2) player.transform.position).normalized;
-        Debug.Log("wtf10");
         while (curr < DashDuration) {
             playerBody.velocity = dir * DashSpeed;
             curr += Time.deltaTime;

@@ -182,10 +182,10 @@ public class PlayerControl1 : PlayerControl {
 		anim.SetFloat ("SpeedY", rb.velocity.y);
 		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, (1 << 11) | (1 << 8));
 
-		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null) {
+		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
+        {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
-			//print ("landing");
 		}
 
         box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;

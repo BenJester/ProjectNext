@@ -136,13 +136,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifespan: 500
   active: 1
-  hasDistanceLimite: 1
-  distanceLimite: 300
   smokeOffset: {x: 0, y: 15, z: 0}
   dashParticle: {fileID: 1447157706495034, guid: 108ad1cecb0e29e46ab8ff7a79084a6a,
     type: 3}
   slowColor: {r: 0.06407974, g: 0.73456985, b: 0.9056604, a: 1}
   fastColor: {r: 0.9245283, g: 0.13519046, b: 0.13519046, a: 1}
+  isHomingBullet: 0
+  CountDistanceSelf: 0
 --- !u!95 &95582019695042234
 Animator:
   serializedVersion: 3
