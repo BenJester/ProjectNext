@@ -80,7 +80,7 @@ public class Dash : Skill {
 			
 			
 		}
-        charge -= 1;
+        
         float curr = 0f;
 		//		while (curr < pauseDuration) 
 		//		{
@@ -99,8 +99,8 @@ public class Dash : Skill {
             curr += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
 		}
-		
-		playerBody.velocity = dir * playerControl.speed;
+        charge -= 1;
+        playerBody.velocity = dir * playerControl.speed;
         curr = 0f;
         playerControl.canMove = true;
         while (curr < CoyoteDuration)
