@@ -75,13 +75,13 @@ public class Dash : Skill {
 	IEnumerator DoDash () {
 
 		if (isShadowDash) {
-			player.GetComponent<SpriteRenderer> ().color = Color.black;
-			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),true);
+		    player.GetComponent<SpriteRenderer> ().color = Color.black;
+			//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),true);
 			
 			
 		}
-
-		float curr = 0f;
+        charge -= 1;
+        float curr = 0f;
 		//		while (curr < pauseDuration) 
 		//		{
 		//			playerBody.velocity = Vector2.zero;
@@ -99,7 +99,7 @@ public class Dash : Skill {
             curr += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
 		}
-		charge -= 1;
+		
 		playerBody.velocity = dir * playerControl.speed;
         curr = 0f;
         playerControl.canMove = true;
@@ -112,7 +112,7 @@ public class Dash : Skill {
         playerBody.gravityScale = gravity;
 
         if (isShadowDash) {
-			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
+			//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
 			
 			player.GetComponent<SpriteRenderer> ().color = Color.white;
 		}
@@ -148,7 +148,8 @@ public class Dash : Skill {
     {
         Vector3[] results = new Vector3[steps];
         
-        float timestep = Time.fixedDeltaTime * multiplier; /// (1f * Physics2D.velocityIterations);
+        float timestep = 0.05f;
+        Debug.Log(timestep);/// (1f * Physics2D.velocityIterations);
         Vector2 gravityAccel = Physics2D.gravity * rigidbody.gravityScale;// * timestep;
         Vector2 moveStep = velocity * timestep;
 

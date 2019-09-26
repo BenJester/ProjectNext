@@ -425,6 +425,8 @@ MonoBehaviour:
   slipperyMat: {fileID: 6200000, guid: 55e753de05c02462eaae2b6a311903f2, type: 2}
   roughMat: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
   groundCheckRadius: 5
+  blood: {fileID: 0}
+  bloodEffectDuration: 0
   canMove: 1
   playerRespawnPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 3}
@@ -467,7 +469,7 @@ MonoBehaviour:
   closestObjectToPlayer: {fileID: 0}
   closestDistance: 9999
   closestPlayerDistance: Infinity
-  cursorSnapThreshold: 125
+  cursorSnapThreshold: 138
   marker: {fileID: 1948678748210214}
   targetMarker: {fileID: 1193951111751896}
   swap: {fileID: 0}
@@ -544,6 +546,7 @@ MonoBehaviour:
   smokeOn: 1
   damageEffectOn: 1
   col: {fileID: 0}
+  delaying: 0
   smokeParticle: {fileID: 1447157706495034, guid: 108ad1cecb0e29e46ab8ff7a79084a6a,
     type: 3}
   damageParticle: {fileID: 1350374086244790, guid: cd9004eb80d5ad640a2b23ae471c43ad,
@@ -554,6 +557,7 @@ MonoBehaviour:
   waitTime: 0.38
   reducedTimeScale: 0.3
   realWaitTime: 0
+  curr: 0
 --- !u!114 &114591261722450940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,6 +583,7 @@ MonoBehaviour:
   waitTime: 4
   currWaitTime: 0
   maxCharge: 2
+  multiplier: 0
 --- !u!114 &114325612499970784
 MonoBehaviour:
   m_ObjectHideFlags: 0

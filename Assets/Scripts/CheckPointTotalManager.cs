@@ -24,6 +24,8 @@ public class CheckPointTotalManager : MonoBehaviour {
     }
     private void Start()
     {
+        QualitySettings.vSyncCount = 0;  // VSync must be disabled 
+        Application.targetFrameRate = 60;
         SetStrawBerryText();
     }
 
