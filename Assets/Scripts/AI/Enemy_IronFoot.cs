@@ -34,7 +34,7 @@ public class Enemy_IronFoot : Enemy_Base {
 		if(isFall){
 			anim.CrossFade("Enemy_IronFoot",0.01f);
 			rb.gravityScale=0.1f;
-			rb.drag=0.1f;
+			rb.drag=0.2f;
 		}else
 		{
 			anim.CrossFade("Enemy_IronFoot_idle",0.01f);
