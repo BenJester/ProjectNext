@@ -17,11 +17,12 @@ public class Spike : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.CompareTag("thing") || col.gameObject.CompareTag("player")) {
 			Thing colThing = col.gameObject.GetComponent<Thing> ();
-			if (colThing.type == Type.enemy ||  colThing.type == Type.player) {
-				colThing.Die ();
+			if (colThing.type == Type.enemy) {
+                colThing.GetComponent<Enemy>().TakeDamage(1);
 			}
             if (colThing.type == Type.player)
             {
+                colThing.Die();
                 StartCoroutine(colThing.GetComponent<PlayerControl1>().DelayRestart());
             }
 		}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Ninja : MonoBehaviour
+public class Enemy_Ninja : Enemy
 {
     public enum State
     {
@@ -21,6 +21,7 @@ public class Enemy_Ninja : MonoBehaviour
     PlayerControl1 playerControl;
     Rigidbody2D body;
     BoxCollider2D box;
+    BoxCollider2D playerBox;
 
     public float sightDistance;
 
@@ -73,6 +74,7 @@ public class Enemy_Ninja : MonoBehaviour
                                     box.size.x / 2f - groundCheckBoxIndent,
                                     -(box.size.y / 2f + groundCheckBoxHeight / 2f)
                                  );
+        playerBox = player.GetComponent<BoxCollider2D>();
     }
 
     public bool CheckPlayerInSight()
@@ -109,7 +111,7 @@ public class Enemy_Ninja : MonoBehaviour
         {
             if (distance < dashThreshold)
             {
-                StartCoroutine(Idle());
+                StartCoroutine(Walk());
             }
             else
             {
@@ -189,13 +191,14 @@ public class Enemy_Ninja : MonoBehaviour
         busy = true;
         yield return new WaitForSeconds(dashDelay);
 
-        for (int i = 0; i < shootCount; i++)
+        for (int i = 0; i < dashCount; i++)
         {
             
             Vector3 direction = (player.position - transform.position).normalized;
             float timer = 0f;
             while (timer < dashDuration)
             {
+                Physics2D.IgnoreCollision(box, playerBox, true);
                 body.velocity = direction * dashSpeed;
                 Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + direction * (box.size.x + hitboxWidth),
                                  new Vector2(hitboxWidth * 2, box.size.y),
@@ -208,10 +211,18 @@ public class Enemy_Ninja : MonoBehaviour
                 }
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
+                Physics2D.IgnoreCollision(box, playerBox, false);
             }
-            
-            yield return new WaitForSeconds(dashInteval);
+            timer = 0f;
+            while (timer < dashInteval)
+            {
+                body.velocity = new Vector2(0, 0);
+                timer += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
         }
+        
+
         busy = false;
         StartCoroutine(StartAttackTimer());
     }

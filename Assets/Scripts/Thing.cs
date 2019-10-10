@@ -11,7 +11,6 @@ public enum Type {
 
 public class Thing : MonoBehaviour {
 
-	
     public GameObject dieParticle;
 	public Type type;
 	public float lowerY;
@@ -108,7 +107,9 @@ public class Thing : MonoBehaviour {
         //		}
         if (type == Type.player)
             playerControl.hp = 0;
-		if (dead)
+
+
+        if (dead)
 			return;
 		dead = true;
 		

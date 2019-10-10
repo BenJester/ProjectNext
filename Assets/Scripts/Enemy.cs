@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour{
 	[HideInInspector]
 	public Goal goal;
 	public int maxHealth = 1;
-	public int health=1;
+	public int health = 1;
     public bool canShuaisi = false;
     BoxCollider2D box;
     bool grounded;
