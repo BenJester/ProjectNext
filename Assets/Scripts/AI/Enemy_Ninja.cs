@@ -53,11 +53,16 @@ public class Enemy_Ninja : Enemy
     public float dashThreshold;
     public float shootThreshold;
 
+    public float bombDelay;
+    public float bombSpeed;
+    public GameObject bomb;
+
     public float attackInteval;
     public bool justAttacked;
 
-    private void Start()
+    void Start()
     {
+        base.Start();
         player = GameObject.FindGameObjectWithTag("player").GetComponent<Transform>();
         playerControl = player.GetComponent<PlayerControl1>();
 
@@ -98,6 +103,7 @@ public class Enemy_Ninja : Enemy
 
         if (!justAttacked)
         {
+            StartCoroutine(ThrowBomb());
             if (distance < dashThreshold)
             {
                 StartCoroutine(Dash());
@@ -109,6 +115,7 @@ public class Enemy_Ninja : Enemy
         }
         else
         {
+            
             if (distance < dashThreshold)
             {
                 StartCoroutine(Walk());
@@ -181,6 +188,18 @@ public class Enemy_Ninja : Enemy
             bulletBody.velocity = direction * bulletSpeed;
             yield return new WaitForSeconds(shootInteval);
         }
+        busy = false;
+        StartCoroutine(StartAttackTimer());
+    }
+
+    IEnumerator ThrowBomb()
+    {
+        if (busy) yield break;
+        busy = true;
+        Vector3 direction = (player.position - transform.position).normalized;
+        GameObject newBullet = Instantiate(bomb, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
+        Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+        bulletBody.velocity = direction * bulletSpeed;
         busy = false;
         StartCoroutine(StartAttackTimer());
     }
