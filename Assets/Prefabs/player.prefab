@@ -425,6 +425,8 @@ MonoBehaviour:
   slipperyMat: {fileID: 6200000, guid: 55e753de05c02462eaae2b6a311903f2, type: 2}
   roughMat: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
   groundCheckRadius: 5
+  waitTime: 5
+  currWaitTime: 0
   blood: {fileID: 0}
   bloodEffectDuration: 0
   canMove: 1
@@ -580,7 +582,7 @@ MonoBehaviour:
   CoyoteDuration: 0.15
   pauseDuration: 0.1
   reducedTimeScale: 0.02
-  waitTime: 4
+  waitTime: 5
   currWaitTime: 0
   maxCharge: 2
   multiplier: 0

@@ -31,6 +31,9 @@ public class PlayerControl1 : PlayerControl {
     BoxCollider2D box;
 	public float groundCheckRadius;
 
+    public int waitTime;
+    public int currWaitTime;
+
     public Image blood;
     public float bloodEffectDuration;
 
@@ -253,8 +256,28 @@ public class PlayerControl1 : PlayerControl {
 			}
 		}
 
-		//处理按下的指示器
-		if (Input.GetMouseButton (0)) {
+        // 左键子弹时间
+        if (Input.GetMouseButton(0) && currWaitTime >= waitTime)
+        {
+            Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
+            Time.fixedDeltaTime = dash.reducedTimeScale * startDeltaTime;
+            targetDeltaTime = Time.fixedDeltaTime;
+            targetTimeScale = Time.timeScale;
+
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            currWaitTime = 0;
+            Time.timeScale = 1f;
+            targetTimeScale = 1f;
+            Time.fixedDeltaTime = startDeltaTime;
+            targetDeltaTime = Time.fixedDeltaTime;
+        }
+        // 左键子弹时间结束
+
+        //处理按下的指示器
+        if (Input.GetMouseButton (0)) {
 			if (useLineRenderer) {
 				lr.enabled = true;
 				HandleLineRenderer ();
@@ -352,7 +375,12 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void FixedUpdate () {
-		if (Input.GetMouseButton (0)) {
+
+        // 左键子弹时间
+        if (Input.GetMouseButton(0))
+            currWaitTime += 1;
+
+        if (Input.GetMouseButton (0)) {
 
 			anim.SetBool ("IsCharging", true);
 

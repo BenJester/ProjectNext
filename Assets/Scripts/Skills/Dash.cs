@@ -56,6 +56,7 @@ public class Dash : Skill {
 			charge = maxCharge;
 		}
 	}
+
 	void FixedUpdate () {
 		if (Input.GetMouseButton (1))
 			currWaitTime += 1;
