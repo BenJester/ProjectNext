@@ -101,7 +101,7 @@ Rigidbody2D:
   m_Mass: 800
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 400
+  m_GravityScale: 150
   m_Material: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -209,3 +209,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionRadius: 100
+  damage: 1

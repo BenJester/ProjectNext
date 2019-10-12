@@ -25,12 +25,6 @@ public class Enemy_Ninja : Enemy
 
     public float sightDistance;
 
-    public LayerMask floorLayer = 8;
-    public float groundCheckBoxHeight = 10f;
-    public float groundCheckBoxIndent = 2f;
-    Vector2 groundCheckTopLeft;
-    Vector2 groundCheckBottomRight;
-
     public GameObject bullet;
     public float bulletInstanceDistance;
     public float shootDelay;
@@ -69,16 +63,6 @@ public class Enemy_Ninja : Enemy
         body = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
 
-        groundCheckTopLeft = new Vector2
-                         (
-                            -(box.size.x / 2f - groundCheckBoxIndent),
-                            -(box.size.y / 2f - groundCheckBoxHeight / 2f)
-                         );
-        groundCheckBottomRight = new Vector2
-                                 (
-                                    box.size.x / 2f - groundCheckBoxIndent,
-                                    -(box.size.y / 2f + groundCheckBoxHeight / 2f)
-                                 );
         playerBox = player.GetComponent<BoxCollider2D>();
     }
 
@@ -99,7 +83,7 @@ public class Enemy_Ninja : Enemy
     {
         float distance = Vector3.Distance(player.position, transform.position);
 
-        if (!CheckPlayerInSight()) return;
+        if (!CheckPlayerInSight() || thing.dead) return;
 
         if (!justAttacked)
         {
@@ -139,16 +123,6 @@ public class Enemy_Ninja : Enemy
         justAttacked = false;
     }
 
-    bool Grounded()
-    {
-        return Physics2D.OverlapArea
-        (
-            (Vector2)transform.position + groundCheckTopLeft,
-            (Vector2)transform.position + groundCheckBottomRight,
-            floorLayer
-        );
-    }
-
     IEnumerator Idle()
     {
         if (busy) yield break;
@@ -167,7 +141,7 @@ public class Enemy_Ninja : Enemy
         body.velocity = new Vector2(player.position.x < transform.position.x ? -walkSpeed : walkSpeed, body.velocity.y);
         while (timer < walkDuration)
         {
-            if (!Grounded()) break;
+            if (!grounded) break;
             timer += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -196,10 +170,10 @@ public class Enemy_Ninja : Enemy
     {
         if (busy) yield break;
         busy = true;
-        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 direction = (Vector3.up * 2f + (player.position - transform.position).normalized).normalized;
         GameObject newBullet = Instantiate(bomb, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
         Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
-        bulletBody.velocity = direction * bulletSpeed;
+        bulletBody.velocity = direction * bombSpeed;
         busy = false;
         StartCoroutine(StartAttackTimer());
     }

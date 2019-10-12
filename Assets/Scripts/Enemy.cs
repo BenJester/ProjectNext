@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour{
 	public int health = 1;
     public bool canShuaisi = false;
     BoxCollider2D box;
-    bool grounded;
+    protected bool grounded;
     Vector2 groundCheckTopLeft;
     Vector2 groundCheckBottomRight;
     float groundCheckBoxIndent = 2f;
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour{
     public LayerMask floorLayer = 8;
 
     protected void Start () {
-		maxHealth = 1;
+		//maxHealth = 1;
 		health = maxHealth;
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
@@ -46,17 +46,15 @@ public class Enemy : MonoBehaviour{
         {
             thing.Die();
         }
-	}
-
-	void OnCollisionEnter2D (Collision2D col) {
-
         grounded = Physics2D.OverlapArea
     (
         (Vector2)transform.position + groundCheckTopLeft,
         (Vector2)transform.position + groundCheckBottomRight,
         floorLayer
     );
+    }
 
+	void OnCollisionEnter2D (Collision2D col) {
         if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && grounded) {
 			thing.collider.enabled = false;
 			thing.Die ();

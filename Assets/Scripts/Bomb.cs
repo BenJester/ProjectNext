@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     public float explosionRadius;
+    public int damage = 1;
     bool active;
 
     private void Start()
@@ -14,11 +15,11 @@ public class Bomb : MonoBehaviour
 
     IEnumerator Init()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         active = true;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionStay2D(Collision2D col)
     {
         Explode();
     }
@@ -33,9 +34,9 @@ public class Bomb : MonoBehaviour
             {
                 col.GetComponent<PlayerControl1>().Die();
             }
-            if (col.CompareTag("thing"))
+            if (col.CompareTag("thing") && col.GetComponent<Enemy>())
             {
-                col.GetComponent<Thing>().Die();
+                col.GetComponent<Enemy>().TakeDamage(damage);
             }
         }
         Destroy(gameObject);
