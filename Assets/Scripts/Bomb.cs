@@ -39,6 +39,6 @@ public class Bomb : MonoBehaviour
                 col.GetComponent<Enemy>().TakeDamage(damage);
             }
         }
-        Destroy(gameObject);
+        GetComponent<Thing>().Die();
     }
 }
