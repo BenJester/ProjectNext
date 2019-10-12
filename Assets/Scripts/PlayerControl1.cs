@@ -148,6 +148,15 @@ public class PlayerControl1 : PlayerControl {
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
 
+
+    [Tooltip("持续跳跃的时间")]
+    public float TimeToKeepJumping;
+
+    [Tooltip("持续跳跃的力度")]
+    public float ForceKeepJumping;
+
+    private float m_fCurrentKeepJumping;
+
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -281,16 +290,29 @@ public class PlayerControl1 : PlayerControl {
 				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
 			}
 
-			//跳跃代码
-			if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
-				if (canJump)
-					Jump ();
-				else {
-					cachedJump = true;
-					StartCoroutine (CacheJump ());
-				}
+            if (canJump == false)
+            {
+                if (m_fCurrentKeepJumping <= TimeToKeepJumping)
+                {
+                    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+                    {
+                        m_fCurrentKeepJumping += Time.deltaTime;
+                        rb.AddForce(transform.up * ForceKeepJumping);
+                    }
+                }
+            }
 
-			}
+            //跳跃代码
+            if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
+				if (canJump)
+                {
+					Jump ();
+                }
+				else {
+                    cachedJump = true;
+                    StartCoroutine(CacheJump());
+                }
+            }
 
 			if (isTouchingGround) {
 				anim.SetBool ("Jumping", false);
@@ -367,7 +389,9 @@ public class PlayerControl1 : PlayerControl {
 	void Jump () {
 		rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		canJump = false;
-	}
+        m_fCurrentKeepJumping = 0.0f;
+
+    }
 
 	// 计算与鼠标和玩家最近的物体
 	void HandleObjectDistance () {
