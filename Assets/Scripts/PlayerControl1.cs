@@ -145,6 +145,9 @@ public class PlayerControl1 : PlayerControl {
 	public Dash dash;
 	public bool doubleSwap;
 
+    public LayerMask TouchLayer;
+    public LayerMask BoxLayer;
+
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -180,12 +183,54 @@ public class PlayerControl1 : PlayerControl {
         hp = maxhp;
 	}
 
+    private bool _isTouching(ref RaycastHit2D _refRaycast)
+    {
+        bool bRes = false;
+        if (_refRaycast)
+        {
+            if (BoxLayer == _refRaycast.transform.gameObject.layer)
+            {
+                //如果检测出来的是boxlayer物件，判断角色与触碰物的位置，如果位置不符合条件，则不算碰触，避免在触碰物两边也会卡住的问题
+                BoxCollider2D _box = _refRaycast.transform.GetComponent<BoxCollider2D>();
+                float fHeight = _box.size.y / 2 * _refRaycast.transform.localScale.y;
+                float posTopBox = _refRaycast.transform.position.y + fHeight;
+                if (transform.position.y < posTopBox)
+                {
+                    bRes = false;
+                }
+                else
+                {
+                    bRes = true;
+                }
+            }
+            else
+            {
+                bRes = true;
+            }
+        }
+        return bRes;
+    }
 	void Update () {
 
 		anim.SetFloat ("SpeedY", rb.velocity.y);
-		isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, (1 << 11) | (1 << 8)) || Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, (1 << 11) | (1 << 8));
+        //isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
+        //          Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
+        //          Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
+        //          Physics2D.Raycast (groundCheckPoint4.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
+        //          Physics2D.Raycast (groundCheckPoint5.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12));
+        RaycastHit2D _ray1 = Physics2D.Raycast(groundCheckPoint1.position, Vector3.down, 5f, TouchLayer);
+        RaycastHit2D _ray2 = Physics2D.Raycast(groundCheckPoint2.position, Vector3.down, 5f, TouchLayer);
+        RaycastHit2D _ray3 = Physics2D.Raycast(groundCheckPoint3.position, Vector3.down, 5f, TouchLayer);
+        RaycastHit2D _ray4 = Physics2D.Raycast(groundCheckPoint4.position, Vector3.down, 5f, TouchLayer);
+        RaycastHit2D _ray5 = Physics2D.Raycast(groundCheckPoint5.position, Vector3.down, 5f, TouchLayer);
+        isTouchingGround = _ray1 | _ray2 | _ray3 | _ray4 | _ray5;
 
-		if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
+        if (isTouchingGround == true)
+        {
+            isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
+        }
+
+        if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
         {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
@@ -617,10 +662,10 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void HandleJump () {
-		if (!isTouchingGround)
-			StartCoroutine (JumpTolerence ());
-		else
-			canJump = true;
+        if (!isTouchingGround)
+            StartCoroutine (JumpTolerence ());
+        else
+            canJump = true;
 	}
 
 	IEnumerator JumpTolerence () {
