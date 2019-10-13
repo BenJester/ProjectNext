@@ -35,7 +35,7 @@ public class EnemyBullet : Bullet {
 //		collider.enabled = false;
 //	}
 //
-	public override void OnTriggerEnter2D(Collider2D col) {
+	public void OnTriggerEnter2D(Collider2D col) {
 
 		if (col.CompareTag ("thing")) {
 			if (col.GetComponent<Thing> ().type != Type.box)

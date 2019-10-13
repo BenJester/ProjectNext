@@ -20,7 +20,6 @@ public class Enemy_Ninja : Enemy
     Transform player;
     PlayerControl1 playerControl;
     Rigidbody2D body;
-    BoxCollider2D box;
     BoxCollider2D playerBox;
 
     public float sightDistance;
@@ -61,7 +60,6 @@ public class Enemy_Ninja : Enemy
         playerControl = player.GetComponent<PlayerControl1>();
 
         body = GetComponent<Rigidbody2D>();
-        box = GetComponent<BoxCollider2D>();
 
         playerBox = player.GetComponent<BoxCollider2D>();
     }
@@ -102,7 +100,7 @@ public class Enemy_Ninja : Enemy
             
             if (distance < dashThreshold)
             {
-                StartCoroutine(Walk());
+                StartCoroutine(Idle());
             }
             else
             {
@@ -189,6 +187,13 @@ public class Enemy_Ninja : Enemy
             
             Vector3 direction = (player.position - transform.position).normalized;
             float timer = 0f;
+            while (timer < dashInteval)
+            {
+                body.velocity = new Vector2(0, 0);
+                timer += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            timer = 0f;
             while (timer < dashDuration)
             {
                 Physics2D.IgnoreCollision(box, playerBox, true);
@@ -207,15 +212,8 @@ public class Enemy_Ninja : Enemy
                 Physics2D.IgnoreCollision(box, playerBox, false);
             }
             timer = 0f;
-            while (timer < dashInteval)
-            {
-                body.velocity = new Vector2(0, 0);
-                timer += Time.deltaTime;
-                yield return new WaitForEndOfFrame();
-            }
+            body.velocity = Vector2.zero;
         }
-        
-
         busy = false;
         StartCoroutine(StartAttackTimer());
     }

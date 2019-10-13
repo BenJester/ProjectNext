@@ -7,6 +7,7 @@ public class Bomb : MonoBehaviour
     public float explosionRadius;
     public int damage = 1;
     bool active;
+    public GameObject particle;
 
     private void Start()
     {
@@ -39,6 +40,8 @@ public class Bomb : MonoBehaviour
                 col.GetComponent<Enemy>().TakeDamage(damage);
             }
         }
+        GameObject par = Instantiate(particle, transform.position, Quaternion.identity);
+        active = false;
         GetComponent<Thing>().Die();
     }
 }

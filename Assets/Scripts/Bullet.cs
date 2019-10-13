@@ -145,10 +145,10 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 
-	public virtual void OnTriggerEnter2D (Collider2D col) {
+	public virtual void OnCollisionEnter2D (Collision2D col) {
 
-		if (col.CompareTag ("thing") && !col.GetComponent<Thing>().hasShield) {
-			playerControl.swap.col = col;
+		if (col.collider.CompareTag ("thing") && !col.collider.GetComponent<Thing>().hasShield) {
+			playerControl.swap.col = col.collider;
 			playerControl.swap.Do ();
 			playerControl.doubleSwap = true;
             CameraShaker.Instance.ShakeOnce(15, 1f, 0.02f, 0.05f);
@@ -196,7 +196,7 @@ public class Bullet : MonoBehaviour {
             //			thingBody.velocity = tempV;
             Deactivate();
 
-		} else if (col.CompareTag ("floor") || col.CompareTag("shield")) {
+		} else if (col.collider.CompareTag ("floor") || col.collider.CompareTag("shield")) {
 			Deactivate ();
 		}
 
