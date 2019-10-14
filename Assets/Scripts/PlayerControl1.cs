@@ -17,7 +17,8 @@ public class PlayerControl1 : PlayerControl {
     bool invincible;
 	public float speed;
 	public float jumpSpeed;
-	public float coyoteTime;
+    public float jumpSpeed2nd;
+    public float coyoteTime;
 	public float cacheJumpTime;
 	bool cachedJump;
 	public float maxSpeed = 10000f;
@@ -89,7 +90,10 @@ public class PlayerControl1 : PlayerControl {
 	public bool isTouchingGround;
 	public bool canJump;
 
-	public int startChargeFrame;
+
+    private bool m_bJumpingWindow;
+
+    public int startChargeFrame;
 	float chargeFrame = 0;
 
 	[Header ("瞄准表现")]
@@ -148,13 +152,8 @@ public class PlayerControl1 : PlayerControl {
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
 
-
-    [Tooltip("持续跳跃的时间")]
-    public float TimeToKeepJumping;
-
-    [Tooltip("持续跳跃的力度")]
-    public float ForceKeepJumping;
-
+    public float Jump2ndTime;
+    public float Jump1stTime;
     private float m_fCurrentKeepJumping;
 
 	public void InitSkills () {
@@ -290,14 +289,29 @@ public class PlayerControl1 : PlayerControl {
 				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
 			}
 
-            if (canJump == false)
+            if (m_bJumpingWindow == true)
             {
-                if (m_fCurrentKeepJumping <= TimeToKeepJumping)
+                if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
                 {
-                    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+                    if (m_fCurrentKeepJumping >= Jump2ndTime)
                     {
-                        m_fCurrentKeepJumping += Time.deltaTime;
-                        rb.AddForce(transform.up * ForceKeepJumping);
+                        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
+                        m_bJumpingWindow = false;
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+                        m_bJumpingWindow = false;
+                    }
+                }
+                m_fCurrentKeepJumping += Time.deltaTime;
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+                {
+                    if (m_fCurrentKeepJumping >= Jump2ndTime)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
+                        m_bJumpingWindow = false;
                     }
                 }
             }
@@ -387,10 +401,10 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Jump () {
-		rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+		//rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		canJump = false;
         m_fCurrentKeepJumping = 0.0f;
-
+        m_bJumpingWindow = true;
     }
 
 	// 计算与鼠标和玩家最近的物体
@@ -689,7 +703,19 @@ public class PlayerControl1 : PlayerControl {
         if (!isTouchingGround)
             StartCoroutine (JumpTolerence ());
         else
-            canJump = true;
+        {
+            if( m_bJumpingWindow == false)
+            {
+                canJump = true;
+            }
+            else
+            {
+                if (m_fCurrentKeepJumping > Jump2ndTime)
+                {
+                    canJump = true;
+                }
+            }
+        }
 	}
 
 	IEnumerator JumpTolerence () {
