@@ -95,8 +95,9 @@ public class Dash : Skill {
 		//		Vector2 dir = new Vector2(h, v).normalized;
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Vector2 dir = (mouseWorldPos - (Vector2) player.transform.position).normalized;
+        playerBody.velocity = dir * DashSpeed;
         while (curr < DashDuration) {
-            playerBody.velocity = dir * DashSpeed;
+            //playerBody.velocity = dir * DashSpeed;
             curr += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
 		}
@@ -128,12 +129,21 @@ public class Dash : Skill {
 
         if (!playerControl.swap.delaying)
         {
-            lr.SetPosition(0, transform.position);
-            for (int i = 1; i < 25; i ++)
-            {
-                lr.SetPosition(i, transform.position + (Vector3)dir * 170);
-            }
 
+            //lr.SetPosition(0, transform.position);
+            //for (int i = 1; i < 25; i ++)
+            //{
+            //    lr.SetPosition(i, transform.position + (Vector3)dir * 170);
+            //}
+            GameObject target = gameObject;// playerControl.swap.col.gameObject;
+            lr.SetPositions(Plot(playerControl.GetComponent<Rigidbody2D>(),
+                                 target.transform.position,
+                                 dir * DashSpeed,
+                                 5));
+            for (int i = 5; i < 25; i++)
+            {
+                lr.SetPosition(i, lr.GetPosition(4));
+            }
         }
         else
         {
