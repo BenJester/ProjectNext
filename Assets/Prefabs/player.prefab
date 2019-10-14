@@ -442,7 +442,7 @@ MonoBehaviour:
   hp: 0
   speed: 400
   jumpSpeed: 580
-  jumpSpeed2nd: 700
+  jumpForceAir: 400000
   coyoteTime: 4
   cacheJumpTime: 10
   maxSpeed: 1200
@@ -512,8 +512,7 @@ MonoBehaviour:
   BoxLayer:
     serializedVersion: 2
     m_Bits: 0
-  Jump2ndTime: 0.1
-  Jump1stTime: 0.05
+  Jump1stTime: 0.2
 --- !u!114 &114260691191748520
 MonoBehaviour:
   m_ObjectHideFlags: 0
