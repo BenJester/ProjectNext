@@ -9,6 +9,7 @@ public class Shield : MonoBehaviour
     void Start()
     {
         thing = transform.parent.GetComponent<Thing>();
+        thing.shield = gameObject;
     }
 
     // Update is called once per frame

@@ -53,6 +53,9 @@ public class Enemy_Ninja : Enemy
     public float attackInteval;
     public bool justAttacked;
 
+    bool enraged;
+    bool justEnraged;
+
     void Start()
     {
         base.Start();
@@ -77,13 +80,29 @@ public class Enemy_Ninja : Enemy
         else return false;
     }
 
-    private void Update()
+    IEnumerator Enrage()
+    {
+        enraged = true;
+        justEnraged = true;
+        yield return new WaitForSeconds(1f);
+        thing.hasShield = true;
+        AnimHelper.Instance.Scale(thing.shield, 0f, 1.3f, 0.3f);
+        yield return new WaitForSeconds(0.3f);
+        AnimHelper.Instance.Scale(thing.shield, 1f, 0.77f, 0.1f);
+        yield return new WaitForSeconds(1.8f);
+        justEnraged = false;
+    }
+
+    void PhaseTwoAI()
     {
         float distance = Vector3.Distance(player.position, transform.position);
-
-        if (!CheckPlayerInSight() || thing.dead) return;
-
-        if (!justAttacked)
+        if (!enraged)
+        {
+            justAttacked = true;
+            StartCoroutine(Enrage());
+        }
+            
+        if (!justAttacked && !justEnraged)
         {
             StartCoroutine(ThrowBomb());
             if (distance < dashThreshold)
@@ -97,7 +116,6 @@ public class Enemy_Ninja : Enemy
         }
         else
         {
-            
             if (distance < dashThreshold)
             {
                 StartCoroutine(Idle());
@@ -107,6 +125,44 @@ public class Enemy_Ninja : Enemy
                 StartCoroutine(Walk());
             }
         }
+    }
+
+    void PhaseOneAI()
+    {
+        float distance = Vector3.Distance(player.position, transform.position);
+
+        if (!justAttacked)
+        {
+            if (Random.Range(0f, 1f) > 0.66f)
+            {
+                StartCoroutine(Dash());
+            }
+            else
+            {
+                StartCoroutine(ThrowBomb());
+            }
+        }
+        else
+        {
+            if (distance < dashThreshold)
+            {
+                StartCoroutine(Idle());
+            }
+            else
+            {
+                StartCoroutine(Walk());
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (!CheckPlayerInSight() || thing.dead) return;
+
+        if (health >= 3)
+            PhaseOneAI();
+        else
+            PhaseTwoAI();
     }
 
     IEnumerator StartAttackTimer()
