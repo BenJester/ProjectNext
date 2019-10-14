@@ -528,7 +528,7 @@ public class PlayerControl1 : PlayerControl {
         if(m_bJumpingWindow == true)
         {
             m_fCurrentKeepJumping += Time.fixedDeltaTime;
-            if(Time.fixedDeltaTime <= JumpAddForceTime)
+            if(m_fCurrentKeepJumping <= JumpAddForceTime)
             {
                 rb.AddForce(transform.up * Time.fixedDeltaTime * jumpForceAir);
             }
