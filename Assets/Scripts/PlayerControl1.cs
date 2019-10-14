@@ -152,7 +152,7 @@ public class PlayerControl1 : PlayerControl {
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
 
-    public float Jump1stTime;
+    public float JumpAddForceTime;
     private float m_fCurrentKeepJumping;
     private float m_fTotalForce;
 
@@ -525,7 +525,7 @@ public class PlayerControl1 : PlayerControl {
         if(m_bJumpingWindow == true)
         {
             m_fCurrentKeepJumping += Time.fixedDeltaTime;
-            if(Time.fixedDeltaTime <= Jump1stTime)
+            if(Time.fixedDeltaTime <= JumpAddForceTime)
             {
                 rb.AddForce(transform.up * Time.fixedDeltaTime * jumpForceAir);
             }
