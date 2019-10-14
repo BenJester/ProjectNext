@@ -25,6 +25,7 @@ public class Thing : MonoBehaviour {
 	Goal goal;
 	public bool dead = false;
     public bool hasShield = false;
+    public GameObject shield;
 	GameObject player;
 	[Header("死亡动画，需要有HeadBodySeparation脚本")]
 	public bool isDivedeDead=false;

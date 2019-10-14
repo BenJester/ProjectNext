@@ -13,6 +13,8 @@ public class Swap : Skill {
 	public Collider2D col;
     public bool delaying;
 
+    public float dashBeforeSwapTime;
+
     public GameObject smokeParticle;
 	public GameObject damageParticle;
 	public Vector3 smokeOffset;
@@ -166,7 +168,7 @@ public class Swap : Skill {
     IEnumerator CancelDelay()
     {
         delaying = false;
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(dashBeforeSwapTime);
         Time.fixedDeltaTime = playerControl.startDeltaTime;
         playerControl.targetDeltaTime = playerControl.startDeltaTime;
         //yield return new WaitForSeconds (waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f));

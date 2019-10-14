@@ -17,7 +17,9 @@ public class PlayerControl1 : PlayerControl {
     bool invincible;
 	public float speed;
 	public float jumpSpeed;
-    public float jumpSpeed2nd;
+
+    [Tooltip("空中跳跃施加力")]
+    public float jumpForceAir;
     public float coyoteTime;
 	public float cacheJumpTime;
 	bool cachedJump;
@@ -152,10 +154,12 @@ public class PlayerControl1 : PlayerControl {
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
 
-    public float Jump2ndTime;
-    public float Jump1stTime;
+    [Tooltip("空中跳跃施加力的时间")]
+    public float JumpAddForceTime;
     private float m_fCurrentKeepJumping;
+    private float m_fTotalForce;
 
+    private float m_fHeight;
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -291,29 +295,88 @@ public class PlayerControl1 : PlayerControl {
 
             if (m_bJumpingWindow == true)
             {
-                if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
-                {
-                    if (m_fCurrentKeepJumping >= Jump2ndTime)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
-                        m_bJumpingWindow = false;
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-                        m_bJumpingWindow = false;
-                    }
-                }
-                m_fCurrentKeepJumping += Time.deltaTime;
+                //if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
+                //{
+                //    if (m_fCurrentKeepJumping >= Jump2ndTime)
+                //    {
+                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
+                //        m_bJumpingWindow = false;
+                //    }
+                //    else
+                //    {
+                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+                //        m_bJumpingWindow = false;
+                //    }
+                //}
+                //m_fCurrentKeepJumping += Time.deltaTime;
 
-                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
-                {
-                    if (m_fCurrentKeepJumping >= Jump2ndTime)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
-                        m_bJumpingWindow = false;
-                    }
-                }
+                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+                //{
+                //    if (m_fCurrentKeepJumping >= Jump2ndTime)
+                //    {
+                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
+                //        m_bJumpingWindow = false;
+                //    }
+                //}
+
+
+                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+                //{
+                //    if (m_fCurrentKeepJumping >= Jump1stTime)
+                //    {
+                //        m_bJumpingWindow = false;
+                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
+                //    }
+                //    m_fCurrentKeepJumping += Time.deltaTime;
+                //}
+
+                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+                //{
+                //    float fCache = m_fCurrentKeepJumping;
+                //    m_fCurrentKeepJumping += Time.deltaTime;
+                //    if (m_fCurrentKeepJumping <= Jump1stTime)
+                //    {
+                //        rb.AddForce(transform.up * jumpSpeed2nd * Time.deltaTime);
+                //        m_fTotalForce += (jumpSpeed2nd * Time.deltaTime);
+                //        if (m_fCurrentKeepJumping == Jump1stTime)
+                //        {
+                //            m_bJumpingWindow = false;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        float deltaTimeDiff = Jump1stTime - fCache;
+                //        rb.AddForce(transform.up * jumpSpeed2nd * deltaTimeDiff);
+                //        m_fTotalForce += (jumpSpeed2nd * deltaTimeDiff);
+                //        m_bJumpingWindow = false;
+                //    }
+                //}
+
+                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
+                //{
+                //    float fCache = m_fCurrentKeepJumping;
+                //    m_fCurrentKeepJumping += Time.deltaTime;
+                //    if (m_fCurrentKeepJumping <= Jump1stTime)
+                //    {
+                //        if (m_fCurrentKeepJumping == Jump1stTime)
+                //        {
+                //            m_bJumpingWindow = false;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        m_bJumpingWindow = false;
+                //    }
+                //}
+            }
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
+            {
+                m_bJumpingWindow = false;
+            }
+            //log code
+            if (m_fHeight < transform.position.y)
+            {
+                m_fHeight = transform.position.y;
             }
 
             //跳跃代码
@@ -401,10 +464,13 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Jump () {
-		//rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
-		canJump = false;
+        rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+        canJump = false;
         m_fCurrentKeepJumping = 0.0f;
+        m_fTotalForce = 0.0f;
         m_bJumpingWindow = true;
+
+        m_fHeight = transform.position.y;
     }
 
 	// 计算与鼠标和玩家最近的物体
@@ -458,7 +524,19 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void FixedUpdate () {
+        if(m_bJumpingWindow == true)
+        {
+            m_fCurrentKeepJumping += Time.fixedDeltaTime;
+            if(Time.fixedDeltaTime <= JumpAddForceTime)
+            {
+                rb.AddForce(transform.up * Time.fixedDeltaTime * jumpForceAir);
+            }
+            else
+            {
+                m_bJumpingWindow = false;
+            }
 
+        }
         // 左键子弹时间
         if (Input.GetMouseButton(0))
             currWaitTime += 1;
@@ -699,6 +777,14 @@ public class PlayerControl1 : PlayerControl {
 		return angle;
 	}
 
+    private void _logHeight()
+    {
+        if(canJump == false)
+        {
+            //Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
+        }
+    }
+
 	void HandleJump () {
         if (!isTouchingGround)
             StartCoroutine (JumpTolerence ());
@@ -706,14 +792,15 @@ public class PlayerControl1 : PlayerControl {
         {
             if( m_bJumpingWindow == false)
             {
+                _logHeight();
                 canJump = true;
             }
             else
             {
-                if (m_fCurrentKeepJumping > Jump2ndTime)
-                {
-                    canJump = true;
-                }
+                //if (m_fCurrentKeepJumping > Jump2ndTime)
+                //{
+                //    canJump = true;
+                //}
             }
         }
 	}
@@ -723,7 +810,8 @@ public class PlayerControl1 : PlayerControl {
 		while (curr <= coyoteTime) {
 			if (isTouchingGround) {
 
-				canJump = true;
+                _logHeight();
+                canJump = true;
 				yield return null;
 			}
 
