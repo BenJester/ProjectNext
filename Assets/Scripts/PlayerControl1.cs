@@ -17,6 +17,8 @@ public class PlayerControl1 : PlayerControl {
     bool invincible;
 	public float speed;
 	public float jumpSpeed;
+
+    [Tooltip("空中跳跃施加力")]
     public float jumpForceAir;
     public float coyoteTime;
 	public float cacheJumpTime;
@@ -152,6 +154,7 @@ public class PlayerControl1 : PlayerControl {
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
 
+    [Tooltip("空中跳跃施加力的时间")]
     public float JumpAddForceTime;
     private float m_fCurrentKeepJumping;
     private float m_fTotalForce;
@@ -465,7 +468,6 @@ public class PlayerControl1 : PlayerControl {
         canJump = false;
         m_fCurrentKeepJumping = 0.0f;
         m_fTotalForce = 0.0f;
-        Debug.Log(string.Format("<color=red>vy=[{0}]</color>", rb.velocity.y));
         m_bJumpingWindow = true;
 
         m_fHeight = transform.position.y;
@@ -779,7 +781,7 @@ public class PlayerControl1 : PlayerControl {
     {
         if(canJump == false)
         {
-            Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
+            //Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
         }
     }
 
