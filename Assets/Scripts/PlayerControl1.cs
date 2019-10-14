@@ -464,6 +464,7 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Jump () {
+        box.sharedMaterial = slipperyMat;
         rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
         canJump = false;
         m_fCurrentKeepJumping = 0.0f;
@@ -781,7 +782,7 @@ public class PlayerControl1 : PlayerControl {
     {
         if(canJump == false)
         {
-            //Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
+            Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
         }
     }
 
