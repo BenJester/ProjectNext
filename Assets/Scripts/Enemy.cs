@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
-		if (thing.upperY < -1600f)
+		if (thing.upperY < -16000f)
         {
             thing.Die();
         }
