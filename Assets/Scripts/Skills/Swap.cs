@@ -31,7 +31,7 @@ public class Swap : Skill {
 			return;
 		StartCoroutine(DelayedSwap(waitTime));
 
-
+        playerControl.SetColShadow();
 
 	}
 

@@ -168,6 +168,9 @@ public class PlayerControl1 : PlayerControl {
     private float m_fTotalForce;
 
     private float m_fHeight;
+
+    public SpriteRenderer colShadow;
+    public SpriteRenderer playerShadow;
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -201,7 +204,7 @@ public class PlayerControl1 : PlayerControl {
 		//设置射程和灯光
 		if (hasShootDistance) HandleShootDistanceAndLight ();
         hp = maxhp;
-	}
+    }
 
     private bool _isTouching(ref RaycastHit2D _refRaycast)
     {
@@ -912,5 +915,32 @@ public class PlayerControl1 : PlayerControl {
         yield return new WaitForSeconds(0.3f);
         GetComponent<SpriteRenderer>().color = Color.white;
         invincible = false;
+    }
+    public void SetColShadow()
+    {
+        colShadow.enabled = true;
+        colShadow.sprite = swap.col.GetComponent<SpriteRenderer>().sprite;
+        colShadow.transform.localScale = swap.col.transform.localScale;
+        StartCoroutine(PlayColShadow());
+    }
+    IEnumerator PlayColShadow()
+    {
+        colShadow.transform.position = transform.position;
+        while (Input.GetMouseButton(1) && swap.delaying)
+        {
+            if ((Vector2) lr.GetPosition(5) != Vector2.zero)
+                colShadow.transform.position = Vector2.Lerp(colShadow.transform.position, lr.GetPosition(5), Time.deltaTime * 50);
+            if ((lr.GetPosition(5) - colShadow.transform.position).magnitude < 20)
+                colShadow.transform.position = transform.position;
+            yield return null;
+        }
+        colShadow.enabled = false;
+        colShadow.transform.position = transform.position;
+        for(int i = 0; i < 4; i++)
+        {
+             SpriteRenderer s= Instantiate(playerShadow, lr.GetPosition(i), Quaternion.identity);
+            s.enabled = true;
+            s.GetComponent<AutoDestroy>().StartDestroy(0.5f+i/10f);
+        }
     }
 }
