@@ -441,6 +441,8 @@ MonoBehaviour:
   maxhp: 5
   hp: 0
   speed: 400
+  JumpingHorizontalMaxSpeed: 250
+  JumpingHorizontalForce: 10000
   jumpSpeed: 580
   jumpForceAir: 400000
   coyoteTime: 4
@@ -716,16 +718,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147906740149146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51a80656a89e2c046a774a9d35474b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
-  maxCharge: 1
+  maxCharge: 0
   CoyoteDelay: 0.2
   CoyoteDuration: 0.15
 --- !u!114 &652234066
