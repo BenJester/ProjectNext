@@ -520,18 +520,23 @@ public class PlayerControl1 : PlayerControl {
 		closestObjectToPlayer = null;
 
 		foreach (var thing in thingList) {
-			float distanceToCursor = Vector2.Distance (((Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition)), (Vector2) thing.transform.position);
-			float distanceToPlayer = Vector2.Distance ((Vector2) transform.position, (Vector2) thing.transform.position);
+            if(thing != null)
+            {
+                float distanceToCursor = Vector2.Distance(((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)), (Vector2)thing.transform.position);
+                float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
 
-			if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) {
-				closestDistance = distanceToCursor;
-				closestObjectToCursor = thing.gameObject;
-			}
+                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold)
+                {
+                    closestDistance = distanceToCursor;
+                    closestObjectToCursor = thing.gameObject;
+                }
 
-			if (!thing.dead && distanceToPlayer < closestPlayerDistance) {
-				closestPlayerDistance = distanceToPlayer;
-				closestObjectToPlayer = thing.gameObject;
-			}
+                if (!thing.dead && distanceToPlayer < closestPlayerDistance)
+                {
+                    closestPlayerDistance = distanceToPlayer;
+                    closestObjectToPlayer = thing.gameObject;
+                }
+            }
 		}
 
 		// 记号圆圈
