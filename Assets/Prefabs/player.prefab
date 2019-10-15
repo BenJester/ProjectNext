@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 1650953026518082663}
   - component: {fileID: 938646920251497759}
   - component: {fileID: 213356528936573312}
+  - component: {fileID: 1171777106461932643}
   m_Layer: 9
   m_Name: player
   m_TagString: player
@@ -772,7 +773,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
-  maxCharge: 0
+  maxCharge: 1
   CoyoteDelay: 0.2
   CoyoteDuration: 0.15
 --- !u!114 &652234066
@@ -832,6 +833,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28679b06a8e6cb2429c275c7132727a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1171777106461932643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147906740149146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4b743961682f54f86b311138db1440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasHpUI: 1
+  playerHealthText: {fileID: 0}
+  pc: {fileID: 0}
 --- !u!1 &1193951111751896
 GameObject:
   m_ObjectHideFlags: 0
