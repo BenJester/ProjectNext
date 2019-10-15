@@ -16,10 +16,14 @@ public class PlayerControl1 : PlayerControl {
     public int hp;
     bool invincible;
 	public float speed;
-    [Tooltip("跳跃中水平移动最大速度")]
-    public float JumpingHorizontalMaxSpeed;
-    [Tooltip("跳跃中水平移动施加力值")]
-    public float JumpingHorizontalForce;
+    [Tooltip("跳跃中水平移动最大速度向上")]
+    public float JumpingHorizontalUpMaxSpeed;
+    [Tooltip("跳跃中水平移动施加力值向上")]
+    public float JumpingHorizontalUpForce;
+    [Tooltip("跳跃中水平移动最大速度向下")]
+    public float JumpingHorizontalDownMaxSpeed;
+    [Tooltip("跳跃中水平移动施加力值向下")]
+    public float JumpingHorizontalDownForce;
     public float jumpSpeed;
 
     [Tooltip("空中跳跃施加力")]
@@ -304,16 +308,36 @@ public class PlayerControl1 : PlayerControl {
             {
                 if (h > 0)
                 {
-                    if( rb.velocity.x < JumpingHorizontalMaxSpeed)
+                    if(rb.velocity.y > 0)
                     {
-                        rb.AddForce(Vector2.right * JumpingHorizontalForce);
+                        if (rb.velocity.x < JumpingHorizontalUpMaxSpeed)
+                        {
+                            rb.AddForce(Vector2.right * JumpingHorizontalUpForce);
+                        }
+                    }
+                    else
+                    {
+                        if (rb.velocity.x < JumpingHorizontalDownMaxSpeed)
+                        {
+                            rb.AddForce(Vector2.right * JumpingHorizontalDownForce);
+                        }
                     }
                 }
                 else if (h < 0)
                 {
-                    if (rb.velocity.x > -JumpingHorizontalMaxSpeed)
+                    if (rb.velocity.y > 0)
                     {
-                        rb.AddForce(Vector2.left * JumpingHorizontalForce);
+                        if (rb.velocity.x > -JumpingHorizontalUpMaxSpeed)
+                        {
+                            rb.AddForce(Vector2.left * JumpingHorizontalUpForce);
+                        }
+                    }
+                    else
+                    {
+                        if (rb.velocity.x > -JumpingHorizontalDownMaxSpeed)
+                        {
+                            rb.AddForce(Vector2.left * JumpingHorizontalDownForce);
+                        }
                     }
                 }
             }

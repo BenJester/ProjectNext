@@ -442,10 +442,12 @@ MonoBehaviour:
   maxhp: 5
   hp: 5
   speed: 400
-  JumpingHorizontalMaxSpeed: 250
-  JumpingHorizontalForce: 10000
+  JumpingHorizontalUpMaxSpeed: 300
+  JumpingHorizontalUpForce: 60000
+  JumpingHorizontalDownMaxSpeed: 300
+  JumpingHorizontalDownForce: 60000
   jumpSpeed: 500
-  jumpForceAir: 1000000
+  jumpForceAir: 800000
   coyoteTime: 4
   cacheJumpTime: 10
   maxSpeed: 1200
@@ -560,7 +562,7 @@ MonoBehaviour:
   BoxLayer:
     serializedVersion: 2
     m_Bits: 0
-  JumpAddForceTime: 0.2
+  JumpAddForceTime: 0.25
 --- !u!114 &114260691191748520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,7 +775,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
-  maxCharge: 1
+  maxCharge: 0
   CoyoteDelay: 0.2
   CoyoteDuration: 0.15
 --- !u!114 &652234066
