@@ -10,6 +10,8 @@ public class Mech_ChangeSpeed : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.tag == "bullet")
+            return;
         Rigidbody2D rb = col.GetComponent<Rigidbody2D>();
         float speed = rb.velocity.magnitude;
         if (dir != Vector2.zero)
