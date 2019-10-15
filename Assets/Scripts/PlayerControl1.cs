@@ -16,7 +16,11 @@ public class PlayerControl1 : PlayerControl {
     public int hp;
     bool invincible;
 	public float speed;
-	public float jumpSpeed;
+    [Tooltip("跳跃中水平移动最大速度")]
+    public float JumpingHorizontalMaxSpeed;
+    [Tooltip("跳跃中水平移动施加力值")]
+    public float JumpingHorizontalForce;
+    public float jumpSpeed;
 
     [Tooltip("空中跳跃施加力")]
     public float jumpForceAir;
@@ -287,11 +291,43 @@ public class PlayerControl1 : PlayerControl {
 				legAnim.SetBool ("Moving", false);
 			}
 
-			if (Mathf.Abs (rb.velocity.x) <= speed) {
-				rb.velocity = new Vector2 (h * speed, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
-			} else {
-				rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp (rb.velocity.y, -maxSpeed, maxSpeed));
-			}
+            //if (Mathf.Abs(rb.velocity.x) <= speed)
+            //{
+            //    rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+            //}
+            //else
+            //{
+            //    rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+            //}
+
+            if (canJump == false)
+            {
+                if (h > 0)
+                {
+                    if( rb.velocity.x < JumpingHorizontalMaxSpeed)
+                    {
+                        rb.AddForce(Vector2.right * JumpingHorizontalForce);
+                    }
+                }
+                else if (h < 0)
+                {
+                    if (rb.velocity.x > -JumpingHorizontalMaxSpeed)
+                    {
+                        rb.AddForce(Vector2.left * JumpingHorizontalForce);
+                    }
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(rb.velocity.x) <= speed)
+                {
+                    rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+                }
+                else
+                {
+                    rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+                }
+            }
 
             if (m_bJumpingWindow == true)
             {
@@ -484,18 +520,23 @@ public class PlayerControl1 : PlayerControl {
 		closestObjectToPlayer = null;
 
 		foreach (var thing in thingList) {
-			float distanceToCursor = Vector2.Distance (((Vector2) Camera.main.ScreenToWorldPoint (Input.mousePosition)), (Vector2) thing.transform.position);
-			float distanceToPlayer = Vector2.Distance ((Vector2) transform.position, (Vector2) thing.transform.position);
+            if(thing != null)
+            {
+                float distanceToCursor = Vector2.Distance(((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)), (Vector2)thing.transform.position);
+                float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
 
-			if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold) {
-				closestDistance = distanceToCursor;
-				closestObjectToCursor = thing.gameObject;
-			}
+                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold)
+                {
+                    closestDistance = distanceToCursor;
+                    closestObjectToCursor = thing.gameObject;
+                }
 
-			if (!thing.dead && distanceToPlayer < closestPlayerDistance) {
-				closestPlayerDistance = distanceToPlayer;
-				closestObjectToPlayer = thing.gameObject;
-			}
+                if (!thing.dead && distanceToPlayer < closestPlayerDistance)
+                {
+                    closestPlayerDistance = distanceToPlayer;
+                    closestObjectToPlayer = thing.gameObject;
+                }
+            }
 		}
 
 		// 记号圆圈
@@ -782,7 +823,7 @@ public class PlayerControl1 : PlayerControl {
     {
         if(canJump == false)
         {
-            Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
+            //Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
         }
     }
 

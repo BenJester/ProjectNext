@@ -439,10 +439,12 @@ MonoBehaviour:
   active: 1
   HasRepawnPoint: 1
   maxhp: 5
-  hp: 0
+  hp: 5
   speed: 400
-  jumpSpeed: 580
-  jumpForceAir: 400000
+  JumpingHorizontalMaxSpeed: 250
+  JumpingHorizontalForce: 10000
+  jumpSpeed: 500
+  jumpForceAir: 1000000
   coyoteTime: 4
   cacheJumpTime: 10
   maxSpeed: 1200
@@ -476,35 +478,80 @@ MonoBehaviour:
   minBulletSpeed: 2300
   maxBulletSpeed: 2000
   bulletChargeSpeed: -1
-  bulletSpeed: 0
-  isTouchingGround: 0
-  canJump: 0
+  bulletSpeed: 2300
+  isTouchingGround: 1
+  canJump: 1
   startChargeFrame: 10
   useLineRenderer: 0
   useCursor: 1
-  lr: {fileID: 0}
+  lr: {fileID: 120921767453741660}
   cursorPrefab: {fileID: 1499566487591756, guid: 815a9e77ddf752b4ab29e228454e5cda,
     type: 3}
-  startDeltaTime: 0
-  targetDeltaTime: 0
-  targetTimeScale: 0
+  startDeltaTime: 0.0167
+  targetDeltaTime: 0.0167
+  targetTimeScale: 1
   landingParticle: {fileID: 1760684535814648, guid: 73e1ea2ab6a1ba64c96de3502e70c87b,
     type: 3}
-  originalScale: {x: 0, y: 0, z: 0}
+  originalScale: {x: 1, y: 1, z: 1}
   legAnim: {fileID: 95738157068914426}
   legsSpriteRenderer: {fileID: 212105170672423868}
   pointer: {fileID: 1899453179180814}
   swapTarget: {fileID: 0}
-  thingList: []
+  thingList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   closestObjectToCursor: {fileID: 0}
   closestObjectToPlayer: {fileID: 0}
-  closestDistance: 9999
-  closestPlayerDistance: Infinity
+  closestDistance: Infinity
+  closestPlayerDistance: 974.4824
   cursorSnapThreshold: 138
   marker: {fileID: 1948678748210214}
   targetMarker: {fileID: 1193951111751896}
-  swap: {fileID: 0}
-  dash: {fileID: 0}
+  swap: {fileID: 114163332939612696}
+  dash: {fileID: 114591261722450940}
   doubleSwap: 0
   TouchLayer:
     serializedVersion: 2
@@ -716,16 +763,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147906740149146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51a80656a89e2c046a774a9d35474b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
-  maxCharge: 1
+  maxCharge: 0
   CoyoteDelay: 0.2
   CoyoteDuration: 0.15
 --- !u!114 &652234066
