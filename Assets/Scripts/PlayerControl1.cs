@@ -936,11 +936,29 @@ public class PlayerControl1 : PlayerControl {
         }
         colShadow.enabled = false;
         colShadow.transform.position = transform.position;
-        for(int i = 0; i < 4; i++)
+       
+        //延迟换图
+        /*SpriteRenderer colSprite=  swap.col.GetComponent<SpriteRenderer>();
+        Sprite originColSprite = colSprite.sprite;
+        colSprite.sprite = spriteRenderer.sprite;
+        colSprite.flipX = spriteRenderer.flipX;
+        Vector3 originScale = colSprite.transform.localScale;
+        colSprite.transform.localScale = transform.localScale;*/
+        //
+        yield return new WaitForSeconds(0.1f);
+        playerShadow.sprite = spriteRenderer.sprite;
+        playerShadow.flipX = spriteRenderer.flipX;
+     
+        for (int i = 0; i < 4; i++)
         {
-             SpriteRenderer s= Instantiate(playerShadow, lr.GetPosition(i), Quaternion.identity);
+            SpriteRenderer s = Instantiate(playerShadow, lr.GetPosition(i), Quaternion.identity);
             s.enabled = true;
-            s.GetComponent<AutoDestroy>().StartDestroy(0.5f+i/10f);
+            s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
+            yield return new WaitForSeconds(0.04f);
         }
+        yield return new WaitForSeconds(0.05f);
+        //图换回去
+        /*colSprite.sprite = originColSprite;
+        colSprite.transform.localScale = originScale;*/
     }
 }

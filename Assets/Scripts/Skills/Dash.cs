@@ -179,7 +179,7 @@ public class Dash : Skill {
                                  target.transform.position,
                                  dir * DashSpeed,
                                  5));
-            for (int i = 5; i < 25; i++)
+            for (int i = 5; i < lr.positionCount; i++)
             {
                 lr.SetPosition(i, lr.GetPosition(4));
             }
