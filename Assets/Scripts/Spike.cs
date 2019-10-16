@@ -6,7 +6,12 @@ public class Spike : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        CompositeCollider2D _composite = GetComponent<CompositeCollider2D>();
+        if( _composite != null )
+        {
+            //因为地图上可能会有一些留存spike没有改成trigger。所以写一个脚本来保证每个spike都是trigger
+            _composite.isTrigger = true;
+        }
 	}
 	
 	// Update is called once per frame
