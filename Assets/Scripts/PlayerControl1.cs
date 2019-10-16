@@ -919,8 +919,9 @@ public class PlayerControl1 : PlayerControl {
     public void SetColShadow()
     {
         colShadow.enabled = true;
-        colShadow.sprite = swap.col.GetComponent<SpriteRenderer>().sprite;
-        colShadow.transform.localScale = swap.col.transform.localScale;
+        colShadow.sprite = spriteRenderer.sprite; //swap.col.GetComponent<SpriteRenderer>().sprite;
+        //colShadow.transform.localScale = swap.col.transform.localScale;
+        colShadow.flipX = spriteRenderer.flipX;
         StartCoroutine(PlayColShadow());
     }
     IEnumerator PlayColShadow()
@@ -928,10 +929,19 @@ public class PlayerControl1 : PlayerControl {
         colShadow.transform.position = transform.position;
         while (Input.GetMouseButton(1) && swap.delaying)
         {
-            if ((Vector2) lr.GetPosition(5) != Vector2.zero)
+            if ((Vector2)lr.GetPosition(5) != Vector2.zero)
+            {
+                //Debug.Log(Time.timeScale);
                 colShadow.transform.position = Vector2.Lerp(colShadow.transform.position, lr.GetPosition(5), Time.deltaTime * 50);
+
+                if ((lr.GetPosition(5) - colShadow.transform.position).magnitude < 100)
+                    colShadow.color = Color.Lerp(colShadow.color, new Color(1, 1, 1, 0),Time.deltaTime*50);
+            }
             if ((lr.GetPosition(5) - colShadow.transform.position).magnitude < 20)
+            {
                 colShadow.transform.position = transform.position;
+                colShadow.color = new Color(1, 1, 1, 100/255f);
+            }
             yield return null;
         }
         colShadow.enabled = false;
