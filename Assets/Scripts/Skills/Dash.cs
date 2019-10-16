@@ -16,6 +16,11 @@ public class Dash : Skill {
 	int charge;
     public float multiplier;
 
+    public GameObject dashParticle;
+    public GameObject dashPointer;
+    public GameObject dashChargingParticle;
+    private GameObject _dashChargeParticle;
+
 	LineRenderer lr;
 
 	public override void Init () {
@@ -30,7 +35,29 @@ public class Dash : Skill {
 	void Update () {
 		//Debug.Log(Time.timeScale);
 		if (Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) {
-			playerControl.swap.realWaitTime = playerControl.swap.waitTime;
+            
+            
+            //蓄力粒子
+            if (_dashChargeParticle == null)
+            {
+                _dashChargeParticle = Instantiate(dashChargingParticle, transform.position, Quaternion.identity, transform);
+            }
+
+
+            //显示箭头
+            if (dashPointer != null)
+            {
+                Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
+                dashPointer.SetActive(true);
+                dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
+                dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir));
+            }
+            
+
+
+
+            playerControl.swap.realWaitTime = playerControl.swap.waitTime;
 			Time.timeScale = Mathf.Min (Time.timeScale, reducedTimeScale);
 			Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
 			playerControl.targetDeltaTime = Time.fixedDeltaTime;
@@ -51,7 +78,11 @@ public class Dash : Skill {
 
             //辅助线取消
             lr.enabled = false;
-		}
+            //蓄力冲刺特效取消[是不是不生成比较有效率？]
+            if (_dashChargeParticle != null) Destroy(_dashChargeParticle);
+            if (dashPointer != null) dashPointer.SetActive(false);
+
+        }
 		if (playerControl.isTouchingGround) {
 			charge = maxCharge;
 		}
@@ -69,11 +100,18 @@ public class Dash : Skill {
 			return;
 
 		playerControl.canMove = false;
-
 		StartCoroutine (DoDash ());
 	}
 
 	IEnumerator DoDash () {
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
+
+        //冲刺特效
+        if (dashParticle != null)
+        {
+            GameObject dashP = Instantiate(dashParticle, transform.position, Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir)),null);
+        }
 
 		if (isShadowDash) {
 		    player.GetComponent<SpriteRenderer> ().color = Color.black;
@@ -81,6 +119,7 @@ public class Dash : Skill {
 			
 			
 		}
+
         
         float curr = 0f;
 		//		while (curr < pauseDuration) 
@@ -93,8 +132,7 @@ public class Dash : Skill {
 		//		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
 		//		float v = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
 		//		Vector2 dir = new Vector2(h, v).normalized;
-		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		Vector2 dir = (mouseWorldPos - (Vector2) player.transform.position).normalized;
+		
         playerBody.velocity = dir * DashSpeed;
         while (curr < DashDuration) {
             //playerBody.velocity = dir * DashSpeed;
@@ -115,12 +153,13 @@ public class Dash : Skill {
 
         if (isShadowDash) {
 			//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
-			
 			player.GetComponent<SpriteRenderer> ().color = Color.white;
 		}
 		
 	}
 
+
+    //抛物线绘制
     void DrawTrajectory()
     {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -175,4 +214,18 @@ public class Dash : Skill {
 
         return results;
     }
+
+    public static float AngleBetween(Vector2 vectorA, Vector2 vectorB)
+    {
+        float angle = Vector2.Angle(vectorA, vectorB);
+        Vector3 cross = Vector3.Cross(vectorA, vectorB);
+
+        if (cross.z > 0)
+        {
+            angle = 360 - angle;
+        }
+
+        return angle;
+    }
 }
+

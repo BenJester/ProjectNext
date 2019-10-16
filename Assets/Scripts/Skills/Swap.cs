@@ -17,6 +17,8 @@ public class Swap : Skill {
 
     public GameObject smokeParticle;
 	public GameObject damageParticle;
+    
+
 	public Vector3 smokeOffset;
 	public float scanBoxHeight;
 	public bool delay;
@@ -24,6 +26,8 @@ public class Swap : Skill {
 	public float reducedTimeScale;
     public float realWaitTime;
     public float curr;
+
+
 
 	public override void Do()
 	{
