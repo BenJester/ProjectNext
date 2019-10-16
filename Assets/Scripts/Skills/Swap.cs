@@ -37,9 +37,12 @@ public class Swap : Skill {
 
 
 	public void SetPowerParticle(GameObject powerParticle){
-		powerParticle.transform.position=col.transform.position;
-		powerParticle.transform.SetParent(col.transform);
-		Destroy(powerParticle,0.5f);
+        if (powerParticle && col)
+        {
+            powerParticle.transform.position = col.transform.position;
+            powerParticle.transform.SetParent(col.transform);
+            Destroy(powerParticle, 0.5f);
+        }
 	}
 	public void DoSwap ()
     {	
@@ -151,7 +154,9 @@ public class Swap : Skill {
             while (curr < realWaitTime)
             {
                 if (Input.GetMouseButtonUp(1))
+                {
                     break;
+                }
                 curr += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
@@ -167,8 +172,9 @@ public class Swap : Skill {
 
     IEnumerator CancelDelay()
     {
+       
         delaying = false;
-        yield return new WaitForSecondsRealtime(dashBeforeSwapTime);
+        yield return new WaitForSeconds(dashBeforeSwapTime);
         Time.fixedDeltaTime = playerControl.startDeltaTime;
         playerControl.targetDeltaTime = playerControl.startDeltaTime;
         //yield return new WaitForSeconds (waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f));
