@@ -360,6 +360,14 @@ public class PlayerControl1 : PlayerControl {
             {
                 m_bJumpingWindow = false;
             }
+            if(rb.velocity.y != 0 )
+            {
+                if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
+                {
+                    m_bJumpingWindow = true;
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
+            }
             //log code
             if (m_fHeight < transform.position.y)
             {
