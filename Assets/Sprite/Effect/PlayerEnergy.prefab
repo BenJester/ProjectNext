@@ -88,8 +88,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.389656
-        value: 0.392003
+        time: 0.4413833
+        value: 0.5440034
         inSlope: -3.990474
         outSlope: -3.990474
         tangentMode: 0
@@ -97,8 +97,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0.37878555
       - serializedVersion: 3
-        time: 0.6172414
-        value: 0
+        time: 0.46207476
+        value: 0.0079956055
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -110,7 +110,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -211,116 +211,6 @@ PrefabInstance:
     - target: {fileID: 8464535212963198510, guid: 69e617da20ee179408b07ea46e29b65b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startRotation.minScalar
-      value: -3.1415925
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startRotation.scalar
-      value: 3.1415927
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.randomizeRotationDirection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.maxNumParticles
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: EmissionModule.rateOverDistance.scalar
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: lengthInSec
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: RotationModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: RotationBySpeedModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: RotationBySpeedModule.curve.scalar
-      value: 2.0943952
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: ClampVelocityModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startRotation.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startRotationX.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startRotationY.minMaxState
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startRotationX.scalar
-      value: 3.1415927
-      objectReference: {fileID: 0}
-    - target: {fileID: 9041207134252445329, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: InitialModule.startRotationY.scalar
-      value: 3.1415927
-      objectReference: {fileID: 0}
-    - target: {fileID: 5483888178016675093, guid: 69e617da20ee179408b07ea46e29b65b,
-        type: 3}
-      propertyPath: m_Flip.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

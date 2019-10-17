@@ -77,11 +77,7 @@ public class PlayerControl1 : PlayerControl {
 	[SerializeField]
 	UnityEngine.Experimental.Rendering.LWRP.Light2D shootDistanceLight;
 
-	[Space]
-	[Header("风之力量的展现")]
-	public GameObject powerParticle;
-	[HideInInspector]
-	public GameObject powerParticleInstance;
+	
 
 	[Space]
 
@@ -726,11 +722,7 @@ public class PlayerControl1 : PlayerControl {
 			return;
 		}
 
-        //玩家自己出现力量
-		powerParticleInstance = Instantiate(powerParticle, transform.position, Quaternion.identity);
-		powerParticleInstance.transform.SetParent(transform);
-        Destroy(powerParticleInstance, 1f);
-
+        
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
 		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler (0, 0, -AngleBetween (Vector2.left, ((Vector2) mouseWorldPos - (Vector2) transform.position).normalized)));

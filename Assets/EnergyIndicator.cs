@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyIndicator : MonoBehaviour
+public class  EnergyIndicator : MonoBehaviour
 {
+
+    public static EnergyIndicator instance;
 
     public GameObject energyParticle;
     private GameObject _energyParticle;
-    
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+    }
     void Start()
     {
         RespawnEnergyParticle();
@@ -23,8 +29,21 @@ public class EnergyIndicator : MonoBehaviour
     {
         _energyParticle = Instantiate(energyParticle, transform.position, transform.rotation, transform);
     }
+
+    public void CloseEnergyParticle()
+    {
+        _energyParticle.SetActive(false);
+        Debug.Log("setfalse energy");
+    }
     public void TransferEnergyParticle(Transform target)
     {
+        
+        _energyParticle.transform.position = target.transform.position;
+        _energyParticle.SetActive(true);
         _energyParticle.transform.SetParent(target);
+        Destroy(_energyParticle, 1f);
     }
+
+    //玩家自己出现力量
+   
 }
