@@ -41,12 +41,9 @@ public class Swap : Skill {
 
 
 	public void SetPowerParticle(GameObject powerParticle){
-        if (powerParticle && col)
-        {
-            powerParticle.transform.position = col.transform.position;
-            powerParticle.transform.SetParent(col.transform);
-            Destroy(powerParticle, 0.5f);
-        }
+		powerParticle.transform.position=col.transform.position;
+		powerParticle.transform.SetParent(col.transform);
+		Destroy(powerParticle,0.5f);
 	}
 	public void DoSwap ()
     {	
@@ -62,9 +59,14 @@ public class Swap : Skill {
 		Vector3 pos = player.transform.position;
 		Vector3 thingPos = col.transform.position;
 
-		SetPowerParticle(playerControl.powerParticleInstance);
-		
-		float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
+
+        
+        
+        EnergyIndicator.instance.CloseEnergyParticle();
+
+
+
+        float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
 		float heightDiff = (col.GetComponent<BoxCollider2D> ().size.y * col.transform.localScale.y - playerRadiusY * 2f) / 2f;
 
 		if (thing.leftX < player.transform.position.x && thing.rightX > player.transform.position.x && thing.lowerY > player.transform.position.y && thing.lowerY < player.transform.position.y + playerRadiusY + 10f) {
@@ -83,7 +85,11 @@ public class Swap : Skill {
 			Smoke ();
 		}
 
-		Vector2 tempV = playerBody.velocity;
+        //转移粒子：
+        EnergyIndicator.instance.TransferEnergyParticle(col.transform);
+        EnergyIndicator.instance.RespawnEnergyParticle();
+
+        Vector2 tempV = playerBody.velocity;
 		playerBody.velocity += thingBody.velocity;
         playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
 		thingBody.velocity = tempV;
@@ -158,9 +164,7 @@ public class Swap : Skill {
             while (curr < realWaitTime)
             {
                 if (Input.GetMouseButtonUp(1))
-                {
                     break;
-                }
                 curr += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
@@ -176,9 +180,8 @@ public class Swap : Skill {
 
     IEnumerator CancelDelay()
     {
-       
         delaying = false;
-        yield return new WaitForSeconds(dashBeforeSwapTime);
+        yield return new WaitForSecondsRealtime(dashBeforeSwapTime);
         Time.fixedDeltaTime = playerControl.startDeltaTime;
         playerControl.targetDeltaTime = playerControl.startDeltaTime;
         //yield return new WaitForSeconds (waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f));
