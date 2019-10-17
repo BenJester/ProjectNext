@@ -352,85 +352,17 @@ public class PlayerControl1 : PlayerControl {
                 }
             }
 
-            if (m_bJumpingWindow == true)
-            {
-                //if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
-                //{
-                //    if (m_fCurrentKeepJumping >= Jump2ndTime)
-                //    {
-                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
-                //        m_bJumpingWindow = false;
-                //    }
-                //    else
-                //    {
-                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-                //        m_bJumpingWindow = false;
-                //    }
-                //}
-                //m_fCurrentKeepJumping += Time.deltaTime;
-
-                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
-                //{
-                //    if (m_fCurrentKeepJumping >= Jump2ndTime)
-                //    {
-                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
-                //        m_bJumpingWindow = false;
-                //    }
-                //}
-
-
-                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
-                //{
-                //    if (m_fCurrentKeepJumping >= Jump1stTime)
-                //    {
-                //        m_bJumpingWindow = false;
-                //        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed2nd);
-                //    }
-                //    m_fCurrentKeepJumping += Time.deltaTime;
-                //}
-
-                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
-                //{
-                //    float fCache = m_fCurrentKeepJumping;
-                //    m_fCurrentKeepJumping += Time.deltaTime;
-                //    if (m_fCurrentKeepJumping <= Jump1stTime)
-                //    {
-                //        rb.AddForce(transform.up * jumpSpeed2nd * Time.deltaTime);
-                //        m_fTotalForce += (jumpSpeed2nd * Time.deltaTime);
-                //        if (m_fCurrentKeepJumping == Jump1stTime)
-                //        {
-                //            m_bJumpingWindow = false;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        float deltaTimeDiff = Jump1stTime - fCache;
-                //        rb.AddForce(transform.up * jumpSpeed2nd * deltaTimeDiff);
-                //        m_fTotalForce += (jumpSpeed2nd * deltaTimeDiff);
-                //        m_bJumpingWindow = false;
-                //    }
-                //}
-
-                //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space))
-                //{
-                //    float fCache = m_fCurrentKeepJumping;
-                //    m_fCurrentKeepJumping += Time.deltaTime;
-                //    if (m_fCurrentKeepJumping <= Jump1stTime)
-                //    {
-                //        if (m_fCurrentKeepJumping == Jump1stTime)
-                //        {
-                //            m_bJumpingWindow = false;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        m_bJumpingWindow = false;
-                //    }
-                //}
-            }
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
             {
                 m_bJumpingWindow = false;
+            }
+            if(rb.velocity.y != 0 )
+            {
+                if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
+                {
+                    m_bJumpingWindow = true;
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
             }
             //log code
             if (m_fHeight < transform.position.y)
