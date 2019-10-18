@@ -21,11 +21,15 @@ public class Dash : Skill {
     public GameObject dashChargingParticle;
     private GameObject _dashChargeParticle;
 
+    public bool isDashing = false;
+
 	LineRenderer lr;
+    Animator amin;
 
 	public override void Init () {
 		lr = GetComponent<LineRenderer> ();
-		charge = maxCharge;
+        amin = GetComponent<Animator>();
+        charge = maxCharge;
 	}
 
 	public override bool Check () {
@@ -33,10 +37,28 @@ public class Dash : Skill {
 	}
 
 	void Update () {
-		//Debug.Log(Time.timeScale);
-		if (Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) {
+        //Debug.Log(Time.timeScale);
+
+        //播放冲刺情况下的动画
+        if (isDashing)
+        {
+            //冲刺中动画
+            if (!amin.GetCurrentAnimatorStateInfo(0).IsName("Dashing"))
+            {
+                amin.CrossFade("Dashing", 0.01f);
+            }
+            transform.rotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, GetComponent<Rigidbody2D>().velocity));
+        }
+
+        if (Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) {
             
+            //播放动画
+            if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
+            amin.CrossFade("Dash_Charging", 0.01f);
+
+
             
+
             //蓄力粒子
             if (_dashChargeParticle == null)
             {
@@ -107,6 +129,10 @@ public class Dash : Skill {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
 
+
+        isDashing = true;
+
+
         //冲刺特效
         if (dashParticle != null)
         {
@@ -158,6 +184,9 @@ public class Dash : Skill {
             //Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
             player.GetComponent<SpriteRenderer>().color = Color.white;
         }
+        isDashing = false;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        
 
     }
 
