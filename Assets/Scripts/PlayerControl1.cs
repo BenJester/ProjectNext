@@ -172,7 +172,9 @@ public class PlayerControl1 : PlayerControl {
 		dash = GetComponent<Dash> ();
 	}
 
-	void Awake () {
+    public LineRenderer lockedOnObjectLine;
+
+    void Awake () {
 
 		originalScale = transform.localScale;
 		startDeltaTime = Time.fixedDeltaTime;
@@ -188,11 +190,10 @@ public class PlayerControl1 : PlayerControl {
 
 	void Start () {
 
-        GameObject blackObj = GameObject.FindWithTag("black");
-        if(blackObj != null)
-        {
-            blackSr = blackObj.GetComponent<SpriteRenderer>();
-        }
+        lockedOnObjectLine.startWidth = 1f;
+        lockedOnObjectLine.positionCount = 2;
+
+        blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
 		bulletSpeed = minBulletSpeed;
 
 		InitSkills ();
@@ -251,11 +252,13 @@ public class PlayerControl1 : PlayerControl {
         {
             isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
         }
-
+        // landing
         if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
         {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
+            if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            rb.velocity = Vector2.zero;
 		}
 
         box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;
@@ -402,6 +405,9 @@ public class PlayerControl1 : PlayerControl {
             targetDeltaTime = Time.fixedDeltaTime;
             targetTimeScale = Time.timeScale;
 
+            //
+            SetColShadow();
+
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -500,9 +506,24 @@ public class PlayerControl1 : PlayerControl {
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
 			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
-		} else {
+            lockedOnObjectLine.SetPosition(0, transform.position);
+            lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
+            RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+            lockedOnObjectLine.startWidth = 1f;
+            if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D>())
+            {
+                swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
+                lockedOnObjectLine.startWidth = 5f;
+            }
+            if (swap.col && Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
+            {
+                lockedOnObjectLine.startWidth = 0f;
+            }
+        } else {
 			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
-		}
+            lockedOnObjectLine.SetPosition(0,Vector3.zero);
+            lockedOnObjectLine.SetPosition(1,Vector3.zero);
+        }
 		if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing> ().dead) {
 			targetMarker.transform.position = new Vector3 (swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
 		} else {
@@ -619,11 +640,19 @@ public class PlayerControl1 : PlayerControl {
 	//狙击枪，点击直线瞬间交换；
 	void HandleLaserChange () {
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-
-		RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, ~(1 << 9));
-
-		if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D> ()) {
+        if (!closestObjectToCursor) return;
+		RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        if (!hit) return;
+        lockedOnObjectLine.startWidth = 1f;
+        if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D> ()) {
 			swap.col = closestObjectToCursor.GetComponent<BoxCollider2D> ();
+            lockedOnObjectLine.startWidth = 3f;
+            if (Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
+            {
+                lockedOnObjectLine.startWidth = 0f;
+                return;
+            }
+            
 			swap.Do ();
 		}
 
@@ -854,7 +883,7 @@ public class PlayerControl1 : PlayerControl {
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
-        while (Input.GetMouseButton(1) && swap.delaying)
+        while (Input.GetMouseButton(1) /*&& swap.delaying*/)
         {
             if ((Vector2)lr.GetPosition(5) != Vector2.zero)
             {
@@ -885,10 +914,11 @@ public class PlayerControl1 : PlayerControl {
         yield return new WaitForSeconds(0.1f);
         playerShadow.sprite = spriteRenderer.sprite;
         playerShadow.flipX = spriteRenderer.flipX;
+        playerShadow.color = new Color(0, 0, 0, 100 / 255f);
      
         for (int i = 0; i < 4; i++)
         {
-            SpriteRenderer s = Instantiate(playerShadow, lr.GetPosition(i), Quaternion.identity);
+            SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
             s.enabled = true;
             s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
             yield return new WaitForSeconds(0.04f);
