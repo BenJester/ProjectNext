@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//嗨，spike是要求又boxcollider2d处理trigger为true的，如果你把boxcollider2d删除，请确认，添加上的collider.istrigger = true
+[RequireComponent(typeof(BoxCollider2D))]
 public class Spike : MonoBehaviour {
 
 	// Use this for initialization
