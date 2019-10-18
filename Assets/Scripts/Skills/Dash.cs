@@ -135,12 +135,12 @@ public class Dash : Skill {
         charge -= 1;
         playerBody.velocity = dir * DashSpeed;
         yield return null;
-  //      while (curr < DashDuration) {
-  //          //playerBody.velocity = dir * DashSpeed;
-  //          curr += Time.deltaTime;
-		//	yield return new WaitForEndOfFrame ();
-		//}
-        
+        //      while (curr < DashDuration) {
+        //          //playerBody.velocity = dir * DashSpeed;
+        //          curr += Time.deltaTime;
+        //	yield return new WaitForEndOfFrame ();
+        //}
+
         //playerControl.canMove = true;
         //      playerBody.velocity = dir * playerControl.speed;
         //      curr = 0f;
@@ -153,10 +153,11 @@ public class Dash : Skill {
         //      }
         //      playerBody.gravityScale = gravity;
 
-        //      if (isShadowDash) {
-        //	//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
-        //	player.GetComponent<SpriteRenderer> ().color = Color.white;
-        //}
+        if (isShadowDash)
+        {
+            //Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
+            player.GetComponent<SpriteRenderer>().color = Color.white;
+        }
 
     }
 
