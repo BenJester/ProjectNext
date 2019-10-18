@@ -181,7 +181,7 @@ public class Swap : Skill {
     IEnumerator CancelDelay()
     {
         delaying = false;
-        yield return new WaitForSecondsRealtime(dashBeforeSwapTime);
+        yield return new WaitForSeconds(dashBeforeSwapTime);
         Time.fixedDeltaTime = playerControl.startDeltaTime;
         playerControl.targetDeltaTime = playerControl.startDeltaTime;
         //yield return new WaitForSeconds (waitTime * (Time.timeScale == reducedTimeScale ? reducedTimeScale : 1f));
