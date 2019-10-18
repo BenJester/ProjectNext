@@ -167,6 +167,7 @@ public class PlayerControl1 : PlayerControl {
 
     public SpriteRenderer colShadow;
     public SpriteRenderer playerShadow;
+    private bool isPlayColShadow=false;
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -874,6 +875,9 @@ public class PlayerControl1 : PlayerControl {
     }
     public void SetColShadow()
     {
+        if (isPlayColShadow)
+            return;
+        isPlayColShadow = true;
         colShadow.enabled = true;
         colShadow.sprite = spriteRenderer.sprite; //swap.col.GetComponent<SpriteRenderer>().sprite;
         //colShadow.transform.localScale = swap.col.transform.localScale;
@@ -883,7 +887,7 @@ public class PlayerControl1 : PlayerControl {
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
-        while (Input.GetMouseButton(1) /*&& swap.delaying*/)
+        while (Input.GetMouseButton(1) || Input.GetMouseButton(0)/*&& swap.delaying*/)
         {
             if ((Vector2)lr.GetPosition(5) != Vector2.zero)
             {
@@ -903,14 +907,6 @@ public class PlayerControl1 : PlayerControl {
         colShadow.enabled = false;
         colShadow.transform.position = transform.position;
        
-        //延迟换图
-        /*SpriteRenderer colSprite=  swap.col.GetComponent<SpriteRenderer>();
-        Sprite originColSprite = colSprite.sprite;
-        colSprite.sprite = spriteRenderer.sprite;
-        colSprite.flipX = spriteRenderer.flipX;
-        Vector3 originScale = colSprite.transform.localScale;
-        colSprite.transform.localScale = transform.localScale;*/
-        //
         yield return new WaitForSeconds(0.1f);
         playerShadow.sprite = spriteRenderer.sprite;
         playerShadow.flipX = spriteRenderer.flipX;
@@ -923,9 +919,6 @@ public class PlayerControl1 : PlayerControl {
             s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
             yield return new WaitForSeconds(0.04f);
         }
-        yield return new WaitForSeconds(0.05f);
-        //图换回去
-        /*colSprite.sprite = originColSprite;
-        colSprite.transform.localScale = originScale;*/
+        isPlayColShadow = false;
     }
 }
