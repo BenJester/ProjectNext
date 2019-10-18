@@ -188,8 +188,11 @@ public class PlayerControl1 : PlayerControl {
 
 	void Start () {
 
-
-		blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
+        GameObject blackObj = GameObject.FindWithTag("black");
+        if(blackObj != null)
+        {
+            blackSr = blackObj.GetComponent<SpriteRenderer>();
+        }
 		bulletSpeed = minBulletSpeed;
 
 		InitSkills ();
