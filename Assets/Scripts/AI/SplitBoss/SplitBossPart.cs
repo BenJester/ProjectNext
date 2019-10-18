@@ -42,6 +42,11 @@ public class SplitBossPart : MonoBehaviour
         }
     }
 
+    public void ThingEnable(bool bEnable)
+    {
+        _ThingEnable(bEnable);
+    }
+
     private void _ThingEnable(bool bEnable)
     {
         if (TransReadySplit != null)
