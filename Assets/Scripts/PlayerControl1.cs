@@ -490,7 +490,7 @@ public class PlayerControl1 : PlayerControl {
                 float distanceToCursor = Vector2.Distance(((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)), (Vector2)thing.transform.position);
                 float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
 
-                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold)
+                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true)
                 {
                     closestDistance = distanceToCursor;
                     closestObjectToCursor = thing.gameObject;
