@@ -12,6 +12,18 @@ public class Spike : MonoBehaviour {
             //因为地图上可能会有一些留存spike没有改成trigger。所以写一个脚本来保证每个spike都是trigger
             _composite.isTrigger = true;
         }
+        else
+        {
+            BoxCollider2D _boxCollider = GetComponent<BoxCollider2D>();
+            if(_boxCollider != null )
+            {
+                _boxCollider.isTrigger = true;
+            }
+            else
+            {
+                Debug.Assert(false, "这个刺的collider是不是又被改掉拉？");
+            }
+        }
 	}
 	
 	// Update is called once per frame
