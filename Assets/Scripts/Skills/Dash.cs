@@ -99,7 +99,7 @@ public class Dash : Skill {
         if (!active || !playerControl.canMove || !Check ())
 			return;
 
-		playerControl.canMove = false;
+		//playerControl.canMove = false;
 		StartCoroutine (DoDash ());
 	}
 
@@ -122,25 +122,26 @@ public class Dash : Skill {
 
         
         float curr = 0f;
-		//		while (curr < pauseDuration) 
-		//		{
-		//			playerBody.velocity = Vector2.zero;
-		//			curr += Time.deltaTime;
-		//			yield return new WaitForEndOfFrame ();
-		//		}
-		//		curr = 0f;
-		//		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
-		//		float v = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
-		//		Vector2 dir = new Vector2(h, v).normalized;
-		
-        playerBody.velocity = dir * DashSpeed;
-        while (curr < DashDuration) {
-            //playerBody.velocity = dir * DashSpeed;
-            curr += Time.deltaTime;
-			yield return new WaitForEndOfFrame ();
-		}
+        //		while (curr < pauseDuration) 
+        //		{
+        //			playerBody.velocity = Vector2.zero;
+        //			curr += Time.deltaTime;
+        //			yield return new WaitForEndOfFrame ();
+        //		}
+        //		curr = 0f;
+        //		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
+        //		float v = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
+        //		Vector2 dir = new Vector2(h, v).normalized;
         charge -= 1;
-        playerControl.canMove = true;
+        playerBody.velocity = dir * DashSpeed;
+        yield return null;
+  //      while (curr < DashDuration) {
+  //          //playerBody.velocity = dir * DashSpeed;
+  //          curr += Time.deltaTime;
+		//	yield return new WaitForEndOfFrame ();
+		//}
+        
+        //playerControl.canMove = true;
         //      playerBody.velocity = dir * playerControl.speed;
         //      curr = 0f;
         //      playerControl.canMove = true;
