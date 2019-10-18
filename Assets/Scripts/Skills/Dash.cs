@@ -140,23 +140,24 @@ public class Dash : Skill {
 			yield return new WaitForEndOfFrame ();
 		}
         charge -= 1;
-        playerBody.velocity = dir * playerControl.speed;
-        curr = 0f;
         playerControl.canMove = true;
-        while (curr < CoyoteDuration)
-        {
-            playerBody.gravityScale = 75f;
-            curr += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        playerBody.gravityScale = gravity;
+        //      playerBody.velocity = dir * playerControl.speed;
+        //      curr = 0f;
+        //      playerControl.canMove = true;
+        //      while (curr < CoyoteDuration)
+        //      {
+        //          playerBody.gravityScale = 75f;
+        //          curr += Time.deltaTime;
+        //          yield return new WaitForEndOfFrame();
+        //      }
+        //      playerBody.gravityScale = gravity;
 
-        if (isShadowDash) {
-			//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
-			player.GetComponent<SpriteRenderer> ().color = Color.white;
-		}
-		
-	}
+        //      if (isShadowDash) {
+        //	//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
+        //	player.GetComponent<SpriteRenderer> ().color = Color.white;
+        //}
+
+    }
 
 
     //抛物线绘制

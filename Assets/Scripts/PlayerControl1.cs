@@ -248,11 +248,13 @@ public class PlayerControl1 : PlayerControl {
         {
             isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
         }
-
+        // landing
         if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
         {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
+            if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+            rb.velocity = Vector2.zero;
 		}
 
         box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;
@@ -398,6 +400,9 @@ public class PlayerControl1 : PlayerControl {
             Time.fixedDeltaTime = dash.reducedTimeScale * startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
             targetTimeScale = Time.timeScale;
+
+            //
+            SetColShadow();
 
         }
 
@@ -851,7 +856,7 @@ public class PlayerControl1 : PlayerControl {
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
-        while (Input.GetMouseButton(1) && swap.delaying)
+        while (Input.GetMouseButton(1) /*&& swap.delaying*/)
         {
             if ((Vector2)lr.GetPosition(5) != Vector2.zero)
             {
@@ -882,10 +887,11 @@ public class PlayerControl1 : PlayerControl {
         yield return new WaitForSeconds(0.1f);
         playerShadow.sprite = spriteRenderer.sprite;
         playerShadow.flipX = spriteRenderer.flipX;
+        playerShadow.color = new Color(0, 0, 0, 100 / 255f);
      
         for (int i = 0; i < 4; i++)
         {
-            SpriteRenderer s = Instantiate(playerShadow, lr.GetPosition(i), Quaternion.identity);
+            SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
             s.enabled = true;
             s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
             yield return new WaitForSeconds(0.04f);
