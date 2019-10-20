@@ -62,8 +62,9 @@ public class PlayerControl1 : PlayerControl {
 
 	[Header ("激光枪射击，瞬间交换，会被阻挡")]
 	public bool laserBullet = false;
-
-	[Header ("带有跟踪效果")]
+    [Header("lock first, then 激光枪射击，瞬间交换，会被阻挡")]
+    public bool lockLaserBullet = false;
+    [Header ("带有跟踪效果")]
 	public bool isHomingBullet = false;
 	public float homingBulletSpeed=10f;
 	public float homingBulletRotateSpeed=200f;
@@ -109,7 +110,7 @@ public class PlayerControl1 : PlayerControl {
 	public LineRenderer lr;
 	GameObject cursor;
 	public GameObject cursorPrefab;
-
+    bool locked;
 	Rigidbody2D rb;
 
 	[HideInInspector]
@@ -538,7 +539,12 @@ public class PlayerControl1 : PlayerControl {
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
 			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
-            FourCornerHit();
+            //FourCornerHit();
+            if (locked)
+            {
+                lockedOnObjectLine.SetPosition(0, transform.position);
+                lockedOnObjectLine.SetPosition(1, swap.col.transform.position);
+            }
         } else {
 			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
             lockedOnObjectLine.SetPosition(0,Vector3.zero);
@@ -657,17 +663,38 @@ public class PlayerControl1 : PlayerControl {
 			chargeFrame += 1;
 	}
 
-	//狙击枪，点击直线瞬间交换；
-	void HandleLaserChange () {
+    // 锁定目标
+    void LockObject()
+    {
+        if (!FourCornerHit()) return;
+        locked = true;
+
+    }
+
+    //狙击枪，点击直线瞬间交换；
+    void HandleLaserChange () {
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
         if (!closestObjectToCursor) return;
         FourCornerHit();
 
         swap.Do ();
-		
+        
 
 		StartCoroutine (laserLine ());
 	}
+
+    void HandleLockLaser()
+    {
+        if (!locked)
+            LockObject();
+        else
+        {
+            locked = false;
+            swap.Do();
+        }
+            
+    }
+
 	//狙击枪的弹道
 	IEnumerator laserLine () {
 		lr.enabled = true;
@@ -696,7 +723,12 @@ public class PlayerControl1 : PlayerControl {
 			return;
 		}
 
-        
+        if (lockLaserBullet)
+        {
+            HandleLockLaser();
+            return;
+        }
+
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
 		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler (0, 0, -AngleBetween (Vector2.left, ((Vector2) mouseWorldPos - (Vector2) transform.position).normalized)));

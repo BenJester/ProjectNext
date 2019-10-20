@@ -59,12 +59,7 @@ public class Swap : Skill {
 		Vector3 pos = player.transform.position;
 		Vector3 thingPos = col.transform.position;
 
-
-        
-        
         EnergyIndicator.instance.CloseEnergyParticle();
-
-
 
         float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
 		float heightDiff = (col.GetComponent<BoxCollider2D> ().size.y * col.transform.localScale.y - playerRadiusY * 2f) / 2f;
