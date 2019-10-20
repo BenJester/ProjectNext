@@ -633,7 +633,7 @@ public class PlayerControl1 : PlayerControl {
 		return;
 
 		if (Rewind.Instance != null) {
-			if (Input.GetKey (KeyCode.Q)) {
+			if (Input.GetKey (KeyCode.Space)) {
 
 				Rewind.Instance.isReverting = true;
 			} else {
