@@ -90,7 +90,9 @@ public class Swap : Skill {
         EnergyIndicator.instance.RespawnEnergyParticle();
 
         Vector2 tempV = playerBody.velocity;
-		playerBody.velocity += thingBody.velocity;
+        //
+		playerBody.velocity = thingBody.velocity;
+        //
         playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
 		thingBody.velocity = tempV;
 
