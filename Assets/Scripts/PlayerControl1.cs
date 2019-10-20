@@ -475,6 +475,37 @@ public class PlayerControl1 : PlayerControl {
         m_fHeight = transform.position.y;
     }
 
+    bool FourCornerHit()
+    {
+        bool res = false;
+        lockedOnObjectLine.SetPosition(0, transform.position);
+        lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
+        BoxCollider2D targetBox = closestObjectToCursor.GetComponent<BoxCollider2D>();
+        float targetX = targetBox.size.x;
+        float targetY = targetBox.size.y;
+        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+
+        lockedOnObjectLine.startWidth = 1f;
+        swap.col = null;
+        if (hit0.collider == targetBox)// || hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox)
+        {
+            swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
+            lockedOnObjectLine.startWidth = 5f;
+            res = true;
+        }
+        if (swap.col && Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
+        {
+            lockedOnObjectLine.startWidth = 0f;
+            res = false;
+            swap.col = null;
+        }
+        return res;
+    }
+
 	// 计算与鼠标和玩家最近的物体
 	void HandleObjectDistance () {
 
@@ -507,19 +538,7 @@ public class PlayerControl1 : PlayerControl {
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
 			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
-            lockedOnObjectLine.SetPosition(0, transform.position);
-            lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
-            RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-            lockedOnObjectLine.startWidth = 1f;
-            if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D>())
-            {
-                swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
-                lockedOnObjectLine.startWidth = 5f;
-            }
-            if (swap.col && Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
-            {
-                lockedOnObjectLine.startWidth = 0f;
-            }
+            FourCornerHit();
         } else {
 			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
             lockedOnObjectLine.SetPosition(0,Vector3.zero);
@@ -642,20 +661,10 @@ public class PlayerControl1 : PlayerControl {
 	void HandleLaserChange () {
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
         if (!closestObjectToCursor) return;
-		RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        if (!hit) return;
-        lockedOnObjectLine.startWidth = 1f;
-        if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D> ()) {
-			swap.col = closestObjectToCursor.GetComponent<BoxCollider2D> ();
-            lockedOnObjectLine.startWidth = 3f;
-            if (Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
-            {
-                lockedOnObjectLine.startWidth = 0f;
-                return;
-            }
-            
-			swap.Do ();
-		}
+        FourCornerHit();
+
+        swap.Do ();
+		
 
 		StartCoroutine (laserLine ());
 	}
