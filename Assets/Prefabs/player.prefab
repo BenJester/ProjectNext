@@ -756,7 +756,7 @@ MonoBehaviour:
   smokeOffset: {x: 0, y: 15, z: 0}
   scanBoxHeight: 40
   delay: 1
-  waitTime: 0.3
+  waitTime: 0.1
   reducedTimeScale: 0.3
   realWaitTime: 0
   curr: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
   reducedTimeScale: 0.04
   waitTime: 5
   currWaitTime: 0
-  maxCharge: 0
+  maxCharge: 1
   multiplier: 122
   dashParticle: {fileID: 9163682763277132950, guid: d831f243a3d274d44bef28016962fa66,
     type: 3}
@@ -819,9 +819,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Head: {fileID: 21300000, guid: 4df0a103d913f3b4eac373d60cc0ce0f, type: 3}
-  Body: {fileID: 21300000, guid: 662a2e0b1646c01489ed41624980f0e8, type: 3}
-  PlayerLegs: {fileID: 21300000, guid: 662a2e0b1646c01489ed41624980f0e8, type: 3}
+  Head: {fileID: 21300000, guid: 2d47947487b32a24f999edc64582a605, type: 3}
+  Body: {fileID: 21300000, guid: 8e22091177f0c764ab0d434ab632cd02, type: 3}
+  PlayerLegs: {fileID: 21300000, guid: 69a3ac0a4bcfa8246ad7af283d0acaf2, type: 3}
 --- !u!114 &790404172
 MonoBehaviour:
   m_ObjectHideFlags: 0
