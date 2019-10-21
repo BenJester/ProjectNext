@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 120603463632225352}
   - component: {fileID: 120603463632225353}
   - component: {fileID: 120603463632225354}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 120603464041086085}
   - component: {fileID: 120603464041086086}
   - component: {fileID: 120603464041086087}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: CoolDownIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,8 +162,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 8e9516e0c219f49ebbc3b21d2b166184, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
@@ -185,7 +183,7 @@ GameObject:
   - component: {fileID: 120603464799391646}
   - component: {fileID: 120603464799391647}
   - component: {fileID: 120603464799391640}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mech_ThingRespawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
