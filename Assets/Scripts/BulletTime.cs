@@ -33,13 +33,13 @@ public class BulletTime : MonoBehaviour {
 
 		switch (mode) {
 			case inputMode.ClickToInOut:
-				if (Input.GetKeyDown (KeyCode.LeftShift)) {
+				if (Input.GetKeyDown (KeyCode.Space)) {
 					bulletTimeActive = !bulletTimeActive;
 				}
 				break;
 
 			case inputMode.HoldToIn:
-				if (Input.GetKey (KeyCode.LeftShift)) {
+				if (Input.GetKey (KeyCode.Space)) {
 					bulletTimeActive = true;
 				} else bulletTimeActive = false;
 				break;

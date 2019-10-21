@@ -9,7 +9,7 @@ public class ShakeOnKeyPress : MonoBehaviour
 
 	void Update ()
     {
-	    if(Input.GetKeyDown(KeyCode.LeftShift))
+	    if(Input.GetKeyDown(KeyCode.Space))
             CameraShaker.Instance.ShakeOnce(Magnitude, Roughness, 0, FadeOutTime);
 	}
 }
