@@ -107,7 +107,7 @@ public class PlayerControl2 : PlayerControl {
 			rb.velocity = new Vector2 (h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
 		}
 
-		if ((Input.GetKeyDown (KeyCode.W)||Input.GetKeyDown(KeyCode.Space)) && isTouchingGround) {
+		if (Input.GetKeyDown (KeyCode.W) && isTouchingGround) {
 			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		}
 
@@ -164,7 +164,7 @@ public class PlayerControl2 : PlayerControl {
 			Shoot ();
 		}
 
-		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			if (bulletSpeed == maxBulletSpeed)
 				bulletSpeed = minBulletSpeed;
 			else

@@ -62,8 +62,9 @@ public class PlayerControl1 : PlayerControl {
 
 	[Header ("激光枪射击，瞬间交换，会被阻挡")]
 	public bool laserBullet = false;
-
-	[Header ("带有跟踪效果")]
+    [Header("lock first, then 激光枪射击，瞬间交换，会被阻挡")]
+    public bool lockLaserBullet = false;
+    [Header ("带有跟踪效果")]
 	public bool isHomingBullet = false;
 	public float homingBulletSpeed=10f;
 	public float homingBulletRotateSpeed=200f;
@@ -109,7 +110,7 @@ public class PlayerControl1 : PlayerControl {
 	public LineRenderer lr;
 	GameObject cursor;
 	public GameObject cursorPrefab;
-
+    bool locked;
 	Rigidbody2D rb;
 
 	[HideInInspector]
@@ -475,6 +476,37 @@ public class PlayerControl1 : PlayerControl {
         m_fHeight = transform.position.y;
     }
 
+    bool FourCornerHit()
+    {
+        bool res = false;
+        lockedOnObjectLine.SetPosition(0, transform.position);
+        lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
+        BoxCollider2D targetBox = closestObjectToCursor.GetComponent<BoxCollider2D>();
+        float targetX = targetBox.size.x;
+        float targetY = targetBox.size.y;
+        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+
+        lockedOnObjectLine.startWidth = 1f;
+        swap.col = null;
+        if (hit0.collider == targetBox)// || hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox)
+        {
+            swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
+            lockedOnObjectLine.startWidth = 5f;
+            res = true;
+        }
+        if (swap.col && Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
+        {
+            lockedOnObjectLine.startWidth = 0f;
+            res = false;
+            swap.col = null;
+        }
+        return res;
+    }
+
 	// 计算与鼠标和玩家最近的物体
 	void HandleObjectDistance () {
 
@@ -507,18 +539,11 @@ public class PlayerControl1 : PlayerControl {
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
 			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
-            lockedOnObjectLine.SetPosition(0, transform.position);
-            lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
-            RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-            lockedOnObjectLine.startWidth = 1f;
-            if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D>())
+            //FourCornerHit();
+            if (locked)
             {
-                swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
-                lockedOnObjectLine.startWidth = 5f;
-            }
-            if (swap.col && Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
-            {
-                lockedOnObjectLine.startWidth = 0f;
+                lockedOnObjectLine.SetPosition(0, transform.position);
+                lockedOnObjectLine.SetPosition(1, swap.col.transform.position);
             }
         } else {
 			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
@@ -608,7 +633,7 @@ public class PlayerControl1 : PlayerControl {
 		return;
 
 		if (Rewind.Instance != null) {
-			if (Input.GetKey (KeyCode.Q)) {
+			if (Input.GetKey (KeyCode.Space)) {
 
 				Rewind.Instance.isReverting = true;
 			} else {
@@ -638,27 +663,38 @@ public class PlayerControl1 : PlayerControl {
 			chargeFrame += 1;
 	}
 
-	//狙击枪，点击直线瞬间交换；
-	void HandleLaserChange () {
+    // 锁定目标
+    void LockObject()
+    {
+        if (!FourCornerHit()) return;
+        locked = true;
+
+    }
+
+    //狙击枪，点击直线瞬间交换；
+    void HandleLaserChange () {
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
         if (!closestObjectToCursor) return;
-		RaycastHit2D hit = Physics2D.Raycast (transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        if (!hit) return;
-        lockedOnObjectLine.startWidth = 1f;
-        if (hit.collider == closestObjectToCursor.GetComponent<BoxCollider2D> ()) {
-			swap.col = closestObjectToCursor.GetComponent<BoxCollider2D> ();
-            lockedOnObjectLine.startWidth = 3f;
-            if (Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
-            {
-                lockedOnObjectLine.startWidth = 0f;
-                return;
-            }
-            
-			swap.Do ();
-		}
+        FourCornerHit();
+
+        swap.Do ();
+        
 
 		StartCoroutine (laserLine ());
 	}
+
+    void HandleLockLaser()
+    {
+        if (!locked)
+            LockObject();
+        else
+        {
+            locked = false;
+            swap.Do();
+        }
+            
+    }
+
 	//狙击枪的弹道
 	IEnumerator laserLine () {
 		lr.enabled = true;
@@ -687,7 +723,12 @@ public class PlayerControl1 : PlayerControl {
 			return;
 		}
 
-        
+        if (lockLaserBullet)
+        {
+            HandleLockLaser();
+            return;
+        }
+
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
 		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler (0, 0, -AngleBetween (Vector2.left, ((Vector2) mouseWorldPos - (Vector2) transform.position).normalized)));
