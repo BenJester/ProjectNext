@@ -11,7 +11,7 @@ public class UnlockDash : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "pawdlayer")
+        if (collision.tag == "player")
         {
             dash.maxCharge = 1;
         }
