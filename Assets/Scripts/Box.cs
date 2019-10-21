@@ -25,7 +25,10 @@ public class Box : MonoBehaviour {
 			if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && thing.lowerY <= colThing.upperY + killRange) {
 				colThing.Die ();
 			}
-			body.velocity = prevVelocity;
+            if(body != null)
+            {
+                body.velocity = prevVelocity;
+            }
 		}
 	}
 }

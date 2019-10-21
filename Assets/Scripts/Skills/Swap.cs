@@ -53,7 +53,10 @@ public class Swap : Skill {
 		CameraShaker.Instance.ShakeOnce(10f,0.1f,0.02f,0.05f);
 
 		ScanEnemies ();
-
+        if(col == null)
+        {
+            return;
+        }
 		Rigidbody2D thingBody = col.gameObject.GetComponent<Rigidbody2D> ();
 		Thing thing = col.gameObject.GetComponent<Thing> ();
 		Vector3 pos = player.transform.position;
