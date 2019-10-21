@@ -45,7 +45,7 @@ public class Dash : Skill {
             //冲刺中动画
             if (!amin.GetCurrentAnimatorStateInfo(0).IsName("Dashing"))
             {
-                amin.CrossFade("Dashing", 0.01f);
+                //amin.CrossFade("Dashing", 0.01f);
             }
             transform.rotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, GetComponent<Rigidbody2D>().velocity));
         }
@@ -54,7 +54,7 @@ public class Dash : Skill {
             
             //播放动画
             if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
-            amin.CrossFade("Dash_Charging", 0.01f);
+            //amin.CrossFade("Dash_Charging", 0.01f);
 
 
             
@@ -158,8 +158,11 @@ public class Dash : Skill {
         //		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //		float v = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
         //		Vector2 dir = new Vector2(h, v).normalized;
-        charge -= 1;
+        
         playerBody.velocity = dir * DashSpeed;
+        yield return new WaitForSeconds(0.05f);
+        charge -= 1;
+        isDashing = false;
         yield return null;
         //      while (curr < DashDuration) {
         //          //playerBody.velocity = dir * DashSpeed;
@@ -184,7 +187,7 @@ public class Dash : Skill {
             //Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
             player.GetComponent<SpriteRenderer>().color = Color.white;
         }
-        isDashing = false;
+        
         transform.rotation = Quaternion.Euler(0, 0, 0);
         
 

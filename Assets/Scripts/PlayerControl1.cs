@@ -261,6 +261,7 @@ public class PlayerControl1 : PlayerControl {
 			Destroy (part, 2f);
             if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
             rb.velocity = Vector2.zero;
+            
 		}
 
         box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;
@@ -360,7 +361,7 @@ public class PlayerControl1 : PlayerControl {
                 }
             }
 
-            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.W))
             {
                 m_bJumpingWindow = false;
             }
@@ -379,7 +380,7 @@ public class PlayerControl1 : PlayerControl {
             }
 
             //跳跃代码
-            if ((Input.GetKeyDown (KeyCode.W)) || Input.GetKeyDown (KeyCode.Space)) {
+            if ((Input.GetKeyDown (KeyCode.W))) {
 				if (canJump)
                 {
 					Jump ();
@@ -539,7 +540,7 @@ public class PlayerControl1 : PlayerControl {
 		// 记号圆圈
 		if (closestObjectToCursor != null) {
 			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
-            //FourCornerHit();
+            FourCornerHit();
             if (locked)
             {
                 lockedOnObjectLine.SetPosition(0, transform.position);
