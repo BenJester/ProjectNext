@@ -957,10 +957,17 @@ public class PlayerControl1 : PlayerControl {
      
         for (int i = 0; i < 4; i++)
         {
-            SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
-            s.enabled = true;
-            s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
-            yield return new WaitForSeconds(0.04f);
+            if(swap == null ||(swap.col == null))
+            {
+
+            }
+            else
+            {
+                SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
+                s.enabled = true;
+                s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
+                yield return new WaitForSeconds(0.04f);
+            }
         }
         isPlayColShadow = false;
     }
