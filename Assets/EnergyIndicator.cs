@@ -27,7 +27,7 @@ public class  EnergyIndicator : MonoBehaviour
 
     public void RespawnEnergyParticle()
     {
-        _energyParticle = Instantiate(energyParticle, transform.position, transform.rotation, transform);
+        _energyParticle = Instantiate(energyParticle, transform.position + new Vector3(0,8,0), transform.rotation, transform) ;
     }
 
     public void CloseEnergyParticle()
