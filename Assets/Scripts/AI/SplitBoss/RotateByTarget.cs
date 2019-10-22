@@ -24,6 +24,11 @@ public class RotateByTarget : MonoBehaviour
         AroundTarget = _target;
     }
 
+    public void StopRotate()
+    {
+        AroundTarget = null;
+    }
+
     // Update is called once per frame
     void Update()
     {
