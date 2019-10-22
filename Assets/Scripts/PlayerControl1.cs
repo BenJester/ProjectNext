@@ -8,7 +8,9 @@ using UnityEngine.UI;
 //using UnityEngine.Rendering.LWRP;
 
 public class PlayerControl1 : PlayerControl {
-
+    [Tooltip("处理角色在空中时候，平行速度迅速递减的lerp值")]
+    [Range(0,1)]
+    public float JumpVelocityLerp;
 	public bool HasRepawnPoint = false;
 
     [Header("基本参数")]
@@ -370,7 +372,13 @@ public class PlayerControl1 : PlayerControl {
                 if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
                 {
                     m_bJumpingWindow = true;
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
+                    //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                }
+                if (m_bJumpingWindow == true)
+                {
+                    float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
+                    rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
                 }
             }
             //log code
