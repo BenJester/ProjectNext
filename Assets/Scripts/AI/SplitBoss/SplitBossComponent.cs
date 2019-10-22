@@ -75,4 +75,8 @@ public class SplitBossComponent : MonoBehaviour
             transform.localRotation = Quaternion.AngleAxis(180, Vector2.up);
         }
     }
+    public bool BossRight()
+    {
+        return m_bRight;
+    }
 }

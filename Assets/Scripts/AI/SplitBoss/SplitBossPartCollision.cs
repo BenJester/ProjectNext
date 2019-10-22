@@ -24,6 +24,8 @@ public class SplitBossPartCollision : MonoBehaviour
         if( collision.gameObject.tag == "floor")
         {
             m_part.SetGravity();
+            m_part.ThingEnable(true);
+            m_part.gameObject.layer = LayerMask.NameToLayer("BoxLayer");
             m_bCollide = true;
         }
     }
