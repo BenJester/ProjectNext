@@ -12,6 +12,7 @@ public class Dash : Skill {
 	public float reducedTimeScale;
 	public int waitTime;
 	public int currWaitTime;
+    public int remainBulletTimeThreshold;
 	public int maxCharge;
 	int charge;
     public float multiplier;
@@ -91,12 +92,21 @@ public class Dash : Skill {
 		}
 
 		if (Input.GetMouseButtonUp (1)) {
-			currWaitTime = 0;
-			Do ();
-			Time.timeScale = 1f;
-			playerControl.targetTimeScale = 1f;
-			Time.fixedDeltaTime = playerControl.startDeltaTime;
-			playerControl.targetDeltaTime = Time.fixedDeltaTime;
+            Do();
+            if (currWaitTime < remainBulletTimeThreshold)
+            {
+                Time.timeScale = 1f;
+                playerControl.targetTimeScale = 1f;
+                Time.fixedDeltaTime = playerControl.startDeltaTime;
+                playerControl.targetDeltaTime = Time.fixedDeltaTime;
+            } else
+            {
+                Time.timeScale = 0.1f;
+                playerControl.targetTimeScale = 0.1f;
+                Time.fixedDeltaTime = playerControl.startDeltaTime * 0.1f;
+                playerControl.targetDeltaTime = playerControl.startDeltaTime * 0.1f;
+            }
+            currWaitTime = 0;
 
             //辅助线取消
             lr.enabled = false;
