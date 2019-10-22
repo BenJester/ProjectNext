@@ -7,6 +7,7 @@ public class SplitBossBehavior : MonoBehaviour
     public int JumpingCounts;
     public float JumpingTime;
     public float TimeToShootAfterJump;
+    public List<SplitBossPart> LstParts;
 
     private bool m_bJumppingRight;
     private int m_nCurJumpingCounts;
@@ -17,6 +18,8 @@ public class SplitBossBehavior : MonoBehaviour
     private bool m_bJumping;
     private float m_fCurrentReadyShoot;
     private bool m_bShoot;
+
+    public bool testCallBack;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +69,17 @@ public class SplitBossBehavior : MonoBehaviour
             {
                 m_shootBoss.BossShoot();
                 m_bShoot = false;
+            }
+        }
+
+        if(testCallBack == true)
+        {
+            testCallBack = false;
+            foreach (SplitBossPart _part in LstParts)
+            {
+                _part.ThingEnable(false);
+                _part.GetComponent<RotateByTarget>().StopRotate();
+                _part.GetComponent<SplitCallBackParts>().StartCallBack(_part.TransOriginalSplit.transform, 1);
             }
         }
     }

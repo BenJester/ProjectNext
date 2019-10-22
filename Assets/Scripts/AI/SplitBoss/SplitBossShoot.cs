@@ -61,22 +61,7 @@ public class SplitBossShoot : MonoBehaviour
                 {
                     vecDir = Vector2.left;
                 }
-                Transform _transExist = m_lstExistTarget[nIdxTarget];
-                Transform _transProcess = null;
-                //if( nIdxTarget < m_lstTarget.Count - 1 || m_lstTarget.Count == 0)
-                if( nIdxTarget == m_lstTarget.Count )
-                {
-                    GameObject objIns = Instantiate(GMObjectFlyObject, _transExist.position, Quaternion.identity);
-                    _transProcess = objIns.transform;
-                    m_lstTarget.Add(_transProcess);
-                    _transProcess.position = _transExist.position;
-                }
-                else
-                {
-                    _transProcess = m_lstTarget[nIdxTarget];
-                }
-                _part.ShootReady();
-                _part.RotateTarget(_transProcess);
+                Transform _transProcess = m_lstTarget[nIdxTarget];
                 _transProcess.transform.Translate(vecDir * ShootForce);
                 m_fCurrentShootingTime += Time.deltaTime;
                 nIdxTarget++;
@@ -99,9 +84,32 @@ public class SplitBossShoot : MonoBehaviour
         int _idxTarget = 0;
         foreach (SplitBossPart _partBoss in m_lstShootPart)
         {
-            Transform _targetTrans = m_lstExistTarget[_idxTarget];
-            _targetTrans.position = _partBoss.TransReadySplit.position;
+            Transform _transExist = m_lstExistTarget[_idxTarget];
+            _transExist.position = _partBoss.TransReadySplit.position;
+
+
+            Transform _transProcess = null;
+            if (_idxTarget == m_lstTarget.Count)
+            {
+                GameObject objIns = Instantiate(GMObjectFlyObject, _transExist.position, Quaternion.identity);
+                _transProcess = objIns.transform;
+                m_lstTarget.Add(_transProcess);
+            }
+            else
+            {
+                _transProcess = m_lstTarget[_idxTarget];
+            }
+            _transProcess.position = _transExist.position;
+            _partBoss.ShootReady();
+            _partBoss.RotateTarget(_transProcess);
+
             _idxTarget++;
+        }
+
+        int nIdx = 0;
+        foreach(Transform _transExist in m_lstExistTarget)
+        {
+            nIdx++;
         }
     }
 }
