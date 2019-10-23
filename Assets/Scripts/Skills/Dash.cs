@@ -89,6 +89,9 @@ public class Dash : Skill {
 
             //辅助线指示
             DrawTrajectory();
+
+            //播放动态残影
+            playerControl.SetColShadow();
 		}
 
 		if (Input.GetMouseButtonUp (1)) {

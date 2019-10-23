@@ -417,7 +417,7 @@ public class PlayerControl1 : PlayerControl {
             targetTimeScale = Time.timeScale;
 
             //
-            SetColShadow();
+           
 
         }
 
@@ -937,8 +937,7 @@ public class PlayerControl1 : PlayerControl {
         colShadow.sprite = spriteRenderer.sprite; //swap.col.GetComponent<SpriteRenderer>().sprite;
         //colShadow.transform.localScale = swap.col.transform.localScale;
         colShadow.flipX = spriteRenderer.flipX;
-
-            StartCoroutine(PlayColShadow());
+        StartCoroutine(PlayColShadow());
     }
     IEnumerator PlayColShadow()
     {
