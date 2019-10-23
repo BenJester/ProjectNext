@@ -13,6 +13,7 @@ public class Dash : Skill {
 	public int waitTime;
 	public int currWaitTime;
     public int remainBulletTimeThreshold;
+    public int remainBulletTimeDuration;
 	public int maxCharge;
 	int charge;
     public float multiplier;
@@ -23,8 +24,9 @@ public class Dash : Skill {
     private GameObject _dashChargeParticle;
 
     public bool isDashing = false;
+    public float disableMovementTime;
 
-	LineRenderer lr;
+    LineRenderer lr;
     Animator amin;
 
 	public override void Init () {
@@ -108,6 +110,7 @@ public class Dash : Skill {
                 playerControl.targetTimeScale = 0.1f;
                 Time.fixedDeltaTime = playerControl.startDeltaTime * 0.1f;
                 playerControl.targetDeltaTime = playerControl.startDeltaTime * 0.1f;
+                StartCoroutine(CancelBulletTime());
             }
             currWaitTime = 0;
 
@@ -122,6 +125,13 @@ public class Dash : Skill {
 			charge = maxCharge;
 		}
 	}
+
+    IEnumerator CancelBulletTime()
+    {
+        yield return new WaitForSecondsRealtime(remainBulletTimeDuration);
+        playerControl.targetTimeScale = 1f;
+        playerControl.targetDeltaTime = playerControl.startDeltaTime * 1f;
+    }
 
 	void FixedUpdate () {
 		if (Input.GetMouseButton (1))
@@ -171,11 +181,13 @@ public class Dash : Skill {
         //		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //		float v = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
         //		Vector2 dir = new Vector2(h, v).normalized;
-        
+        playerControl.canMove = false;
         playerBody.velocity = dir * DashSpeed;
         yield return new WaitForSeconds(0.05f);
         charge -= 1;
         isDashing = false;
+        yield return new WaitForSeconds(disableMovementTime - 0.05f);
+        playerControl.canMove = true;
         yield return null;
         //      while (curr < DashDuration) {
         //          //playerBody.velocity = dir * DashSpeed;
