@@ -13,7 +13,7 @@ public class Dash : Skill {
 	public int waitTime;
 	public int currWaitTime;
     public int remainBulletTimeThreshold;
-    public int remainBulletTimeDuration;
+    public float remainBulletTimeDuration;
 	public int maxCharge;
 	int charge;
     public float multiplier;
