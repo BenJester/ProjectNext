@@ -23,8 +23,9 @@ public class Dash : Skill {
     private GameObject _dashChargeParticle;
 
     public bool isDashing = false;
+    public float disableMovementTime;
 
-	LineRenderer lr;
+    LineRenderer lr;
     Animator amin;
 
 	public override void Init () {
@@ -171,11 +172,13 @@ public class Dash : Skill {
         //		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //		float v = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
         //		Vector2 dir = new Vector2(h, v).normalized;
-        
+        playerControl.canMove = false;
         playerBody.velocity = dir * DashSpeed;
         yield return new WaitForSeconds(0.05f);
         charge -= 1;
         isDashing = false;
+        yield return new WaitForSeconds(disableMovementTime - 0.05f);
+        playerControl.canMove = true;
         yield return null;
         //      while (curr < DashDuration) {
         //          //playerBody.velocity = dir * DashSpeed;
