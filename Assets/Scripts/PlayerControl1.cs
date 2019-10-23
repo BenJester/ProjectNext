@@ -533,8 +533,13 @@ public class PlayerControl1 : PlayerControl {
 
                 if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true)
                 {
-                    closestDistance = distanceToCursor;
-                    closestObjectToCursor = thing.gameObject;
+                    RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+                    if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
+                    {
+                        closestDistance = distanceToCursor;
+                        closestObjectToCursor = thing.gameObject;
+                    }
+                    
                 }
 
                 if (!thing.dead && distanceToPlayer < closestPlayerDistance)
