@@ -161,6 +161,7 @@ public class PlayerControl1 : PlayerControl {
 
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
+    public LayerMask MovePlatformLayer;
 
     [Tooltip("空中跳跃施加力的时间")]
     public float JumpAddForceTime;
@@ -216,7 +217,8 @@ public class PlayerControl1 : PlayerControl {
         bool bRes = false;
         if (_refRaycast)
         {
-            if (BoxLayer == _refRaycast.transform.gameObject.layer)
+            transform.SetParent(null);
+            if ((BoxLayer & (1 << _refRaycast.transform.gameObject.layer)) != 0)
             {
                 //如果检测出来的是boxlayer物件，判断角色与触碰物的位置，如果位置不符合条件，则不算碰触，避免在触碰物两边也会卡住的问题
                 BoxCollider2D _box = _refRaycast.transform.GetComponent<BoxCollider2D>();
@@ -230,6 +232,11 @@ public class PlayerControl1 : PlayerControl {
                 {
                     bRes = true;
                 }
+            }
+            else if ((MovePlatformLayer & (1 << _refRaycast.transform.gameObject.layer)) != 0)
+            {
+                bRes = true;
+                transform.SetParent(_refRaycast.transform);
             }
             else
             {
