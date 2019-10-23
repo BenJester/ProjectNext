@@ -719,6 +719,7 @@ public class PlayerControl1 : PlayerControl {
         {
             locked = false;
             swap.Do();
+          
         }
             
     }
