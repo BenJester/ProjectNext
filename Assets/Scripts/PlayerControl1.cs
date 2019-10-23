@@ -262,8 +262,8 @@ public class PlayerControl1 : PlayerControl {
         {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
-            if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
-            rb.velocity = Vector2.zero;
+            if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
+                rb.velocity = Vector2.zero;
             
 		}
 
