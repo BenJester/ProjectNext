@@ -15,7 +15,7 @@ public class Strawberry : MonoBehaviour
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        worldManager = transform.parent.GetComponent<CheckPointTotalManager>();
+        worldManager = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<CheckPointTotalManager>();
         worldManager.maxStrawberryCount += 1;
     }
 
