@@ -641,6 +641,7 @@ MonoBehaviour:
   bulletSpeed: 2300
   isTouchingGround: 1
   canJump: 1
+  m_bJumpRelease: 0
   startChargeFrame: 10
   useLineRenderer: 0
   useCursor: 1
@@ -670,10 +671,13 @@ MonoBehaviour:
   doubleSwap: 0
   TouchLayer:
     serializedVersion: 2
-    m_Bits: 6400
+    m_Bits: 71936
   BoxLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
+  MovePlatformLayer:
+    serializedVersion: 2
+    m_Bits: 65536
   JumpAddForceTime: 0.25
   colShadow: {fileID: 1890909594}
   playerShadow: {fileID: 906594863}
