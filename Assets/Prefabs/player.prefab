@@ -786,7 +786,8 @@ MonoBehaviour:
   reducedTimeScale: 0.04
   waitTime: 5
   currWaitTime: 0
-  remainBulletTimeThreshold: 0
+  remainBulletTimeThreshold: 25
+  remainBulletTimeDuration: 1
   maxCharge: 1
   multiplier: 122
   dashParticle: {fileID: 9163682763277132950, guid: d831f243a3d274d44bef28016962fa66,
@@ -795,6 +796,7 @@ MonoBehaviour:
   dashChargingParticle: {fileID: 9163682763277132950, guid: af26e5e4b3e9c4b49b3bafabd149203d,
     type: 3}
   isDashing: 0
+  disableMovementTime: 0.2
 --- !u!114 &114325612499970784
 MonoBehaviour:
   m_ObjectHideFlags: 0

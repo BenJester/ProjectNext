@@ -292,122 +292,122 @@ public class PlayerControl1 : PlayerControl {
 		if (!active)
 			return;
 
-		if (canMove) {
 
-			//左右移动
-			float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
-			if (Mathf.Abs (h) > 0) {
-				anim.SetBool ("Moving", true);
-				legAnim.SetBool ("Moving", true);
-				if (h > 0) legsSpriteRenderer.flipX = true;
-				else legsSpriteRenderer.flipX = false;
-			} else {
-				anim.SetBool ("Moving", false);
-				legAnim.SetBool ("Moving", false);
-			}
+		//左右移动
+		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
+        if (!canMove) h = 0f;
+		if (Mathf.Abs (h) > 0) {
+			anim.SetBool ("Moving", true);
+			legAnim.SetBool ("Moving", true);
+			if (h > 0) legsSpriteRenderer.flipX = true;
+			else legsSpriteRenderer.flipX = false;
+		} else {
+			anim.SetBool ("Moving", false);
+			legAnim.SetBool ("Moving", false);
+		}
 
-            //if (Mathf.Abs(rb.velocity.x) <= speed)
-            //{
-            //    rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
-            //}
-            //else
-            //{
-            //    rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
-            //}
+        //if (Mathf.Abs(rb.velocity.x) <= speed)
+        //{
+        //    rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        //}
+        //else
+        //{
+        //    rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        //}
 
-            if (canJump == false)
+        if (canJump == false)
+        {
+            if (h > 0)
             {
-                if (h > 0)
+                if(rb.velocity.y > 0)
                 {
-                    if(rb.velocity.y > 0)
+                    if (rb.velocity.x < JumpingHorizontalUpMaxSpeed)
                     {
-                        if (rb.velocity.x < JumpingHorizontalUpMaxSpeed)
-                        {
-                            rb.AddForce(Vector2.right * JumpingHorizontalUpForce);
-                        }
+                        rb.AddForce(Vector2.right * JumpingHorizontalUpForce);
                     }
-                    else
-                    {
-                        if (rb.velocity.x < JumpingHorizontalDownMaxSpeed)
-                        {
-                            rb.AddForce(Vector2.right * JumpingHorizontalDownForce);
-                        }
-                    }
-                }
-                else if (h < 0)
-                {
-                    if (rb.velocity.y > 0)
-                    {
-                        if (rb.velocity.x > -JumpingHorizontalUpMaxSpeed)
-                        {
-                            rb.AddForce(Vector2.left * JumpingHorizontalUpForce);
-                        }
-                    }
-                    else
-                    {
-                        if (rb.velocity.x > -JumpingHorizontalDownMaxSpeed)
-                        {
-                            rb.AddForce(Vector2.left * JumpingHorizontalDownForce);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (Mathf.Abs(rb.velocity.x) <= speed)
-                {
-                    rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
                 }
                 else
                 {
-                    rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+                    if (rb.velocity.x < JumpingHorizontalDownMaxSpeed)
+                    {
+                        rb.AddForce(Vector2.right * JumpingHorizontalDownForce);
+                    }
                 }
             }
-
-            if (Input.GetKeyUp(KeyCode.W))
+            else if (h < 0)
             {
-                m_bJumpingWindow = false;
+                if (rb.velocity.y > 0)
+                {
+                    if (rb.velocity.x > -JumpingHorizontalUpMaxSpeed)
+                    {
+                        rb.AddForce(Vector2.left * JumpingHorizontalUpForce);
+                    }
+                }
+                else
+                {
+                    if (rb.velocity.x > -JumpingHorizontalDownMaxSpeed)
+                    {
+                        rb.AddForce(Vector2.left * JumpingHorizontalDownForce);
+                    }
+                }
             }
-            if(rb.velocity.y != 0 )
+        }
+        else
+        {
+            if (Mathf.Abs(rb.velocity.x) <= speed)
             {
-                if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
-                {
-                    m_bJumpRelease = true;
-                    //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
-                    //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
-                }
-                if (m_bJumpRelease == true)
-                {
-                    float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
-                    rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
-                }
+                rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
             }
-            //log code
-            if (m_fHeight < transform.position.y)
+            else
             {
-                m_fHeight = transform.position.y;
+                rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
             }
+        }
 
-            //跳跃代码
-            if ((Input.GetKeyDown (KeyCode.W))) {
-				if (canJump)
-                {
-					Jump ();
-                }
-				else {
-                    cachedJump = true;
-                    StartCoroutine(CacheJump());
-                }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            m_bJumpingWindow = false;
+        }
+        if(rb.velocity.y != 0 )
+        {
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
+            {
+                m_bJumpRelease = true;
+                //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
+                //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
             }
+            if (m_bJumpRelease == true)
+            {
+                float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
+                rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+            }
+        }
+        //log code
+        if (m_fHeight < transform.position.y)
+        {
+            m_fHeight = transform.position.y;
+        }
 
-			if (isTouchingGround) {
-				anim.SetBool ("Jumping", false);
-				legAnim.SetBool ("Jumping", false);
-			} else {
-				anim.SetBool ("Jumping", true);
-				legAnim.SetBool ("Jumping", true);
-			}
+        //跳跃代码
+        if (Input.GetKeyDown (KeyCode.W)|| Input.GetKeyDown(KeyCode.Space) ){
+			if (canJump)
+            {
+				Jump ();
+            }
+			else {
+                cachedJump = true;
+                StartCoroutine(CacheJump());
+            }
+        }
+
+		if (isTouchingGround) {
+			anim.SetBool ("Jumping", false);
+			legAnim.SetBool ("Jumping", false);
+		} else {
+			anim.SetBool ("Jumping", true);
+			legAnim.SetBool ("Jumping", true);
 		}
+		
 
         // 左键子弹时间
         if (Input.GetMouseButton(0) && currWaitTime >= waitTime)
@@ -418,7 +418,7 @@ public class PlayerControl1 : PlayerControl {
             targetTimeScale = Time.timeScale;
 
             //
-            SetColShadow();
+           
 
         }
 
@@ -941,8 +941,7 @@ public class PlayerControl1 : PlayerControl {
         colShadow.sprite = spriteRenderer.sprite; //swap.col.GetComponent<SpriteRenderer>().sprite;
         //colShadow.transform.localScale = swap.col.transform.localScale;
         colShadow.flipX = spriteRenderer.flipX;
-
-            StartCoroutine(PlayColShadow());
+        StartCoroutine(PlayColShadow());
     }
     IEnumerator PlayColShadow()
     {
