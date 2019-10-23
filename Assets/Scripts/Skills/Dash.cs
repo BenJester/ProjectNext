@@ -13,6 +13,7 @@ public class Dash : Skill {
 	public int waitTime;
 	public int currWaitTime;
     public int remainBulletTimeThreshold;
+    public int remainBulletTimeDuration;
 	public int maxCharge;
 	int charge;
     public float multiplier;
@@ -109,6 +110,7 @@ public class Dash : Skill {
                 playerControl.targetTimeScale = 0.1f;
                 Time.fixedDeltaTime = playerControl.startDeltaTime * 0.1f;
                 playerControl.targetDeltaTime = playerControl.startDeltaTime * 0.1f;
+                StartCoroutine(CancelBulletTime());
             }
             currWaitTime = 0;
 
@@ -123,6 +125,13 @@ public class Dash : Skill {
 			charge = maxCharge;
 		}
 	}
+
+    IEnumerator CancelBulletTime()
+    {
+        yield return new WaitForSecondsRealtime(remainBulletTimeDuration);
+        playerControl.targetTimeScale = 1f;
+        playerControl.targetDeltaTime = playerControl.startDeltaTime * 1f;
+    }
 
 	void FixedUpdate () {
 		if (Input.GetMouseButton (1))
