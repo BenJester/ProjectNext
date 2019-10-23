@@ -101,6 +101,7 @@ public class PlayerControl1 : PlayerControl {
 
 
     private bool m_bJumpingWindow;
+    private bool m_bJumpRelease;
 
     public int startChargeFrame;
 	float chargeFrame = 0;
@@ -371,14 +372,14 @@ public class PlayerControl1 : PlayerControl {
         {
             if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
             {
-                m_bJumpingWindow = true;
+                m_bJumpRelease = true;
                 //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
                 //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
             }
-            if (m_bJumpingWindow == true)
+            if (m_bJumpRelease == true)
             {
-                //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
-                //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
+                rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
             }
         }
         //log code
@@ -481,6 +482,7 @@ public class PlayerControl1 : PlayerControl {
         m_fCurrentKeepJumping = 0.0f;
         m_fTotalForce = 0.0f;
         m_bJumpingWindow = true;
+        m_bJumpRelease = false;
 
         m_fHeight = transform.position.y;
     }
@@ -875,6 +877,7 @@ public class PlayerControl1 : PlayerControl {
             {
                 _logHeight();
                 canJump = true;
+                m_bJumpRelease = false;
             }
             else
             {
@@ -893,7 +896,8 @@ public class PlayerControl1 : PlayerControl {
 
                 _logHeight();
                 canJump = true;
-				yield return null;
+                m_bJumpRelease = false;
+                yield return null;
 			}
 
 			yield return new WaitForEndOfFrame ();
