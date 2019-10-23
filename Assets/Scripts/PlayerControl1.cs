@@ -377,8 +377,8 @@ public class PlayerControl1 : PlayerControl {
                 }
                 if (m_bJumpingWindow == true)
                 {
-                    float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
-                    rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                    //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
+                    //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
                 }
             }
             //log code
@@ -531,7 +531,7 @@ public class PlayerControl1 : PlayerControl {
                 float distanceToCursor = Vector2.Distance(((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)), (Vector2)thing.transform.position);
                 float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
 
-                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true)
+                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                 {
                     RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
                     if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
