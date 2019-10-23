@@ -101,7 +101,7 @@ public class PlayerControl1 : PlayerControl {
 
 
     private bool m_bJumpingWindow;
-    private bool m_bJumpRelease;
+    public bool m_bJumpRelease;
 
     public int startChargeFrame;
 	float chargeFrame = 0;

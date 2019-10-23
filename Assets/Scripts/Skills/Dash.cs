@@ -149,6 +149,7 @@ public class Dash : Skill {
 	}
 
 	IEnumerator DoDash () {
+        playerControl.m_bJumpRelease = false;
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
 
