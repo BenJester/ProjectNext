@@ -380,7 +380,7 @@ public class PlayerControl1 : PlayerControl {
             }
 
             //跳跃代码
-            if ((Input.GetKeyDown (KeyCode.W))) {
+            if (Input.GetKeyDown (KeyCode.W)|| Input.GetKeyDown(KeyCode.Space) ){
 				if (canJump)
                 {
 					Jump ();
