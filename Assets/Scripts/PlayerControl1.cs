@@ -180,6 +180,8 @@ public class PlayerControl1 : PlayerControl {
 
     public LineRenderer lockedOnObjectLine;
 
+    private PlayerStateManager m_stateMgr;
+
     void Awake () {
 
 		originalScale = transform.localScale;
@@ -195,7 +197,7 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Start () {
-
+        m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
         lockedOnObjectLine.positionCount = 2;
 
@@ -385,8 +387,11 @@ public class PlayerControl1 : PlayerControl {
             }
             if (m_bJumpRelease == true)
             {
-                float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
-                rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                if(m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed)
+                {
+                    float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
             }
         }
         //log code
@@ -885,6 +890,7 @@ public class PlayerControl1 : PlayerControl {
             {
                 _logHeight();
                 canJump = true;
+                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
                 m_bJumpRelease = false;
             }
             else
@@ -904,6 +910,7 @@ public class PlayerControl1 : PlayerControl {
 
                 _logHeight();
                 canJump = true;
+                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
                 m_bJumpRelease = false;
                 yield return null;
 			}
