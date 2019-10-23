@@ -8,7 +8,9 @@ using UnityEngine.UI;
 //using UnityEngine.Rendering.LWRP;
 
 public class PlayerControl1 : PlayerControl {
-
+    [Tooltip("处理角色在空中时候，平行速度迅速递减的lerp值")]
+    [Range(0,1)]
+    public float JumpVelocityLerp;
 	public bool HasRepawnPoint = false;
 
     [Header("基本参数")]
@@ -370,7 +372,13 @@ public class PlayerControl1 : PlayerControl {
                 if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
                 {
                     m_bJumpingWindow = true;
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
+                    //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                }
+                if (m_bJumpingWindow == true)
+                {
+                    //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
+                    //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
                 }
             }
             //log code
@@ -523,10 +531,15 @@ public class PlayerControl1 : PlayerControl {
                 float distanceToCursor = Vector2.Distance(((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)), (Vector2)thing.transform.position);
                 float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
 
-                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true)
+                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                 {
-                    closestDistance = distanceToCursor;
-                    closestObjectToCursor = thing.gameObject;
+                    RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+                    if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
+                    {
+                        closestDistance = distanceToCursor;
+                        closestObjectToCursor = thing.gameObject;
+                    }
+                    
                 }
 
                 if (!thing.dead && distanceToPlayer < closestPlayerDistance)
