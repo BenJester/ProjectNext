@@ -22,5 +22,18 @@ public class Mech_ChangeSpeed : MonoBehaviour
         {
             rb.velocity = -rb.velocity * speedFactor;
         }
+
+        if (col.gameObject.CompareTag("player"))
+        {
+            PlayerStateManager _stateMgr = col.gameObject.GetComponent<PlayerStateManager>();
+            if (_stateMgr != null)
+            {
+                _stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed);
+            }
+            else
+            {
+                Debug.Assert(false, string.Format("Player has not playerstatemanager component"));
+            }
+        }
     }
 }
