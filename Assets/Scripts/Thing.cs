@@ -38,6 +38,7 @@ public class Thing : MonoBehaviour {
     public float distanceToPlayer = Mathf.Infinity;
 
 	public virtual void Start () {
+        Debug.Log(gameObject.name+ transform.lossyScale);
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
@@ -74,8 +75,15 @@ public class Thing : MonoBehaviour {
                 break;
         }
     }
-
-	public virtual void Update () {
+    public float GetLowerY()
+    {
+        return lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
+    }
+    public float GetUpperY()
+    {
+        return upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
+    }
+    public virtual void Update () {
 		lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
 		upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
 		leftX = transform.position.x - collider.size.x / 2f * transform.localScale.x;

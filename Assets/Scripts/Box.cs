@@ -7,12 +7,12 @@ public class Box : MonoBehaviour {
 	public float killDropSpeed;
 	public float killRange;
 	Rigidbody2D body;
-	Thing thing;
+	Thing _boxThing;
 	Vector2 prevVelocity;
 
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
-		thing = GetComponent<Thing> ();	
+		_boxThing = GetComponent<Thing> ();	
 	}
 	
 	void Update () {
@@ -22,9 +22,20 @@ public class Box : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.CompareTag("thing")) {
 			Thing colThing = col.gameObject.GetComponent<Thing> ();
-			if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && thing.lowerY <= colThing.upperY + killRange) {
-				colThing.Die ();
+			if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
+                if( colThing.GetLowerY() > _boxThing.GetLowerY() )
+                {
+                    //碰撞物在箱子上面。就不处理。
+                }
+                else
+                {
+                    colThing.Die();
+                }
 			}
+            else
+            {
+                //Debug.Assert(false);
+            }
             if(body != null)
             {
                 body.velocity = prevVelocity;
