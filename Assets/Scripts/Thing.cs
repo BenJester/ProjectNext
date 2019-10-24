@@ -38,6 +38,7 @@ public class Thing : MonoBehaviour {
     public float distanceToPlayer = Mathf.Infinity;
 
 	public virtual void Start () {
+        Debug.Log(gameObject.name+ transform.lossyScale);
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
