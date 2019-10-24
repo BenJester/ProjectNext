@@ -8,14 +8,16 @@ public class SmoothCamera2D : MonoBehaviour {
 	private Vector3 velocity = Vector3.zero;
 	Transform target;
     public bool followY;
-
+    bool init;
 	// Update is called once per frame
-	void Start () {
-		target = GameObject.FindWithTag ("player").transform;
-		transform.position = new Vector3 (target.position.x, target.position.y, transform.position.z);
-	}
+	void Init () {
+        if (init) return;
+        init = true;
+        target = GameObject.FindWithTag("player").transform;
+        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+    }
 	void Update () {
-
+        Init();
 		//跟随玩家移动
 		if (target) {
 			Vector3 point = Camera.main.WorldToViewportPoint (target.position);
