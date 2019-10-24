@@ -34,7 +34,7 @@ public class Box : MonoBehaviour {
 			}
             else
             {
-                Debug.Assert(false);
+                //Debug.Assert(false);
             }
             if(body != null)
             {
