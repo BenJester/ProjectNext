@@ -306,12 +306,16 @@ public class PlayerControl1 : PlayerControl {
 		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
         if (!canMove) h = 0f;
 		if (Mathf.Abs (h) > 0) {
-			anim.SetBool ("Moving", true);
+            m_bJumpRelease = false;
+
+            anim.SetBool ("Moving", true);
 			legAnim.SetBool ("Moving", true);
 			if (h > 0) legsSpriteRenderer.flipX = true;
 			else legsSpriteRenderer.flipX = false;
-		} else {
-			anim.SetBool ("Moving", false);
+		} else
+        {
+            m_bJumpRelease = false;
+            anim.SetBool ("Moving", false);
 			legAnim.SetBool ("Moving", false);
 		}
 
