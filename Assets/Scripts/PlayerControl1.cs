@@ -394,7 +394,7 @@ public class PlayerControl1 : PlayerControl {
                 if(m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed)
                 {
                     float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
                 }
             }
         }
