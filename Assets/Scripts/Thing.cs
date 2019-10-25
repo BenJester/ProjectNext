@@ -82,6 +82,15 @@ public class Thing : MonoBehaviour {
     {
         return upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
     }
+
+    public float GetLeftX()
+    {
+        return leftX = transform.position.x - collider.size.x / 2f * transform.localScale.x;
+    }
+    public float GetRightX()
+    {
+        return rightX = transform.position.x + collider.size.x / 2f * transform.localScale.x;
+    }
     public virtual void Update () {
 		lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
 		upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;

@@ -59,31 +59,45 @@ public class Swap : Skill {
         }
         
 		Rigidbody2D thingBody = col.gameObject.GetComponent<Rigidbody2D> ();
-		Thing thing = col.gameObject.GetComponent<Thing> ();
-        if (thing.hasShield) return;
-		Vector3 pos = player.transform.position;
-		Vector3 thingPos = col.transform.position;
+		Thing _swapThing = col.gameObject.GetComponent<Thing> ();
+        Thing _playerThing = player.gameObject.GetComponent<Thing>();
+        if (_swapThing.hasShield) return;
+		Vector3 posPlayer = player.transform.position;
+		Vector3 _posSwapThing = col.transform.position;
 
         EnergyIndicator.instance.CloseEnergyParticle();
+        BoxCollider2D objCol2d = col.GetComponent<BoxCollider2D>();
+        //float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
+        float playerRadiusY = player.GetComponent<BoxCollider2D>().bounds.size.y / 2f;
+        //这里的size.y是原始大小，乘以scale的话只能是相对父亲的大小，但是父亲也缩放的话，就有问题了。所以这里改用bounds.size取世界尺寸
+        //float heightDiff = (col.GetComponent<BoxCollider2D> ().size.y * col.transform.localScale.y - playerRadiusY * 2f) / 2f;
+        float heightDiff = (col.GetComponent<BoxCollider2D>().bounds.size.y - playerRadiusY * 2f) / 2f;
 
-        float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
-		float heightDiff = (col.GetComponent<BoxCollider2D> ().size.y * col.transform.localScale.y - playerRadiusY * 2f) / 2f;
-
-		if (thing.leftX < player.transform.position.x && thing.rightX > player.transform.position.x && thing.lowerY > player.transform.position.y && thing.lowerY < player.transform.position.y + playerRadiusY + 10f) {
+        if (_swapThing.GetLeftX() < player.transform.position.x && 
+            _swapThing.GetRightX() > player.transform.position.x && 
+            _swapThing.GetLowerY() > player.transform.position.y && 
+            _swapThing.GetLowerY() < player.transform.position.y + playerRadiusY + 10f) {
 			
 			Vector3 temp = col.gameObject.transform.position;
-			col.gameObject.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y - playerRadiusY + (thing.upperY - thing.lowerY) / 2f, player.transform.position.z);
-			player.transform.position = new Vector3 (temp.x, col.gameObject.transform.position.y + playerRadiusY + (thing.upperY - thing.lowerY) / 2f, player.transform.position.z);
+			col.gameObject.transform.position = new Vector3 (
+                player.transform.position.x, 
+                player.transform.position.y - playerRadiusY + (_swapThing.GetUpperY() - _swapThing.GetLowerY()) / 2f, 
+                player.transform.position.z);
+
+			player.transform.position = new Vector3 (
+                temp.x, 
+                col.gameObject.transform.position.y + playerRadiusY + (_swapThing.GetUpperY() - _swapThing.GetLowerY()) / 2f, 
+                player.transform.position.z);
 			
-			Smoke ();
-		} else {
-			Vector3 tempPos = new Vector3 (pos.x, pos.y + heightDiff, pos.z);
-			player.transform.position = new Vector3 (thingPos.x, thingPos.y - heightDiff, thingPos.z);
-			col.gameObject.transform.position = tempPos;
-			PostEffectManager.instance.Blink (0.03f);
-			//print ("Exchange!");
-			Smoke ();
 		}
+        else
+        {
+            col.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
+            player.transform.position = new Vector3 (_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
+            PostEffectManager.instance.Blink (0.03f);
+			//print ("Exchange!");
+        }
+        Smoke();
 
         //转移粒子：
         EnergyIndicator.instance.TransferEnergyParticle(col.transform);
