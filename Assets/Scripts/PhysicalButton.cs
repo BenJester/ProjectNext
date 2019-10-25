@@ -46,17 +46,17 @@ public class PhysicalButton : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        switch (state)
-        {
-            case ClickState.NoClick:
-				transform.position = Vector3.Lerp(transform.position, originalPosition, 0.2f);
-                break;
-			case ClickState.IsClick:
-				transform.position = Vector3.Lerp(transform.position, targetPosition, 0.6f);
-                break;
-            default:
-                break;
-        }
+   //     switch (state)
+   //     {
+   //         case ClickState.NoClick:
+			//	transform.position = Vector3.Lerp(transform.position, originalPosition, 0.2f);
+   //             break;
+			//case ClickState.IsClick:
+			//	transform.position = Vector3.Lerp(transform.position, targetPosition, 0.6f);
+   //             break;
+   //         default:
+   //             break;
+   //     }
 
 
            
