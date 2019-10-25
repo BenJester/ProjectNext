@@ -40,7 +40,7 @@ public class TouchDestroyPlatform : MonoBehaviour
             if (colThing != null && colThing.type == Type.enemy)
             {
                 colThing.GetComponent<Enemy>().TakeDamage(1);
-                SpawnObjAfterDestroy _spawnObj = GetComponent<SpawnObjAfterDestroy>();
+                SpawnObjComponent _spawnObj = GetComponent<SpawnObjComponent>();
                 if (_spawnObj != null)
                 {
                     _spawnObj.SpawnObject();

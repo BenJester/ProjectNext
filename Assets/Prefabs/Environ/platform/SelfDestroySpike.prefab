@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 754878188449781236}
-  - component: {fileID: 754878188449781239}
   - component: {fileID: 754878188449781238}
   - component: {fileID: 754878188449781233}
   - component: {fileID: 754878188449781242}
   - component: {fileID: 754878188449781237}
+  - component: {fileID: 3817161812107039795}
   m_Layer: 0
   m_Name: SelfDestroySpike
   m_TagString: Untagged
@@ -35,20 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &754878188449781239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 754878188449781232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44faffe031ee0f342a4b62dbf60875e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LstSpawnObj:
-  - {fileID: 1511333772615874505, guid: f19a129cba1ba7f40b4c96e881af8897, type: 3}
 --- !u!114 &754878188449781238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,3 +144,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
+--- !u!114 &3817161812107039795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754878188449781232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f912d778c17fe41a4f40a2e1d5a26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LstSpawnObj:
+  - {fileID: 1511333772615874505, guid: f19a129cba1ba7f40b4c96e881af8897, type: 3}
