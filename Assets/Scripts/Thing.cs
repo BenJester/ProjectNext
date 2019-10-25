@@ -77,26 +77,26 @@ public class Thing : MonoBehaviour {
     }
     public float GetLowerY()
     {
-        return lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
+        return lowerY = transform.position.y - collider.bounds.size.y / 2f;
     }
     public float GetUpperY()
     {
-        return upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
+        return upperY = transform.position.y + collider.bounds.size.y / 2f;
     }
 
     public float GetLeftX()
     {
-        return leftX = transform.position.x - collider.size.x / 2f * transform.localScale.x;
+        return leftX = transform.position.x - collider.bounds.size.x / 2f;
     }
     public float GetRightX()
     {
-        return rightX = transform.position.x + collider.size.x / 2f * transform.localScale.x;
+        return rightX = transform.position.x + collider.bounds.size.x / 2f;
     }
     public virtual void Update () {
-		lowerY = transform.position.y - collider.size.y / 2f * transform.localScale.y;
-		upperY = transform.position.y + collider.size.y / 2f * transform.localScale.y;
-		leftX = transform.position.x - collider.size.x / 2f * transform.localScale.x;
-		rightX = transform.position.x + collider.size.x / 2f * transform.localScale.x;
+		lowerY = transform.position.y - collider.bounds.size.y / 2f;
+		upperY = transform.position.y + collider.bounds.size.y / 2f;
+		leftX = transform.position.x - collider.bounds.size.x / 2f;
+		rightX = transform.position.x + collider.bounds.size.x / 2f;
 
 		if (transform.position.y < -8000f)
 			Die ();
