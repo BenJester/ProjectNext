@@ -93,7 +93,7 @@ public class Swap : Skill {
         else
         {
             col.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
-            player.transform.position = new Vector3 (_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
+            player.transform.position = new Vector3(_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
             PostEffectManager.instance.Blink (0.03f);
 			//print ("Exchange!");
         }
