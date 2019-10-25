@@ -173,6 +173,8 @@ public class PlayerControl1 : PlayerControl {
     public SpriteRenderer colShadow;
     public SpriteRenderer playerShadow;
     private bool isPlayColShadow=false;
+
+    private LevelTest levelTest;
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -197,6 +199,7 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Start () {
+        levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
         m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
         lockedOnObjectLine.positionCount = 2;
@@ -807,7 +810,7 @@ public class PlayerControl1 : PlayerControl {
         }
     }
 
-	public override void Die () 
+    public override void Die()
     {
         if (invincible) return;
         StartCoroutine(BloodEffect());
@@ -820,22 +823,27 @@ public class PlayerControl1 : PlayerControl {
         StartCoroutine(DelayRestart());
 
         active = false;
-		GetComponent<BoxCollider2D> ().enabled = false;
-		GetComponent<SpriteRenderer> ().enabled = false;
-		GetComponent<SpriteRenderer> ().enabled = false;
-		foreach (var sr in GetComponentsInChildren<SpriteRenderer> ()) {
-			sr.enabled = false;
-		}
-		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
-		GetComponent<HeadBodySeparation> ().PlayerDead (25000);
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.enabled = false;
+        }
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        GetComponent<HeadBodySeparation>().PlayerDead(25000);
 
         //transform.localScale = Vector3.zero;
-	}
+
+    
+    }
     public IEnumerator DelayRestart()
     {
         yield return new WaitForSeconds(0.25f);
         Time.fixedDeltaTime = startDeltaTime;
         Time.timeScale = 1f;
+        if (levelTest)
+            levelTest.AddDeadNum(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     }
