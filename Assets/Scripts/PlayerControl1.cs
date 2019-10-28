@@ -202,7 +202,12 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Start () {
-		levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
+        GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
+
+        if(objLevelMgr != null)
+        {
+            levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
+        }
 		m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
                 m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
