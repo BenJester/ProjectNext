@@ -174,6 +174,8 @@ public class PlayerControl1 : PlayerControl {
     public SpriteRenderer colShadow;
     public SpriteRenderer playerShadow;
     private bool isPlayColShadow=false;
+
+    private LevelTest levelTest;
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -200,9 +202,9 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Start () {
-        //GlobalVariable.GetUIPlayerCtrl().RegisteDelayRestart(_delayAction);
-        m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
-        m_stateMgr = GetComponent<PlayerStateManager>();
+		levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
+		m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+                m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
         lockedOnObjectLine.positionCount = 2;
 
@@ -312,8 +314,8 @@ public class PlayerControl1 : PlayerControl {
 		//	Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
 		//}
 
-		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.01f, 1f);
-		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
+		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.07f : -0.07f), 0.01f, 1f);
+		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.07f * startDeltaTime : -0.07f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
 
 		if (!active)
 			return;
@@ -321,7 +323,7 @@ public class PlayerControl1 : PlayerControl {
 
 		//左右移动
 		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
-        if (!canMove) h = 0f;
+        //if (!canMove) h = 0f;
 		if (Mathf.Abs (h) > 0) {
             m_bJumpRelease = false;
 
@@ -810,7 +812,7 @@ public class PlayerControl1 : PlayerControl {
     {
         blood.color = new Color(1f, 1f, 1f, 0f);
         float curr = 0f;
-        while (curr < 1f)
+        while (curr < 0.4f)
         {
             curr = Mathf.Clamp01(curr + Time.unscaledDeltaTime / bloodEffectDuration);
             blood.color = new Color(1f, 1f, 1f, curr);
@@ -824,7 +826,7 @@ public class PlayerControl1 : PlayerControl {
         }
     }
 
-	public override void Die () 
+    public override void Die()
     {
         if (invincible) return;
         StartCoroutine(BloodEffect());
@@ -837,17 +839,20 @@ public class PlayerControl1 : PlayerControl {
         StartCoroutine(DelayRestart());
 
         active = false;
-		GetComponent<BoxCollider2D> ().enabled = false;
-		GetComponent<SpriteRenderer> ().enabled = false;
-		GetComponent<SpriteRenderer> ().enabled = false;
-		foreach (var sr in GetComponentsInChildren<SpriteRenderer> ()) {
-			sr.enabled = false;
-		}
-		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
-		GetComponent<HeadBodySeparation> ().PlayerDead (25000);
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.enabled = false;
+        }
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        GetComponent<HeadBodySeparation>().PlayerDead(25000);
 
         //transform.localScale = Vector3.zero;
-	}
+
+    
+    }
     private void _delayAction()
     {
 
@@ -864,6 +869,8 @@ public class PlayerControl1 : PlayerControl {
         yield return new WaitForSeconds(0.25f);
         Time.fixedDeltaTime = startDeltaTime;
         Time.timeScale = 1f;
+        if (levelTest)
+            levelTest.AddDeadNum(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 	public override void Revive () {
