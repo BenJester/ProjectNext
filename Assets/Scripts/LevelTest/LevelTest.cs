@@ -31,6 +31,11 @@ public class LevelTest : MonoBehaviour
     private void Start()
     {
         dataPrint = levelTestPanel.GetComponentInChildren<Text>();
+        Grid grid = GameObject.FindObjectOfType<Grid>();
+        if (!grid.GetComponent<AddLevel>())
+        {
+            grid.gameObject.AddComponent<AddLevel>();
+        }
     }
 
     public void Update()
