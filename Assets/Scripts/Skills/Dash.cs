@@ -227,32 +227,11 @@ public class Dash : Skill {
         Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
         lr.enabled = true;
 
-        if (!playerControl.swap.delaying)
-        {
-
-            //lr.SetPosition(0, transform.position);
-            //for (int i = 1; i < 25; i ++)
-            //{
-            //    lr.SetPosition(i, transform.position + (Vector3)dir * 170);
-            //}
-            GameObject target = gameObject;// playerControl.swap.col.gameObject;
-            lr.SetPositions(Plot(playerControl.GetComponent<Rigidbody2D>(),
-                                 target.transform.position,
-                                 dir * DashSpeed,
-                                 5));
-            for (int i = 5; i < lr.positionCount; i++)
-            {
-                lr.SetPosition(i, lr.GetPosition(4));
-            }
-        }
-        else
-        {
-            GameObject target = gameObject;// playerControl.swap.col.gameObject;
-            lr.SetPositions(Plot(playerControl.swap.col.GetComponent<Rigidbody2D>(),
-                                 target.transform.position,
-                                 dir * DashSpeed,
-                                 25));
-        }
+        GameObject target = gameObject;// playerControl.swap.col.gameObject;
+        lr.SetPositions(Plot(playerBody,
+                                target.transform.position,
+                                dir * DashSpeed,
+                                18));
     }
 
     public Vector3[] Plot(Rigidbody2D rigidbody, Vector3 pos, Vector2 velocity, int steps)

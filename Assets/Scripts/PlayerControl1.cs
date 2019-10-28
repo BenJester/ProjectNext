@@ -298,8 +298,8 @@ public class PlayerControl1 : PlayerControl {
 		//	Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
 		//}
 
-		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.01f, 1f);
-		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
+		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.07f : -0.07f), 0.01f, 1f);
+		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.07f * startDeltaTime : -0.07f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
 
 		if (!active)
 			return;
@@ -307,7 +307,7 @@ public class PlayerControl1 : PlayerControl {
 
 		//左右移动
 		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
-        if (!canMove) h = 0f;
+        //if (!canMove) h = 0f;
 		if (Mathf.Abs (h) > 0) {
             m_bJumpRelease = false;
 
@@ -796,7 +796,7 @@ public class PlayerControl1 : PlayerControl {
     {
         blood.color = new Color(1f, 1f, 1f, 0f);
         float curr = 0f;
-        while (curr < 1f)
+        while (curr < 0.4f)
         {
             curr = Mathf.Clamp01(curr + Time.unscaledDeltaTime / bloodEffectDuration);
             blood.color = new Color(1f, 1f, 1f, curr);
