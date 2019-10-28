@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class CheckPointTotalManager : MonoBehaviour {
 
 	public static CheckPointTotalManager instance;
-	public Vector3 savedPos;
+	private Vector3 savedPos;
 	public GameObject pivot;
     // Use this for initialization
     public int strawberryCount = 0;
@@ -43,7 +43,12 @@ public class CheckPointTotalManager : MonoBehaviour {
 		savedPos=playerArrive;
 	}
 
-	public Vector3 SetPlayerPos(){
+	public Vector3 GetPlayerPos(){
 		return savedPos;
 	}
+
+    public void SetPlayerPos(Vector3 _vecPos)
+    {
+        savedPos = _vecPos;
+    }
 }

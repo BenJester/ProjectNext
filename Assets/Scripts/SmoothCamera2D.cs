@@ -13,7 +13,10 @@ public class SmoothCamera2D : MonoBehaviour {
 	void Init () {
         if (init) return;
         init = true;
-        target = GameObject.FindWithTag("player").transform;
+        GameObject objPlayer = GameObject.FindWithTag("player");
+        PlayerControl1 _playerCtrl = objPlayer.GetComponent<PlayerControl1>();
+        _playerCtrl.RegisteDieAction(PlayerDieAction);
+        target = objPlayer.transform;
         transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
     }
 	void Update () {
@@ -28,6 +31,12 @@ public class SmoothCamera2D : MonoBehaviour {
 		}
 
 	}
+
+    public void PlayerDieAction(PlayerControl1 _ctrl)
+    {
+        target = null;
+        transform.position = new Vector3(CheckPointTotalManager.instance.GetPlayerPos().x, CheckPointTotalManager.instance.GetPlayerPos().y, transform.position.z);
+    }
 
 	public void offsetLery (Vector3 offsetTarget) {
 		StartCoroutine (lerpv3 (offset, offsetTarget));
