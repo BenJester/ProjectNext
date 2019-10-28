@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum Type {
 	player = 1,
@@ -30,6 +31,8 @@ public class Thing : MonoBehaviour {
 	[Header("死亡动画，需要有HeadBodySeparation脚本")]
 	public bool isDivedeDead=false;
 	public float force = 25000f;
+
+    private UnityAction m_swapAction;
 	
 	
 	[HideInInspector]
@@ -56,7 +59,21 @@ public class Thing : MonoBehaviour {
 		}
 
 	}
-	
+    public void RegisteSwap(UnityAction ac)
+    {
+        m_swapAction += ac;
+    }
+    public void UnregisteSwap(UnityAction ac)
+    {
+        m_swapAction -= ac;
+    }
+    public void ThingSwap()
+    {
+        if(m_swapAction != null)
+        {
+            m_swapAction.Invoke();
+        }
+    }
     void HandleRewind()
     {
         switch (type)

@@ -27,41 +27,109 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	[System.NonSerialized] public int[] stateActiveFrames = new int[5] { 0, 0, 0, 0, 0 };
 	[System.NonSerialized] public int[] stateInactiveFrames = new int[5] { 0, 0, 0, 0, 0 };
 
-	private void TimeFixedUpdate () {
-		for (int i = 0; i < stateInactiveFrames.Length; i++) {
-			stateInactiveFrames[i] = ((int) state == i) ? 0 : stateInactiveFrames[i] + 1;
-		}
+    //预计状态所对应的帧数
+    public int[] stateActiveFrameCounts;
+    //通过预计帧数计算可能的时间段值
+    private float[] m_totalDeltaTime;
+    private float m_fCurDeltaTime;
+    private void TimeFixedUpdate()
+    {
+        if (state != PlayerState.idle)
+        {
+            m_fCurDeltaTime += Time.deltaTime;
+        }
+    }
+    private void StateFixedUpdate()
+    {
+        if (state == PlayerState.idle)
+        {
+            if (health == 0)
+            {
+                state = PlayerState.isDead;
+            }
+            else if (CheckPlayerInSight()) state = PlayerState.aim;
+        }
+        else if (state == PlayerState.aim)
+        {
+            if (m_fCurDeltaTime >= m_totalDeltaTime[(int)PlayerState.aim])
+            {
+                state = PlayerState.lockOn;
+            }
+        }
+        else if (state == PlayerState.lockOn)
+        {
+            if (m_fCurDeltaTime >= m_totalDeltaTime[(int)PlayerState.lockOn])
+            {
+                state = PlayerState.shoot;
+            }
+        }
+        else if (state == PlayerState.shoot)
+        {
+            if (m_fCurDeltaTime >= m_totalDeltaTime[(int)PlayerState.shoot])
+            {
+                state = PlayerState.recover;
+            }
+        }
+        else if (state == PlayerState.recover)
+        {
+            if (m_fCurDeltaTime >= m_totalDeltaTime[(int)PlayerState.recover])
+            {
+                state = PlayerState.idle;
+                m_fCurDeltaTime = 0.0f;
+            }
+        }
+    }
+    //   private void TimeFixedUpdate () {
+    //	for (int i = 0; i < stateInactiveFrames.Length; i++) {
+    //		stateInactiveFrames[i] = ((int) state == i) ? 0 : stateInactiveFrames[i] + 1;
+    //	}
 
-		for (int i = 0; i < stateActiveFrames.Length; i++) {
-			stateActiveFrames[i] = ((int) state == i) ? stateActiveFrames[i] + 1 : 0;
-		}
-	}
+    //	for (int i = 0; i < stateActiveFrames.Length; i++) {
+    //		stateActiveFrames[i] = ((int) state == i) ? stateActiveFrames[i] + 1 : 0;
+    //	}
+    //}
 
-	private void StateFixedUpdate () {
-		if (state == PlayerState.idle) {
-			if (health == 0) {
-				state = PlayerState.isDead;
-			} else if (CheckPlayerInSight ()) state = PlayerState.aim;
-		} else if (state == PlayerState.aim) {
-			if (stateActiveFrames[(int) PlayerState.aim] > aimFrame) {
-				state = PlayerState.lockOn;
-			}
-		} else if (state == PlayerState.lockOn) {
-			if (stateActiveFrames[(int) PlayerState.lockOn] > lockFrame) {
-				state = PlayerState.shoot;
-			}
-		} else if (state == PlayerState.shoot) {
-			if (stateActiveFrames[(int) PlayerState.shoot] > shootFrame) {
-				state = PlayerState.recover;
-			}
-		} else if (state == PlayerState.recover) {
-			if (stateActiveFrames[(int) PlayerState.recover] > recoverFrame) {
-				state = PlayerState.idle;
-			}
-		}
-	}
+    //private void StateFixedUpdate()
+    //{
+    //    if (state == PlayerState.idle)
+    //    {
+    //        if (health == 0)
+    //        {
+    //            state = PlayerState.isDead;
+    //        }
+    //        else if (CheckPlayerInSight()) state = PlayerState.aim;
+    //    }
+    //    else if (state == PlayerState.aim)
+    //    {
+    //        if (stateActiveFrames[(int)PlayerState.aim] > aimFrame)
+    //        {
+    //            state = PlayerState.lockOn;
+    //        }
+    //    }
+    //    else if (state == PlayerState.lockOn)
+    //    {
+    //        if (stateActiveFrames[(int)PlayerState.lockOn] > lockFrame)
+    //        {
+    //            state = PlayerState.shoot;
+    //        }
+    //    }
+    //    else if (state == PlayerState.shoot)
+    //    {
+    //        if (stateActiveFrames[(int)PlayerState.shoot] > shootFrame)
+    //        {
+    //            state = PlayerState.recover;
+    //        }
+    //    }
+    //    else if (state == PlayerState.recover)
+    //    {
+    //        if (stateActiveFrames[(int)PlayerState.recover] > recoverFrame)
+    //        {
+    //            state = PlayerState.idle;
+    //        }
+    //    }
+    //}
 
-	public float distance=1000;
+    public float distance=1000;
 	private Vector2 direction;
 	
 	private Animator animator;
@@ -70,7 +138,15 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	public LineRenderer lr;
 
 	private void Awake () {
-		animator = GetComponent<Animator> ();
+        int nLengthState = stateActiveFrameCounts.Length;
+        m_totalDeltaTime = new float[nLengthState];
+        float fCurValue = 0;
+        for (int nIdx = 0; nIdx < nLengthState; nIdx++)
+        {
+            fCurValue += (stateActiveFrameCounts[nIdx] * Time.fixedDeltaTime);
+            m_totalDeltaTime[nIdx] = fCurValue;
+        }
+        animator = GetComponent<Animator> ();
 		player = GameObject.FindGameObjectWithTag ("player").GetComponent<Transform> ();
 		lr = GetComponent<LineRenderer> ();
 	}
@@ -86,8 +162,8 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 			lr.enabled = false;
 			return;
 		}
-		TimeFixedUpdate ();
-		StateFixedUpdate ();
+		//TimeFixedUpdate ();
+		//StateFixedUpdate ();
 
         if (!CheckPlayerInSight())
         {
@@ -136,7 +212,9 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 
 	private void FixedUpdate () {
 
-	}
+        TimeFixedUpdate();
+        StateFixedUpdate();
+    }
 
 	// IEnumerator HandleShoot () {
 
