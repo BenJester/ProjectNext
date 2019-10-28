@@ -60,7 +60,9 @@ public class Swap : Skill {
         
 		Rigidbody2D thingBody = col.gameObject.GetComponent<Rigidbody2D> ();
 		Thing _swapThing = col.gameObject.GetComponent<Thing> ();
+        _swapThing.ThingSwap();
         Thing _playerThing = player.gameObject.GetComponent<Thing>();
+        _playerThing.ThingSwap();
         if (_swapThing.hasShield) return;
 		Vector3 posPlayer = player.transform.position;
 		Vector3 _posSwapThing = col.transform.position;
