@@ -867,8 +867,8 @@ public class PlayerControl1 : PlayerControl {
     public IEnumerator DelayRestart()
     {
         yield return new WaitForSeconds(1f);
-        //StartCoroutine(DelayLoadScene());
-        m_playDieAction.Invoke(this);
+        StartCoroutine(DelayLoadScene());
+        //m_playDieAction.Invoke(this);
     }
 
     public IEnumerator DelayLoadScene()
