@@ -12,7 +12,11 @@ public class PlayerStateManager : MonoBehaviour
     }
     public void SetPlayerState(PlayerStateDefine.PlayerState_Typ _rState)
     {
-        m_curState = _rState;
+        if(_rState != m_curState)
+        {
+            m_curState = _rState;
+            Debug.Log(string.Format("state changed {0}", _rState));
+        }
     }
     public PlayerStateDefine.PlayerState_Typ GetPlayerState()
     {

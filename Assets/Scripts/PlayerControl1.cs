@@ -415,8 +415,9 @@ public class PlayerControl1 : PlayerControl {
             }
             if (m_bJumpRelease == true)
             {
-                if(m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed)
+                if(m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
                 {
+                    Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
                     float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
                     rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
                 }
@@ -570,7 +571,8 @@ public class PlayerControl1 : PlayerControl {
 		foreach (var thing in thingList) {
             if(thing != null)
             {
-                float distanceToCursor = Vector2.Distance(((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)), (Vector2)thing.transform.position);
+                Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                float distanceToCursor = Vector2.Distance(vecMouseWorldPos, (Vector2)thing.transform.position);
                 float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
 
                 if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
@@ -929,7 +931,7 @@ public class PlayerControl1 : PlayerControl {
             StartCoroutine (JumpTolerence ());
         else
         {
-            if( m_bJumpingWindow == false)
+            if( m_bJumpingWindow == false && dash.isDashing == false)
             {
                 _logHeight();
                 canJump = true;

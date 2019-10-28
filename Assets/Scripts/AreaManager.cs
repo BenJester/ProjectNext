@@ -25,7 +25,7 @@ public class AreaManager : MonoBehaviour {
 		if (other.tag=="player")
 		{
 			checkited=true;
-			print("enter!");
+			//print("enter!");
 			if(CheckPointTotalManager.instance)
 			CheckPointTotalManager.instance.SetPlayerPos (transform.position);
 		}

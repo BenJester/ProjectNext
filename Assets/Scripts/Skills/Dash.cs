@@ -26,12 +26,17 @@ public class Dash : Skill {
     public bool isDashing = false;
     public float disableMovementTime;
 
+    public float DashTime;
+
     LineRenderer lr;
     Animator amin;
+
+    private PlayerStateManager m_stateMgr;
 
 	public override void Init () {
 		lr = GetComponent<LineRenderer> ();
         amin = GetComponent<Animator>();
+        m_stateMgr = GetComponent<PlayerStateManager>();
         charge = maxCharge;
 	}
 
@@ -155,7 +160,8 @@ public class Dash : Skill {
 
 
         isDashing = true;
-
+        Debug.Log("dash start");
+        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
 
         //冲刺特效
         if (dashParticle != null)
@@ -184,9 +190,18 @@ public class Dash : Skill {
         //		Vector2 dir = new Vector2(h, v).normalized;
         playerControl.canMove = false;
         playerBody.velocity = dir * DashSpeed;
-        yield return new WaitForSeconds(0.05f);
+        if( DashTime <= 0 )
+        {
+            yield return new WaitForSeconds(0.05f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(DashTime);
+        }
         charge -= 1;
         isDashing = false;
+        Debug.Log("dash over");
+        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
         yield return new WaitForSeconds(disableMovementTime - 0.05f);
         playerControl.canMove = true;
         yield return null;
@@ -239,7 +254,7 @@ public class Dash : Skill {
         Vector3[] results = new Vector3[steps];
         
         float timestep = 0.05f;
-        Debug.Log(timestep);/// (1f * Physics2D.velocityIterations);
+        //Debug.Log(timestep);/// (1f * Physics2D.velocityIterations);
         Vector2 gravityAccel = Physics2D.gravity * rigidbody.gravityScale;// * timestep;
         Vector2 moveStep = velocity * timestep;
 
