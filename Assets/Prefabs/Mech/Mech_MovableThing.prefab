@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 273582764220568110}
   - component: {fileID: 273582764220568275}
   - component: {fileID: 273582764220568274}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MovableThing
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -235,6 +235,8 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  hasShield: 0
+  shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
   distanceToCursor: Infinity
