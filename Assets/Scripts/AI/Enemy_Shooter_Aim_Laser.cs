@@ -11,7 +11,7 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	public PlayerState state;
 	public int aimFrame = 120;
 	public int lockFrame = 30;
-	public int shootFrame = 30;
+	public int shootFrame = 10;
 	public int recoverFrame = 120;
 	public enum PlayerState {
 		idle = 0,
@@ -88,6 +88,11 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 		}
 		TimeFixedUpdate ();
 		StateFixedUpdate ();
+
+        if (!CheckPlayerInSight())
+        {
+            state = PlayerState.idle;
+        }
 
 		switch (state) {
 			case PlayerState.idle:
