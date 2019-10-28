@@ -34,7 +34,10 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
     private float m_fCurDeltaTime;
     private void TimeFixedUpdate()
     {
-        m_fCurDeltaTime += Time.deltaTime;
+        if (state != PlayerState.idle)
+        {
+            m_fCurDeltaTime += Time.deltaTime;
+        }
     }
     private void StateFixedUpdate()
     {
@@ -140,7 +143,7 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
         float fCurValue = 0;
         for (int nIdx = 0; nIdx < nLengthState; nIdx++)
         {
-            fCurValue += (stateActiveFrameCounts[nIdx] * Time.deltaTime);
+            fCurValue += (stateActiveFrameCounts[nIdx] * Time.fixedDeltaTime);
             m_totalDeltaTime[nIdx] = fCurValue;
         }
         animator = GetComponent<Animator> ();
@@ -159,8 +162,8 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 			lr.enabled = false;
 			return;
 		}
-		TimeFixedUpdate ();
-		StateFixedUpdate ();
+		//TimeFixedUpdate ();
+		//StateFixedUpdate ();
 
         if (!CheckPlayerInSight())
         {
@@ -209,7 +212,9 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 
 	private void FixedUpdate () {
 
-	}
+        TimeFixedUpdate();
+        StateFixedUpdate();
+    }
 
 	// IEnumerator HandleShoot () {
 
