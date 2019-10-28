@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using EZCameraShake;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 //using UnityEngine.Rendering.LWRP;
 
@@ -184,6 +185,8 @@ public class PlayerControl1 : PlayerControl {
 
     private PlayerStateManager m_stateMgr;
 
+    private UnityAction<PlayerControl1> m_playDieAction;
+
     void Awake () {
 
 		originalScale = transform.localScale;
@@ -199,8 +202,9 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	void Start () {
-        levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
-        m_stateMgr = GetComponent<PlayerStateManager>();
+		levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
+		m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+                m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
         lockedOnObjectLine.positionCount = 2;
 
@@ -210,11 +214,23 @@ public class PlayerControl1 : PlayerControl {
 		InitSkills ();
 
 		if (HasRepawnPoint)
-			transform.position = CheckPointTotalManager.instance.SetPlayerPos ();
+			transform.position = CheckPointTotalManager.instance.GetPlayerPos ();
 
 		//设置射程和灯光
 		if (hasShootDistance) HandleShootDistanceAndLight ();
         hp = maxhp;
+    }
+    public void RegisteDieAction(UnityAction<PlayerControl1> _act)
+    {
+        m_playDieAction += _act;
+    }
+    private void OnDestroy()
+    {
+        //GlobalVariable.GetUIPlayerCtrl().UnregisteDelayRestart(_delayAction);
+        if(GlobalVariable.GetUIPlayerCtrl() != null)
+        {
+            m_playDieAction -= GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+        }
     }
 
     private bool _isTouching(ref RaycastHit2D _refRaycast)
@@ -837,7 +853,18 @@ public class PlayerControl1 : PlayerControl {
 
     
     }
+    private void _delayAction()
+    {
+
+    }
     public IEnumerator DelayRestart()
+    {
+        yield return new WaitForSeconds(1f);
+        //StartCoroutine(DelayLoadScene());
+        m_playDieAction.Invoke(this);
+    }
+
+    public IEnumerator DelayLoadScene()
     {
         yield return new WaitForSeconds(0.25f);
         Time.fixedDeltaTime = startDeltaTime;
@@ -845,7 +872,6 @@ public class PlayerControl1 : PlayerControl {
         if (levelTest)
             levelTest.AddDeadNum(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
 	public override void Revive () {
 		active = true;

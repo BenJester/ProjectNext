@@ -27,7 +27,7 @@ public class AreaManager : MonoBehaviour {
 			checkited=true;
 			print("enter!");
 			if(CheckPointTotalManager.instance)
-			CheckPointTotalManager.instance.savedPos=transform.position;
+			CheckPointTotalManager.instance.SetPlayerPos (transform.position);
 		}
 	}
 
