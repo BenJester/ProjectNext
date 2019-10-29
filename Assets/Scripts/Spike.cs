@@ -60,6 +60,22 @@ public class Spike : MonoBehaviour {
                 colThing.Die();
                 StartCoroutine(colThing.GetComponent<PlayerControl1>().DelayRestart());
             }
+            if (colThing.type == Type.box)
+            {
+                collision.GetComponent<Box>().GetSpike();
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("thing"))
+        {
+            Thing colThing = collision.gameObject.GetComponent<Thing>();
+            if (colThing.type == Type.box)
+            {
+                collision.GetComponent<Box>().OutSpike();
+            }
         }
     }
 }

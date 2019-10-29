@@ -246,7 +246,7 @@ public class Dash : Skill {
         lr.SetPositions(Plot(playerBody,
                                 target.transform.position,
                                 dir * DashSpeed,
-                                18));
+                                14));
     }
 
     public Vector3[] Plot(Rigidbody2D rigidbody, Vector3 pos, Vector2 velocity, int steps)

@@ -189,6 +189,10 @@ public class PlayerControl1 : PlayerControl {
 
     private UnityAction<PlayerControl1> m_playDieAction;
 
+    private Color trajectoryStartColor;
+    private Color trajectoryEndColor;
+    private bool trajectoryOn = true;
+
     void Awake () {
         GlobalVariable.SetPlayer(this);
 		originalScale = transform.localScale;
@@ -226,11 +230,17 @@ public class PlayerControl1 : PlayerControl {
 		//设置射程和灯光
 		if (hasShootDistance) HandleShootDistanceAndLight ();
         hp = maxhp;
+
+        trajectoryStartColor = lr.startColor;
+        trajectoryEndColor = lr.endColor;
+
     }
+
     public void RegisteDieAction(UnityAction<PlayerControl1> _act)
     {
         m_playDieAction += _act;
     }
+
     private void OnDestroy()
     {
         //GlobalVariable.GetUIPlayerCtrl().UnregisteDelayRestart(_delayAction);
@@ -273,6 +283,7 @@ public class PlayerControl1 : PlayerControl {
         }
         return bRes;
     }
+
 	void Update () {
 
 		anim.SetFloat ("SpeedY", rb.velocity.y);
@@ -478,7 +489,7 @@ public class PlayerControl1 : PlayerControl {
         //处理按下的指示器
         if (Input.GetMouseButton (0)) {
 			if (useLineRenderer) {
-				lr.enabled = true;
+				//lr.enabled = true;
 				HandleLineRenderer ();
 			}
 
@@ -516,6 +527,8 @@ public class PlayerControl1 : PlayerControl {
 		HandleObjectDistance ();
 		// coyote
 		HandleJump ();
+
+        HandleTrajectoryTest();
 	}
 
 	void Jump () {
@@ -758,7 +771,7 @@ public class PlayerControl1 : PlayerControl {
 
 	//狙击枪的弹道
 	IEnumerator laserLine () {
-		lr.enabled = true;
+		//lr.enabled = true;
 		lr.SetPosition (0, transform.position);
 		lr.SetPosition (1, transform.position + (closestObjectToCursor.transform.position - transform.position).normalized * shootDistance);
 		yield return new WaitForSeconds (0.3f);
@@ -1048,5 +1061,22 @@ public class PlayerControl1 : PlayerControl {
             }
         }
         isPlayColShadow = false;
+    }
+
+    void HandleTrajectoryTest()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (trajectoryOn)
+            {
+                lr.startColor = new Color(0f, 0f, 0f, 0f);
+                lr.endColor = new Color(0f, 0f, 0f, 0f);
+            } else
+            {
+                lr.startColor = trajectoryStartColor;
+                lr.endColor = trajectoryEndColor;
+            }
+            trajectoryOn = !trajectoryOn;
+        }
     }
 }
