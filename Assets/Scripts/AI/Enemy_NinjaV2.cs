@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Ninja : Enemy
+public class Enemy_NinjaV2 : Enemy
 {
     public enum State
     {
@@ -33,10 +33,17 @@ public class Enemy_Ninja : Enemy
 
     public float dashDelay;
     public int dashCount;
+    public int dashRageCount;
     public float dashInteval;
     public float dashSpeed;
     public float dashDuration;
     public float hitboxWidth;
+
+    public float throwDelay;
+    public float throwInteval;
+    public float throwDuration;
+    public int throwCount;
+    public int throwRageCount;
 
     public float walkSpeed;
     public float walkDuration;
@@ -58,14 +65,15 @@ public class Enemy_Ninja : Enemy
     bool enraged;
     bool justEnraged;
 
-    //private EnemySkillShoot m_shootSkill;
-    //private EnemySkillThrowBomb m_throwBomb;
     private EnemySkillBase m_shootSkill;
     private EnemySkillBase m_throwBomb;
+
+    private bool m_bDashToggle;
 
     void Start()
     {
         base.Start();
+        m_bDashToggle = true;
         player = GameObject.FindGameObjectWithTag("player").GetComponent<Transform>();
         playerControl = player.GetComponent<PlayerControl1>();
 
@@ -112,16 +120,18 @@ public class Enemy_Ninja : Enemy
             justAttacked = true;
             StartCoroutine(Enrage());
         }
-            
+
         if (!justAttacked && !justEnraged)
         {
-            StartCoroutine(ThrowBomb());
-            if (distance < dashThreshold)
+            //StartCoroutine(ThrowBomb(throwRageCount));
+            //if (distance < dashThreshold)
+            if (m_bDashToggle == true)
             {
-                StartCoroutine(Dash());
+                StartCoroutine(Dash(dashRageCount));
             }
             else
             {
+                StartCoroutine(ThrowBomb(throwRageCount));
                 StartCoroutine(Shoot());
             }
         }
@@ -144,13 +154,13 @@ public class Enemy_Ninja : Enemy
 
         if (!justAttacked)
         {
-            if (Random.Range(0f, 1f) > 0.66f)
+            if (m_bDashToggle == true)
             {
-                StartCoroutine(Dash());
+                StartCoroutine(Dash(dashCount));
             }
             else
             {
-                StartCoroutine(ThrowBomb());
+                StartCoroutine(ThrowBomb(throwCount));
             }
         }
         else
@@ -219,13 +229,8 @@ public class Enemy_Ninja : Enemy
         busy = true;
         yield return new WaitForSeconds(shootDelay);
 
-        for (int i = 0; i < shootCount; i ++)
+        for (int i = 0; i < shootCount; i++)
         {
-            //Vector3 direction = (player.position - transform.position).normalized;
-            //GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
-            //Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
-            //bulletBody.velocity = direction * bulletSpeed;
-
             m_shootSkill.CastSkill();
             yield return new WaitForSeconds(shootInteval);
         }
@@ -233,30 +238,35 @@ public class Enemy_Ninja : Enemy
         StartCoroutine(StartAttackTimer());
     }
 
-    IEnumerator ThrowBomb()
+    IEnumerator ThrowBomb(int nThrowCount)
     {
         if (busy) yield break;
         busy = true;
-        //Vector3 direction = (Vector3.up * 2f + (player.position - transform.position).normalized).normalized;
-        //GameObject newBullet = Instantiate(bomb, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
-        //Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
-        //bulletBody.velocity = direction * bombSpeed;
-        m_throwBomb.CastSkill();
+        yield return new WaitForSeconds(throwDelay);
+
+        for (int i = 0; i < nThrowCount; i++)
+        {
+            m_throwBomb.CastSkill();
+            yield return new WaitForSeconds(throwInteval);
+        }
+
+
         busy = false;
+        m_bDashToggle = true;
         StartCoroutine(StartAttackTimer());
     }
 
-    IEnumerator Dash()
+    IEnumerator Dash(int nDashCount)
     {
         if (busy) yield break;
         busy = true;
         yield return new WaitForSeconds(dashDelay);
 
-        for (int i = 0; i < dashCount; i++)
+        for (int i = 0; i < nDashCount; i++)
         {
 
             Vector3 direction;
-            if(OnlyHorizontalDash == true)
+            if (OnlyHorizontalDash == true)
             {
                 direction = (new Vector3(player.position.x, transform.position.y, player.position.z) - transform.position).normalized;
             }
@@ -293,6 +303,7 @@ public class Enemy_Ninja : Enemy
             body.velocity = Vector2.zero;
         }
         busy = false;
+        m_bDashToggle = false;
         StartCoroutine(StartAttackTimer());
     }
 }
