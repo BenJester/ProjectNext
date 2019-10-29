@@ -31,6 +31,7 @@ public class Enemy_NinjaV2 : Enemy
     public float shootInteval;
     //public float bulletSpeed;
 
+    public float rushDelay;
     public float dashDelay;
     public int dashCount;
     public int dashRageCount;
@@ -69,14 +70,20 @@ public class Enemy_NinjaV2 : Enemy
     private EnemySkillBase m_throwBomb;
 
     private bool m_bDashToggle;
+    private bool m_bThrowBomb;
+    private bool m_bShootBullet;
 
     private Animator m_animator;
 
     public string AnimatorChargingPara;
     public string AnimatorAttackPara;
+    public string AnimatorThrowBombPara;
+    public string AnimatorShootingPara;
 
     private int m_nAnimatorChargingPara;
     private int m_nAnimatorAttackPara;
+    private int m_nAnimatorThrowBombPara;
+    private int m_nAnimatorShootingPara;
 
     private bool m_bBossFlipRight;
 
@@ -96,8 +103,10 @@ public class Enemy_NinjaV2 : Enemy
         m_throwBomb = GetComponent<EnemySkillThrowBomb>();
 
         m_animator = GetComponent<Animator>();
-        m_nAnimatorChargingPara = Animator.StringToHash(AnimatorChargingPara);
-        m_nAnimatorAttackPara = Animator.StringToHash(AnimatorAttackPara);
+        m_nAnimatorChargingPara     = Animator.StringToHash(AnimatorChargingPara);
+        m_nAnimatorAttackPara       = Animator.StringToHash(AnimatorAttackPara);
+        m_nAnimatorThrowBombPara    = Animator.StringToHash(AnimatorThrowBombPara);
+        m_nAnimatorShootingPara     = Animator.StringToHash(AnimatorShootingPara);
     }
 
     public bool CheckPlayerInSight()
@@ -143,9 +152,12 @@ public class Enemy_NinjaV2 : Enemy
             {
                 StartCoroutine(Dash(dashRageCount));
             }
-            else
+            else if(m_bThrowBomb == true)
             {
                 StartCoroutine(ThrowBomb(throwRageCount));
+            }
+            else
+            {
                 StartCoroutine(Shoot());
             }
         }
@@ -194,7 +206,7 @@ public class Enemy_NinjaV2 : Enemy
     {
         if (!CheckPlayerInSight() || thing.dead) return;
 
-        if (health >= 3)
+        if (health >= 2)
             PhaseOneAI();
         else
             PhaseTwoAI();
@@ -253,6 +265,8 @@ public class Enemy_NinjaV2 : Enemy
             m_shootSkill.CastSkill();
             yield return new WaitForSeconds(shootInteval);
         }
+        m_bShootBullet = false;
+        m_bDashToggle = true;
         busy = false;
         StartCoroutine(StartAttackTimer());
     }
@@ -275,7 +289,15 @@ public class Enemy_NinjaV2 : Enemy
 
 
         busy = false;
-        m_bDashToggle = true;
+        if( enraged == true )
+        {
+            m_bThrowBomb = false;
+            m_bShootBullet = true;
+        }
+        else
+        {
+            m_bDashToggle = true;
+        }
         StartCoroutine(StartAttackTimer());
     }
 
@@ -309,6 +331,11 @@ public class Enemy_NinjaV2 : Enemy
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
+            m_animator.SetInteger(m_nAnimatorChargingPara, 0);
+            m_animator.SetInteger(m_nAnimatorAttackPara, 1);
+
+            yield return new WaitForSeconds(rushDelay);
+
             timer = 0f;
             while (timer < dashDuration)
             {
@@ -332,6 +359,9 @@ public class Enemy_NinjaV2 : Enemy
         }
         busy = false;
         m_bDashToggle = false;
+        m_bThrowBomb = true;
+        m_animator.SetInteger(m_nAnimatorChargingPara, 0);
+        m_animator.SetInteger(m_nAnimatorAttackPara, 0);
         StartCoroutine(StartAttackTimer());
     }
 

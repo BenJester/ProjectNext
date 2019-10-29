@@ -467,7 +467,7 @@ MonoBehaviour:
   thing: {fileID: 0}
   dropKillSpeed: 50
   goal: {fileID: 0}
-  maxHealth: 3
+  maxHealth: 4
   health: 1
   canShuaisi: 0
   groundCheckBoxHeight: 10
@@ -481,6 +481,7 @@ MonoBehaviour:
   shootDelay: 0.3
   shootCount: 3
   shootInteval: 0.3
+  rushDelay: 0.5
   dashDelay: 0.5
   dashCount: 2
   dashRageCount: 3
@@ -504,6 +505,8 @@ MonoBehaviour:
   OnlyHorizontalDash: 1
   AnimatorChargingPara: Charging
   AnimatorAttackPara: Attacking
+  AnimatorThrowBombPara: ThrowBomb
+  AnimatorShootingPara: ShootingBullet
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
