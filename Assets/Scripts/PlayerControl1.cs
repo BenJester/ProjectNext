@@ -478,7 +478,7 @@ public class PlayerControl1 : PlayerControl {
         //处理按下的指示器
         if (Input.GetMouseButton (0)) {
 			if (useLineRenderer) {
-				lr.enabled = true;
+				//lr.enabled = true;
 				HandleLineRenderer ();
 			}
 
@@ -758,7 +758,7 @@ public class PlayerControl1 : PlayerControl {
 
 	//狙击枪的弹道
 	IEnumerator laserLine () {
-		lr.enabled = true;
+		//lr.enabled = true;
 		lr.SetPosition (0, transform.position);
 		lr.SetPosition (1, transform.position + (closestObjectToCursor.transform.position - transform.position).normalized * shootDistance);
 		yield return new WaitForSeconds (0.3f);
