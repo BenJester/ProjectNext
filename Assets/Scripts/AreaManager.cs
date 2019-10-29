@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AreaManager : MonoBehaviour {
 
-	public int areaID;
+	//public int areaID;
 	public bool checkited=false;
 
 	
