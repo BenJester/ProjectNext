@@ -404,7 +404,7 @@ public class PlayerControl1 : PlayerControl {
         }
         else
         {
-            if (Mathf.Abs(rb.velocity.x) <= speed)
+            if (Mathf.Abs(rb.velocity.x) <= speed && dash.isDashing == false)
             {
                 rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
             }
