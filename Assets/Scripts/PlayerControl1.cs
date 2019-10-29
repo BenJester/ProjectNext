@@ -173,6 +173,8 @@ public class PlayerControl1 : PlayerControl {
 
     public SpriteRenderer colShadow;
     public SpriteRenderer playerShadow;
+
+    public float PlayerSpawnTime;
     private bool isPlayColShadow=false;
 
     private LevelTest levelTest;
@@ -188,7 +190,7 @@ public class PlayerControl1 : PlayerControl {
     private UnityAction<PlayerControl1> m_playDieAction;
 
     void Awake () {
-
+        GlobalVariable.SetPlayer(this);
 		originalScale = transform.localScale;
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
@@ -866,7 +868,7 @@ public class PlayerControl1 : PlayerControl {
     }
     public IEnumerator DelayRestart()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(PlayerSpawnTime);
         StartCoroutine(DelayLoadScene());
         //m_playDieAction.Invoke(this);
     }
