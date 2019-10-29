@@ -81,8 +81,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a677315c94bb70e469a21de8747049fc, type: 3}
-  m_Color: {r: 1, g: 0.5975191, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: d014ee6e912bf0f4cb0e126c8e08959c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -130,7 +130,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 83.33333, y: 83.33333}
+    oldSize: {x: 125, y: 124.75}
     newSize: {x: 29, y: 73}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -212,7 +212,7 @@ Animator:
   m_GameObject: {fileID: 5775181348552360192}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5700ee18cdb7d654aadd2a547d166627, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2356ab086983b6a45b69152f41205a75, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -502,6 +502,8 @@ MonoBehaviour:
   attackInteval: 1.8
   justAttacked: 0
   OnlyHorizontalDash: 1
+  AnimatorChargingPara: Charging
+  AnimatorAttackPara: Attacking
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0

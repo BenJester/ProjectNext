@@ -70,6 +70,16 @@ public class Enemy_NinjaV2 : Enemy
 
     private bool m_bDashToggle;
 
+    private Animator m_animator;
+
+    public string AnimatorChargingPara;
+    public string AnimatorAttackPara;
+
+    private int m_nAnimatorChargingPara;
+    private int m_nAnimatorAttackPara;
+
+    private bool m_bBossFlipRight;
+
     void Start()
     {
         base.Start();
@@ -84,6 +94,10 @@ public class Enemy_NinjaV2 : Enemy
         m_shootSkill = GetComponent<EnemySkillShoot>();
 
         m_throwBomb = GetComponent<EnemySkillThrowBomb>();
+
+        m_animator = GetComponent<Animator>();
+        m_nAnimatorChargingPara = Animator.StringToHash(AnimatorChargingPara);
+        m_nAnimatorAttackPara = Animator.StringToHash(AnimatorAttackPara);
     }
 
     public bool CheckPlayerInSight()
@@ -203,6 +217,8 @@ public class Enemy_NinjaV2 : Enemy
         if (busy) yield break;
         busy = true;
 
+        m_animator.SetInteger(m_nAnimatorChargingPara, 0);
+        m_animator.SetInteger(m_nAnimatorAttackPara, 0);
         yield return new WaitForSeconds(idleDuration);
         busy = false;
     }
@@ -211,6 +227,9 @@ public class Enemy_NinjaV2 : Enemy
     {
         if (busy) yield break;
         busy = true;
+
+        m_animator.SetInteger(m_nAnimatorChargingPara, 0);
+        m_animator.SetInteger(m_nAnimatorAttackPara, 0);
 
         float timer = 0f;
         body.velocity = new Vector2(player.position.x < transform.position.x ? -walkSpeed : walkSpeed, body.velocity.y);
@@ -244,8 +263,12 @@ public class Enemy_NinjaV2 : Enemy
         busy = true;
         yield return new WaitForSeconds(throwDelay);
 
+
+
         for (int i = 0; i < nThrowCount; i++)
         {
+            m_animator.SetInteger(m_nAnimatorChargingPara, 0);
+            m_animator.SetInteger(m_nAnimatorAttackPara, 1);
             m_throwBomb.CastSkill();
             yield return new WaitForSeconds(throwInteval);
         }
@@ -262,6 +285,8 @@ public class Enemy_NinjaV2 : Enemy
         busy = true;
         yield return new WaitForSeconds(dashDelay);
 
+        //m_animator.SetInteger()
+
         for (int i = 0; i < nDashCount; i++)
         {
 
@@ -275,6 +300,9 @@ public class Enemy_NinjaV2 : Enemy
                 direction = (player.position - transform.position).normalized;
             }
             float timer = 0f;
+
+            m_animator.SetInteger(m_nAnimatorChargingPara, 1);
+            m_animator.SetInteger(m_nAnimatorAttackPara, 0);
             while (timer < dashInteval)
             {
                 body.velocity = new Vector2(0, 0);
@@ -305,5 +333,39 @@ public class Enemy_NinjaV2 : Enemy
         busy = false;
         m_bDashToggle = false;
         StartCoroutine(StartAttackTimer());
+    }
+
+    private void _FlipBoss(bool bRight)
+    {
+        if (bRight == true)
+        {
+            transform.localRotation = Quaternion.AngleAxis(0, Vector2.up);
+        }
+        else
+        {
+            transform.localRotation = Quaternion.AngleAxis(180, Vector2.up);
+        }
+    }
+
+    private void _processFlipBoss()
+    {
+        bool bRight = false;
+        if(player.position.x < transform.position.x)
+        {
+            bRight = true;
+        }
+        else
+        {
+            bRight = false;
+        }
+        if( bRight != m_bBossFlipRight)
+        {
+            _FlipBoss(bRight);
+            m_bBossFlipRight = bRight;
+        }
+    }
+    private void FixedUpdate()
+    {
+        _processFlipBoss();
     }
 }
