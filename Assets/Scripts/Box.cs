@@ -10,6 +10,8 @@ public class Box : MonoBehaviour {
 	Thing _boxThing;
 	Vector2 prevVelocity;
 
+    public Color spikeColor;
+
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
 		_boxThing = GetComponent<Thing> ();	
@@ -42,4 +44,15 @@ public class Box : MonoBehaviour {
             }
 		}
 	}
+
+    public void GetSpike()
+    {
+        GetComponent<SpriteRenderer>().color = spikeColor;
+
+    }
+
+    public void OutSpike()
+    {
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
 }

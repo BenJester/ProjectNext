@@ -53,11 +53,15 @@ public class Enemy_Ninja : Enemy
     public float attackInteval;
     public bool justAttacked;
 
+    public bool OnlyHorizontalDash;
+
     bool enraged;
     bool justEnraged;
 
-    private EnemySkillShoot m_shootSkill;
-    private EnemySkillThrowBomb m_throwBomb;
+    //private EnemySkillShoot m_shootSkill;
+    //private EnemySkillThrowBomb m_throwBomb;
+    private EnemySkillBase m_shootSkill;
+    private EnemySkillBase m_throwBomb;
 
     void Start()
     {
@@ -222,7 +226,7 @@ public class Enemy_Ninja : Enemy
             //Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
             //bulletBody.velocity = direction * bulletSpeed;
 
-            m_shootSkill.ShootSomething();
+            m_shootSkill.CastSkill();
             yield return new WaitForSeconds(shootInteval);
         }
         busy = false;
@@ -237,7 +241,7 @@ public class Enemy_Ninja : Enemy
         //GameObject newBullet = Instantiate(bomb, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
         //Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
         //bulletBody.velocity = direction * bombSpeed;
-        m_throwBomb.ShootSomething();
+        m_throwBomb.CastSkill();
         busy = false;
         StartCoroutine(StartAttackTimer());
     }
@@ -250,8 +254,16 @@ public class Enemy_Ninja : Enemy
 
         for (int i = 0; i < dashCount; i++)
         {
-            
-            Vector3 direction = (player.position - transform.position).normalized;
+
+            Vector3 direction;
+            if(OnlyHorizontalDash == true)
+            {
+                direction = (new Vector3(player.position.x, transform.position.y, player.position.z) - transform.position).normalized;
+            }
+            else
+            {
+                direction = (player.position - transform.position).normalized;
+            }
             float timer = 0f;
             while (timer < dashInteval)
             {

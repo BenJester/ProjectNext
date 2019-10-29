@@ -33,7 +33,7 @@ public class  EnergyIndicator : MonoBehaviour
     public void CloseEnergyParticle()
     {
         _energyParticle.SetActive(false);
-        Debug.Log("setfalse energy");
+        //Debug.Log("setfalse energy");
     }
     public void TransferEnergyParticle(Transform target)
     {
