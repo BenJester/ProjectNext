@@ -189,6 +189,10 @@ public class PlayerControl1 : PlayerControl {
 
     private UnityAction<PlayerControl1> m_playDieAction;
 
+    private Color trajectoryStartColor;
+    private Color trajectoryEndColor;
+    private bool trajectoryOn = true;
+
     void Awake () {
         GlobalVariable.SetPlayer(this);
 		originalScale = transform.localScale;
@@ -226,11 +230,17 @@ public class PlayerControl1 : PlayerControl {
 		//设置射程和灯光
 		if (hasShootDistance) HandleShootDistanceAndLight ();
         hp = maxhp;
+
+        trajectoryStartColor = lr.startColor;
+        trajectoryEndColor = lr.endColor;
+
     }
+
     public void RegisteDieAction(UnityAction<PlayerControl1> _act)
     {
         m_playDieAction += _act;
     }
+
     private void OnDestroy()
     {
         //GlobalVariable.GetUIPlayerCtrl().UnregisteDelayRestart(_delayAction);
@@ -273,6 +283,7 @@ public class PlayerControl1 : PlayerControl {
         }
         return bRes;
     }
+
 	void Update () {
 
 		anim.SetFloat ("SpeedY", rb.velocity.y);
@@ -516,6 +527,8 @@ public class PlayerControl1 : PlayerControl {
 		HandleObjectDistance ();
 		// coyote
 		HandleJump ();
+
+        HandleTrajectoryTest();
 	}
 
 	void Jump () {
@@ -1048,5 +1061,22 @@ public class PlayerControl1 : PlayerControl {
             }
         }
         isPlayColShadow = false;
+    }
+
+    void HandleTrajectoryTest()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (trajectoryOn)
+            {
+                lr.startColor = new Color(0f, 0f, 0f, 0f);
+                lr.endColor = new Color(0f, 0f, 0f, 0f);
+            } else
+            {
+                lr.startColor = trajectoryStartColor;
+                lr.endColor = trajectoryEndColor;
+            }
+            trajectoryOn = !trajectoryOn;
+        }
     }
 }
