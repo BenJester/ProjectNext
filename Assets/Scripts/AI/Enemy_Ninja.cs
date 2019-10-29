@@ -24,12 +24,12 @@ public class Enemy_Ninja : Enemy
 
     public float sightDistance;
 
-    public GameObject bullet;
+    //public GameObject bullet;
     public float bulletInstanceDistance;
     public float shootDelay;
     public int shootCount;
     public float shootInteval;
-    public float bulletSpeed;
+    //public float bulletSpeed;
 
     public float dashDelay;
     public int dashCount;
@@ -47,14 +47,17 @@ public class Enemy_Ninja : Enemy
     public float shootThreshold;
 
     public float bombDelay;
-    public float bombSpeed;
-    public GameObject bomb;
+    //public float bombSpeed;
+    //public GameObject bomb;
 
     public float attackInteval;
     public bool justAttacked;
 
     bool enraged;
     bool justEnraged;
+
+    private EnemySkillShoot m_shootSkill;
+    private EnemySkillThrowBomb m_throwBomb;
 
     void Start()
     {
@@ -65,6 +68,10 @@ public class Enemy_Ninja : Enemy
         body = GetComponent<Rigidbody2D>();
 
         playerBox = player.GetComponent<BoxCollider2D>();
+
+        m_shootSkill = GetComponent<EnemySkillShoot>();
+
+        m_throwBomb = GetComponent<EnemySkillThrowBomb>();
     }
 
     public bool CheckPlayerInSight()
@@ -210,10 +217,12 @@ public class Enemy_Ninja : Enemy
 
         for (int i = 0; i < shootCount; i ++)
         {
-            Vector3 direction = (player.position - transform.position).normalized;
-            GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
-            Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
-            bulletBody.velocity = direction * bulletSpeed;
+            //Vector3 direction = (player.position - transform.position).normalized;
+            //GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
+            //Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+            //bulletBody.velocity = direction * bulletSpeed;
+
+            m_shootSkill.ShootSomething();
             yield return new WaitForSeconds(shootInteval);
         }
         busy = false;
@@ -224,10 +233,11 @@ public class Enemy_Ninja : Enemy
     {
         if (busy) yield break;
         busy = true;
-        Vector3 direction = (Vector3.up * 2f + (player.position - transform.position).normalized).normalized;
-        GameObject newBullet = Instantiate(bomb, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
-        Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
-        bulletBody.velocity = direction * bombSpeed;
+        //Vector3 direction = (Vector3.up * 2f + (player.position - transform.position).normalized).normalized;
+        //GameObject newBullet = Instantiate(bomb, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
+        //Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+        //bulletBody.velocity = direction * bombSpeed;
+        m_throwBomb.ShootSomething();
         busy = false;
         StartCoroutine(StartAttackTimer());
     }
