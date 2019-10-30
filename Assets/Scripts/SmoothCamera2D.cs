@@ -15,7 +15,7 @@ public class SmoothCamera2D : MonoBehaviour {
         init = true;
         GameObject objPlayer = GameObject.FindWithTag("player");
         PlayerControl1 _playerCtrl = objPlayer.GetComponent<PlayerControl1>();
-        _playerCtrl.RegisteDieAction(PlayerDieAction);
+        //_playerCtrl.RegisteDieAction(PlayerDieAction);
         target = objPlayer.transform;
         transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
     }
