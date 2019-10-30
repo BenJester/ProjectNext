@@ -214,8 +214,8 @@ public class PlayerControl1 : PlayerControl {
         {
             levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
         }
-		m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
-                m_stateMgr = GetComponent<PlayerStateManager>();
+		//m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+        m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
         lockedOnObjectLine.positionCount = 2;
 
@@ -246,7 +246,7 @@ public class PlayerControl1 : PlayerControl {
         //GlobalVariable.GetUIPlayerCtrl().UnregisteDelayRestart(_delayAction);
         if(GlobalVariable.GetUIPlayerCtrl() != null)
         {
-            m_playDieAction -= GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+            //m_playDieAction -= GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
         }
     }
 
@@ -881,9 +881,16 @@ public class PlayerControl1 : PlayerControl {
     }
     public IEnumerator DelayRestart()
     {
+        if(m_playDieAction != null)
+        {
+            m_playDieAction.Invoke(this);
+        }
+        else
+        {
+            Debug.Assert(false);
+        }
         yield return new WaitForSeconds(PlayerSpawnTime);
         StartCoroutine(DelayLoadScene());
-        //m_playDieAction.Invoke(this);
     }
 
     public IEnumerator DelayLoadScene()
