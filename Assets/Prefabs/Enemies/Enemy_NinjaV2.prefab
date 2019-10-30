@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6bf6b50423bf24fb87fb2808f55a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjShoot: {fileID: 305787941185668345, guid: 5f6911f109cb0aa459be2d2b160c1089, type: 3}
+  ObjShoot: {fileID: 305787941185668345, guid: f6ea3c2576a57dd4893be0b833582286, type: 3}
   objInstanceDistance: 50
   objSpeed: 900
 --- !u!114 &43854695
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e08a22eecf9d54e918f84e3eaca607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjShoot: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
+  ObjShoot: {fileID: 1249693321910232, guid: 63bb58a43b890d54eb2132b0bdb9d62d, type: 3}
   objInstanceDistance: 50
   objSpeed: 600
 --- !u!114 &9022779111167391537
@@ -481,6 +481,7 @@ MonoBehaviour:
   shootDelay: 0.3
   shootCount: 3
   shootInteval: 0.3
+  throwBombDelay: 0
   rushDelay: 0.5
   dashDelay: 0.5
   dashCount: 2
