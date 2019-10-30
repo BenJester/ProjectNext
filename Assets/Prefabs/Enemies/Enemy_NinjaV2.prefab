@@ -488,11 +488,8 @@ MonoBehaviour:
   dashInteval: 0.8
   dashSpeed: 1500
   dashDuration: 0.2
-  hitboxWidth: 10
-  throwBombDelay: 0.2
+  hitboxWidth: 15
   throwDelay: 0.2
-  throwInteval: 1
-  throwDuration: 0.2
   throwCount: 2
   throwRageCount: 3
   walkSpeed: 450
@@ -511,6 +508,7 @@ MonoBehaviour:
   AnimatorThrowReadyPara: ThrowBombReady
   AnimationNameThrowReady: NinjaBossReadyThrowBomb
   AnimationNameThrow: NinjaBossThrowBomb
+  AngleHitDiff: 0
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -522,6 +520,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244263522533787652, guid: 6f527f7815769d14f9f3e8b856149f4d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}

@@ -95,6 +95,8 @@ public class Enemy_NinjaV2 : Enemy
     private bool m_bBossFlipRight;
 
     private int m_nBombCounts;
+
+    public float AngleHitDiff;
     void Start()
     {
         base.Start();
@@ -159,7 +161,7 @@ public class Enemy_NinjaV2 : Enemy
                 }
                 else
                 {
-                    busy = false;
+                    //busy = false;
                     if (enraged == true)
                     {
                         m_bThrowBomb = false;
@@ -206,9 +208,10 @@ public class Enemy_NinjaV2 : Enemy
     }
     private void _startThrowBomb()
     {
-        m_nBombCounts = 0;
-        _throwBomb();
-        justAttacked = true;
+        if( m_nBombCounts == 0 )
+        {
+            _throwBomb();
+        }
     }
     void PhaseTwoAI()
     {
@@ -223,7 +226,7 @@ public class Enemy_NinjaV2 : Enemy
         {
             if (m_bDashToggle == true)
             {
-                StartCoroutine(Dash(dashRageCount));
+                StartCoroutine(DashAction(dashRageCount));
             }
             else if (m_bThrowBomb == true)
             {
@@ -256,7 +259,7 @@ public class Enemy_NinjaV2 : Enemy
         {
             if (m_bDashToggle == true)
             {
-                StartCoroutine(Dash(dashCount));
+                StartCoroutine(DashAction(dashCount));
             }
             else
             {
@@ -301,6 +304,7 @@ public class Enemy_NinjaV2 : Enemy
             yield return new WaitForEndOfFrame();
         }
         justAttacked = false;
+        busy = false;
     }
 
     IEnumerator Idle()
@@ -358,7 +362,7 @@ public class Enemy_NinjaV2 : Enemy
     }
 
 
-    IEnumerator Dash(int nDashCount)
+    IEnumerator DashAction(int nDashCount)
     {
         if (busy) yield break;
         busy = true;
@@ -398,9 +402,10 @@ public class Enemy_NinjaV2 : Enemy
             {
                 Physics2D.IgnoreCollision(box, playerBox, true);
                 body.velocity = direction * dashSpeed;
+                float fAngle = Vector2.SignedAngle(transform.position, player.position);
                 Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + direction * (box.size.x + hitboxWidth),
                                  new Vector2(hitboxWidth * 2, box.size.y),
-                                 Vector2.SignedAngle(transform.position, player.position));
+                                 fAngle + AngleHitDiff);
 
                 foreach (Collider2D col in cols)
                 {
@@ -414,12 +419,13 @@ public class Enemy_NinjaV2 : Enemy
             timer = 0f;
             body.velocity = Vector2.zero;
         }
-        busy = false;
         m_bDashToggle = false;
+        m_nBombCounts = 0;
         m_bThrowBomb = true;
         m_animator.SetInteger(m_nAnimatorChargingPara, 0);
         m_animator.SetInteger(m_nAnimatorAttackPara, 0);
         StartCoroutine(StartAttackTimer());
+        busy = false;
     }
 
     private void _FlipBoss(bool bRight)
