@@ -31,6 +31,7 @@ public class Enemy_NinjaV2 : Enemy
     public float shootInteval;
     //public float bulletSpeed;
 
+    public float throwBombDelay;
     public float rushDelay;
     public float dashDelay;
     public int dashCount;
@@ -281,10 +282,11 @@ public class Enemy_NinjaV2 : Enemy
 
         for (int i = 0; i < nThrowCount; i++)
         {
-            m_animator.SetInteger(m_nAnimatorChargingPara, 0);
-            m_animator.SetInteger(m_nAnimatorAttackPara, 1);
+            m_animator.SetInteger(m_nAnimatorThrowBombPara, 1);
             m_throwBomb.CastSkill();
             yield return new WaitForSeconds(throwInteval);
+            m_animator.SetInteger(m_nAnimatorThrowBombPara, 0);
+            yield return new WaitForSeconds(throwBombDelay);
         }
 
 
@@ -322,7 +324,7 @@ public class Enemy_NinjaV2 : Enemy
                 direction = (player.position - transform.position).normalized;
             }
             float timer = 0f;
-
+            _processFlipBoss(true);
             m_animator.SetInteger(m_nAnimatorChargingPara, 1);
             m_animator.SetInteger(m_nAnimatorAttackPara, 0);
             while (timer < dashInteval)
@@ -377,7 +379,7 @@ public class Enemy_NinjaV2 : Enemy
         }
     }
 
-    private void _processFlipBoss()
+    private void _processFlipBoss(bool bForce )
     {
         bool bRight = false;
         if(player.position.x < transform.position.x)
@@ -388,14 +390,22 @@ public class Enemy_NinjaV2 : Enemy
         {
             bRight = false;
         }
-        if( bRight != m_bBossFlipRight)
+        if(bForce == true)
         {
             _FlipBoss(bRight);
             m_bBossFlipRight = bRight;
         }
+        else
+        {
+            if (bRight != m_bBossFlipRight && m_bDashToggle == false)
+            {
+                _FlipBoss(bRight);
+                m_bBossFlipRight = bRight;
+            }
+        }
     }
     private void FixedUpdate()
     {
-        _processFlipBoss();
+        _processFlipBoss(false);
     }
 }
