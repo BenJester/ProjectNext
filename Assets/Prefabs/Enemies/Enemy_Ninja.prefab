@@ -107,7 +107,7 @@ Rigidbody2D:
   m_Mass: 500
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 200
+  m_GravityScale: 185
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -367,10 +367,9 @@ MonoBehaviour:
   dashThreshold: 500
   shootThreshold: 900
   bombDelay: 0
-  bombSpeed: 900
-  bomb: {fileID: 305787941185668345, guid: 5f6911f109cb0aa459be2d2b160c1089, type: 3}
   attackInteval: 1.8
   justAttacked: 0
+  OnlyHorizontalDash: 0
 --- !u!96 &461005181
 TrailRenderer:
   serializedVersion: 2
