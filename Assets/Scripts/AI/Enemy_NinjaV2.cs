@@ -31,7 +31,6 @@ public class Enemy_NinjaV2 : Enemy
     public float shootInteval;
     //public float bulletSpeed;
 
-    public float throwBombDelay;
     public float rushDelay;
     public float dashDelay;
     public int dashCount;
@@ -42,8 +41,6 @@ public class Enemy_NinjaV2 : Enemy
     public float hitboxWidth;
 
     public float throwDelay;
-    public float throwInteval;
-    public float throwDuration;
     public int throwCount;
     public int throwRageCount;
 
@@ -80,14 +77,24 @@ public class Enemy_NinjaV2 : Enemy
     public string AnimatorAttackPara;
     public string AnimatorThrowBombPara;
     public string AnimatorShootingPara;
+    public string AnimatorThrowReadyPara;
+
+    public string AnimationNameThrowReady;
+    public string AnimationNameThrow;
 
     private int m_nAnimatorChargingPara;
     private int m_nAnimatorAttackPara;
     private int m_nAnimatorThrowBombPara;
     private int m_nAnimatorShootingPara;
+    private int m_nAnimatorThrowReadyPara;
 
+    private int m_nAnimationThrowReady;
+    private int m_nAnimationThrow;
+
+    private int m_lastHash;
     private bool m_bBossFlipRight;
 
+    private int m_nBombCounts;
     void Start()
     {
         base.Start();
@@ -108,8 +115,70 @@ public class Enemy_NinjaV2 : Enemy
         m_nAnimatorAttackPara       = Animator.StringToHash(AnimatorAttackPara);
         m_nAnimatorThrowBombPara    = Animator.StringToHash(AnimatorThrowBombPara);
         m_nAnimatorShootingPara     = Animator.StringToHash(AnimatorShootingPara);
+        m_nAnimatorThrowReadyPara = Animator.StringToHash(AnimatorThrowReadyPara);
+
+        m_nAnimationThrowReady = Animator.StringToHash(AnimationNameThrowReady);
+        m_nAnimationThrow = Animator.StringToHash(AnimationNameThrow);
+
+
+
     }
 
+    private void _processAnimation()
+    {
+        if (m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !m_animator.IsInTransition(0))
+        {
+            if (m_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == m_nAnimationThrowReady && m_lastHash != m_nAnimationThrowReady)
+            {
+                //丢雷
+                m_throwBomb.CastSkill();
+                m_lastHash = m_nAnimationThrowReady;
+
+                m_animator.SetInteger(m_nAnimatorThrowBombPara, 1);
+                m_animator.SetInteger(m_nAnimatorThrowReadyPara, 0);
+            }
+            else if (m_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == m_nAnimationThrow && m_lastHash != m_nAnimationThrow)
+            {
+                m_lastHash = m_nAnimationThrow;
+
+                m_animator.SetInteger(m_nAnimatorThrowBombPara, 0);
+                m_animator.SetInteger(m_nAnimatorThrowReadyPara, 0);
+
+                int nNeedThrowCounts = 0;
+                if( enraged == true )
+                {
+                    nNeedThrowCounts = throwRageCount;
+                }
+                else
+                {
+                    nNeedThrowCounts = throwCount;
+                }
+                if( m_nBombCounts < nNeedThrowCounts )
+                {
+                    StartCoroutine(_bombCoroutine());
+                }
+                else
+                {
+                    busy = false;
+                    if (enraged == true)
+                    {
+                        m_bThrowBomb = false;
+                        m_bShootBullet = true;
+                    }
+                    else
+                    {
+                        m_bDashToggle = true;
+                    }
+                    StartCoroutine(StartAttackTimer());
+                }
+            }
+        }
+    }
+    IEnumerator _bombCoroutine()
+    {
+        yield return new WaitForSeconds(throwDelay);
+        _throwBomb();
+    }
     public bool CheckPlayerInSight()
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, (player.position - transform.position).normalized, sightDistance, (1 << 10) | (1 << 8) | (1 << 9));
@@ -135,7 +204,12 @@ public class Enemy_NinjaV2 : Enemy
         yield return new WaitForSeconds(1.8f);
         justEnraged = false;
     }
-
+    private void _startThrowBomb()
+    {
+        m_nBombCounts = 0;
+        _throwBomb();
+        justAttacked = true;
+    }
     void PhaseTwoAI()
     {
         float distance = Vector3.Distance(player.position, transform.position);
@@ -147,18 +221,17 @@ public class Enemy_NinjaV2 : Enemy
 
         if (!justAttacked && !justEnraged)
         {
-            //StartCoroutine(ThrowBomb(throwRageCount));
-            //if (distance < dashThreshold)
             if (m_bDashToggle == true)
             {
                 StartCoroutine(Dash(dashRageCount));
             }
-            else if(m_bThrowBomb == true)
+            else if (m_bThrowBomb == true)
             {
-                StartCoroutine(ThrowBomb(throwRageCount));
+                _startThrowBomb();
             }
             else
             {
+                justAttacked = true;
                 StartCoroutine(Shoot());
             }
         }
@@ -187,7 +260,7 @@ public class Enemy_NinjaV2 : Enemy
             }
             else
             {
-                StartCoroutine(ThrowBomb(throwCount));
+                _startThrowBomb();
             }
         }
         else
@@ -208,9 +281,14 @@ public class Enemy_NinjaV2 : Enemy
         if (!CheckPlayerInSight() || thing.dead) return;
 
         if (health >= 2)
+        {
             PhaseOneAI();
+        }
         else
+        {
             PhaseTwoAI();
+        }
+        _processAnimation();
     }
 
     IEnumerator StartAttackTimer()
@@ -272,36 +350,13 @@ public class Enemy_NinjaV2 : Enemy
         StartCoroutine(StartAttackTimer());
     }
 
-    IEnumerator ThrowBomb(int nThrowCount)
+    private void _throwBomb()
     {
-        if (busy) yield break;
         busy = true;
-        yield return new WaitForSeconds(throwDelay);
-
-
-
-        for (int i = 0; i < nThrowCount; i++)
-        {
-            m_animator.SetInteger(m_nAnimatorThrowBombPara, 1);
-            m_throwBomb.CastSkill();
-            yield return new WaitForSeconds(throwInteval);
-            m_animator.SetInteger(m_nAnimatorThrowBombPara, 0);
-            yield return new WaitForSeconds(throwBombDelay);
-        }
-
-
-        busy = false;
-        if( enraged == true )
-        {
-            m_bThrowBomb = false;
-            m_bShootBullet = true;
-        }
-        else
-        {
-            m_bDashToggle = true;
-        }
-        StartCoroutine(StartAttackTimer());
+        m_animator.SetInteger(m_nAnimatorThrowReadyPara, 1);
+        m_nBombCounts++;
     }
+
 
     IEnumerator Dash(int nDashCount)
     {
