@@ -10,6 +10,8 @@ public class Strawberry : MonoBehaviour
     public float rotationSpeed;
     public float StrawBerryFolloingTime;
 
+    public float FollowingSpeed;
+
     SpriteRenderer sr;
     CheckPointTotalManager worldManager;
 
@@ -38,6 +40,10 @@ public class Strawberry : MonoBehaviour
         {
             Debug.Assert(false);
         }
+        if(FollowingSpeed == 0.0f)
+        {
+            FollowingSpeed = 3.0f;
+        }
         
     }
     private void _setPlayer(PlayerControl1 _player)
@@ -53,7 +59,7 @@ public class Strawberry : MonoBehaviour
     {
         if( m_bFollingPlayer == true )
         {
-            Vector3 vecDst = Vector3.MoveTowards(transform.position, m_playerCtrl.transform.position, 1);
+            Vector3 vecDst = Vector3.MoveTowards(transform.position, m_playerCtrl.transform.position, FollowingSpeed);
             transform.position = new Vector3(vecDst.x, vecDst.y, transform.position.z);
             m_fCurFollingTime += Time.fixedDeltaTime;
             if(m_fCurFollingTime >= StrawBerryFolloingTime)
