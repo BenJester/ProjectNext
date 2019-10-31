@@ -126,7 +126,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 3.1104736, y: -0.7539902}
+  m_Offset: {x: 3.1104736, y: -50.108894}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -137,7 +137,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 46.70172, y: 65.909744}
+  m_Size: {x: 46.70172, y: 99.91057}
   m_EdgeRadius: 0
 --- !u!114 &5888003526284935376
 MonoBehaviour:
@@ -481,7 +481,6 @@ MonoBehaviour:
   shootDelay: 0.3
   shootCount: 3
   shootInteval: 0.3
-  throwBombDelay: 0
   rushDelay: 0.5
   dashDelay: 0.5
   dashCount: 2
@@ -489,10 +488,8 @@ MonoBehaviour:
   dashInteval: 0.8
   dashSpeed: 1500
   dashDuration: 0.2
-  hitboxWidth: 10
-  throwDelay: 0.5
-  throwInteval: 1
-  throwDuration: 0.2
+  hitboxWidth: 15
+  throwDelay: 0.2
   throwCount: 2
   throwRageCount: 3
   walkSpeed: 450
@@ -508,6 +505,10 @@ MonoBehaviour:
   AnimatorAttackPara: Attacking
   AnimatorThrowBombPara: ThrowBomb
   AnimatorShootingPara: ShootingBullet
+  AnimatorThrowReadyPara: ThrowBombReady
+  AnimationNameThrowReady: NinjaBossReadyThrowBomb
+  AnimationNameThrow: NinjaBossThrowBomb
+  AngleHitDiff: 0
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -520,6 +521,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: shield
       objectReference: {fileID: 0}
+    - target: {fileID: 1244263522533787652, guid: 6f527f7815769d14f9f3e8b856149f4d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -528,7 +534,7 @@ PrefabInstance:
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -44.2
       objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
