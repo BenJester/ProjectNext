@@ -25,7 +25,7 @@ public class Mech_ThingRespawner : MonoBehaviour {
             }
         }
 
-        if (respawnedThingInstance !=null && respawnedThingInstance.GetComponent<ChangedDispearThing>().dead)
+        if (respawnedThingInstance !=null && respawnedThingInstance.GetComponent<Thing>().dead)
         {
             hasRespawn=false;
         }
