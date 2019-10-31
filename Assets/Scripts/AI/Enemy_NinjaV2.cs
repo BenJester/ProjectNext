@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy_NinjaV2 : Enemy
 {
     public enum State
@@ -96,7 +97,9 @@ public class Enemy_NinjaV2 : Enemy
 
     private int m_nBombCounts;
 
-    public float AngleHitDiff;
+    public float DashHitOffsetY;
+    
+    private bool m_bDrawGizmos;
     void Start()
     {
         base.Start();
@@ -372,11 +375,10 @@ public class Enemy_NinjaV2 : Enemy
 
         for (int i = 0; i < nDashCount; i++)
         {
-
             Vector3 direction;
             if (OnlyHorizontalDash == true)
             {
-                direction = (new Vector3(player.position.x, transform.position.y, player.position.z) - transform.position).normalized;
+                direction = (new Vector3(player.position.x, transform.position.y - DashHitOffsetY, player.position.z) - transform.position).normalized;
             }
             else
             {
@@ -396,7 +398,7 @@ public class Enemy_NinjaV2 : Enemy
             m_animator.SetInteger(m_nAnimatorAttackPara, 1);
 
             yield return new WaitForSeconds(rushDelay);
-
+            m_bDrawGizmos = true;
             timer = 0f;
             while (timer < dashDuration)
             {
@@ -405,7 +407,7 @@ public class Enemy_NinjaV2 : Enemy
                 float fAngle = Vector2.SignedAngle(transform.position, player.position);
                 Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + direction * (box.size.x + hitboxWidth),
                                  new Vector2(hitboxWidth * 2, box.size.y),
-                                 fAngle + AngleHitDiff);
+                                 fAngle + DashHitOffsetY);
 
                 foreach (Collider2D col in cols)
                 {
@@ -416,6 +418,7 @@ public class Enemy_NinjaV2 : Enemy
                 yield return new WaitForEndOfFrame();
                 Physics2D.IgnoreCollision(box, playerBox, false);
             }
+            m_bDrawGizmos = false;
             timer = 0f;
             body.velocity = Vector2.zero;
         }
@@ -427,6 +430,8 @@ public class Enemy_NinjaV2 : Enemy
         StartCoroutine(StartAttackTimer());
         busy = false;
     }
+
+    
 
     private void _FlipBoss(bool bRight)
     {
@@ -469,4 +474,15 @@ public class Enemy_NinjaV2 : Enemy
     {
         _processFlipBoss(false);
     }
+    //测试用代码
+    //private void OnDrawGizmos()
+    //{
+    //    if(m_bDrawGizmos == true)
+    //    {
+    //        Vector3 direction = (new Vector3(player.position.x, transform.position.y - DashHitOffsetY, player.position.z) - transform.position).normalized;
+    //        float fAngle = Vector2.SignedAngle(transform.position, player.position);
+    //        Gizmos.color = Color.red;
+    //        Gizmos.DrawCube(transform.position + direction * (box.size.x + hitboxWidth), new Vector3(hitboxWidth * 2, box.size.y, 0));
+    //    }
+    //}
 }
