@@ -394,10 +394,10 @@ public class Enemy_NinjaV2 : Enemy
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
-            m_animator.SetInteger(m_nAnimatorChargingPara, 0);
-            m_animator.SetInteger(m_nAnimatorAttackPara, 1);
 
             yield return new WaitForSeconds(rushDelay);
+            m_animator.SetInteger(m_nAnimatorChargingPara, 0);
+            m_animator.SetInteger(m_nAnimatorAttackPara, 1);
             m_bDrawGizmos = true;
             timer = 0f;
             while (timer < dashDuration)
