@@ -529,7 +529,9 @@ public class PlayerControl1 : PlayerControl {
 		HandleJump ();
 
         HandleTrajectoryTest();
-	}
+        HandleShootSlowBullet();
+
+    }
 
 	void Jump () {
         box.sharedMaterial = slipperyMat;
@@ -829,6 +831,19 @@ public class PlayerControl1 : PlayerControl {
 		chargeFrame = 0;
 
 	}
+
+    // 录视频用 按Q直接射出慢子弹
+    void HandleShootSlowBullet()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            GameObject newBullet = Instantiate(bullet, transform.position + ((Vector3)mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler(0, 0, -AngleBetween(Vector2.left, ((Vector2)mouseWorldPos - (Vector2)transform.position).normalized)));
+            newBullet.GetComponent<Bullet>().SetBulletType(Bullet.BulletType.slow);
+            Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+            bulletBody.velocity = (mouseWorldPos - (Vector2)transform.position).normalized * minBulletSpeed;
+        }
+    }
 
     IEnumerator BloodEffect()
     {

@@ -494,7 +494,7 @@ MonoBehaviour:
   throwRageCount: 3
   walkSpeed: 450
   walkDuration: 1.2
-  idleDuration: 1
+  idleDuration: 0.2
   dashThreshold: 500
   shootThreshold: 900
   bombDelay: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
   AnimatorThrowReadyPara: ThrowBombReady
   AnimationNameThrowReady: NinjaBossReadyThrowBomb
   AnimationNameThrow: NinjaBossThrowBomb
-  AngleHitDiff: 0
+  DashHitOffsetY: 40
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0

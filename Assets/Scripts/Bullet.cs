@@ -25,8 +25,8 @@ public class Bullet : MonoBehaviour {
 	public Color slowColor;
 	public Color fastColor;
 	PlayerControl1 playerControl;
-
-	public bool isHomingBullet=false;
+    BulletType bulletType;
+    public bool isHomingBullet=false;
 	
 	private float speed;
 	private float rotateSpeed;
@@ -61,7 +61,7 @@ public class Bullet : MonoBehaviour {
 
 		//距离玩家太远摧毁
 		//或许自身地飞行距离比较合适？
-		if(playerControl.hasShootDistance)
+		if(playerControl.hasShootDistance && bulletType != BulletType.slow)
 		{
 			//计算自己开始与飞行的距离；
 			if(CountDistanceSelf){
@@ -124,11 +124,12 @@ public class Bullet : MonoBehaviour {
 
 	public void SetBulletType (BulletType type) {
 
-		
-		switch (type) {
+        bulletType = type;
+
+        switch (type) {
 			
 			case BulletType.slow:
-				GetComponent<Animator>().CrossFade("Slow",0.001f);
+                GetComponent<Animator>().CrossFade("Slow",0.001f);
 				TrailRenderer tr =GetComponent<TrailRenderer>(); 
 				tr.startColor=slowColor;
 				tr.endColor=slowColor;

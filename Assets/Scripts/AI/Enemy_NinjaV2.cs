@@ -378,7 +378,7 @@ public class Enemy_NinjaV2 : Enemy
             Vector3 direction;
             if (OnlyHorizontalDash == true)
             {
-                direction = (new Vector3(player.position.x, transform.position.y - DashHitOffsetY, player.position.z) - transform.position).normalized;
+                direction = (new Vector3(player.position.x, transform.position.y , player.position.z) - transform.position).normalized;
             }
             else
             {
@@ -402,12 +402,13 @@ public class Enemy_NinjaV2 : Enemy
             timer = 0f;
             while (timer < dashDuration)
             {
+                Vector3 vecSource = new Vector2(transform.position.x, transform.position.y - DashHitOffsetY);
                 Physics2D.IgnoreCollision(box, playerBox, true);
                 body.velocity = direction * dashSpeed;
                 float fAngle = Vector2.SignedAngle(transform.position, player.position);
-                Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + direction * (box.size.x + hitboxWidth),
+                Collider2D[] cols = Physics2D.OverlapBoxAll(vecSource + direction * (box.size.x + hitboxWidth),
                                  new Vector2(hitboxWidth * 2, box.size.y),
-                                 fAngle + DashHitOffsetY);
+                                 fAngle );
 
                 foreach (Collider2D col in cols)
                 {
@@ -475,14 +476,33 @@ public class Enemy_NinjaV2 : Enemy
         _processFlipBoss(false);
     }
     //测试用代码
-    //private void OnDrawGizmos()
-    //{
-    //    if(m_bDrawGizmos == true)
-    //    {
-    //        Vector3 direction = (new Vector3(player.position.x, transform.position.y - DashHitOffsetY, player.position.z) - transform.position).normalized;
-    //        float fAngle = Vector2.SignedAngle(transform.position, player.position);
-    //        Gizmos.color = Color.red;
-    //        Gizmos.DrawCube(transform.position + direction * (box.size.x + hitboxWidth), new Vector3(hitboxWidth * 2, box.size.y, 0));
-    //    }
-    //}
+    private void OnDrawGizmos()
+    {
+        //if (m_bDrawGizmos == true)
+        //{
+        //    Vector3 vecSource = new Vector2(transform.position.x, transform.position.y - DashHitOffsetY);
+
+        //    Vector3 size = new Vector3(hitboxWidth * 2, box.size.y, 0);
+        //    float fAngle = Vector2.SignedAngle(transform.position, player.position);
+        //    var orientation = Quaternion.Euler(0, 0, fAngle);
+
+        //    // Basis vectors, half the size in each direction from the center.
+        //    Vector2 right = orientation * Vector2.right * size.x / 2f;
+        //    Vector2 up = orientation * Vector2.up * size.y / 2f;
+
+        //    // Four box corners.
+        //    Vector2 pos = new Vector2(vecSource.x,vecSource.y);
+        //    var topLeft = pos + up - right;
+        //    var topRight = pos + up + right;
+        //    var bottomRight = pos - up + right;
+        //    var bottomLeft = pos - up - right;
+
+        //    // Now we've reduced the problem to drawing lines.
+        //    float duration = 3;
+        //    Debug.DrawLine(topLeft, topRight, Color.red, duration);
+        //    Debug.DrawLine(topRight, bottomRight, Color.red, duration);
+        //    Debug.DrawLine(bottomRight, bottomLeft, Color.red, duration);
+        //    Debug.DrawLine(bottomLeft, topLeft, Color.red, duration);
+        //}
+    }
 }
