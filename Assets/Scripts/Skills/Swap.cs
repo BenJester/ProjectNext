@@ -27,11 +27,12 @@ public class Swap : Skill {
     public float realWaitTime;
     public float curr;
 
-
+    public float cooldown;
+    bool cooldowned = true;
 
 	public override void Do()
 	{
-		if (!active || !col || col.GetComponent<Thing> ().dead)
+		if (!active || !col || col.GetComponent<Thing> ().dead || !cooldowned)
 			return;
 		StartCoroutine(DelayedSwap(waitTime));
 
@@ -45,6 +46,7 @@ public class Swap : Skill {
 		powerParticle.transform.SetParent(col.transform);
 		Destroy(powerParticle,0.5f);
 	}
+
 	public void DoSwap ()
     {	
 		StartCoroutine (SwapDamageEffect ());
@@ -112,8 +114,9 @@ public class Swap : Skill {
         playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
 		thingBody.velocity = tempV;
 
-
-	}
+        cooldowned = false;
+        StartCoroutine(StartCooldown());
+    }
 		
 	void ScanEnemies () {
 		if (!swapDamageOn)
@@ -206,6 +209,13 @@ public class Swap : Skill {
         Time.timeScale = 1f;
         playerControl.targetTimeScale = 1f;
         DoSwap();
+    }
+
+    IEnumerator StartCooldown()
+    {
+        cooldowned = false;
+        yield return new WaitForSecondsRealtime(cooldown);
+        cooldowned = true;
     }
 
     void FixedUpdate()
