@@ -20,6 +20,10 @@ public class LoadSceneByName : MonoBehaviour
     {
         if (collision.CompareTag("player"))
         {
+            GameObject worldManager = GameObject.FindGameObjectWithTag("WorldManager");
+            GameObject levelTest = GameObject.FindGameObjectWithTag("LevelManager");
+            Destroy(worldManager);
+            Destroy(levelTest);
             SceneManager.LoadScene(SceneName);
         }
     }
