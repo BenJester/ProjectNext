@@ -11,6 +11,8 @@ public class Level : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!test)
+            return;
         if (collision.gameObject. tag == "player")
         {
             test.currentLevel = name;
