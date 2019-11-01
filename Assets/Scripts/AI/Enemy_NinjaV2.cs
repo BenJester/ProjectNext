@@ -98,6 +98,8 @@ public class Enemy_NinjaV2 : Enemy
     private int m_nBombCounts;
 
     public float DashHitOffsetY;
+
+    public int HealthToRage;
     
     private bool m_bDrawGizmos;
     void Start()
@@ -286,7 +288,7 @@ public class Enemy_NinjaV2 : Enemy
     {
         if (!CheckPlayerInSight() || thing.dead) return;
 
-        if (health >= 2)
+        if (health >= HealthToRage)
         {
             PhaseOneAI();
         }
