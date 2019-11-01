@@ -8,6 +8,7 @@ public class Mech_ChangeSpeed : MonoBehaviour
     public Vector2 dir;
     public float speedFactor;
     public Animator anim;
+    public Vector3 DstPosition;
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D col)
     {

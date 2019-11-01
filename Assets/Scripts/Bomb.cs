@@ -44,6 +44,6 @@ public class Bomb : MonoBehaviour
         active = false;
         GetComponent<Thing>().Die();
 
-        //GameObject.Destroy(gameObject);
+        GameObject.Destroy(gameObject);
     }
 }

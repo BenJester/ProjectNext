@@ -33,6 +33,8 @@ public class MovableElasticThing : MonoBehaviour {
             lr.SetPosition(1,transform.position);
 
             rb.velocity += (Vector2)(originalPos-(Vector2)transform.position).normalized * force;
+            Vector2 vec = rb.velocity;
+            Debug.Log(string.Format("{0}", vec.normalized));
         }
     }
 }
