@@ -20,19 +20,25 @@ public class Mech_ThingRespawner : MonoBehaviour {
             
             if (nowEnergy >= respawnColdDown) {
                 respawnedThingInstance = Instantiate (respawnThing, transform.position, Quaternion.identity) as GameObject;
+                DestroyNotify _notify = respawnedThingInstance.gameObject.GetComponent<DestroyNotify>();
+                if(_notify != null)
+                {
+                    _notify.RegisteNotifyTarget(_spawnObjectDestroy);
+                }
                 hasRespawn = true;
                 nowEnergy = 0;
             }
         }
 
-        if (respawnedThingInstance !=null && respawnedThingInstance.GetComponent<Thing>().dead)
+        float fill = (float) nowEnergy / respawnColdDown;
+        coolDownSlider.fillAmount = Mathf.Clamp (fill, 0, 1);
+    }
+
+    private void _spawnObjectDestroy()
+    {
+        if (respawnedThingInstance != null && respawnedThingInstance.GetComponent<Thing>().dead)
         {
             hasRespawn = false;
         }
-        float fill = (float) nowEnergy / respawnColdDown;
-        coolDownSlider.fillAmount = Mathf.Clamp (fill, 0, 1);
-
-        
-
     }
 }
