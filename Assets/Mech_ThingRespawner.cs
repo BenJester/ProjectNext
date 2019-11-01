@@ -27,7 +27,7 @@ public class Mech_ThingRespawner : MonoBehaviour {
 
         if (respawnedThingInstance !=null && respawnedThingInstance.GetComponent<Thing>().dead)
         {
-            hasRespawn=false;
+            hasRespawn = false;
         }
         float fill = (float) nowEnergy / respawnColdDown;
         coolDownSlider.fillAmount = Mathf.Clamp (fill, 0, 1);
