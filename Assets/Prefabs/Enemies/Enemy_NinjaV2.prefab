@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4608901840260904553}
   - component: {fileID: 43854695}
   - component: {fileID: 9022779111167391537}
+  - component: {fileID: 1117773378}
   m_Layer: 8
   m_Name: Enemy_NinjaV2
   m_TagString: thing
@@ -202,6 +203,7 @@ MonoBehaviour:
   Head: {fileID: 21300000, guid: fd334bfeff74b184381af0192e74317e, type: 3}
   Body: {fileID: 21300000, guid: 0ba11a578efa2124882994fa5d299745, type: 3}
   PlayerLegs: {fileID: 0}
+  clip: {fileID: 0}
 --- !u!95 &5869765929230958684
 Animator:
   serializedVersion: 3
@@ -510,6 +512,18 @@ MonoBehaviour:
   AnimationNameThrow: NinjaBossThrowBomb
   DashHitOffsetY: 40
   HealthToRage: 4
+--- !u!114 &1117773378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b83e1b1835f1634586f3ffcd1596cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -521,11 +535,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shield
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244263522533787652, guid: 6f527f7815769d14f9f3e8b856149f4d,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
