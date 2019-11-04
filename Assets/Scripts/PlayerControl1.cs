@@ -522,9 +522,12 @@ public class PlayerControl1 : PlayerControl {
 		if (Input.GetKeyDown (KeyCode.E) && doubleSwap) {
             //原先是通过子弹进行呼唤，所以这里需要false，但是现在情况变了，这个作为一个功能开关，而不是一个属性值
 			//doubleSwap = false;
-            swap.SetDoubleSwap(true);
+            if(swap.CanDoubleSwap())
+            {
+                swap.SetDoubleSwap(true);
 
-            swap.Do ();
+                swap.Do();
+            }
 		}
 
 		//冲刺触发

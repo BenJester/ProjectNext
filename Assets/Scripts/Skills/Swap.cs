@@ -68,7 +68,6 @@ public class Swap : Skill {
 		//屏幕震动	
 		CameraShaker.Instance.ShakeOnce(10f,0.1f,0.02f,0.05f);
 
-		ScanEnemies ();
         if(col == null)
         {
             return;
@@ -95,9 +94,11 @@ public class Swap : Skill {
             {
                 return;
             }
+            m_lastTargetCol = null;
         }
 
 
+        ScanEnemies(_readySwapCol);
         Rigidbody2D thingBody = _readySwapCol.gameObject.GetComponent<Rigidbody2D> ();
 		Thing _swapThing = _readySwapCol.gameObject.GetComponent<Thing> ();
         _swapThing.ThingSwap();
@@ -158,15 +159,15 @@ public class Swap : Skill {
         audioSource.PlayOneShot(clip, 0.8f);
     }
 		
-	void ScanEnemies () {
+	void ScanEnemies (Collider2D _swapCol) {
 		if (!swapDamageOn)
 			return;
 
 
 		//Collider2D[] cols = Physics2D.OverlapAreaAll ((Vector2) (player.transform.position + scanBoxHeight / 2f * Vector3.up), (Vector2) (col.transform.position - scanBoxHeight / 2f * Vector3.down));
-		Vector2 midPoint = (player.transform.position + col.transform.position) / 2f;
-		Vector2 size = new Vector2 (Vector2.Distance ((Vector2)player.transform.position, (Vector2)col.transform.position), scanBoxHeight);
-		float angle = Vector2.SignedAngle (player.transform.position, col.transform.position);
+		Vector2 midPoint = (player.transform.position + _swapCol.transform.position) / 2f;
+		Vector2 size = new Vector2 (Vector2.Distance ((Vector2)player.transform.position, (Vector2)_swapCol.transform.position), scanBoxHeight);
+		float angle = Vector2.SignedAngle (player.transform.position, _swapCol.transform.position);
 		//RaycastHit2D[] cols = Physics2D.LinecastAll ((Vector2)player.transform.position, (Vector2)col.transform.position);
 		GameObject temp = new GameObject();
 		GameObject scan = Instantiate(temp, midPoint, Quaternion.Euler(0f,0f, Vector2.SignedAngle (Vector2.right, (Vector2)player.transform.position - (Vector2)col.transform.position)));
@@ -178,7 +179,7 @@ public class Swap : Skill {
 		Collider2D[] cols = new Collider2D[32];
 		int count = Physics2D.OverlapCollider(scanBox, new ContactFilter2D(), cols);
 		for (int i = 0; i < count; i ++) {
-			if (cols[i] == col)
+			if (cols[i] == _swapCol)
 				continue;
 			Enemy enemy = cols[i].GetComponent<Enemy> ();
 			if (enemy != null) {
@@ -189,6 +190,8 @@ public class Swap : Skill {
         m_vecCacheDrawBoxSize = size;
         m_fCacheDrawBoxAngle = angle;
         m_bDrawBox = true;
+
+        m_bDoubleSwap = false;
 
         Destroy (temp);
 		Destroy (scan);
@@ -282,6 +285,13 @@ public class Swap : Skill {
     }
     public void SetDoubleSwap(bool bDouble)
     {
-        m_bDoubleSwap = bDouble;
+        if(m_lastTargetCol != null )
+        {
+            m_bDoubleSwap = bDouble;
+        }
+    }
+    public bool CanDoubleSwap()
+    {
+        return (m_bDoubleSwap == false && m_lastTargetCol != null);
     }
 }
