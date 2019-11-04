@@ -38,6 +38,8 @@ public class Swap : Skill {
 
     private Collider2D m_lastTargetCol;
     private bool m_bDoubleSwap;
+
+    public SwapEffectMovement m_swapEffect;
     public override void Do()
 	{
 		if (!active || !col || col.GetComponent<Thing> ().dead || !cooldowned)
@@ -97,7 +99,14 @@ public class Swap : Skill {
             m_lastTargetCol = null;
         }
 
-
+        if( _readySwapCol != null)
+        {
+            if(m_swapEffect != null)
+            {
+                //m_swapEffect.StartMoving(transform.position, _readySwapCol.transform.position);
+                m_swapEffect.StartMoving( _readySwapCol.transform.position, transform.position);
+            }
+        }
         ScanEnemies(_readySwapCol);
         Rigidbody2D thingBody = _readySwapCol.gameObject.GetComponent<Rigidbody2D> ();
 		Thing _swapThing = _readySwapCol.gameObject.GetComponent<Thing> ();
