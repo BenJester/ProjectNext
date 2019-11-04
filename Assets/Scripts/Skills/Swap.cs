@@ -30,7 +30,15 @@ public class Swap : Skill {
     public float cooldown;
     bool cooldowned = true;
 
-	public override void Do()
+    private Vector2 m_vecCacheDrawBoxPos;
+    private Vector2 m_vecCacheDrawBoxSize;
+    private float m_fCacheDrawBoxAngle;
+
+    private bool m_bDrawBox;
+
+    private Collider2D m_lastTargetCol;
+    private bool m_bDoubleSwap;
+    public override void Do()
 	{
 		if (!active || !col || col.GetComponent<Thing> ().dead || !cooldowned)
 			return;
@@ -47,6 +55,12 @@ public class Swap : Skill {
 		Destroy(powerParticle,0.5f);
 	}
 
+    private void _swapThingDestroy()
+    {
+        m_lastTargetCol = null;
+        m_bDoubleSwap = false;
+    }
+
 	public void DoSwap ()
     {	
 		StartCoroutine (SwapDamageEffect ());
@@ -59,44 +73,68 @@ public class Swap : Skill {
         {
             return;
         }
-        
-		Rigidbody2D thingBody = col.gameObject.GetComponent<Rigidbody2D> ();
-		Thing _swapThing = col.gameObject.GetComponent<Thing> ();
+        Collider2D _readySwapCol = col;
+        if( m_bDoubleSwap == false )
+        {
+            Thing _colThing = _readySwapCol.GetComponent<Thing>();
+            if(_colThing != null)
+            {
+                m_lastTargetCol = _readySwapCol;
+                _colThing.RegisteDestroyNotify(_swapThingDestroy);
+            }
+            else
+            {
+                Debug.Assert(false);
+            }
+        }
+        else
+        {
+            _readySwapCol = m_lastTargetCol;
+            m_bDoubleSwap = false;
+            if (m_lastTargetCol == null)
+            {
+                return;
+            }
+        }
+
+
+        Rigidbody2D thingBody = _readySwapCol.gameObject.GetComponent<Rigidbody2D> ();
+		Thing _swapThing = _readySwapCol.gameObject.GetComponent<Thing> ();
         _swapThing.ThingSwap();
         Thing _playerThing = player.gameObject.GetComponent<Thing>();
         _playerThing.ThingSwap();
         if (_swapThing.hasShield) return;
 		Vector3 posPlayer = player.transform.position;
-		Vector3 _posSwapThing = col.transform.position;
+		Vector3 _posSwapThing = _readySwapCol.transform.position;
 
         EnergyIndicator.instance.CloseEnergyParticle();
-        BoxCollider2D objCol2d = col.GetComponent<BoxCollider2D>();
+        BoxCollider2D objCol2d = _readySwapCol.GetComponent<BoxCollider2D>();
         //float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
         float playerRadiusY = player.GetComponent<BoxCollider2D>().bounds.size.y / 2f;
         //这里的size.y是原始大小，乘以scale的话只能是相对父亲的大小，但是父亲也缩放的话，就有问题了。所以这里改用bounds.size取世界尺寸
         //float heightDiff = (col.GetComponent<BoxCollider2D> ().size.y * col.transform.localScale.y - playerRadiusY * 2f) / 2f;
-        float heightDiff = (col.GetComponent<BoxCollider2D>().bounds.size.y - playerRadiusY * 2f) / 2f;
+        float heightDiff = (_readySwapCol.GetComponent<BoxCollider2D>().bounds.size.y - playerRadiusY * 2f) / 2f;
 
         if (_swapThing.GetLeftX() < player.transform.position.x && 
             _swapThing.GetRightX() > player.transform.position.x && 
             _swapThing.GetLowerY() > player.transform.position.y && 
             _swapThing.GetLowerY() < player.transform.position.y + playerRadiusY + 10f) {
 			
-			Vector3 temp = col.gameObject.transform.position;
-			col.gameObject.transform.position = new Vector3 (
+			Vector3 temp = _readySwapCol.gameObject.transform.position;
+            _readySwapCol.gameObject.transform.position = new Vector3 (
                 player.transform.position.x, 
                 player.transform.position.y - playerRadiusY + (_swapThing.GetUpperY() - _swapThing.GetLowerY()) / 2f, 
                 player.transform.position.z);
 
 			player.transform.position = new Vector3 (
-                temp.x, 
-                col.gameObject.transform.position.y + playerRadiusY + (_swapThing.GetUpperY() - _swapThing.GetLowerY()) / 2f, 
+                temp.x,
+                _readySwapCol.gameObject.transform.position.y + playerRadiusY + (_swapThing.GetUpperY() - _swapThing.GetLowerY()) / 2f, 
                 player.transform.position.z);
 			
 		}
         else
         {
-            col.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
+            _readySwapCol.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
             player.transform.position = new Vector3(_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
             PostEffectManager.instance.Blink (0.03f);
 			//print ("Exchange!");
@@ -104,7 +142,7 @@ public class Swap : Skill {
         Smoke();
 
         //转移粒子：
-        EnergyIndicator.instance.TransferEnergyParticle(col.transform);
+        EnergyIndicator.instance.TransferEnergyParticle(_readySwapCol.transform);
         EnergyIndicator.instance.RespawnEnergyParticle();
 
         Vector2 tempV = playerBody.velocity;
@@ -147,11 +185,24 @@ public class Swap : Skill {
 				enemy.TakeDamage (swapDamage);
 			}
 		}
-		Destroy (temp);
+        m_vecCacheDrawBoxPos = midPoint;
+        m_vecCacheDrawBoxSize = size;
+        m_fCacheDrawBoxAngle = angle;
+        m_bDrawBox = true;
+
+        Destroy (temp);
 		Destroy (scan);
 	}
 
-	void Smoke () {
+    private void OnDrawGizmos()
+    {
+        if (m_bDrawBox == true)
+        {
+            MathUtil.DrawDebugBox(m_vecCacheDrawBoxPos, m_vecCacheDrawBoxSize, m_fCacheDrawBoxAngle,3);
+        }
+    }
+
+    void Smoke () {
 		if (!smokeOn)
 			return;
 		Vector3 pos = player.transform.position;
@@ -228,5 +279,9 @@ public class Swap : Skill {
             StopAllCoroutines();
             StartCoroutine(CancelDelay());
         }
+    }
+    public void SetDoubleSwap(bool bDouble)
+    {
+        m_bDoubleSwap = bDouble;
     }
 }
