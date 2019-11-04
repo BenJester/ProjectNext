@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d014ee6e912bf0f4cb0e126c8e08959c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3639ad36b69f13f47b8c646d5661c854, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,18 +126,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 3.1104736, y: -0.7539902}
+  m_Offset: {x: 3.1104736, y: -50.108894}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 125, y: 124.75}
+    oldSize: {x: 206.25, y: 242}
     newSize: {x: 29, y: 73}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 46.70172, y: 65.909744}
+  m_Size: {x: 46.70172, y: 99.91057}
   m_EdgeRadius: 0
 --- !u!114 &5888003526284935376
 MonoBehaviour:
@@ -199,8 +199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Head: {fileID: 21300000, guid: 1f1244d0593ec5b458e97fbb95611088, type: 3}
-  Body: {fileID: 21300000, guid: 6935687610b502043be63edf3b63d58a, type: 3}
+  Head: {fileID: 21300000, guid: fd334bfeff74b184381af0192e74317e, type: 3}
+  Body: {fileID: 21300000, guid: 0ba11a578efa2124882994fa5d299745, type: 3}
   PlayerLegs: {fileID: 0}
 --- !u!95 &5869765929230958684
 Animator:
@@ -228,7 +228,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -334,7 +334,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6bf6b50423bf24fb87fb2808f55a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjShoot: {fileID: 305787941185668345, guid: 5f6911f109cb0aa459be2d2b160c1089, type: 3}
+  ObjShoot: {fileID: 305787941185668345, guid: f6ea3c2576a57dd4893be0b833582286, type: 3}
   objInstanceDistance: 50
   objSpeed: 900
 --- !u!114 &43854695
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e08a22eecf9d54e918f84e3eaca607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjShoot: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
+  ObjShoot: {fileID: 1249693321910232, guid: 63bb58a43b890d54eb2132b0bdb9d62d, type: 3}
   objInstanceDistance: 50
   objSpeed: 600
 --- !u!114 &9022779111167391537
@@ -488,15 +488,13 @@ MonoBehaviour:
   dashInteval: 0.8
   dashSpeed: 1500
   dashDuration: 0.2
-  hitboxWidth: 10
-  throwDelay: 0.5
-  throwInteval: 1
-  throwDuration: 0.2
+  hitboxWidth: 15
+  throwDelay: 0.2
   throwCount: 2
   throwRageCount: 3
   walkSpeed: 450
   walkDuration: 1.2
-  idleDuration: 1
+  idleDuration: 0.2
   dashThreshold: 500
   shootThreshold: 900
   bombDelay: 0
@@ -507,6 +505,11 @@ MonoBehaviour:
   AnimatorAttackPara: Attacking
   AnimatorThrowBombPara: ThrowBomb
   AnimatorShootingPara: ShootingBullet
+  AnimatorThrowReadyPara: ThrowBombReady
+  AnimationNameThrowReady: NinjaBossReadyThrowBomb
+  AnimationNameThrow: NinjaBossThrowBomb
+  DashHitOffsetY: 40
+  HealthToRage: 4
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -519,6 +522,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: shield
       objectReference: {fileID: 0}
+    - target: {fileID: 1244263522533787652, guid: 6f527f7815769d14f9f3e8b856149f4d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -527,7 +535,7 @@ PrefabInstance:
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -44.2
       objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}

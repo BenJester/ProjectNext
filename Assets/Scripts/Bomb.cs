@@ -43,5 +43,7 @@ public class Bomb : MonoBehaviour
         GameObject par = Instantiate(particle, transform.position, Quaternion.identity);
         active = false;
         GetComponent<Thing>().Die();
+
+        GameObject.Destroy(gameObject);
     }
 }

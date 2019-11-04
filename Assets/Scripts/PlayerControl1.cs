@@ -178,6 +178,11 @@ public class PlayerControl1 : PlayerControl {
     private bool isPlayColShadow=false;
 
     private LevelTest levelTest;
+
+    AudioSource audioSource;
+    public AudioClip jumpClip;
+    public AudioClip hitClip;
+
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -205,7 +210,9 @@ public class PlayerControl1 : PlayerControl {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		lr.enabled = false;
         box = GetComponent<BoxCollider2D>();
-	}
+        audioSource = GetComponent<AudioSource>();
+
+    }
 
 	void Start () {
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
@@ -214,8 +221,8 @@ public class PlayerControl1 : PlayerControl {
         {
             levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
         }
-		m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
-                m_stateMgr = GetComponent<PlayerStateManager>();
+		//m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+        m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
         lockedOnObjectLine.positionCount = 2;
 
@@ -246,7 +253,7 @@ public class PlayerControl1 : PlayerControl {
         //GlobalVariable.GetUIPlayerCtrl().UnregisteDelayRestart(_delayAction);
         if(GlobalVariable.GetUIPlayerCtrl() != null)
         {
-            m_playDieAction -= GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+            //m_playDieAction -= GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
         }
     }
 
@@ -529,7 +536,9 @@ public class PlayerControl1 : PlayerControl {
 		HandleJump ();
 
         HandleTrajectoryTest();
-	}
+        HandleShootSlowBullet();
+
+    }
 
 	void Jump () {
         box.sharedMaterial = slipperyMat;
@@ -541,6 +550,8 @@ public class PlayerControl1 : PlayerControl {
         m_bJumpRelease = false;
 
         m_fHeight = transform.position.y;
+
+        audioSource.PlayOneShot(jumpClip);
     }
 
     bool FourCornerHit()
@@ -830,6 +841,19 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
+    // 录视频用 按Q直接射出慢子弹
+    void HandleShootSlowBullet()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            GameObject newBullet = Instantiate(bullet, transform.position + ((Vector3)mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler(0, 0, -AngleBetween(Vector2.left, ((Vector2)mouseWorldPos - (Vector2)transform.position).normalized)));
+            newBullet.GetComponent<Bullet>().SetBulletType(Bullet.BulletType.slow);
+            Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+            bulletBody.velocity = (mouseWorldPos - (Vector2)transform.position).normalized * minBulletSpeed;
+        }
+    }
+
     IEnumerator BloodEffect()
     {
         blood.color = new Color(1f, 1f, 1f, 0f);
@@ -853,6 +877,7 @@ public class PlayerControl1 : PlayerControl {
         if (invincible) return;
         StartCoroutine(BloodEffect());
         StartCoroutine(OnHit());
+        audioSource.PlayOneShot(hitClip, 0.3f);
         if (hp > 1)
         {
             hp -= 1;
@@ -881,9 +906,16 @@ public class PlayerControl1 : PlayerControl {
     }
     public IEnumerator DelayRestart()
     {
+        if(m_playDieAction != null)
+        {
+            m_playDieAction.Invoke(this);
+        }
+        else
+        {
+            Debug.Assert(false);
+        }
         yield return new WaitForSeconds(PlayerSpawnTime);
         StartCoroutine(DelayLoadScene());
-        //m_playDieAction.Invoke(this);
     }
 
     public IEnumerator DelayLoadScene()
@@ -1078,5 +1110,10 @@ public class PlayerControl1 : PlayerControl {
             }
             trajectoryOn = !trajectoryOn;
         }
+    }
+
+    public void SetMoveVelocity(Vector2 vecVelocity)
+    {
+
     }
 }

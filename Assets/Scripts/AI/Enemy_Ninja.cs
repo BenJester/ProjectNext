@@ -57,7 +57,8 @@ public class Enemy_Ninja : Enemy
 
     bool enraged;
     bool justEnraged;
-
+    bool justSawPlayer;
+    bool sawPlayer;
     //private EnemySkillShoot m_shootSkill;
     //private EnemySkillThrowBomb m_throwBomb;
     private EnemySkillBase m_shootSkill;
@@ -85,7 +86,12 @@ public class Enemy_Ninja : Enemy
         if (hits.Length >= 2)
         {
             hitNear = hits[1];
-            if (hitNear.collider.tag == "player") return true;
+            if (hitNear.collider.tag == "player")
+            {
+                justSawPlayer = true;
+                return true;
+            }
+            
             else return false;
         }
         else return false;
@@ -132,7 +138,7 @@ public class Enemy_Ninja : Enemy
                 StartCoroutine(Idle());
             }
             else
-            {
+            {               
                 StartCoroutine(Walk());
             }
         }
@@ -161,6 +167,13 @@ public class Enemy_Ninja : Enemy
             }
             else
             {
+                if (justSawPlayer && !sawPlayer)
+                {
+                    justSawPlayer = false;
+                    sawPlayer = true;
+                    StartCoroutine(Idle());
+                    return;
+                }
                 StartCoroutine(Walk());
             }
         }

@@ -8,7 +8,16 @@ public class Mech_ChangeSpeed : MonoBehaviour
     public Vector2 dir;
     public float speedFactor;
     public Animator anim;
-    // Start is called before the first frame update
+    public Vector3 DstPosition;
+    AudioSource audioSource;
+    public AudioClip bounceClip;
+
+    private void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        bounceClip = Resources.Load<AudioClip>("Sounds/Mushroom");
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         
@@ -45,5 +54,8 @@ public class Mech_ChangeSpeed : MonoBehaviour
 
             anim.CrossFade("Mech_Tanhuang", 0.01f);
         }
+
+        if (col.gameObject.CompareTag("player") || col.gameObject.CompareTag("thing"))
+            audioSource.PlayOneShot(bounceClip, 0.6f);
     }
 }
