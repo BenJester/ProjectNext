@@ -15,7 +15,7 @@ public class Dash : Skill {
     public int remainBulletTimeThreshold;
     public float remainBulletTimeDuration;
 	public int maxCharge;
-	int charge;
+	public int charge;
     public float multiplier;
 
     public GameObject dashParticle;

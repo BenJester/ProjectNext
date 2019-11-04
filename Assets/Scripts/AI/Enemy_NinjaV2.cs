@@ -93,7 +93,6 @@ public class Enemy_NinjaV2 : Enemy
     private int m_nAnimationThrow;
 
     private int m_lastHash;
-    private bool m_bBossFlipRight;
 
     private int m_nBombCounts;
 
@@ -102,9 +101,12 @@ public class Enemy_NinjaV2 : Enemy
     public int HealthToRage;
     
     private bool m_bDrawGizmos;
+
+    private Enemy_FlipByPlayer m_enemyFlip;
     void Start()
     {
         base.Start();
+        m_enemyFlip = GetComponent<Enemy_FlipByPlayer>();
         m_bDashToggle = true;
         player = GameObject.FindGameObjectWithTag("player").GetComponent<Transform>();
         playerControl = player.GetComponent<PlayerControl1>();
@@ -387,7 +389,7 @@ public class Enemy_NinjaV2 : Enemy
                 direction = (player.position - transform.position).normalized;
             }
             float timer = 0f;
-            _processFlipBoss(true);
+            m_enemyFlip.ProcessFlip(true);
             m_animator.SetInteger(m_nAnimatorChargingPara, 1);
             m_animator.SetInteger(m_nAnimatorAttackPara, 0);
             while (timer < dashInteval)
@@ -448,34 +450,12 @@ public class Enemy_NinjaV2 : Enemy
         }
     }
 
-    private void _processFlipBoss(bool bForce )
-    {
-        bool bRight = false;
-        if(player.position.x < transform.position.x)
-        {
-            bRight = true;
-        }
-        else
-        {
-            bRight = false;
-        }
-        if(bForce == true)
-        {
-            _FlipBoss(bRight);
-            m_bBossFlipRight = bRight;
-        }
-        else
-        {
-            if (bRight != m_bBossFlipRight && m_bDashToggle == false)
-            {
-                _FlipBoss(bRight);
-                m_bBossFlipRight = bRight;
-            }
-        }
-    }
     private void FixedUpdate()
     {
-        _processFlipBoss(false);
+        if( m_bDashToggle == false )
+        {
+            m_enemyFlip.ProcessFlip(false);
+        }
     }
     //测试用代码
     private void OnDrawGizmos()
