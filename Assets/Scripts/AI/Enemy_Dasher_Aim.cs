@@ -15,7 +15,14 @@ public class Enemy_Dasher_Aim :  Enemy {
 	public float dashSpeed=20;
 	public int recoverFrame = 120;
 
-	public enum PlayerState {
+    public string animChargingParam;
+    public string animAttackParam;
+
+    private int m_nHashChargingParam;
+    private int m_nHashAttackParam;
+
+    private Enemy_FlipByPlayer m_flipEnemy;
+    public enum PlayerState {
 		idle = 0,
 		aim = 1,
 		lockOn = 2,
@@ -46,19 +53,27 @@ public class Enemy_Dasher_Aim :  Enemy {
 			} else if (CheckPlayerInSight ()) state = PlayerState.aim;
 		} else if (state == PlayerState.aim) {
 			if (stateActiveFrames[(int) PlayerState.aim] > aimFrame) {
-				state = PlayerState.lockOn;
+                animator.SetInteger(m_nHashChargingParam, 1);
+                animator.SetInteger(m_nHashAttackParam, 0);
+                state = PlayerState.lockOn;
 			}
 		} else if (state == PlayerState.lockOn) {
-			if (stateActiveFrames[(int) PlayerState.lockOn] > lockFrame) {
-				state = PlayerState.dash;
+			if (stateActiveFrames[(int) PlayerState.lockOn] > lockFrame)
+            {
+                animator.SetInteger(m_nHashChargingParam, 0);
+                animator.SetInteger(m_nHashAttackParam, 1);
+                state = PlayerState.dash;
 			}
 		} else if (state == PlayerState.dash) {
 			if (stateActiveFrames[(int) PlayerState.dash] > dashFrame) {
 				state = PlayerState.recover;
-			}
+                animator.SetInteger(m_nHashChargingParam, 0);
+                animator.SetInteger(m_nHashAttackParam, 0);
+            }
 		} else if (state == PlayerState.recover) {
-			if (stateActiveFrames[(int) PlayerState.recover] > recoverFrame) {
-				state = PlayerState.idle;
+			if (stateActiveFrames[(int) PlayerState.recover] > recoverFrame)
+            {
+                state = PlayerState.idle;
 			}
 		}
 	}
@@ -72,15 +87,21 @@ public class Enemy_Dasher_Aim :  Enemy {
 	public LineRenderer lr;
 
 	private void Awake () {
-		animator = GetComponent<Animator> ();
+        m_flipEnemy = GetComponent<Enemy_FlipByPlayer>();
+        animator = GetComponent<Animator> ();
 		player = GameObject.FindGameObjectWithTag ("player").GetComponent<Transform> ();
 		lr = GetComponent<LineRenderer> ();
 	}
 	void Start () {
 		base.Start ();
-		//StartCoroutine (HandleShoot ());
-		//transform.rotation = Quaternion.Euler (0, 0, AngleBetween (direction, Vector2.left));
-	}
+        m_nHashChargingParam = Animator.StringToHash(animChargingParam);
+        m_nHashAttackParam = Animator.StringToHash(animAttackParam);
+
+        animator.SetInteger(m_nHashChargingParam, 0);
+        animator.SetInteger(m_nHashAttackParam, 0);
+        //StartCoroutine (HandleShoot ());
+        //transform.rotation = Quaternion.Euler (0, 0, AngleBetween (direction, Vector2.left));
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -93,17 +114,16 @@ public class Enemy_Dasher_Aim :  Enemy {
 
 		switch (state) {
 			case PlayerState.idle:
-				if (stateActiveFrames[(int) PlayerState.idle] == 0) lr.enabled = false;
+                if (stateActiveFrames[(int)PlayerState.idle] == 0)
+                {
+                    //animator.CrossFade()
+                    lr.enabled = false;
+                }
 				break;
 			case PlayerState.aim:
-				if (stateActiveFrames[(int) PlayerState.aim] == 0) lr.enabled = true;
-				//Debug.DrawLine (transform.position, transform.position + (Vector3) direction * distance, Color.red, 0.1f);
-				lr.SetPosition (0, transform.position);
-				lr.SetPosition (1, (Vector3) direction * distance + transform.position);
-				lr.startColor = Color.green;
-				lr.endColor = Color.green;
-				//刷新方向
-				direction = (player.position - transform.position).normalized;
+                {
+                    _changeDir();
+                }
 				break;
 
 			case PlayerState.lockOn:
@@ -122,7 +142,10 @@ public class Enemy_Dasher_Aim :  Enemy {
 				break;
 
 			case PlayerState.recover:
-				if (stateActiveFrames[(int) PlayerState.recover] == 0) lr.enabled = false;
+                if (stateActiveFrames[(int)PlayerState.recover] == 0)
+                {
+                    lr.enabled = false;
+                }
 				break;
 			case PlayerState.isDead:
 				return;
@@ -131,8 +154,26 @@ public class Enemy_Dasher_Aim :  Enemy {
 
 	}
 
-	private void FixedUpdate () {
+    private void _changeDir()
+    {
+        if (stateActiveFrames[(int)PlayerState.aim] == 0)
+        {
+            lr.enabled = true;
+        }
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, (Vector3)direction * distance + transform.position);
+        lr.startColor = Color.green;
+        lr.endColor = Color.green;
+        //刷新方向
+        direction = (player.position - transform.position).normalized;
+    }
 
+	private void FixedUpdate () {
+        if(m_flipEnemy != null && state != PlayerState.dash)
+        {
+            m_flipEnemy.ProcessFlip(false);
+            _changeDir();
+        }
 	}
 
 	// IEnumerator HandleShoot () {
@@ -187,14 +228,4 @@ public class Enemy_Dasher_Aim :  Enemy {
 		if (player != null) Gizmos.DrawLine (transform.position, (player.position - transform.position).normalized * distance + transform.position);
 	}
 
-	public static float AngleBetween (Vector2 vectorA, Vector2 vectorB) {
-		float angle = Vector2.Angle (vectorA, vectorB);
-		Vector3 cross = Vector3.Cross (vectorA, vectorB);
-
-		if (cross.z > 0) {
-			angle = 360 - angle;
-		}
-
-		return angle;
-	}
 }
