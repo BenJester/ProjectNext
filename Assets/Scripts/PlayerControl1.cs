@@ -1111,4 +1111,9 @@ public class PlayerControl1 : PlayerControl {
             trajectoryOn = !trajectoryOn;
         }
     }
+
+    public void SetMoveVelocity(Vector2 vecVelocity)
+    {
+
+    }
 }
