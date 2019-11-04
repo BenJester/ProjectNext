@@ -20,6 +20,8 @@ public class Enemy_Dasher_Aim :  Enemy {
 
     private int m_nHashChargingParam;
     private int m_nHashAttackParam;
+
+    private Enemy_FlipByPlayer m_flipEnemy;
     public enum PlayerState {
 		idle = 0,
 		aim = 1,
@@ -85,7 +87,8 @@ public class Enemy_Dasher_Aim :  Enemy {
 	public LineRenderer lr;
 
 	private void Awake () {
-		animator = GetComponent<Animator> ();
+        m_flipEnemy = GetComponent<Enemy_FlipByPlayer>();
+        animator = GetComponent<Animator> ();
 		player = GameObject.FindGameObjectWithTag ("player").GetComponent<Transform> ();
 		lr = GetComponent<LineRenderer> ();
 	}
@@ -118,16 +121,9 @@ public class Enemy_Dasher_Aim :  Enemy {
                 }
 				break;
 			case PlayerState.aim:
-                if (stateActiveFrames[(int)PlayerState.aim] == 0)
                 {
-                    lr.enabled = true;
+                    _changeDir();
                 }
-				lr.SetPosition (0, transform.position);
-				lr.SetPosition (1, (Vector3) direction * distance + transform.position);
-				lr.startColor = Color.green;
-				lr.endColor = Color.green;
-				//刷新方向
-				direction = (player.position - transform.position).normalized;
 				break;
 
 			case PlayerState.lockOn:
@@ -158,8 +154,26 @@ public class Enemy_Dasher_Aim :  Enemy {
 
 	}
 
-	private void FixedUpdate () {
+    private void _changeDir()
+    {
+        if (stateActiveFrames[(int)PlayerState.aim] == 0)
+        {
+            lr.enabled = true;
+        }
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, (Vector3)direction * distance + transform.position);
+        lr.startColor = Color.green;
+        lr.endColor = Color.green;
+        //刷新方向
+        direction = (player.position - transform.position).normalized;
+    }
 
+	private void FixedUpdate () {
+        if(m_flipEnemy != null && state != PlayerState.dash)
+        {
+            m_flipEnemy.ProcessFlip(false);
+            _changeDir();
+        }
 	}
 
 	// IEnumerator HandleShoot () {
