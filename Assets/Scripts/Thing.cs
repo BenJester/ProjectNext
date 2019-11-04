@@ -33,6 +33,8 @@ public class Thing : MonoBehaviour {
 	public float force = 25000f;
 
     private UnityAction m_swapAction;
+
+    private UnityAction m_acDestroy;
 	
 	
 	[HideInInspector]
@@ -197,4 +199,17 @@ public class Thing : MonoBehaviour {
 
 		StartCoroutine (ScaleUp(0.2f));
 	}
+
+    private void OnDestroy()
+    {
+        if(m_acDestroy != null)
+        {
+            m_acDestroy.Invoke();
+        }
+    }
+
+    public void RegisteDestroyNotify( UnityAction ac)
+    {
+        m_acDestroy += ac;
+    }
 }
