@@ -116,8 +116,6 @@ public class Swap : Skill {
 
         cooldowned = false;
         StartCoroutine(StartCooldown());
-
-        audioSource.PlayOneShot(clip, 0.8f);
     }
 		
 	void ScanEnemies () {

@@ -12,15 +12,12 @@ public class Skill : MonoBehaviour {
 	[HideInInspector]
 	public PlayerControl1 playerControl;
     protected float gravity;
-    protected AudioSource audioSource;
-    public AudioClip clip;
 
 	private void Awake() {
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		playerBody = player.GetComponent<Rigidbody2D> ();
         gravity = playerBody.gravityScale;
-        audioSource = GetComponent<AudioSource>();
 	}
 	void Start() {
 		

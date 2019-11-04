@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 public class LoadThing : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    public GameObject worldManager;
     void Start()
     {
         
@@ -23,8 +21,7 @@ public class LoadThing : MonoBehaviour
     {
         if (collision.CompareTag("player"))
         {
-            worldManager=GameObject.FindGameObjectWithTag("WorldManager");
-            Destroy(worldManager, 0f);
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
     }

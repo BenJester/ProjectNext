@@ -178,11 +178,6 @@ public class PlayerControl1 : PlayerControl {
     private bool isPlayColShadow=false;
 
     private LevelTest levelTest;
-
-    AudioSource audioSource;
-    public AudioClip jumpClip;
-    public AudioClip hitClip;
-
 	public void InitSkills () {
 		swap = GetComponent<Swap> ();
 		dash = GetComponent<Dash> ();
@@ -210,9 +205,7 @@ public class PlayerControl1 : PlayerControl {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		lr.enabled = false;
         box = GetComponent<BoxCollider2D>();
-        audioSource = GetComponent<AudioSource>();
-
-    }
+	}
 
 	void Start () {
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
@@ -550,8 +543,6 @@ public class PlayerControl1 : PlayerControl {
         m_bJumpRelease = false;
 
         m_fHeight = transform.position.y;
-
-        audioSource.PlayOneShot(jumpClip);
     }
 
     bool FourCornerHit()
@@ -877,7 +868,6 @@ public class PlayerControl1 : PlayerControl {
         if (invincible) return;
         StartCoroutine(BloodEffect());
         StartCoroutine(OnHit());
-        audioSource.PlayOneShot(hitClip, 0.3f);
         if (hp > 1)
         {
             hp -= 1;
@@ -1110,10 +1100,5 @@ public class PlayerControl1 : PlayerControl {
             }
             trajectoryOn = !trajectoryOn;
         }
-    }
-
-    public void SetMoveVelocity(Vector2 vecVelocity)
-    {
-
     }
 }

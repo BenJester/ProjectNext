@@ -158,7 +158,7 @@ public class Dash : Skill {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
 
-        audioSource.PlayOneShot(clip, 0.5f);
+
         isDashing = true;
         Debug.Log("dash start");
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
@@ -230,8 +230,8 @@ public class Dash : Skill {
         }
         
         transform.rotation = Quaternion.Euler(0, 0, 0);
-
         
+
     }
 
 

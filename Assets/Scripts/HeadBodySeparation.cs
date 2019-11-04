@@ -9,13 +9,9 @@ public class HeadBodySeparation : MonoBehaviour {
 	public Sprite Body;
 	public Sprite PlayerLegs;
 
-    AudioSource audioSource;
-    public AudioClip clip;
-
 	void Start () {
-        audioSource = gameObject.AddComponent<AudioSource>();
-        clip = Resources.Load<AudioClip>("Sounds/Hit_SlimeSplat1");
-    }
+
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -54,9 +50,7 @@ public class HeadBodySeparation : MonoBehaviour {
 		Destroy (headPart, 2.5f);
 		Destroy (bodyPart, 2.5f);
 
-        audioSource.PlayOneShot(clip, 0.5f);
-
-    }
+	}
 
 	public void PlayerDead (float force) {
 
