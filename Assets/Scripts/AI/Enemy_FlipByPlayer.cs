@@ -13,6 +13,7 @@ public class Enemy_FlipByPlayer : MonoBehaviour
         {
             m_transPlayer = GlobalVariable.GetPlayer().transform;
         }
+        _processFlipEnemy(true);
     }
 
     private void FixedUpdate()
