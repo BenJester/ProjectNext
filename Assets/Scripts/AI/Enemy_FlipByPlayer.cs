@@ -17,7 +17,6 @@ public class Enemy_FlipByPlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _processFlipEnemy(false);
     }
     private void _processFlipEnemy(bool bForce)
     {

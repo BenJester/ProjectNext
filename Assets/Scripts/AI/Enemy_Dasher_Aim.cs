@@ -169,7 +169,7 @@ public class Enemy_Dasher_Aim :  Enemy {
     }
 
 	private void FixedUpdate () {
-        if(m_flipEnemy != null && state != PlayerState.dash)
+        if(m_flipEnemy != null && state == PlayerState.aim)
         {
             m_flipEnemy.ProcessFlip(false);
             _changeDir();
