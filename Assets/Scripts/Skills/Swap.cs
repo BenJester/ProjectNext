@@ -229,8 +229,14 @@ public class Swap : Skill {
 	IEnumerator SwapDamageEffect () {
 		if (damageEffectOn) {
 			GameObject par3 =  Instantiate(damageParticle,transform.position,Quaternion.identity);
-			
-			yield return new WaitForSeconds (0.1f);
+            SwapEffectMovement _movement = par3.GetComponent<SwapEffectMovement>();
+            if(_movement != null)
+            {
+                _movement.PlayerTrans = transform;
+                m_swapEffect = _movement.GetComponent<SwapEffectMovement>();
+            }
+
+            yield return new WaitForSeconds (0.1f);
 			par3.transform.SetParent(null);
 			Destroy(par3,1f);
 		} else {
