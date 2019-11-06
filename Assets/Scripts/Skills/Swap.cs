@@ -155,12 +155,15 @@ public class Swap : Skill {
         EnergyIndicator.instance.TransferEnergyParticle(_readySwapCol.transform);
         EnergyIndicator.instance.RespawnEnergyParticle();
 
-        Vector2 tempV = playerBody.velocity;
+        Vector2 MomentumPlayer = playerBody.velocity * playerBody.mass;
+        Vector2 MomentumSwapThing = thingBody.velocity * thingBody.mass;
         //
-		playerBody.velocity = thingBody.velocity;
+        playerBody.velocity = thingBody.velocity;
         //
-        playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-		thingBody.velocity = tempV;
+        //playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
+		thingBody.velocity = MomentumPlayer / thingBody.mass;
+
+        //playerBody.velocity = MomentumSwapThing / playerBody.mass;
 
         cooldowned = false;
         StartCoroutine(StartCooldown());
