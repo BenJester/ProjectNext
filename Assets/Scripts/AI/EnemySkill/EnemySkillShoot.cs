@@ -7,6 +7,7 @@ public class EnemySkillShoot : EnemySkillBase
     public GameObject ObjShoot;
     public float objInstanceDistance;
     public float objSpeed;
+    public bool IsLocal;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -19,7 +20,16 @@ public class EnemySkillShoot : EnemySkillBase
 
         Vector3 direction = (m_transPlayer.position - transform.position).normalized;
         GameObject newBullet = Instantiate(ObjShoot, transform.position + objInstanceDistance * (Vector3)direction, Quaternion.identity);
+        if (IsLocal == true)
+        {
+            newBullet.transform.SetParent(transform);
+            newBullet.transform.localPosition = new Vector3();
+            newBullet.transform.localRotation = Quaternion.AngleAxis(0, Vector2.up);
+        }
         Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
-        bulletBody.velocity = direction * objSpeed;
+        if(bulletBody != null)
+        {
+            bulletBody.velocity = direction * objSpeed;
+        }
     }
 }
