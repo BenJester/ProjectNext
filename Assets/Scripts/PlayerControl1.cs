@@ -421,7 +421,7 @@ public class PlayerControl1 : PlayerControl {
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
         {
             m_bJumpingWindow = false;
         }
