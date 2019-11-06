@@ -32,6 +32,8 @@ public class Thing : MonoBehaviour {
 	public bool isDivedeDead=false;
 	public float force = 25000f;
 
+    public float MomentumMass;
+
     private UnityAction m_swapAction;
 
     private UnityAction m_acDestroy;
@@ -43,6 +45,10 @@ public class Thing : MonoBehaviour {
     public float distanceToPlayer = Mathf.Infinity;
 
 	public virtual void Start () {
+        if( MomentumMass == 0.0f )
+        {
+            MomentumMass = 10;
+        }
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
