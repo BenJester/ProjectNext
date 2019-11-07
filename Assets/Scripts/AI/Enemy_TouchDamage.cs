@@ -22,7 +22,7 @@ public class Enemy_TouchDamage : MonoBehaviour
             PlayerControl1 _ctrl = collision.GetComponent<PlayerControl1>();
             if( _ctrl != null )
             {
-                _ctrl.Die();
+                _ctrl.GetComponent<Thing>().Die();
                 StartCoroutine(_ctrl.DelayRestart());
             }
         }
