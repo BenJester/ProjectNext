@@ -134,6 +134,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceDashPlayer: 150
   DistanceDelta: 300
+  BeginColorStartMin: {r: 1, g: 0, b: 0, a: 0.7647059}
+  BeginColorStartMax: {r: 0, g: 0, b: 0, a: 1}
+  ChangeStateColorStart: {r: 0.9150943, g: 0.9038938, b: 0.43596473, a: 1}
+  ChangeStateColorEnd: {r: 0.65882355, g: 0.74708045, b: 0.9137255, a: 1}
 --- !u!198 &5621454646975307648
 ParticleSystem:
   m_ObjectHideFlags: 0
