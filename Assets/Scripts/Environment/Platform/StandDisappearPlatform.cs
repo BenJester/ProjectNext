@@ -7,11 +7,13 @@ public class StandDisappearPlatform : MonoBehaviour
     public string AnimationNameOfShaking;
     public string AnimationNameOfDestroy;
     public string AnimationNameOfShow;
+    public bool DisableForever;
 
     private Animator m_animator;
     private string m_strShaking = "Shaking";
     private string m_strDestroy = "Destroy";
     private string m_strShow    = "Show";
+    private string m_strDisappear    = "Disappear";
     private int m_hashNameShaking;
     private int m_hashNameDestroy;
     private int m_hashNameShow;
@@ -47,13 +49,27 @@ public class StandDisappearPlatform : MonoBehaviour
                 }
                 else if (m_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == m_hashNameDestroy && m_lastHash != m_hashNameDestroy)
                 {
-                    m_animator.SetInteger(m_strShaking, 0);
-                    m_animator.SetInteger(m_strDestroy, 0);
-                    m_animator.SetInteger(m_strShow, 1);
+                    if( DisableForever == true )
+                    {
+                        m_animator.SetInteger(m_strShaking, 0);
+                        m_animator.SetInteger(m_strDestroy, 0);
+                        m_animator.SetInteger(m_strShow, 0);
+                        m_animator.SetInteger(m_strDisappear, 1);
+                    }
+                    else
+                    {
+                        m_animator.SetInteger(m_strShaking, 0);
+                        m_animator.SetInteger(m_strDestroy, 0);
+                        m_animator.SetInteger(m_strShow, 1);
+                    }
                     m_lastHash = m_hashNameDestroy;
                 }
                 else if (m_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == m_hashNameShow && m_lastHash != m_hashNameShow)
                 {
+                    if (DisableForever == false)
+                    {
+
+                    }
                     m_animator.SetInteger(m_strShaking, 0);
                     m_animator.SetInteger(m_strDestroy, 0);
                     m_animator.SetInteger(m_strShow, 0);
