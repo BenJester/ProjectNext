@@ -175,6 +175,7 @@ public class PlayerControl1 : PlayerControl {
     public SpriteRenderer playerShadow;
 
     public float PlayerSpawnTime;
+    private Vector3 swapColPosition;
     private bool isPlayColShadow=false;
 
     private LevelTest levelTest;
@@ -1078,24 +1079,24 @@ public class PlayerControl1 : PlayerControl {
         }
         colShadow.enabled = false;
         colShadow.transform.position = transform.position;
-       
+        swapColPosition = swap.col.transform.position;
+
         yield return new WaitForSeconds(0.1f);
         playerShadow.sprite = spriteRenderer.sprite;
         playerShadow.flipX = spriteRenderer.flipX;
         playerShadow.color = new Color(0, 0, 0, 100 / 255f);
-     
-        for (int i = 0; i < 4; i++)
-        {
-            if(swap == null ||(swap.col == null))
-            {
 
-            }
-            else
+        if (swap.col.transform.position != swapColPosition)
+        {
+            for (int i = 0; i < 4; i++)
             {
-                SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
-                s.enabled = true;
-                s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
-                yield return new WaitForSeconds(0.04f);
+                if (swap != null && swap.col != null)
+                {
+                    SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
+                    s.enabled = true;
+                    s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
+                    yield return new WaitForSeconds(0.04f);
+                }
             }
         }
         isPlayColShadow = false;
