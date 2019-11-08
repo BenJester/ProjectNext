@@ -1086,17 +1086,18 @@ public class PlayerControl1 : PlayerControl {
         playerShadow.flipX = spriteRenderer.flipX;
         playerShadow.color = new Color(0, 0, 0, 100 / 255f);
 
-        if (swap.col.transform.position != swapColPosition)
+        if (swap.col)
         {
-            for (int i = 0; i < 4; i++)
+            if (swap.col.transform.position != swapColPosition)
             {
-                if (swap != null && swap.col != null)
+                for (int i = 0; i < 4; i++)
                 {
                     SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
                     s.enabled = true;
                     s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
                     yield return new WaitForSeconds(0.04f);
                 }
+
             }
         }
         isPlayColShadow = false;
