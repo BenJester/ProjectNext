@@ -62,8 +62,9 @@ public class PlayerControl1 : PlayerControl {
 	[Space]
 	[Header ("点击直接瞬间交换，不会被阻挡")]
 	public bool ClickChangeDirectly;
-
-	[Header ("激光枪射击，瞬间交换，会被阻挡")]
+    [Header("激光枪射击，以角度计算锁定目标")]
+    public bool laserBulletAngle = false;
+    [Header ("激光枪射击，瞬间交换，会被阻挡")]
 	public bool laserBullet = false;
     [Header("lock first, then 激光枪射击，瞬间交换，会被阻挡")]
     public bool lockLaserBullet = false;
@@ -602,29 +603,64 @@ public class PlayerControl1 : PlayerControl {
 		closestObjectToPlayer = null;
 
 		foreach (var thing in thingList) {
-            if(thing != null)
+
+            // 选择离鼠标最近物体
+            if (!laserBulletAngle) 
             {
-                Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                float distanceToCursor = Vector2.Distance(vecMouseWorldPos, (Vector2)thing.transform.position);
-                float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
-
-                if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
+                if (thing != null)
                 {
-                    RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-                    if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
+                    Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    float distanceToCursor = Vector2.Distance(vecMouseWorldPos, (Vector2)thing.transform.position);
+                    float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
+
+                    if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
-                        closestDistance = distanceToCursor;
-                        closestObjectToCursor = thing.gameObject;
-                    }
-                    
-                }
+                        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+                        if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
+                        {
+                            closestDistance = distanceToCursor;
+                            closestObjectToCursor = thing.gameObject;
+                        }
 
-                if (!thing.dead && distanceToPlayer < closestPlayerDistance)
-                {
-                    closestPlayerDistance = distanceToPlayer;
-                    closestObjectToPlayer = thing.gameObject;
+                    }
+
+                    if (!thing.dead && distanceToPlayer < closestPlayerDistance)
+                    {
+                        closestPlayerDistance = distanceToPlayer;
+                        closestObjectToPlayer = thing.gameObject;
+                    }
                 }
             }
+            // 选择角度最近物体
+            else
+            {
+                if (thing != null)
+                {
+                    Vector3 vecMouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    //Debug.Log(vecMouseWorldPos);
+                    float angleToCursor = AngleBetween(transform.position, vecMouseWorldPos);
+                    float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
+                    float diff = Mathf.Abs(angleToCursor - angleToPlayer);
+                    //Debug.Log(angleToCursor);
+                    if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
+                    {
+                        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+                        if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
+                        {
+                            closestDistance = diff;
+                            closestObjectToCursor = thing.gameObject;
+                        }
+
+                    }
+
+                    if (!thing.dead && diff < closestPlayerDistance)
+                    {
+                        closestPlayerDistance = diff;
+                        closestObjectToPlayer = thing.gameObject;
+                    }
+                }
+            }
+            
 		}
 
 		// 记号圆圈
@@ -774,6 +810,11 @@ public class PlayerControl1 : PlayerControl {
 		StartCoroutine (laserLine ());
 	}
 
+    void HandleLaserAngle ()
+    {
+        HandleLaserChange();
+    }
+
     void HandleLockLaser()
     {
         if (!locked)
@@ -820,6 +861,12 @@ public class PlayerControl1 : PlayerControl {
             HandleLockLaser();
             return;
         }
+        if (laserBulletAngle)
+        {
+            HandleLaserAngle ();
+            return;
+        }
+        
 
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
@@ -961,15 +1008,8 @@ public class PlayerControl1 : PlayerControl {
 	}
 
 	//李昊明的数学公式计算*2
-	public static float AngleBetween (Vector2 vectorA, Vector2 vectorB) {
-		float angle = Vector2.Angle (vectorA, vectorB);
-		Vector3 cross = Vector3.Cross (vectorA, vectorB);
-
-		if (cross.z > 0) {
-			angle = 360 - angle;
-		}
-
-		return angle;
+	public static float AngleBetween (Vector2 a, Vector2 b) {
+        return Mathf.Atan2(b.y - a.y, b.x - a.x);
 	}
 
     private void _logHeight()

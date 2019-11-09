@@ -253,6 +253,7 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 			else return false;
 		} else return false;
 	}
+
 	private void OnDrawGizmos () {
 		if (player != null) Gizmos.DrawLine (transform.position, (player.position - transform.position).normalized * distance + transform.position);
 	}
