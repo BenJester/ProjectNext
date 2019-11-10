@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &387944122
 Transform:
   m_ObjectHideFlags: 0
@@ -648,7 +648,8 @@ MonoBehaviour:
   playerRespawnPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 3}
   ClickChangeDirectly: 0
-  laserBullet: 1
+  laserBulletAngle: 1
+  laserBullet: 0
   lockLaserBullet: 0
   isHomingBullet: 0
   homingBulletSpeed: 2000
@@ -657,7 +658,7 @@ MonoBehaviour:
   countDistanceToPlayer: 1
   shootDistance: 900
   shootDistanceLight: {fileID: 387944121}
-  minBulletSpeed: 2300
+  minBulletSpeed: 300
   maxBulletSpeed: 2000
   bulletChargeSpeed: -1
   bulletSpeed: 2300
@@ -820,7 +821,7 @@ MonoBehaviour:
   waitTime: 8
   currWaitTime: 0
   remainBulletTimeThreshold: 30
-  remainBulletTimeDuration: 0.7
+  remainBulletTimeDuration: 0.8
   maxCharge: 1
   charge: 0
   multiplier: 122
@@ -2058,8 +2059,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7007682636466809946}
   - component: {fileID: 5714785506168491203}
+  - component: {fileID: 233105719}
   m_Layer: 9
-  m_Name: Freeform Light 2D
+  m_Name: coneLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2074,7 +2076,7 @@ Transform:
   m_GameObject: {fileID: 7803834185112028197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 4906589617144064}
   m_RootOrder: 16
@@ -2091,14 +2093,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LightType: 1
+  m_LightType: 2
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.05
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
-  m_LightCookieSprite: {fileID: 0}
+  m_LightCookieSprite: {fileID: 21300000, guid: 93c0a690536208b49ac6117032fa9277,
+    type: 3}
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
@@ -2118,6 +2121,19 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &233105719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803834185112028197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529c77108325ea241ad4fa6b0374b27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angleOffset: 0
 --- !u!1001 &1837990245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2187,15 +2203,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21ef11d7cac06374a95d951f727576bd, type: 3}
---- !u!4 &8464535212216907595 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8464535212963198510, guid: 21ef11d7cac06374a95d951f727576bd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1837990245}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9163682765064726003 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9163682763277132950, guid: 21ef11d7cac06374a95d951f727576bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1837990245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8464535212216907595 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8464535212963198510, guid: 21ef11d7cac06374a95d951f727576bd,
     type: 3}
   m_PrefabInstance: {fileID: 1837990245}
   m_PrefabAsset: {fileID: 0}
