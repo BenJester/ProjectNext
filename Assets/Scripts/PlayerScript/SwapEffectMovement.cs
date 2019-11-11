@@ -40,7 +40,10 @@ public class SwapEffectMovement : MonoBehaviour
         }
         else
         {
-            transform.position = PlayerTrans.position;
+            if(PlayerTrans != null)
+            {
+                transform.position = PlayerTrans.position;
+            }
         }
     }
     public void StartMoving(Vector2 vecDstPos,Vector2 vecSrcPos)
