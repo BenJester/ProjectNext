@@ -45,4 +45,10 @@ public class TracingBoss : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, GlobalVariable.GetPlayer().transform.position, DistanceDelta * Time.fixedDeltaTime);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, DistanceDashPlayer );
+    }
 }
