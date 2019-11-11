@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy_TouchDamage : MonoBehaviour
 {
+    public bool EnemyDamage;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,17 @@ public class Enemy_TouchDamage : MonoBehaviour
             {
                 _ctrl.GetComponent<Thing>().Die();
                 StartCoroutine(_ctrl.DelayRestart());
+            }
+        }
+        else if (EnemyDamage == true && collision.gameObject.CompareTag("thing"))
+        {
+            Thing colThing = collision.gameObject.GetComponent<Thing>();
+            if(colThing != null)
+            {
+                if (colThing.type == Type.enemy)
+                {
+                    colThing.GetComponent<Enemy>().TakeDamage(1);
+                }
             }
         }
 
