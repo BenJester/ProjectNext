@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Dash : Skill {
-
+    public bool useKeyboard;
 	public bool isShadowDash = false;
 	public float DashSpeed;
 	public float DashDuration;
@@ -46,7 +46,6 @@ public class Dash : Skill {
 
 	void Update () {
         //Debug.Log(Time.timeScale);
-
         //播放冲刺情况下的动画
         if (isDashing)
         {
@@ -157,6 +156,9 @@ public class Dash : Skill {
         playerControl.m_bJumpRelease = false;
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
+
+        if(useKeyboard)
+        dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
 
         audioSource.PlayOneShot(clip, 0.5f);
         isDashing = true;
