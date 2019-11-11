@@ -14,6 +14,8 @@ public class TracingBoss : MonoBehaviour
     public Color ChangeStateColorStart;
     public Color ChangeStateColorEnd;
 
+    public bool OnlyTracing;
+
     private ParticleSystem m_particleSys;
     private MovingObjectByWayPoint m_movingObj;
     private bool m_bDash;
@@ -31,28 +33,35 @@ public class TracingBoss : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(m_bDash == false)
+        if(OnlyTracing == true)
         {
-            float fDistancePlayer = Vector2.Distance(transform.position, GlobalVariable.GetPlayer().transform.position);
-            if (fDistancePlayer <= DistanceDashPlayer)
-            {
-                m_bDash = true;
-                m_movingObj.enabled = false;
-                m_mainParticle.startColor = new ParticleSystem.MinMaxGradient(ChangeStateColorEnd, ChangeStateColorStart);
-            }
+            transform.position = Vector2.MoveTowards(transform.position, GlobalVariable.GetPlayer().transform.position, DistanceDelta * Time.fixedDeltaTime);
         }
         else
         {
-            float fDistanceBreakAway = Vector2.Distance(transform.position, GlobalVariable.GetPlayer().transform.position);
-            if(fDistanceBreakAway >= PlayerBreakAwayDistance)
+            if (m_bDash == false)
             {
-                m_bDash = false;
-                m_movingObj.enabled = true;
-                m_mainParticle.startColor = new ParticleSystem.MinMaxGradient(BeginColorStartMax, BeginColorStartMin);
+                float fDistancePlayer = Vector2.Distance(transform.position, GlobalVariable.GetPlayer().transform.position);
+                if (fDistancePlayer <= DistanceDashPlayer)
+                {
+                    m_bDash = true;
+                    m_movingObj.enabled = false;
+                    m_mainParticle.startColor = new ParticleSystem.MinMaxGradient(ChangeStateColorEnd, ChangeStateColorStart);
+                }
             }
             else
             {
-                transform.position = Vector2.MoveTowards(transform.position, GlobalVariable.GetPlayer().transform.position, DistanceDelta * Time.fixedDeltaTime);
+                float fDistanceBreakAway = Vector2.Distance(transform.position, GlobalVariable.GetPlayer().transform.position);
+                if (fDistanceBreakAway >= PlayerBreakAwayDistance)
+                {
+                    m_bDash = false;
+                    m_movingObj.enabled = true;
+                    m_mainParticle.startColor = new ParticleSystem.MinMaxGradient(BeginColorStartMax, BeginColorStartMin);
+                }
+                else
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, GlobalVariable.GetPlayer().transform.position, DistanceDelta * Time.fixedDeltaTime);
+                }
             }
         }
     }
