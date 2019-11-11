@@ -6,6 +6,7 @@ public class TracingBoss : MonoBehaviour
 {
     public float DistanceDashPlayer;
     public float DistanceDelta;
+    public float PlayerBreakAwayDistance;
 
     public Color BeginColorStartMin;
     public Color BeginColorStartMax;
@@ -42,7 +43,17 @@ public class TracingBoss : MonoBehaviour
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, GlobalVariable.GetPlayer().transform.position, DistanceDelta * Time.fixedDeltaTime);
+            float fDistanceBreakAway = Vector2.Distance(transform.position, GlobalVariable.GetPlayer().transform.position);
+            if(fDistanceBreakAway >= PlayerBreakAwayDistance)
+            {
+                m_bDash = false;
+                m_movingObj.enabled = true;
+                m_mainParticle.startColor = new ParticleSystem.MinMaxGradient(BeginColorStartMax, BeginColorStartMin);
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position, GlobalVariable.GetPlayer().transform.position, DistanceDelta * Time.fixedDeltaTime);
+            }
         }
     }
 
