@@ -162,6 +162,16 @@ public class Swap : Skill {
         //
         //playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
 		thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+        Thing _thingInstance = thingBody.GetComponent<Thing>();
+        if(_thingInstance != null && _thingInstance.IsSwapRotationByVelocity == true)
+        {
+            float fAngle = Vector3.Angle(thingBody.velocity, thingBody.transform.forward);
+
+            thingBody.transform.rotation = thingBody.GetComponent<Thing>().GetOriginalQuat();
+
+            thingBody.transform.Rotate(thingBody.transform.forward, fAngle);
+        }
+
 
         //playerBody.velocity = MomentumSwapThing / _playerThing.MomentumMass;
 
