@@ -37,6 +37,10 @@ public class Thing : MonoBehaviour {
     private UnityAction m_swapAction;
 
     private UnityAction m_acDestroy;
+
+    private Quaternion m_qtOriginalQuat;
+
+    public bool IsSwapRotationByVelocity;
 	
 	
 	[HideInInspector]
@@ -45,7 +49,8 @@ public class Thing : MonoBehaviour {
     public float distanceToPlayer = Mathf.Infinity;
 
 	public virtual void Start () {
-        if( MomentumMass == 0.0f )
+        m_qtOriginalQuat = transform.rotation;
+        if ( MomentumMass == 0.0f )
         {
             MomentumMass = 10;
         }
@@ -67,6 +72,10 @@ public class Thing : MonoBehaviour {
 		}
 
 	}
+    public Quaternion GetOriginalQuat()
+    {
+        return m_qtOriginalQuat;
+    }
     public void RegisteSwap(UnityAction ac)
     {
         m_swapAction += ac;
