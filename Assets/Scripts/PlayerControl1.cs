@@ -65,6 +65,8 @@ public class PlayerControl1 : PlayerControl {
     [Header("按键切换目标")]
     public bool toggleSwapTarget = false;
     public GameObject toggleTarget;
+    public List<GameObject> swappable;
+    public int index;
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
     [Header ("激光枪射击，瞬间交换，会被阻挡")]
@@ -216,7 +218,7 @@ public class PlayerControl1 : PlayerControl {
 		lr.enabled = false;
         box = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
-
+        swappable = new List<GameObject>();
     }
 
 	void Start () {
@@ -1190,9 +1192,8 @@ public class PlayerControl1 : PlayerControl {
     {
         if (!toggleSwapTarget) return;
 
-        List<Thing> swappable = new List<Thing>();
-        int index = 0;
-
+        //index = 0;
+        swappable = new List<GameObject>();
         foreach (var thing in thingList)
         {
             if (thing != null)
@@ -1202,7 +1203,7 @@ public class PlayerControl1 : PlayerControl {
 
                 if (!thing.dead && thing.enabled == true && !thing.hasShield && distanceToPlayer < shootDistance)
                 {
-                    swappable.Add(thing);
+                    swappable.Add(thing.gameObject);
                 }
             }
         }
@@ -1213,31 +1214,45 @@ public class PlayerControl1 : PlayerControl {
 
         if (!toggleTarget)
         {
-            toggleTarget = swappable[0].gameObject;
+            toggleTarget = swappable[0];
         }
 
-        if (!swappable.Contains(toggleTarget.GetComponent<Thing>()))
+        if (!swappable.Contains(toggleTarget))
         {
+            index = 0;
+            toggleTarget = swappable[0];
             for (int i = 0; i < swappable.Count; i++)
             {
                 if (swappable[i].transform.position.x > toggleTarget.transform.position.x)
                     break;
-                toggleTarget = swappable[i].gameObject;
+                toggleTarget = swappable[i];
                 index = i;
             }
+        }
+        else
+        {
+            index = swappable.IndexOf(toggleTarget);
         }
 
         if (Input.GetKeyUp(KeyCode.Q))
         {
-            if (index == swappable.Count - 1) index = 0;
-            toggleTarget = swappable[index + 1].gameObject;
+            if (index == swappable.Count - 1) index = -1;
+            toggleTarget = swappable[index + 1];
+            index += 1;
         }
 
         marker.transform.position = new Vector3(toggleTarget.transform.position.x, toggleTarget.transform.position.y, -1f);
 
-        if (Hit(toggleTarget.gameObject))
+        if (Hit(toggleTarget))
         {
             swap.col = toggleTarget.GetComponent<BoxCollider2D>();
+            lockedOnObjectLine.SetPosition(0, transform.position);
+            lockedOnObjectLine.SetPosition(1, toggleTarget.transform.position);
+            lockedOnObjectLine.startWidth = 5f;
+        }
+        else
+        {
+            lockedOnObjectLine.startWidth = 0f;
         }
     }
 }
