@@ -467,6 +467,7 @@ MonoBehaviour:
   isDivedeDead: 1
   force: 25000
   MomentumMass: 10
+  IsSwapRotationByVelocity: 0
   distanceToCursor: 0
   distanceToPlayer: Infinity
 --- !u!120 &120921767453741660
@@ -812,6 +813,7 @@ MonoBehaviour:
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 8300000, guid: 9d647e8ef03b7424eaba982af841347e, type: 3}
+  useKeyboard: 0
   isShadowDash: 1
   DashSpeed: 900
   DashDuration: 0.2
@@ -833,6 +835,8 @@ MonoBehaviour:
   isDashing: 0
   disableMovementTime: 0
   DashTime: 0.1
+  TrajectoryTimeStep: 0.05
+  TrajectoryStepCounts: 24
 --- !u!114 &114325612499970784
 MonoBehaviour:
   m_ObjectHideFlags: 0

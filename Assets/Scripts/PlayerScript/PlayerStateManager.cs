@@ -15,7 +15,7 @@ public class PlayerStateManager : MonoBehaviour
         if(_rState != m_curState)
         {
             m_curState = _rState;
-            Debug.Log(string.Format("state changed {0}", _rState));
+            //Debug.Log(string.Format("state changed {0}", _rState));
         }
     }
     public PlayerStateDefine.PlayerState_Typ GetPlayerState()
