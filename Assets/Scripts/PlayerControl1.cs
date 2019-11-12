@@ -562,6 +562,20 @@ public class PlayerControl1 : PlayerControl {
         audioSource.PlayOneShot(jumpClip);
     }
 
+    bool Hit(GameObject target)
+    {
+        BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
+        float targetX = Mathf.Max(0f, targetBox.size.x / 2f - fourCornerScanMargin);
+        float targetY = Mathf.Max(0f, targetBox.size.y / 2f - fourCornerScanMargin);
+        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (target.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        return (hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox);
+
+    }
+
     bool FourCornerHit()
     {
         bool res = false;
