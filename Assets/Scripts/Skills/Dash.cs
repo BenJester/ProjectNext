@@ -121,7 +121,7 @@ public class Dash : Skill {
             currWaitTime = 0;
 
             //辅助线取消
-            //lr.enabled = false;
+            lr.enabled = false;
             //蓄力冲刺特效取消[是不是不生成比较有效率？]
             if (_dashChargeParticle != null) Destroy(_dashChargeParticle);
             if (dashPointer != null) dashPointer.SetActive(false);
