@@ -27,6 +27,8 @@ public class Dash : Skill {
     public float disableMovementTime;
 
     public float DashTime;
+    public float TrajectoryTimeStep;
+    public int TrajectoryStepCounts;
 
     LineRenderer lr;
     Animator amin;
@@ -119,7 +121,7 @@ public class Dash : Skill {
             currWaitTime = 0;
 
             //辅助线取消
-            lr.enabled = false;
+            //lr.enabled = false;
             //蓄力冲刺特效取消[是不是不生成比较有效率？]
             if (_dashChargeParticle != null) Destroy(_dashChargeParticle);
             if (dashPointer != null) dashPointer.SetActive(false);
@@ -245,17 +247,41 @@ public class Dash : Skill {
         lr.enabled = true;
 
         GameObject target = gameObject;// playerControl.swap.col.gameObject;
-        lr.SetPositions(Plot(playerBody,
-                                target.transform.position,
-                                dir * DashSpeed,
-                                14));
+        //lr.SetPositions(Plot(playerBody,
+        //                        target.transform.position,
+        //                        dir * DashSpeed,
+        //                        24));
+        lr.SetPositions(PlotTrajectory(target.transform.position, dir * DashSpeed, TrajectoryTimeStep, TrajectoryStepCounts));
+        //PlotTrajectory(target.transform.position, dir * DashSpeed, 0.02f,1);
+    }
+    public Vector3 PlotTrajectoryAtTime(Vector3 start, Vector3 startVelocity, float time)
+    {
+        return start + startVelocity * time + Physics.gravity * playerBody.gravityScale * time * time * 0.5f;
+    }
+    public Vector3[] PlotTrajectory(Vector3 start, Vector3 startVelocity, float fTimeStep, int stepCounts)
+    {
+        float maxTime = fTimeStep * stepCounts;
+        Vector3[] results = new Vector3[stepCounts];
+        Vector3 prev = start;
+        for (int i = 1; ; i++)
+        {
+            float t = fTimeStep * i;
+            if (t >= maxTime) break;
+            Vector3 pos = PlotTrajectoryAtTime(start, startVelocity, t);
+            if (Physics.Linecast(prev, pos)) break;
+            //Debug.DrawLine(prev, pos, Color.red);
+            prev = pos;
+            results[i -1] = pos;
+        }
+        return results;
     }
 
     public Vector3[] Plot(Rigidbody2D rigidbody, Vector3 pos, Vector2 velocity, int steps)
     {
         Vector3[] results = new Vector3[steps];
-        
-        float timestep = 0.05f;
+
+        float timestep = 0.04f;
+        //timestep = Time.deltaTime / Time.timeScale;
         //Debug.Log(timestep);/// (1f * Physics2D.velocityIterations);
         Vector2 gravityAccel = Physics2D.gravity * rigidbody.gravityScale;// * timestep;
         Vector2 moveStep = velocity * timestep;
@@ -265,13 +291,17 @@ public class Dash : Skill {
             moveStep += velocity * Time.fixedDeltaTime;
             velocity += gravityAccel;
             //moveStep *= drag;
-            pos += (Vector3) moveStep;
+            pos += (Vector3)moveStep;
             results[i] = pos;
         }
 
         return results;
     }
 
+    private void OnDrawGizmos()
+    {
+        Debug.DrawLine(transform.position, transform.position + new Vector3(1, 1, 0), Color.red, 5);
+    }
     public static float AngleBetween(Vector2 vectorA, Vector2 vectorB)
     {
         float angle = Vector2.Angle(vectorA, vectorB);
