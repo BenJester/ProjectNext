@@ -526,7 +526,7 @@ public class PlayerControl1 : PlayerControl {
 		}
 
 		//双重交换
-		if (Input.GetKeyDown (KeyCode.E) && doubleSwap) {
+		if (Input.GetKeyDown (KeyCode.F) && doubleSwap) {
             //原先是通过子弹进行呼唤，所以这里需要false，但是现在情况变了，这个作为一个功能开关，而不是一个属性值
 			//doubleSwap = false;
             if(swap.CanDoubleSwap())
@@ -1234,11 +1234,18 @@ public class PlayerControl1 : PlayerControl {
             index = swappable.IndexOf(toggleTarget);
         }
 
-        if (Input.GetKeyUp(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.E))
         {
             if (index == swappable.Count - 1) index = -1;
             toggleTarget = swappable[index + 1];
             index += 1;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            if (index == 0) index = swappable.Count;
+            toggleTarget = swappable[index - 1];
+            index -= 1;
         }
 
         marker.transform.position = new Vector3(toggleTarget.transform.position.x, toggleTarget.transform.position.y, -1f);
