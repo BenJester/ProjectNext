@@ -108,8 +108,8 @@ public class PlayerControl1 : PlayerControl {
     public int startChargeFrame;
 	float chargeFrame = 0;
 
-	[Header ("瞄准表现")]
-
+    [Header("瞄准表现")]
+    public float fourCornerScanMargin = 5f;
 	public bool useLineRenderer = false;
 	public bool useCursor = false;
 	public LineRenderer lr;
@@ -568,17 +568,17 @@ public class PlayerControl1 : PlayerControl {
         lockedOnObjectLine.SetPosition(0, transform.position);
         lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
         BoxCollider2D targetBox = closestObjectToCursor.GetComponent<BoxCollider2D>();
-        float targetX = targetBox.size.x;
-        float targetY = targetBox.size.y;
+        float targetX = Mathf.Max(0f, targetBox.size.x / 2f - fourCornerScanMargin);
+        float targetY = Mathf.Max(0f, targetBox.size.y / 2f - fourCornerScanMargin);
         RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        //RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        //RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        //RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        //RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
 
         lockedOnObjectLine.startWidth = 1f;
         swap.col = null;
-        if (hit0.collider == targetBox)// || hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox)
+        if (hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox)
         {
             swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
             lockedOnObjectLine.startWidth = 5f;
@@ -615,8 +615,7 @@ public class PlayerControl1 : PlayerControl {
 
                     if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
-                        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-                        if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
+                        if (Hit(thing.gameObject))
                         {
                             closestDistance = distanceToCursor;
                             closestObjectToCursor = thing.gameObject;
@@ -644,8 +643,9 @@ public class PlayerControl1 : PlayerControl {
                     //Debug.Log(angleToCursor);
                     if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
-                        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (thing.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-                        if (hit0.collider == thing.gameObject.GetComponent<BoxCollider2D>())
+                        
+
+                        if (Hit(thing.gameObject))
                         {
                             closestDistance = diff;
                             closestObjectToCursor = thing.gameObject;
