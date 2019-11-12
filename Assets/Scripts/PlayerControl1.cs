@@ -1253,6 +1253,7 @@ public class PlayerControl1 : PlayerControl {
         else
         {
             lockedOnObjectLine.startWidth = 0f;
+            swap.col = null;
         }
     }
 }
