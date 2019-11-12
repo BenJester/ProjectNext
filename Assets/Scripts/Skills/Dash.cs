@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class Dash : Skill {
     public bool useKeyboard;
@@ -33,14 +34,22 @@ public class Dash : Skill {
     LineRenderer lr;
     Animator amin;
 
+    //Rewired-------------------------------------------------
+    private Player rPlayer;
+
     private PlayerStateManager m_stateMgr;
 
 	public override void Init () {
-		lr = GetComponent<LineRenderer> ();
+        
+
+        lr = GetComponent<LineRenderer> ();
         amin = GetComponent<Animator>();
         m_stateMgr = GetComponent<PlayerStateManager>();
         charge = maxCharge;
-	}
+
+        //Rewired------------------------------------------------------------
+        rPlayer = ReInput.players.GetPlayer(0);
+    }
 
 	public override bool Check () {
 		return charge > 0;
@@ -59,7 +68,8 @@ public class Dash : Skill {
             transform.rotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, GetComponent<Rigidbody2D>().velocity));
         }
 
-        if (Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) {
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime || rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime) {
             
             //播放动画
             if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
@@ -102,7 +112,8 @@ public class Dash : Skill {
             playerControl.SetColShadow();
 		}
 
-		if (Input.GetMouseButtonUp (1)) {
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButtonUp (1) || rPlayer.GetButtonUp("Dash")) {
             Do();
             if (currWaitTime < remainBulletTimeThreshold)
             {
@@ -139,10 +150,11 @@ public class Dash : Skill {
         playerControl.targetDeltaTime = playerControl.startDeltaTime * 1f;
     }
 
-	void FixedUpdate () {
-		if (Input.GetMouseButton (1))
+    //Rewired------------------------------------------------------------
+    void FixedUpdate () {
+		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash"))
 			currWaitTime += 1;
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)|| rPlayer.GetButtonDown("Dash"))
             playerControl.swap.curr = 0f;
     }
 
@@ -159,8 +171,12 @@ public class Dash : Skill {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
 
-        if(useKeyboard)
-        dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+        //Rewired------------------------------------------------------------
+        if (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("AimVertical") != 0)
+            dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("AimVertical")).normalized;
+
+        if (useKeyboard)
+            dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
 
         audioSource.PlayOneShot(clip, 0.5f);
         isDashing = true;

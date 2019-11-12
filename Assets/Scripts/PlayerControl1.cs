@@ -375,8 +375,10 @@ public class PlayerControl1 : PlayerControl {
 
 		//左右移动
 		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
-        //if (!canMove) h = 0f;
-		if (Mathf.Abs (h) > 0) {
+        //Rewired------------------------------------------------------------
+        h += player.GetAxisRaw("MoveHorizontal");
+        
+        if (Mathf.Abs (h) > 0) {
             m_bJumpRelease = false;
 
             anim.SetBool ("Moving", true);
@@ -448,13 +450,15 @@ public class PlayerControl1 : PlayerControl {
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+        //Rewired------------------------------------------------------------
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) ||player.GetButtonUp("Jump"))
         {
             m_bJumpingWindow = false;
         }
         if(rb.velocity.y != 0 )
         {
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
+            //Rewired------------------------------------------------------------
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)|| player.GetAxis("MoveHorizontal")!=0)
             {
                 m_bJumpRelease = true;
                 //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
@@ -477,7 +481,9 @@ public class PlayerControl1 : PlayerControl {
         }
 
         //跳跃代码
-        if (Input.GetKeyDown (KeyCode.W)|| Input.GetKeyDown(KeyCode.Space) ){
+        //Rewired------------------------------------------------------------
+        if (Input.GetKeyDown (KeyCode.W)|| Input.GetKeyDown(KeyCode.Space) || player.GetButtonDown("Jump"))
+        {
 			if (canJump)
             {
 				Jump ();
@@ -495,22 +501,21 @@ public class PlayerControl1 : PlayerControl {
 			anim.SetBool ("Jumping", true);
 			legAnim.SetBool ("Jumping", true);
 		}
-		
+
 
         // 左键子弹时间
-        if (Input.GetMouseButton(0) && currWaitTime >= waitTime)
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButton(0) && currWaitTime >= waitTime || player.GetButton("Switch") && currWaitTime >= waitTime)
         {
             Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
             Time.fixedDeltaTime = dash.reducedTimeScale * startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
             targetTimeScale = Time.timeScale;
-
-            //
-           
-
         }
 
-        if (Input.GetMouseButtonUp(0))
+
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch"))
         {
             currWaitTime = 0;
             Time.timeScale = 1f;
@@ -521,7 +526,8 @@ public class PlayerControl1 : PlayerControl {
         // 左键子弹时间结束
 
         //处理按下的指示器
-        if (Input.GetMouseButton (0)) {
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButton (0) || player.GetButton("Switch")) {
 			if (useLineRenderer) {
 				//lr.enabled = true;
 				HandleLineRenderer ();
@@ -529,8 +535,8 @@ public class PlayerControl1 : PlayerControl {
 
 			IncreaseBulletSpeed ();
 
-		} else
-		if (Input.GetMouseButtonUp (0)) {
+		} else //Rewired------------------------------------------------------------
+		if (Input.GetMouseButtonUp (0) || player.GetButtonUp("Switch")) {
 			anim.SetTrigger ("Shot");
 			anim.SetBool ("IsCharging", false);
 			chargeCounter = 0;
@@ -545,8 +551,9 @@ public class PlayerControl1 : PlayerControl {
 			Shoot ();
 		}
 
-		//双重交换
-		if (Input.GetKeyDown (KeyCode.F) && doubleSwap) {
+        //双重交换
+        //Rewired------------------------------------------------------------
+        if (Input.GetKeyDown (KeyCode.F) && doubleSwap || player.GetButtonDown("DoubleSwap") && doubleSwap) {
             //原先是通过子弹进行呼唤，所以这里需要false，但是现在情况变了，这个作为一个功能开关，而不是一个属性值
 			//doubleSwap = false;
             if(swap.CanDoubleSwap())
@@ -760,10 +767,11 @@ public class PlayerControl1 : PlayerControl {
 
         }
         // 左键子弹时间
-        if (Input.GetMouseButton(0))
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButton(0) || player.GetButton("Switch"))
             currWaitTime += 1;
-
-        if (Input.GetMouseButton (0)) {
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButton (0) || player.GetButton("Switch")) {
 
 			anim.SetBool ("IsCharging", true);
 
@@ -1198,6 +1206,8 @@ public class PlayerControl1 : PlayerControl {
         isPlayColShadow = false;
     }
 
+
+    //抛物线的显示
     void HandleTrajectoryTest()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -1215,6 +1225,7 @@ public class PlayerControl1 : PlayerControl {
         }
     }
 
+    //键盘切换锁定敌人
     void HandleToggleSwapTarget()
     {
         if (!toggleSwapTarget) return;
@@ -1261,14 +1272,14 @@ public class PlayerControl1 : PlayerControl {
             index = swappable.IndexOf(toggleTarget);
         }
 
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E)||player.GetButtonDown("LockLeft"))
         {
             if (index == swappable.Count - 1) index = -1;
             toggleTarget = swappable[index + 1];
             index += 1;
         }
 
-        if (Input.GetKeyUp(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.Q) || player.GetButtonDown("LockRight"))
         {
             if (index == 0) index = swappable.Count;
             toggleTarget = swappable[index - 1];
