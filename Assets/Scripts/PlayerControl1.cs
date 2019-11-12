@@ -64,6 +64,7 @@ public class PlayerControl1 : PlayerControl {
 	public bool ClickChangeDirectly;
     [Header("按键切换目标")]
     public bool toggleSwapTarget = false;
+    public GameObject toggleTarget;
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
     [Header ("激光枪射击，瞬间交换，会被阻挡")]
@@ -548,6 +549,7 @@ public class PlayerControl1 : PlayerControl {
         HandleTrajectoryTest();
         HandleShootSlowBullet();
 
+        HandleToggleSwapTarget();
     }
 
 	void Jump () {
@@ -611,6 +613,8 @@ public class PlayerControl1 : PlayerControl {
 
 	// 计算与鼠标和玩家最近的物体
 	void HandleObjectDistance () {
+
+        if (toggleSwapTarget) return;
 
 		closestDistance = Mathf.Infinity;
 		closestPlayerDistance = Mathf.Infinity;
@@ -882,7 +886,13 @@ public class PlayerControl1 : PlayerControl {
             HandleLaserAngle ();
             return;
         }
-        
+
+        if (toggleSwapTarget)
+        {
+            if (!toggleTarget) return;
+            swap.Do();
+            return;
+        }
 
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
@@ -1173,6 +1183,61 @@ public class PlayerControl1 : PlayerControl {
                 lr.endColor = trajectoryEndColor;
             }
             trajectoryOn = !trajectoryOn;
+        }
+    }
+
+    void HandleToggleSwapTarget()
+    {
+        if (!toggleSwapTarget) return;
+
+        List<Thing> swappable = new List<Thing>();
+        int index = 0;
+
+        foreach (var thing in thingList)
+        {
+            if (thing != null)
+            {
+                Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
+
+                if (!thing.dead && thing.enabled == true && !thing.hasShield && distanceToPlayer < shootDistance)
+                {
+                    swappable.Add(thing);
+                }
+            }
+        }
+        // 根据x坐标排序
+        swappable.Sort((emp1, emp2) => emp1.transform.position.x.CompareTo(emp2.transform.position.x));
+
+        if (swappable.Count == 0) return;
+
+        if (!toggleTarget)
+        {
+            toggleTarget = swappable[0].gameObject;
+        }
+
+        if (!swappable.Contains(toggleTarget.GetComponent<Thing>()))
+        {
+            for (int i = 0; i < swappable.Count; i++)
+            {
+                if (swappable[i].transform.position.x > toggleTarget.transform.position.x)
+                    break;
+                toggleTarget = swappable[i].gameObject;
+                index = i;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            if (index == swappable.Count - 1) index = 0;
+            toggleTarget = swappable[index + 1].gameObject;
+        }
+
+        marker.transform.position = new Vector3(toggleTarget.transform.position.x, toggleTarget.transform.position.y, -1f);
+
+        if (Hit(toggleTarget.gameObject))
+        {
+            swap.col = toggleTarget.GetComponent<BoxCollider2D>();
         }
     }
 }
