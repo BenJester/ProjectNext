@@ -5,10 +5,16 @@ using UnityEngine.SceneManagement;
 using EZCameraShake;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Rewired;
 
 //using UnityEngine.Rendering.LWRP;
 
 public class PlayerControl1 : PlayerControl {
+
+    //Rewired------------------------------------------------------------
+    private int playerId = 0;
+    private Player player;
+
     [Tooltip("处理角色在空中时候，平行速度迅速递减的lerp值")]
     [Range(0,1)]
     public float JumpVelocityLerp;
@@ -206,6 +212,11 @@ public class PlayerControl1 : PlayerControl {
     private bool trajectoryOn = true;
 
     void Awake () {
+
+        //Rewired------------------------------------------------------------
+        player = ReInput.players.GetPlayer(playerId);
+
+        //
         GlobalVariable.SetPlayer(this);
 		originalScale = transform.localScale;
 		startDeltaTime = Time.fixedDeltaTime;
@@ -323,7 +334,15 @@ public class PlayerControl1 : PlayerControl {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
             if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
-                rb.velocity = Vector2.zero;
+            {
+                //Rewired------------------------------------------------------------
+                if (player.GetAxis("MoveHorizontal") == 0)
+                {
+                    rb.velocity = Vector2.zero;
+                }
+            }
+                
+           
             
 		}
 
@@ -333,10 +352,11 @@ public class PlayerControl1 : PlayerControl {
 
 		HandleRewind ();
 
-		
 
-		if (Input.GetKeyDown (KeyCode.R)) {
-			Time.fixedDeltaTime = startDeltaTime;
+        //Rewired------------------------------------------------------------
+        if (Input.GetKeyDown (KeyCode.R) || player.GetButtonDown("Restart")) {
+
+            Time.fixedDeltaTime = startDeltaTime;
 			Time.timeScale = 1f;
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		}
