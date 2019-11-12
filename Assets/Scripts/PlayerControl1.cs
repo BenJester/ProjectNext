@@ -62,6 +62,8 @@ public class PlayerControl1 : PlayerControl {
 	[Space]
 	[Header ("点击直接瞬间交换，不会被阻挡")]
 	public bool ClickChangeDirectly;
+    [Header("按键切换目标")]
+    public bool toggleSwapTarget = false;
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
     [Header ("激光枪射击，瞬间交换，会被阻挡")]
@@ -909,10 +911,10 @@ public class PlayerControl1 : PlayerControl {
 
 	}
 
-    // 录视频用 按Q直接射出慢子弹
+    // 录视频用 按V直接射出慢子弹
     void HandleShootSlowBullet()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             GameObject newBullet = Instantiate(bullet, transform.position + ((Vector3)mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler(0, 0, -AngleBetween(Vector2.left, ((Vector2)mouseWorldPos - (Vector2)transform.position).normalized)));
