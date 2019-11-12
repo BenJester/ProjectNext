@@ -444,7 +444,7 @@ public class PlayerControl1 : PlayerControl {
             {
                 if(m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
                 {
-                    Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
+                    //Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
                     float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
                     rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
                 }
@@ -601,6 +601,7 @@ public class PlayerControl1 : PlayerControl {
         if (hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox)
         {
             swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
+            closestObjectToCursor.GetComponent<Thing>().RegisteDestroyNotify(_unregisteSwapCollide);
             lockedOnObjectLine.startWidth = 5f;
             res = true;
         }
@@ -611,6 +612,11 @@ public class PlayerControl1 : PlayerControl {
             swap.col = null;
         }
         return res;
+    }
+
+    private void _unregisteSwapCollide()
+    {
+        swap.col = null;
     }
 
 	// 计算与鼠标和玩家最近的物体
@@ -1160,6 +1166,7 @@ public class PlayerControl1 : PlayerControl {
             {
                 for (int i = 0; i < 4; i++)
                 {
+                    Debug.Log(string.Format("swap.gameObject.name {0} [{1}]", swap.gameObject.name,i));
                     SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
                     s.enabled = true;
                     s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
