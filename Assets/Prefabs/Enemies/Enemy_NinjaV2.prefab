@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5775181348552360192
+--- !u!1 &253930418674161855
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5777747690463099770}
-  - component: {fileID: 5968904308216592120}
-  - component: {fileID: 5806178133781950848}
-  - component: {fileID: 5835475636713975546}
-  - component: {fileID: 5888003526284935376}
-  - component: {fileID: 6007764596947709370}
-  - component: {fileID: 5887499759665113030}
-  - component: {fileID: 5869765929230958684}
-  - component: {fileID: 5875537879067148406}
-  - component: {fileID: 461005181}
-  - component: {fileID: 4608901840260904553}
-  - component: {fileID: 43854695}
-  - component: {fileID: 9022779111167391537}
-  - component: {fileID: 1117773378}
+  - component: {fileID: 765655762772530091}
+  - component: {fileID: 6858946727205143843}
+  - component: {fileID: 4143491588056060243}
   m_Layer: 8
-  m_Name: Enemy_NinjaV2
-  m_TagString: thing
+  m_Name: Animation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5777747690463099770
+--- !u!4 &765655762772530091
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
+  m_GameObject: {fileID: 253930418674161855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6650.491, y: -197.51572, z: 0}
+  m_LocalPosition: {x: 0, y: 59.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 8317492435047961541}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Children: []
+  m_Father: {fileID: 5777747690463099770}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5968904308216592120
+--- !u!212 &6858946727205143843
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
+  m_GameObject: {fileID: 253930418674161855}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -93,6 +81,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4143491588056060243
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253930418674161855}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2356ab086983b6a45b69152f41205a75, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &5775181348552360192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5777747690463099770}
+  - component: {fileID: 5806178133781950848}
+  - component: {fileID: 5835475636713975546}
+  - component: {fileID: 5888003526284935376}
+  - component: {fileID: 6007764596947709370}
+  - component: {fileID: 5887499759665113030}
+  - component: {fileID: 5875537879067148406}
+  - component: {fileID: 461005181}
+  - component: {fileID: 4608901840260904553}
+  - component: {fileID: 43854695}
+  - component: {fileID: 9022779111167391537}
+  - component: {fileID: 1117773378}
+  m_Layer: 8
+  m_Name: Enemy_NinjaV2
+  m_TagString: thing
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5777747690463099770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6650.491, y: -197.51572, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8317492435047961541}
+  - {fileID: 765655762772530091}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &5806178133781950848
 Rigidbody2D:
   serializedVersion: 4
@@ -127,7 +177,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 3.1104736, y: -50.108894}
+  m_Offset: {x: 3.1104736, y: 7.83}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -167,6 +217,8 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!251 &6007764596947709370
@@ -204,25 +256,6 @@ MonoBehaviour:
   Body: {fileID: 21300000, guid: 0ba11a578efa2124882994fa5d299745, type: 3}
   PlayerLegs: {fileID: 0}
   clip: {fileID: 0}
---- !u!95 &5869765929230958684
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2356ab086983b6a45b69152f41205a75, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!120 &5875537879067148406
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -454,6 +487,7 @@ MonoBehaviour:
   ObjShoot: {fileID: 1249693321910232, guid: 63bb58a43b890d54eb2132b0bdb9d62d, type: 3}
   objInstanceDistance: 50
   objSpeed: 600
+  IsLocal: 0
 --- !u!114 &9022779111167391537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,7 +578,7 @@ PrefabInstance:
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -44.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}

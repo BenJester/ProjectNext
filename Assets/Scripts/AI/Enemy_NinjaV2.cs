@@ -119,7 +119,7 @@ public class Enemy_NinjaV2 : Enemy
 
         m_throwBomb = GetComponent<EnemySkillThrowBomb>();
 
-        m_animator = GetComponent<Animator>();
+        m_animator = GetComponentInChildren<Animator>();
         m_nAnimatorChargingPara     = Animator.StringToHash(AnimatorChargingPara);
         m_nAnimatorAttackPara       = Animator.StringToHash(AnimatorAttackPara);
         m_nAnimatorThrowBombPara    = Animator.StringToHash(AnimatorThrowBombPara);
