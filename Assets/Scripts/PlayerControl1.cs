@@ -694,9 +694,10 @@ public class PlayerControl1 : PlayerControl {
                     //Debug.Log(vecMouseWorldPos);
                     float angleToCursor = AngleBetween(transform.position, vecMouseWorldPos);
 
-                    if (player.GetAxis("MoveHorizontal") != 0 || player.GetAxis("AimVertical") != 0)
+                    //Rewired------------------------------------------------------------------------------
+                    if (player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)
                     {
-                        Vector2 dir = new Vector2(player.GetAxis("MoveHorizontal"), player.GetAxis("AimVertical")).normalized;
+                        Vector2 dir = new Vector2(player.GetAxis("AimHorizontal"), player.GetAxis("AimVertical")).normalized;
                         angleToCursor = AngleBetween(Vector2.zero, dir);
                     }
 
