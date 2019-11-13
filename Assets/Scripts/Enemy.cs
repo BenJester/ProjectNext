@@ -40,7 +40,23 @@ public class Enemy : MonoBehaviour{
                                     box.size.x / 2f - groundCheckBoxIndent,
                                     -(box.size.y / 2f + groundCheckBoxHeight / 2f)
                                  );
-        originalColor = GetComponent<SpriteRenderer>().color;
+        SpriteRenderer _spRender = GetComponent<SpriteRenderer>();
+        if(_spRender != null)
+        {
+            originalColor = _spRender.color;
+        }
+        else
+        {
+            _spRender = GetComponentInChildren<SpriteRenderer>();
+            if(_spRender != null)
+            {
+                originalColor = _spRender.color;
+            }
+            else
+            {
+                Debug.Assert(false);
+            }
+        }
     }
 	
 	// Update is called once per frame
