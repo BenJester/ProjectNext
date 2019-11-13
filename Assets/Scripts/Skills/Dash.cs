@@ -37,7 +37,16 @@ public class Dash : Skill {
     public Vector2 dir;
     public Vector2 dashDir;
 
+
+
+
     //Rewired-------------------------------------------------
+    [Header("手柄震动,马达*2")]
+ 
+    public float motor1Level;
+    public float motor2Level;
+    public float motor1duration;
+    public float motor2duration;
     private Player rPlayer;
 
     private PlayerStateManager m_stateMgr;
@@ -170,6 +179,10 @@ public class Dash : Skill {
 	}
 
 	IEnumerator DoDash () {
+        //Rewired 手柄震动---------------------------------------------------
+        PlayerControl1.Instance.player.SetVibration(0, motor1Level, motor1duration);
+        PlayerControl1.Instance.player.SetVibration(1, motor2Level, motor2duration);
+
         playerControl.m_bJumpRelease = false;
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;

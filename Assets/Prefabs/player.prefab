@@ -720,8 +720,8 @@ MonoBehaviour:
   hp: 5
   speed: 400
   JumpingHorizontalUpMaxSpeed: 250
-  JumpingHorizontalUpForce: 80000
-  JumpingHorizontalDownMaxSpeed: 200
+  JumpingHorizontalUpForce: 40000
+  JumpingHorizontalDownMaxSpeed: 250
   JumpingHorizontalDownForce: 60000
   jumpSpeed: 500
   jumpForceAir: 800000
@@ -811,6 +811,18 @@ MonoBehaviour:
   jumpClip: {fileID: 8300000, guid: 6644fd2bcc49f9c46bda13441880add5, type: 3}
   hitClip: {fileID: 8300000, guid: cb805db46ca35eb44be50a37c06155d8, type: 3}
   lockedOnObjectLine: {fileID: 6146267691645847945}
+  landingMotor1Level: 0
+  landingMotor2Level: 0.5
+  landingMotor1duration: 0.05
+  landingMotor2duration: 0.05
+  dieMotor1Level: 2.5
+  dieMotor2Level: 2.5
+  dieMotor1duration: 0.5
+  dieMotor2duration: 0.5
+  onHitMotor1Level: 1.2
+  onHitMotor2Level: 1.5
+  onHitMotor1duration: 0.2
+  onHitMotor2duration: 0.2
 --- !u!114 &114437363468322386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,6 +873,9 @@ MonoBehaviour:
   curr: 0
   cooldown: 0.25
   m_swapEffect: {fileID: 0}
+  motorIndex: 1
+  level: 0.7
+  duration: 0.1
 --- !u!114 &114591261722450940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,7 +903,7 @@ MonoBehaviour:
   waitTime: 8
   currWaitTime: 0
   remainBulletTimeThreshold: 30
-  remainBulletTimeDuration: 0.8
+  remainBulletTimeDuration: 0
   maxCharge: 1
   charge: 0
   multiplier: 122
@@ -904,6 +919,10 @@ MonoBehaviour:
   TrajectoryStepCounts: 24
   dir: {x: 0, y: 0}
   dashDir: {x: 0, y: 0}
+  motor1Level: 0.8
+  motor2Level: 1.2
+  motor1duration: 0.2
+  motor2duration: 0.28
 --- !u!114 &114325612499970784
 MonoBehaviour:
   m_ObjectHideFlags: 0

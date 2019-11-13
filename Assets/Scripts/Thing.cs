@@ -157,7 +157,11 @@ public class Thing : MonoBehaviour {
         //			return;
         //		}
         if (type == Type.player)
+        {
+            PlayerControl1.Instance.Die();
             playerControl.hp = 0;
+        }
+            
 
 
         if (dead)

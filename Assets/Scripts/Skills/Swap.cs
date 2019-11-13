@@ -5,6 +5,8 @@ using EZCameraShake;
 
 public class Swap : Skill {
 
+
+
 	public bool swapDamageOn;
 	public int swapDamage;
 	public bool smokeOn;
@@ -30,6 +32,8 @@ public class Swap : Skill {
     public float cooldown;
     bool cooldowned = true;
 
+    
+
     private Vector2 m_vecCacheDrawBoxPos;
     private Vector2 m_vecCacheDrawBoxSize;
     private float m_fCacheDrawBoxAngle;
@@ -40,6 +44,12 @@ public class Swap : Skill {
     private bool m_bDoubleSwap;
 
     public SwapEffectMovement m_swapEffect;
+
+
+    [Header("手柄震动")]
+    public int motorIndex;
+    public float level;
+    public float duration;
     public override void Do()
 	{
 		if (!active || !col || col.GetComponent<Thing> ().dead || !cooldowned)
@@ -68,7 +78,10 @@ public class Swap : Skill {
 		StartCoroutine (SwapDamageEffect ());
 
 		//屏幕震动	
-		CameraShaker.Instance.ShakeOnce(10f,0.1f,0.02f,0.05f);
+		CameraShaker.Instance.ShakeOnce(1f,0.1f,0.02f,0.05f);
+
+        //手柄震动 Rewired------------------------------------------------------------------------------------
+        PlayerControl1.Instance.player.SetVibration(motorIndex,level, duration);
 
         if(col == null)
         {

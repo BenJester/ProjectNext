@@ -13,20 +13,20 @@ public class PlayerControl1 : PlayerControl {
 
     public static PlayerControl1 Instance { get; private set; }
     //Rewired------------------------------------------------------------
-    
+
     public int playerId = 0;
     public Player player;
 
     [Tooltip("处理角色在空中时候，平行速度迅速递减的lerp值")]
-    [Range(0,1)]
+    [Range(0, 1)]
     public float JumpVelocityLerp;
-	public bool HasRepawnPoint = false;
+    public bool HasRepawnPoint = false;
 
     [Header("基本参数")]
     public int maxhp = 1;
     public int hp;
     bool invincible;
-	public float speed;
+    public float speed;
     [Tooltip("跳跃中水平移动最大速度向上")]
     public float JumpingHorizontalUpMaxSpeed;
     [Tooltip("跳跃中水平移动施加力值向上")]
@@ -40,18 +40,18 @@ public class PlayerControl1 : PlayerControl {
     [Tooltip("空中跳跃施加力")]
     public float jumpForceAir;
     public float coyoteTime;
-	public float cacheJumpTime;
-	bool cachedJump;
-	public float maxSpeed = 10000f;
-	public Transform groundCheckPoint1;
-	public Transform groundCheckPoint2;
-	public Transform groundCheckPoint3;
-	public Transform groundCheckPoint4;
-	public Transform groundCheckPoint5;
+    public float cacheJumpTime;
+    bool cachedJump;
+    public float maxSpeed = 10000f;
+    public Transform groundCheckPoint1;
+    public Transform groundCheckPoint2;
+    public Transform groundCheckPoint3;
+    public Transform groundCheckPoint4;
+    public Transform groundCheckPoint5;
     public PhysicsMaterial2D slipperyMat;
     public PhysicsMaterial2D roughMat;
     BoxCollider2D box;
-	public float groundCheckRadius;
+    public float groundCheckRadius;
 
     public int waitTime;
     public int currWaitTime;
@@ -59,18 +59,18 @@ public class PlayerControl1 : PlayerControl {
     public Image blood;
     public float bloodEffectDuration;
 
-	public bool canMove;
+    public bool canMove;
 
-	public Vector3 playerRespawnPoint;
+    public Vector3 playerRespawnPoint;
 
-	#region 符咒相关内容
-	[Header ("子弹参数")]
-	public GameObject bullet;
+    #region 符咒相关内容
+    [Header("子弹参数")]
+    public GameObject bullet;
 
     [Space]
     public bool isKeyboard;
-	[Header ("点击直接瞬间交换，不会被阻挡")]
-	public bool ClickChangeDirectly;
+    [Header("点击直接瞬间交换，不会被阻挡")]
+    public bool ClickChangeDirectly;
     [Header("按键切换目标")]
     public bool toggleSwapTarget = false;
     public GameObject toggleTarget;
@@ -79,102 +79,102 @@ public class PlayerControl1 : PlayerControl {
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
     public float aimAngle;
-    [Header ("激光枪射击，瞬间交换，会被阻挡")]
-	public bool laserBullet = false;
+    [Header("激光枪射击，瞬间交换，会被阻挡")]
+    public bool laserBullet = false;
     [Header("lock first, then 激光枪射击，瞬间交换，会被阻挡")]
     public bool lockLaserBullet = false;
-    [Header ("带有跟踪效果")]
-	public bool isHomingBullet = false;
-	public float homingBulletSpeed=10f;
-	public float homingBulletRotateSpeed=200f;
+    [Header("带有跟踪效果")]
+    public bool isHomingBullet = false;
+    public float homingBulletSpeed = 10f;
+    public float homingBulletRotateSpeed = 200f;
 
-	[Header ("带有射击距离限制")]
-	public bool hasShootDistance = true;
-	//按照玩家的距离来计算
-	public bool countDistanceToPlayer=true;
-	public float shootDistance = 500f;
+    [Header("带有射击距离限制")]
+    public bool hasShootDistance = true;
+    //按照玩家的距离来计算
+    public bool countDistanceToPlayer = true;
+    public float shootDistance = 500f;
 
-	[SerializeField]
-	UnityEngine.Experimental.Rendering.LWRP.Light2D shootDistanceLight;
+    [SerializeField]
+    UnityEngine.Experimental.Rendering.LWRP.Light2D shootDistanceLight;
 
-	
 
-	[Space]
 
-	[Header ("子弹速度")]
-	public float minBulletSpeed;
-	public float maxBulletSpeed;
-	public float bulletChargeSpeed;
-	public float bulletSpeed;
+    [Space]
 
-	[Space]
+    [Header("子弹速度")]
+    public float minBulletSpeed;
+    public float maxBulletSpeed;
+    public float bulletChargeSpeed;
+    public float bulletSpeed;
 
-	#endregion
+    [Space]
 
-	[Space]
-	//public LayerMask groundLayer;
-	public bool isTouchingGround;
-	public bool canJump;
+    #endregion
+
+    [Space]
+    //public LayerMask groundLayer;
+    public bool isTouchingGround;
+    public bool canJump;
 
 
     private bool m_bJumpingWindow;
     public bool m_bJumpRelease;
 
     public int startChargeFrame;
-	float chargeFrame = 0;
+    float chargeFrame = 0;
 
     [Header("瞄准表现")]
     public float fourCornerScanMargin = 5f;
-	public bool useLineRenderer = false;
-	public bool useCursor = false;
-	public LineRenderer lr;
-	GameObject cursor;
-	public GameObject cursorPrefab;
+    public bool useLineRenderer = false;
+    public bool useCursor = false;
+    public LineRenderer lr;
+    GameObject cursor;
+    public GameObject cursorPrefab;
     bool locked;
-	Rigidbody2D rb;
+    Rigidbody2D rb;
 
-	[HideInInspector]
-	public float startDeltaTime;
-	[HideInInspector]
-	public float targetDeltaTime;
-	[HideInInspector]
-	public float targetTimeScale;
+    [HideInInspector]
+    public float startDeltaTime;
+    [HideInInspector]
+    public float targetDeltaTime;
+    [HideInInspector]
+    public float targetTimeScale;
 
-	//
-	private bool isGroundTemp;
+    //
+    private bool isGroundTemp;
 
-	[Space]
-	[Space]
-	public GameObject landingParticle;
+    [Space]
+    [Space]
+    public GameObject landingParticle;
 
-	public Vector3 originalScale;
+    public Vector3 originalScale;
 
-	private Animator anim;
-	public Animator legAnim;
-	public SpriteRenderer legsSpriteRenderer;
-	private SpriteRenderer spriteRenderer;
+    private Animator anim;
+    public Animator legAnim;
+    public SpriteRenderer legsSpriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
-	private int chargeCounter = 0;
+    private int chargeCounter = 0;
 
-	SpriteRenderer blackSr;
-	bool leftPressed;
+    SpriteRenderer blackSr;
+    bool leftPressed;
 
-	public GameObject pointer;
-	public GameObject swapTarget;
+    public GameObject pointer;
+    public GameObject swapTarget;
 
-	public List<Thing> thingList;
-	public GameObject closestObjectToCursor;
-	public GameObject closestObjectToPlayer;
-	public float closestDistance = Mathf.Infinity;
-	public float closestPlayerDistance = Mathf.Infinity;
-	public float cursorSnapThreshold;
-	public GameObject marker;
+    public List<Thing> thingList;
+    public GameObject closestObjectToCursor;
+    public GameObject closestObjectToPlayer;
+    public float closestDistance = Mathf.Infinity;
+    public float closestPlayerDistance = Mathf.Infinity;
+    public float cursorSnapThreshold;
+    public GameObject marker;
 
-	public GameObject targetMarker;
+    public GameObject targetMarker;
 
-	public Swap swap;
-	public Dash dash;
-	public bool doubleSwap;
+    public Swap swap;
+    public Dash dash;
+    public bool doubleSwap;
 
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
@@ -192,7 +192,7 @@ public class PlayerControl1 : PlayerControl {
 
     public float PlayerSpawnTime;
     private Vector3 swapColPosition;
-    private bool isPlayColShadow=false;
+    private bool isPlayColShadow = false;
 
     private LevelTest levelTest;
 
@@ -200,10 +200,10 @@ public class PlayerControl1 : PlayerControl {
     public AudioClip jumpClip;
     public AudioClip hitClip;
 
-	public void InitSkills () {
-		swap = GetComponent<Swap> ();
-		dash = GetComponent<Dash> ();
-	}
+    public void InitSkills() {
+        swap = GetComponent<Swap>();
+        dash = GetComponent<Dash>();
+    }
 
     public LineRenderer lockedOnObjectLine;
 
@@ -215,52 +215,71 @@ public class PlayerControl1 : PlayerControl {
     private Color trajectoryEndColor;
     private bool trajectoryOn = true;
 
-    void Awake () {
+    //Rewired--------------------------------------------------手柄震动
+    [Header("下落手柄震动")]
+    public float landingMotor1Level;
+    public float landingMotor2Level;
+    public float landingMotor1duration;
+    public float landingMotor2duration;
+
+    [Header("死亡手柄震动")]
+    public float dieMotor1Level;
+    public float dieMotor2Level;
+    public float dieMotor1duration;
+    public float dieMotor2duration;
+
+    [Header("受伤手柄震动")]
+    public float onHitMotor1Level;
+    public float onHitMotor2Level;
+    public float onHitMotor1duration;
+    public float onHitMotor2duration;
+
+    void Awake() {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
 
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
-        player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone=0.2f;
+        player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
 
         //
         GlobalVariable.SetPlayer(this);
-		originalScale = transform.localScale;
-		startDeltaTime = Time.fixedDeltaTime;
-		targetDeltaTime = startDeltaTime;
-		targetTimeScale = 1f;
-		rb = GetComponent<Rigidbody2D> ();
-		anim = GetComponent<Animator> ();
-		lr = GetComponent<LineRenderer> ();
-		spriteRenderer = GetComponent<SpriteRenderer> ();
-		lr.enabled = false;
+        originalScale = transform.localScale;
+        startDeltaTime = Time.fixedDeltaTime;
+        targetDeltaTime = startDeltaTime;
+        targetTimeScale = 1f;
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        lr = GetComponent<LineRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        lr.enabled = false;
         box = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
         swappable = new List<GameObject>();
     }
 
-	void Start () {
+    void Start() {
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
 
-        if(objLevelMgr != null)
+        if (objLevelMgr != null)
         {
             levelTest = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelTest>();
         }
-		//m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
+        //m_playDieAction += GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
         m_stateMgr = GetComponent<PlayerStateManager>();
         lockedOnObjectLine.startWidth = 1f;
         lockedOnObjectLine.positionCount = 2;
 
-        blackSr = GameObject.FindWithTag ("black").GetComponent<SpriteRenderer> ();
-		bulletSpeed = minBulletSpeed;
+        blackSr = GameObject.FindWithTag("black").GetComponent<SpriteRenderer>();
+        bulletSpeed = minBulletSpeed;
 
-		InitSkills ();
+        InitSkills();
 
-		if (HasRepawnPoint)
-			transform.position = CheckPointTotalManager.instance.GetPlayerPos ();
+        if (HasRepawnPoint)
+            transform.position = CheckPointTotalManager.instance.GetPlayerPos();
 
-		//设置射程和灯光
-		if (hasShootDistance) HandleShootDistanceAndLight ();
+        //设置射程和灯光
+        if (hasShootDistance) HandleShootDistanceAndLight();
         hp = maxhp;
 
         trajectoryStartColor = lr.startColor;
@@ -276,7 +295,7 @@ public class PlayerControl1 : PlayerControl {
     private void OnDestroy()
     {
         //GlobalVariable.GetUIPlayerCtrl().UnregisteDelayRestart(_delayAction);
-        if(GlobalVariable.GetUIPlayerCtrl() != null)
+        if (GlobalVariable.GetUIPlayerCtrl() != null)
         {
             //m_playDieAction -= GlobalVariable.GetUIPlayerCtrl().PlayerDieAction;
         }
@@ -316,9 +335,9 @@ public class PlayerControl1 : PlayerControl {
         return bRes;
     }
 
-	void Update () {
+    void Update() {
 
-		anim.SetFloat ("SpeedY", rb.velocity.y);
+        anim.SetFloat("SpeedY", rb.velocity.y);
         //isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
         //          Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
         //          Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
@@ -338,13 +357,17 @@ public class PlayerControl1 : PlayerControl {
         // landing
         if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
         {
-			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
-			Destroy (part, 2f);
+            //Rewired 手柄震动---------------------------------------------------
+            PlayerControl1.Instance.player.SetVibration(0, landingMotor1Level, landingMotor1duration);
+            PlayerControl1.Instance.player.SetVibration(1, landingMotor2Level, landingMotor2duration);
+
+            GameObject part = Instantiate(landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
+            Destroy(part, 2f);
             if (isKeyboard && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
             {
-                
+
                 rb.velocity = Vector2.zero;
-               
+
             }
 
             //Rewired------------------------------------------------------------
@@ -358,50 +381,51 @@ public class PlayerControl1 : PlayerControl {
 
         box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;
 
-		isGroundTemp = isTouchingGround;
+        isGroundTemp = isTouchingGround;
 
-		HandleRewind ();
+        HandleRewind();
 
 
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyDown (KeyCode.R) || player.GetButtonDown("Restart")) {
+        if (Input.GetKeyDown(KeyCode.R) || player.GetButtonDown("Restart")) {
 
             Time.fixedDeltaTime = startDeltaTime;
-			Time.timeScale = 1f;
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
-		}
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
-		//if (!Rewind.Instance.isReverting) {
-		//	Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
-		//	Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
-		//}
+        //if (!Rewind.Instance.isReverting) {
+        //	Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.04f : -0.04f), 0.1f, 1f);
+        //	Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.04f * startDeltaTime : -0.04f * startDeltaTime), 0.1f * startDeltaTime, startDeltaTime);
+        //}
 
-		Time.timeScale = Mathf.Clamp (Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.07f : -0.07f), 0.01f, 1f);
-		Time.fixedDeltaTime = Mathf.Clamp (Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.07f * startDeltaTime : -0.07f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
+        Time.timeScale = Mathf.Clamp(Time.timeScale + ((targetTimeScale >= Time.timeScale) ? 0.07f : -0.07f), 0.01f, 1f);
+        Time.fixedDeltaTime = Mathf.Clamp(Time.fixedDeltaTime + ((targetDeltaTime >= Time.fixedDeltaTime) ? 0.07f * startDeltaTime : -0.07f * startDeltaTime), 0.01f * startDeltaTime, startDeltaTime);
 
-		if (!active)
-			return;
+        if (!active)
+            return;
 
 
-		//左右移动
-		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
+        //左右移动
+        float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
-        if (!isKeyboard) h = (player.GetAxisRaw("MoveHorizontal") > 0 ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < 0 ? -1 : 0);
-        
-        
-        if (Mathf.Abs (h) > 0) {
+        if (!isKeyboard) h = (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
+        print(h);
+
+
+        if (Mathf.Abs(h) > 0) {
             m_bJumpRelease = false;
 
-            anim.SetBool ("Moving", true);
-			legAnim.SetBool ("Moving", true);
-			if (h > 0) legsSpriteRenderer.flipX = true;
-			else legsSpriteRenderer.flipX = false;
-		} else
+            anim.SetBool("Moving", true);
+            legAnim.SetBool("Moving", true);
+            if (h > 0) legsSpriteRenderer.flipX = true;
+            else legsSpriteRenderer.flipX = false;
+        } else
         {
             m_bJumpRelease = false;
-            anim.SetBool ("Moving", false);
-			legAnim.SetBool ("Moving", false);
-		}
+            anim.SetBool("Moving", false);
+            legAnim.SetBool("Moving", false);
+        }
 
         //if (Mathf.Abs(rb.velocity.x) <= speed)
         //{
@@ -414,37 +438,75 @@ public class PlayerControl1 : PlayerControl {
 
         if (canJump == false)
         {
+
+            //Rewired-----------------------------------------------------------------------test
+            //if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.W) || player.GetButtonUp("Jump"))
+            //{
+            //    m_bJumpingWindow = false;
+            //    rb.velocity -= new Vector2(, 0);
+            //    print("stopJump!");
+            //    return;
+            //}
+
             if (h > 0)
             {
-                if(rb.velocity.y > 0)
+
+                ////手柄空中跳跃处理 Rewired---------------------------------------------
+                //if (!isKeyboard)
+                //{
+                //    if (player.GetAxis("MoveHorizontal") < 0.3f)
+                //    {
+                //        h = 0;
+                //    }
+                //    else h = 1f;
+                //}
+
+
+
+
+
+                if (rb.velocity.y > 0)
                 {
                     if (rb.velocity.x < JumpingHorizontalUpMaxSpeed)
                     {
-                        rb.AddForce(Vector2.right * JumpingHorizontalUpForce);
+                        rb.AddForce(JumpingHorizontalUpForce * new Vector2(h, 0));
                     }
                 }
                 else
                 {
                     if (rb.velocity.x < JumpingHorizontalDownMaxSpeed)
                     {
-                        rb.AddForce(Vector2.right * JumpingHorizontalDownForce);
+                        rb.AddForce(JumpingHorizontalDownForce * new Vector2(h, 0));
                     }
                 }
             }
             else if (h < 0)
             {
+                //手柄空中跳跃处理 Rewired---------------------------------------------
+                //if (!isKeyboard)
+                //{
+
+                //    if (player.GetAxis("MoveHorizontal") > -0.3f)
+                //    {
+                //        h = 0;
+                //    }
+                //    else h = -1f;
+
+                //}
+
+
                 if (rb.velocity.y > 0)
                 {
                     if (rb.velocity.x > -JumpingHorizontalUpMaxSpeed)
                     {
-                        rb.AddForce(Vector2.left * JumpingHorizontalUpForce);
+                        rb.AddForce(JumpingHorizontalUpForce * new Vector2(h, 0));
                     }
                 }
                 else
                 {
                     if (rb.velocity.x > -JumpingHorizontalDownMaxSpeed)
                     {
-                        rb.AddForce(Vector2.left * JumpingHorizontalDownForce);
+                        rb.AddForce(JumpingHorizontalDownForce * new Vector2(h, 0));
                     }
                 }
             }
@@ -462,14 +524,14 @@ public class PlayerControl1 : PlayerControl {
         }
 
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) ||player.GetButtonUp("Jump"))
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) || player.GetButtonUp("Jump"))
         {
             m_bJumpingWindow = false;
         }
-        if(rb.velocity.y != 0 )
+        if (rb.velocity.y != 0)
         {
             //Rewired------------------------------------------------------------
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)|| player.GetAxisRaw("MoveHorizontal")==0)
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || player.GetAxisRaw("MoveHorizontal") == 0)
             {
                 m_bJumpRelease = true;
                 //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
@@ -477,7 +539,7 @@ public class PlayerControl1 : PlayerControl {
             }
             if (m_bJumpRelease == true)
             {
-                if(m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
+                if (m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
                 {
                     //Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
                     float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
@@ -493,25 +555,25 @@ public class PlayerControl1 : PlayerControl {
 
         //跳跃代码
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyDown (KeyCode.W)|| Input.GetKeyDown(KeyCode.Space) || player.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || player.GetButtonDown("Jump"))
         {
-			if (canJump)
+            if (canJump)
             {
-				Jump ();
+                Jump();
             }
-			else {
+            else {
                 cachedJump = true;
                 StartCoroutine(CacheJump());
             }
         }
 
-		if (isTouchingGround) {
-			anim.SetBool ("Jumping", false);
-			legAnim.SetBool ("Jumping", false);
-		} else {
-			anim.SetBool ("Jumping", true);
-			legAnim.SetBool ("Jumping", true);
-		}
+        if (isTouchingGround) {
+            anim.SetBool("Jumping", false);
+            legAnim.SetBool("Jumping", false);
+        } else {
+            anim.SetBool("Jumping", true);
+            legAnim.SetBool("Jumping", true);
+        }
 
 
         // 左键子弹时间
@@ -538,53 +600,53 @@ public class PlayerControl1 : PlayerControl {
 
         //处理按下的指示器
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton (0) || player.GetButton("Switch")) {
-			if (useLineRenderer) {
-				//lr.enabled = true;
-				HandleLineRenderer ();
-			}
+        if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
+            if (useLineRenderer) {
+                //lr.enabled = true;
+                HandleLineRenderer();
+            }
 
-			IncreaseBulletSpeed ();
+            IncreaseBulletSpeed();
 
-		} else //Rewired------------------------------------------------------------
-		if (Input.GetMouseButtonUp (0) || player.GetButtonUp("Switch")) {
-			anim.SetTrigger ("Shot");
-			anim.SetBool ("IsCharging", false);
-			chargeCounter = 0;
-			//bulletSpeed = minBulletSpeed;
-			StartCoroutine (RestoreTimeScale (0.035f));
+        } else //Rewired------------------------------------------------------------
+        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch")) {
+            anim.SetTrigger("Shot");
+            anim.SetBool("IsCharging", false);
+            chargeCounter = 0;
+            //bulletSpeed = minBulletSpeed;
+            StartCoroutine(RestoreTimeScale(0.035f));
 
-			if (useLineRenderer) {
-				lr.startColor = Color.black;
-				lr.enabled = false;
-			}
+            if (useLineRenderer) {
+                lr.startColor = Color.black;
+                lr.enabled = false;
+            }
 
-			Shoot ();
-		}
+            Shoot();
+        }
 
         //双重交换
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyDown (KeyCode.F) && doubleSwap || player.GetButtonDown("DoubleSwap") && doubleSwap) {
+        if (Input.GetKeyDown(KeyCode.F) && doubleSwap || player.GetButtonDown("DoubleSwap") && doubleSwap) {
             //原先是通过子弹进行呼唤，所以这里需要false，但是现在情况变了，这个作为一个功能开关，而不是一个属性值
-			//doubleSwap = false;
-            if(swap.CanDoubleSwap())
+            //doubleSwap = false;
+            if (swap.CanDoubleSwap())
             {
                 swap.SetDoubleSwap(true);
 
                 swap.Do();
             }
-		}
+        }
 
-		//冲刺触发
+        //冲刺触发
 
-		// 动量指示器
-		HandlePointer ();
-		// 转向动画
-		FlipFace (rb.velocity.x);
-		// 找到离鼠标最近单位
-		HandleObjectDistance ();
-		// coyote
-		HandleJump ();
+        // 动量指示器
+        HandlePointer();
+        // 转向动画
+        FlipFace(rb.velocity.x);
+        // 找到离鼠标最近单位
+        HandleObjectDistance();
+        // coyote
+        HandleJump();
 
         HandleTrajectoryTest();
         HandleShootSlowBullet();
@@ -592,9 +654,9 @@ public class PlayerControl1 : PlayerControl {
         HandleToggleSwapTarget();
     }
 
-	void Jump () {
+    void Jump() {
         box.sharedMaterial = slipperyMat;
-        rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         canJump = false;
         m_fCurrentKeepJumping = 0.0f;
         m_fTotalForce = 0.0f;
@@ -657,21 +719,21 @@ public class PlayerControl1 : PlayerControl {
         swap.col = null;
     }
 
-	// 计算与鼠标和玩家最近的物体
-	void HandleObjectDistance () {
+    // 计算与鼠标和玩家最近的物体
+    void HandleObjectDistance() {
 
         if (toggleSwapTarget) return;
 
-		closestDistance = Mathf.Infinity;
-		closestPlayerDistance = Mathf.Infinity;
+        closestDistance = Mathf.Infinity;
+        closestPlayerDistance = Mathf.Infinity;
 
-		closestObjectToCursor = null;
-		closestObjectToPlayer = null;
+        closestObjectToCursor = null;
+        closestObjectToPlayer = null;
 
-		foreach (var thing in thingList) {
+        foreach (var thing in thingList) {
 
             // 选择离鼠标最近物体
-            if (!laserBulletAngle) 
+            if (!laserBulletAngle)
             {
                 if (thing != null)
                 {
@@ -719,12 +781,12 @@ public class PlayerControl1 : PlayerControl {
 
                     float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
                     float diff = Mathf.Abs(angleToCursor - angleToPlayer);
-                    
+
 
                     //Debug.Log(angleToCursor);
                     if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
-                        
+
 
                         if (Hit(thing.gameObject))
                         {
@@ -741,12 +803,12 @@ public class PlayerControl1 : PlayerControl {
                     }
                 }
             }
-            
-		}
 
-		// 记号圆圈
-		if (closestObjectToCursor != null) {
-			marker.transform.position = new Vector3 (closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
+        }
+
+        // 记号圆圈
+        if (closestObjectToCursor != null) {
+            marker.transform.position = new Vector3(closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
             FourCornerHit();
             if (locked)
             {
@@ -754,35 +816,37 @@ public class PlayerControl1 : PlayerControl {
                 lockedOnObjectLine.SetPosition(1, swap.col.transform.position);
             }
         } else {
-			marker.transform.position = new Vector3 (-10000f, 0f, 0f);
-            lockedOnObjectLine.SetPosition(0,Vector3.zero);
-            lockedOnObjectLine.SetPosition(1,Vector3.zero);
+            marker.transform.position = new Vector3(-10000f, 0f, 0f);
+            lockedOnObjectLine.SetPosition(0, Vector3.zero);
+            lockedOnObjectLine.SetPosition(1, Vector3.zero);
         }
-		if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing> ().dead) {
-			targetMarker.transform.position = new Vector3 (swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
-		} else {
-			targetMarker.transform.position = new Vector3 (-10000f, 0f, 0f);
-		}
+        if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing>().dead) {
+            targetMarker.transform.position = new Vector3(swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
+        } else {
+            targetMarker.transform.position = new Vector3(-10000f, 0f, 0f);
+        }
 
-	}
+    }
 
-	void HandlePointer () {
-		Vector2 rbNormal = rb.velocity.normalized;
-		if (Time.timeScale == 1f || rbNormal == Vector2.zero) {
-			pointer.GetComponent<SpriteRenderer> ().enabled = false;
-			return;
-		}
-		pointer.GetComponent<SpriteRenderer> ().enabled = true;
-		float angle = Vector2.SignedAngle (Vector2.right, rbNormal);
-		//Debug.Log (angle);
-		pointer.transform.rotation = Quaternion.Euler (0f, 0f, angle);
-	}
+    void HandlePointer() {
+        Vector2 rbNormal = rb.velocity.normalized;
+        if (Time.timeScale == 1f || rbNormal == Vector2.zero) {
+            pointer.GetComponent<SpriteRenderer>().enabled = false;
+            return;
+        }
+        pointer.GetComponent<SpriteRenderer>().enabled = true;
+        float angle = Vector2.SignedAngle(Vector2.right, rbNormal);
+        //Debug.Log (angle);
+        pointer.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
 
-	void FixedUpdate () {
-        if(m_bJumpingWindow == true)
+    void FixedUpdate() {
+        if (m_bJumpingWindow == true)
         {
+           
+
             m_fCurrentKeepJumping += Time.fixedDeltaTime;
-            if(m_fCurrentKeepJumping <= JumpAddForceTime)
+            if (m_fCurrentKeepJumping <= JumpAddForceTime)
             {
                 rb.AddForce(transform.up * Time.fixedDeltaTime * jumpForceAir);
             }
@@ -797,80 +861,80 @@ public class PlayerControl1 : PlayerControl {
         if (Input.GetMouseButton(0) || player.GetButton("Switch"))
             currWaitTime += 1;
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton (0) || player.GetButton("Switch")) {
+        if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
 
-			anim.SetBool ("IsCharging", true);
+            anim.SetBool("IsCharging", true);
 
-			chargeCounter += 1;
-			if (chargeCounter > 25f) {
-				if (useLineRenderer) {
-					lr.startColor = Color.red;
-				}
+            chargeCounter += 1;
+            if (chargeCounter > 25f) {
+                if (useLineRenderer) {
+                    lr.startColor = Color.red;
+                }
 
-				chargeCounter = 0;
+                chargeCounter = 0;
 
-			} else if (chargeCounter > 15f) {
-				// Time.timeScale = 0.1f;
-				// targetTimeScale = 0.1f;
-				// Time.fixedDeltaTime = startDeltaTime * 0.1f;
-				// targetDeltaTime = startDeltaTime * 0.1f;
-				//TODO:之后会写成渐变的感觉
-				//PostEffect.SetActive (true);
-			}
-		} else {
-			chargeCounter = 0;
-		}
-	}
+            } else if (chargeCounter > 15f) {
+                // Time.timeScale = 0.1f;
+                // targetTimeScale = 0.1f;
+                // Time.fixedDeltaTime = startDeltaTime * 0.1f;
+                // targetDeltaTime = startDeltaTime * 0.1f;
+                //TODO:之后会写成渐变的感觉
+                //PostEffect.SetActive (true);
+            }
+        } else {
+            chargeCounter = 0;
+        }
+    }
 
-	void HandleLineRenderer () {
-		lr.SetPosition (0, transform.position);
-		Vector2 mousePosition = (Camera.main.ScreenToWorldPoint (Input.mousePosition) - transform.position);
-		lr.SetPosition (1, transform.position + (Vector3) mousePosition.normalized * 9999);
-	}
+    void HandleLineRenderer() {
+        lr.SetPosition(0, transform.position);
+        Vector2 mousePosition = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+        lr.SetPosition(1, transform.position + (Vector3)mousePosition.normalized * 9999);
+    }
 
-	IEnumerator RestoreTimeScale (float duration) {
-		yield return new WaitForSeconds (duration);
-		if (!Input.GetMouseButton (0)) {
-			// targetTimeScale = 1f;
-			// targetDeltaTime = startDeltaTime;
-		}
+    IEnumerator RestoreTimeScale(float duration) {
+        yield return new WaitForSeconds(duration);
+        if (!Input.GetMouseButton(0)) {
+            // targetTimeScale = 1f;
+            // targetDeltaTime = startDeltaTime;
+        }
 
-	}
+    }
 
-	void HandleRewind () {
+    void HandleRewind() {
 
-		return;
+        return;
 
-		if (Rewind.Instance != null) {
-			if (Input.GetKey (KeyCode.Space)) {
+        if (Rewind.Instance != null) {
+            if (Input.GetKey(KeyCode.Space)) {
 
-				Rewind.Instance.isReverting = true;
-			} else {
-				Rewind.Instance.Record ();
-				Rewind.Instance.isReverting = false;
-			}
+                Rewind.Instance.isReverting = true;
+            } else {
+                Rewind.Instance.Record();
+                Rewind.Instance.isReverting = false;
+            }
 
-			if (!Rewind.Instance.isReverting) { //TODO: if no char or mushroom is moving, don't record
+            if (!Rewind.Instance.isReverting) { //TODO: if no char or mushroom is moving, don't record
 
-			} else {
-				if (Rewind.Instance.states.Count == 0) {
-					return;
-				}
-				Rewind.Instance.Revert ();
-			}
-		}
-	}
+            } else {
+                if (Rewind.Instance.states.Count == 0) {
+                    return;
+                }
+                Rewind.Instance.Revert();
+            }
+        }
+    }
 
-	void HandleShootDistanceAndLight () {
-		shootDistanceLight.pointLightOuterRadius = shootDistance;
-	}
+    void HandleShootDistanceAndLight() {
+        shootDistanceLight.pointLightOuterRadius = shootDistance;
+    }
 
-	void IncreaseBulletSpeed () {
-		if (chargeFrame > startChargeFrame)
-			bulletSpeed = maxBulletSpeed;
-		else
-			chargeFrame += 1;
-	}
+    void IncreaseBulletSpeed() {
+        if (chargeFrame > startChargeFrame)
+            bulletSpeed = maxBulletSpeed;
+        else
+            chargeFrame += 1;
+    }
 
     // 锁定目标
     void LockObject()
@@ -881,18 +945,18 @@ public class PlayerControl1 : PlayerControl {
     }
 
     //狙击枪，点击直线瞬间交换；
-    void HandleLaserChange () {
-		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+    void HandleLaserChange() {
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (!closestObjectToCursor) return;
         FourCornerHit();
 
-        swap.Do ();
-        
+        swap.Do();
 
-		StartCoroutine (laserLine ());
-	}
 
-    void HandleLaserAngle ()
+        StartCoroutine(laserLine());
+    }
+
+    void HandleLaserAngle()
     {
         HandleLaserChange();
     }
@@ -905,38 +969,38 @@ public class PlayerControl1 : PlayerControl {
         {
             locked = false;
             swap.Do();
-          
+
         }
-            
+
     }
 
-	//狙击枪的弹道
-	IEnumerator laserLine () {
-		//lr.enabled = true;
-		lr.SetPosition (0, transform.position);
-		lr.SetPosition (1, transform.position + (closestObjectToCursor.transform.position - transform.position).normalized * shootDistance);
-		yield return new WaitForSeconds (0.3f);
-		lr.enabled = false;
-	}
+    //狙击枪的弹道
+    IEnumerator laserLine() {
+        //lr.enabled = true;
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, transform.position + (closestObjectToCursor.transform.position - transform.position).normalized * shootDistance);
+        yield return new WaitForSeconds(0.3f);
+        lr.enabled = false;
+    }
 
-	//龙王，直接点击直接交换
-	void HandleChangeDirectly () {
-		if (!closestObjectToCursor) return;
-		swap.col = closestObjectToCursor.GetComponent<BoxCollider2D> ();
-		swap.Do ();
-	}
+    //龙王，直接点击直接交换
+    void HandleChangeDirectly() {
+        if (!closestObjectToCursor) return;
+        swap.col = closestObjectToCursor.GetComponent<BoxCollider2D>();
+        swap.Do();
+    }
 
-	void Shoot () {
+    void Shoot() {
 
-		if (ClickChangeDirectly) {
-			HandleChangeDirectly ();
-			return;
-		}
+        if (ClickChangeDirectly) {
+            HandleChangeDirectly();
+            return;
+        }
 
-		if (laserBullet) {
-			HandleLaserChange ();
-			return;
-		}
+        if (laserBullet) {
+            HandleLaserChange();
+            return;
+        }
 
         if (lockLaserBullet)
         {
@@ -945,7 +1009,7 @@ public class PlayerControl1 : PlayerControl {
         }
         if (laserBulletAngle)
         {
-            HandleLaserAngle ();
+            HandleLaserAngle();
             return;
         }
 
@@ -956,32 +1020,32 @@ public class PlayerControl1 : PlayerControl {
             return;
         }
 
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		GameObject newBullet = Instantiate (bullet, transform.position + ((Vector3) mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler (0, 0, -AngleBetween (Vector2.left, ((Vector2) mouseWorldPos - (Vector2) transform.position).normalized)));
+        GameObject newBullet = Instantiate(bullet, transform.position + ((Vector3)mouseWorldPos - transform.position).normalized * 30f, Quaternion.Euler(0, 0, -AngleBetween(Vector2.left, ((Vector2)mouseWorldPos - (Vector2)transform.position).normalized)));
 
-		if (isHomingBullet && closestObjectToCursor!=null)
-		{
-			newBullet.GetComponent<Bullet> ().SetHomingBullet(closestObjectToCursor.transform,homingBulletRotateSpeed,homingBulletSpeed);
-			return;
-		}
+        if (isHomingBullet && closestObjectToCursor != null)
+        {
+            newBullet.GetComponent<Bullet>().SetHomingBullet(closestObjectToCursor.transform, homingBulletRotateSpeed, homingBulletSpeed);
+            return;
+        }
 
-		//修改Bullet的动画
-		if (bulletSpeed == maxBulletSpeed) {
-			newBullet.GetComponent<Bullet> ().SetBulletType (Bullet.BulletType.fast);
-		} else newBullet.GetComponent<Bullet> ().SetBulletType (Bullet.BulletType.slow);
+        //修改Bullet的动画
+        if (bulletSpeed == maxBulletSpeed) {
+            newBullet.GetComponent<Bullet>().SetBulletType(Bullet.BulletType.fast);
+        } else newBullet.GetComponent<Bullet>().SetBulletType(Bullet.BulletType.slow);
 
-		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
+        Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
 
-		if (closestObjectToCursor)
-			bulletBody.velocity = ((Vector2) closestObjectToCursor.transform.position - (Vector2) transform.position).normalized * bulletSpeed;
-		else
-			bulletBody.velocity = (mouseWorldPos - (Vector2) transform.position).normalized * bulletSpeed;
+        if (closestObjectToCursor)
+            bulletBody.velocity = ((Vector2)closestObjectToCursor.transform.position - (Vector2)transform.position).normalized * bulletSpeed;
+        else
+            bulletBody.velocity = (mouseWorldPos - (Vector2)transform.position).normalized * bulletSpeed;
 
-		bulletSpeed = minBulletSpeed;
-		chargeFrame = 0;
+        bulletSpeed = minBulletSpeed;
+        chargeFrame = 0;
 
-	}
+    }
 
     // 录视频用 按V直接射出慢子弹
     void HandleShootSlowBullet()
@@ -1016,6 +1080,12 @@ public class PlayerControl1 : PlayerControl {
 
     public override void Die()
     {
+
+
+        //Rewired 手柄震动---------------------------------------------------
+        PlayerControl1.Instance.player.SetVibration(0, dieMotor1Level, dieMotor1duration);
+        PlayerControl1.Instance.player.SetVibration(1, dieMotor2Level, dieMotor2duration);
+
         if (invincible) return;
         StartCoroutine(BloodEffect());
         StartCoroutine(OnHit());
@@ -1038,9 +1108,10 @@ public class PlayerControl1 : PlayerControl {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<HeadBodySeparation>().PlayerDead(25000);
 
+
         //transform.localScale = Vector3.zero;
 
-    
+
     }
     private void _delayAction()
     {
@@ -1048,7 +1119,7 @@ public class PlayerControl1 : PlayerControl {
     }
     public IEnumerator DelayRestart()
     {
-        if(m_playDieAction != null)
+        if (m_playDieAction != null)
         {
             m_playDieAction.Invoke(this);
         }
@@ -1069,51 +1140,51 @@ public class PlayerControl1 : PlayerControl {
             levelTest.AddDeadNum(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-	public override void Revive () {
-		active = true;
-		GetComponent<BoxCollider2D> ().enabled = true;
-		GetComponent<SpriteRenderer> ().enabled = true;
-		GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
-		foreach (var sr in GetComponentsInChildren<SpriteRenderer> ()) {
-			sr.enabled = true;
-		}
-		//transform.localScale = originalScale;
-	}
+    public override void Revive() {
+        active = true;
+        GetComponent<BoxCollider2D>().enabled = true;
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        foreach (var sr in GetComponentsInChildren<SpriteRenderer>()) {
+            sr.enabled = true;
+        }
+        //transform.localScale = originalScale;
+    }
 
-	private void FlipFace (float h) {
-        if(h>0) spriteRenderer.flipX = true;
-        else if(h<0) spriteRenderer.flipX = false;
-        
+    private void FlipFace(float h) {
+        if (h > 0) spriteRenderer.flipX = true;
+        else if (h < 0) spriteRenderer.flipX = false;
 
-	}
 
-	//李昊明的数学公式计算*1
-	public static Vector3 RotatePointAroundPivot (Vector3 point, Vector3 pivot, float angle) {
-		angle = angle * (Mathf.PI / 180f);
-		var rotatedX = Mathf.Cos (angle) * (point.x - pivot.x) - Mathf.Sin (angle) * (point.y - pivot.y) + pivot.x;
-		var rotatedY = Mathf.Sin (angle) * (point.x - pivot.x) + Mathf.Cos (angle) * (point.y - pivot.y) + pivot.y;
-		return new Vector3 (rotatedX, rotatedY, 0);
-	}
+    }
 
-	//李昊明的数学公式计算*2
-	public static float AngleBetween (Vector2 a, Vector2 b) {
+    //李昊明的数学公式计算*1
+    public static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, float angle) {
+        angle = angle * (Mathf.PI / 180f);
+        var rotatedX = Mathf.Cos(angle) * (point.x - pivot.x) - Mathf.Sin(angle) * (point.y - pivot.y) + pivot.x;
+        var rotatedY = Mathf.Sin(angle) * (point.x - pivot.x) + Mathf.Cos(angle) * (point.y - pivot.y) + pivot.y;
+        return new Vector3(rotatedX, rotatedY, 0);
+    }
+
+    //李昊明的数学公式计算*2
+    public static float AngleBetween(Vector2 a, Vector2 b) {
         return Mathf.Atan2(b.y - a.y, b.x - a.x);
-	}
+    }
 
     private void _logHeight()
     {
-        if(canJump == false)
+        if (canJump == false)
         {
             //Debug.Log(string.Format("Most Height is {0} force is {1}", m_fHeight, m_fTotalForce));
         }
     }
 
-	void HandleJump () {
+    void HandleJump() {
         if (!isTouchingGround)
-            StartCoroutine (JumpTolerence ());
+            StartCoroutine(JumpTolerence());
         else
         {
-            if( m_bJumpingWindow == false && dash.isDashing == false)
+            if (m_bJumpingWindow == false && dash.isDashing == false)
             {
                 _logHeight();
                 canJump = true;
@@ -1128,28 +1199,30 @@ public class PlayerControl1 : PlayerControl {
                 //}
             }
         }
-	}
+    }
 
-	IEnumerator JumpTolerence () {
-		int curr = 0;
-		while (curr <= coyoteTime) {
-			if (isTouchingGround) {
+    IEnumerator JumpTolerence() {
+        int curr = 0;
+        while (curr <= coyoteTime) {
+            if (isTouchingGround) {
 
                 _logHeight();
                 canJump = true;
                 m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
                 m_bJumpRelease = false;
                 yield return null;
-			}
+            }
 
-			yield return new WaitForEndOfFrame ();
-			curr++;
-		}
-		canJump = false;
-	}
+            yield return new WaitForEndOfFrame();
+            curr++;
+        }
+        canJump = false;
+    }
 
-	IEnumerator CacheJump () {
-		int curr = 0;
+    IEnumerator CacheJump() {
+        int curr = 0;
+
+      
 		while (curr <= cacheJumpTime) {
 			if (canJump) {
 				Jump ();
@@ -1173,6 +1246,10 @@ public class PlayerControl1 : PlayerControl {
         yield return new WaitForSeconds(0.3f);
         GetComponent<SpriteRenderer>().color = Color.white;
         invincible = false;
+
+        //Rewired 手柄震动---------------------------------------------------
+        PlayerControl1.Instance.player.SetVibration(0, onHitMotor1Level, onHitMotor1duration);
+        PlayerControl1.Instance.player.SetVibration(1, onHitMotor2Level, onHitMotor2duration);
     }
 
     public void SetColShadow()
