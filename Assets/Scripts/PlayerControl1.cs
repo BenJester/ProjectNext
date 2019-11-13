@@ -693,8 +693,17 @@ public class PlayerControl1 : PlayerControl {
                     Vector3 vecMouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     //Debug.Log(vecMouseWorldPos);
                     float angleToCursor = AngleBetween(transform.position, vecMouseWorldPos);
+
+                    if (player.GetAxis("MoveHorizontal") != 0 || player.GetAxis("AimVertical") != 0)
+                    {
+                        Vector2 dir = new Vector2(player.GetAxis("MoveHorizontal"), player.GetAxis("AimVertical")).normalized;
+                        angleToCursor = AngleBetween(Vector2.zero, dir);
+                    }
+
                     float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
                     float diff = Mathf.Abs(angleToCursor - angleToPlayer);
+                    
+
                     //Debug.Log(angleToCursor);
                     if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
@@ -1148,6 +1157,7 @@ public class PlayerControl1 : PlayerControl {
         GetComponent<SpriteRenderer>().color = Color.white;
         invincible = false;
     }
+
     public void SetColShadow()
     {
         if (isPlayColShadow || !swap.col)
@@ -1159,6 +1169,7 @@ public class PlayerControl1 : PlayerControl {
         colShadow.flipX = spriteRenderer.flipX;
         StartCoroutine(PlayColShadow());
     }
+
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
