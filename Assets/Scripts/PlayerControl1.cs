@@ -13,6 +13,7 @@ public class PlayerControl1 : PlayerControl {
 
     public static PlayerControl1 Instance { get; private set; }
     //Rewired------------------------------------------------------------
+    
     public int playerId = 0;
     public Player player;
 
@@ -217,8 +218,10 @@ public class PlayerControl1 : PlayerControl {
     void Awake () {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
+
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
+        player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone=0.2f;
 
         //
         GlobalVariable.SetPlayer(this);
@@ -337,18 +340,21 @@ public class PlayerControl1 : PlayerControl {
         {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
-            if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
+            if (isKeyboard && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
             {
-                //Rewired------------------------------------------------------------
-                if (player.GetAxis("MoveHorizontal") == 0)
-                {
-                    rb.velocity = Vector2.zero;
-                }
-            }
                 
-           
-            
-		}
+                rb.velocity = Vector2.zero;
+               
+            }
+
+            //Rewired------------------------------------------------------------
+            if (!isKeyboard && (player.GetAxisRaw("MoveHorizontal") == 0))
+            {
+                rb.velocity = Vector2.zero;
+            }
+
+
+        }
 
         box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;
 
@@ -380,7 +386,8 @@ public class PlayerControl1 : PlayerControl {
 		//左右移动
 		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
-        h += player.GetAxisRaw("MoveHorizontal");
+        if (!isKeyboard) h = (player.GetAxisRaw("MoveHorizontal") > 0 ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < 0 ? -1 : 0);
+        
         
         if (Mathf.Abs (h) > 0) {
             m_bJumpRelease = false;
@@ -462,7 +469,7 @@ public class PlayerControl1 : PlayerControl {
         if(rb.velocity.y != 0 )
         {
             //Rewired------------------------------------------------------------
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)|| player.GetAxis("MoveHorizontal")!=0)
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)|| player.GetAxisRaw("MoveHorizontal")==0)
             {
                 m_bJumpRelease = true;
                 //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
@@ -573,7 +580,7 @@ public class PlayerControl1 : PlayerControl {
 		// 动量指示器
 		HandlePointer ();
 		// 转向动画
-		FlipFace ();
+		FlipFace (rb.velocity.x);
 		// 找到离鼠标最近单位
 		HandleObjectDistance ();
 		// coyote
@@ -1073,11 +1080,11 @@ public class PlayerControl1 : PlayerControl {
 		//transform.localScale = originalScale;
 	}
 
-	private void FlipFace () {
-		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		if (mouseWorldPos.x > transform.position.x) {
-			spriteRenderer.flipX = true;
-		} else spriteRenderer.flipX = false;
+	private void FlipFace (float h) {
+        if(h>0) spriteRenderer.flipX = true;
+        else if(h<0) spriteRenderer.flipX = false;
+        
+
 	}
 
 	//李昊明的数学公式计算*1
@@ -1216,10 +1223,14 @@ public class PlayerControl1 : PlayerControl {
                 for (int i = 0; i < 4; i++)
                 {
                     Debug.Log(string.Format("swap.gameObject.name {0} [{1}]", swap.gameObject.name,i));
-                    SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
-                    s.enabled = true;
-                    s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
-                    yield return new WaitForSeconds(0.04f);
+                    if (playerShadow != null)
+                    {
+                        SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
+                        s.enabled = true;
+                        s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
+                        yield return new WaitForSeconds(0.04f);
+                    }
+                    
                 }
 
             }

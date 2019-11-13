@@ -70,6 +70,100 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &700442418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 700442419}
+  - component: {fileID: 700442421}
+  - component: {fileID: 700442420}
+  m_Layer: 9
+  m_Name: MoveCursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &700442419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700442418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4906589617144064}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &700442421
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700442418}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 99
+  m_Sprite: {fileID: 21300000, guid: 39b14e3410f89084f8ea305ea05370f1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 50, y: 50}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &700442420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700442418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09949bcdabed9e24b81f9a79ba5b35cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 100
 --- !u!1 &906594861
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +384,6 @@ GameObject:
   - component: {fileID: 120921767453741660}
   - component: {fileID: 95301921925913516}
   - component: {fileID: 114415816227692440}
-  - component: {fileID: 114260691191748520}
   - component: {fileID: 114437363468322386}
   - component: {fileID: 114163332939612696}
   - component: {fileID: 114591261722450940}
@@ -341,6 +434,7 @@ Transform:
   - {fileID: 7065564280622521176}
   - {fileID: 8185031494549842353}
   - {fileID: 7007682636466809946}
+  - {fileID: 700442419}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -619,6 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  playerId: 0
   JumpVelocityLerp: 1
   HasRepawnPoint: 1
   maxhp: 5
@@ -648,8 +743,14 @@ MonoBehaviour:
   canMove: 1
   playerRespawnPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 3}
+  isKeyboard: 0
   ClickChangeDirectly: 0
+  toggleSwapTarget: 0
+  toggleTarget: {fileID: 0}
+  swappable: []
+  index: 0
   laserBulletAngle: 1
+  aimAngle: 0
   laserBullet: 0
   lockLaserBullet: 0
   isHomingBullet: 0
@@ -667,6 +768,7 @@ MonoBehaviour:
   canJump: 1
   m_bJumpRelease: 0
   startChargeFrame: 10
+  fourCornerScanMargin: 5
   useLineRenderer: 0
   useCursor: 1
   lr: {fileID: 120921767453741660}
@@ -709,43 +811,6 @@ MonoBehaviour:
   jumpClip: {fileID: 8300000, guid: 6644fd2bcc49f9c46bda13441880add5, type: 3}
   hitClip: {fileID: 8300000, guid: cb805db46ca35eb44be50a37c06155d8, type: 3}
   lockedOnObjectLine: {fileID: 6146267691645847945}
---- !u!114 &114260691191748520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147906740149146}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84e69b2d8a4524367915904f242dbe81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 1
-  speed: 400
-  jumpSpeed: 500
-  maxSpeed: 10000
-  bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 3}
-  minBulletSpeed: 450
-  maxBulletSpeed: 2000
-  bulletChargeSpeed: 250
-  groundCheckPoint1: {fileID: 4043578974739562}
-  groundCheckPoint2: {fileID: 4289337571101460}
-  groundCheckPoint3: {fileID: 4405996985490282}
-  groundCheckPoint4: {fileID: 4882908818510406}
-  groundCheckPoint5: {fileID: 4894416746588494}
-  groundCheckRadius: 5
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  bulletSpeed: 900
-  startChargeFrame: 15
-  lr: {fileID: 0}
-  startDeltaTime: 0
-  targetDeltaTime: 0
-  targetTimeScale: 0
-  landingParticle: {fileID: 0}
-  originalScale: {x: 0, y: 0, z: 0}
 --- !u!114 &114437363468322386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,6 +902,8 @@ MonoBehaviour:
   DashTime: 0.1
   TrajectoryTimeStep: 0.05
   TrajectoryStepCounts: 24
+  dir: {x: 0, y: 0}
+  dashDir: {x: 0, y: 0}
 --- !u!114 &114325612499970784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,6 +2205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleOffset: 0
+  m_Light2D: {fileID: 5714785506168491203}
 --- !u!1001 &1837990245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2149,6 +2217,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DashPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 9163682763277132950, guid: 21ef11d7cac06374a95d951f727576bd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8464535212963198510, guid: 21ef11d7cac06374a95d951f727576bd,
         type: 3}
