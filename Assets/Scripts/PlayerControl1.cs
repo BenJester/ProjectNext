@@ -11,9 +11,10 @@ using Rewired;
 
 public class PlayerControl1 : PlayerControl {
 
+    public static PlayerControl1 Instance { get; private set; }
     //Rewired------------------------------------------------------------
-    private int playerId = 0;
-    private Player player;
+    public int playerId = 0;
+    public Player player;
 
     [Tooltip("处理角色在空中时候，平行速度迅速递减的lerp值")]
     [Range(0,1)]
@@ -65,7 +66,8 @@ public class PlayerControl1 : PlayerControl {
 	[Header ("子弹参数")]
 	public GameObject bullet;
 
-	[Space]
+    [Space]
+    public bool isKeyboard;
 	[Header ("点击直接瞬间交换，不会被阻挡")]
 	public bool ClickChangeDirectly;
     [Header("按键切换目标")]
@@ -75,6 +77,7 @@ public class PlayerControl1 : PlayerControl {
     public int index;
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
+    public float aimAngle;
     [Header ("激光枪射击，瞬间交换，会被阻挡")]
 	public bool laserBullet = false;
     [Header("lock first, then 激光枪射击，瞬间交换，会被阻挡")]
@@ -212,7 +215,8 @@ public class PlayerControl1 : PlayerControl {
     private bool trajectoryOn = true;
 
     void Awake () {
-
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
 
@@ -699,6 +703,11 @@ public class PlayerControl1 : PlayerControl {
                     {
                         Vector2 dir = new Vector2(player.GetAxis("AimHorizontal"), player.GetAxis("AimVertical")).normalized;
                         angleToCursor = AngleBetween(Vector2.zero, dir);
+                        aimAngle = angleToCursor;
+                    }
+                    else if (!PlayerControl1.Instance.isKeyboard)
+                    {
+                        angleToCursor = aimAngle;
                     }
 
                     float angleToPlayer = AngleBetween(transform.position, thing.transform.position);

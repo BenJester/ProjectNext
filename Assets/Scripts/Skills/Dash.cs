@@ -34,6 +34,9 @@ public class Dash : Skill {
     LineRenderer lr;
     Animator amin;
 
+    public Vector2 dir;
+    public Vector2 dashDir;
+
     //Rewired-------------------------------------------------
     private Player rPlayer;
 
@@ -169,11 +172,18 @@ public class Dash : Skill {
 	IEnumerator DoDash () {
         playerControl.m_bJumpRelease = false;
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
+        dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
 
         //Rewired------------------------------------------------------------
-        if (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("AimVertical") != 0)
-            dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("AimVertical")).normalized;
+        if (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("MoveVertical") != 0)
+        {
+            dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("MoveVertical")).normalized;
+            dashDir = dir;
+        }
+        else if (!PlayerControl1.Instance.isKeyboard)
+        {
+            dir = dashDir;
+        }
 
         if (useKeyboard)
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
@@ -259,11 +269,17 @@ public class Dash : Skill {
     void DrawTrajectory()
     {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
+        dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
 
-        if (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("AimVertical") != 0)
-            dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("AimVertical")).normalized;
-
+        if (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("MoveVertical") != 0)
+        {
+            dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("MoveVertical")).normalized;
+            dashDir = dir;
+        }
+        else if (!PlayerControl1.Instance.isKeyboard)
+        {
+            dir = dashDir;
+        }
         lr.enabled = true;
 
         GameObject target = gameObject;// playerControl.swap.col.gameObject;

@@ -20,6 +20,15 @@ public class ConeLight : MonoBehaviour
         Vector3 vecMouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Debug.Log(vecMouseWorldPos);
         float angleToCursor = Mathf.Rad2Deg * PlayerControl1.AngleBetween(player.position, vecMouseWorldPos);
+        if (PlayerControl1.Instance.player.GetAxis("AimHorizontal") != 0 || PlayerControl1.Instance.player.GetAxis("AimVertical") != 0)
+        {
+            Vector2 dir = new Vector2(PlayerControl1.Instance.player.GetAxis("AimHorizontal"), PlayerControl1.Instance.player.GetAxis("AimVertical")).normalized;
+            angleToCursor = Mathf.Rad2Deg * PlayerControl1.AngleBetween(Vector2.zero, dir);
+        }
+        else
+        {
+            angleToCursor = Mathf.Rad2Deg * PlayerControl1.Instance.aimAngle;
+        }
         transform.eulerAngles = new Vector3(0f, 0f, angleToCursor + angleOffset);
     }
 }
