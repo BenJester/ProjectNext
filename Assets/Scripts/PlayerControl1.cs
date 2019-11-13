@@ -11,9 +11,11 @@ using Rewired;
 
 public class PlayerControl1 : PlayerControl {
 
+    public static PlayerControl1 Instance { get; private set; }
     //Rewired------------------------------------------------------------
-    private int playerId = 0;
-    private Player player;
+    
+    public int playerId = 0;
+    public Player player;
 
     [Tooltip("处理角色在空中时候，平行速度迅速递减的lerp值")]
     [Range(0,1)]
@@ -65,7 +67,8 @@ public class PlayerControl1 : PlayerControl {
 	[Header ("子弹参数")]
 	public GameObject bullet;
 
-	[Space]
+    [Space]
+    public bool isKeyboard;
 	[Header ("点击直接瞬间交换，不会被阻挡")]
 	public bool ClickChangeDirectly;
     [Header("按键切换目标")]
@@ -75,6 +78,7 @@ public class PlayerControl1 : PlayerControl {
     public int index;
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
+    public float aimAngle;
     [Header ("激光枪射击，瞬间交换，会被阻挡")]
 	public bool laserBullet = false;
     [Header("lock first, then 激光枪射击，瞬间交换，会被阻挡")]
@@ -212,9 +216,12 @@ public class PlayerControl1 : PlayerControl {
     private bool trajectoryOn = true;
 
     void Awake () {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(gameObject); }
 
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
+        player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone=0.2f;
 
         //
         GlobalVariable.SetPlayer(this);
@@ -333,18 +340,21 @@ public class PlayerControl1 : PlayerControl {
         {
 			GameObject part = Instantiate (landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
 			Destroy (part, 2f);
-            if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
+            if (isKeyboard && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
             {
-                //Rewired------------------------------------------------------------
-                if (player.GetAxis("MoveHorizontal") == 0)
-                {
-                    rb.velocity = Vector2.zero;
-                }
-            }
                 
-           
-            
-		}
+                rb.velocity = Vector2.zero;
+               
+            }
+
+            //Rewired------------------------------------------------------------
+            if (!isKeyboard && (player.GetAxisRaw("MoveHorizontal") == 0))
+            {
+                rb.velocity = Vector2.zero;
+            }
+
+
+        }
 
         box.sharedMaterial = isTouchingGround ? roughMat : slipperyMat;
 
@@ -376,7 +386,8 @@ public class PlayerControl1 : PlayerControl {
 		//左右移动
 		float h = (Input.GetKey (KeyCode.D) ? 1 : 0) + (Input.GetKey (KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
-        h += player.GetAxisRaw("MoveHorizontal");
+        if (!isKeyboard) h = (player.GetAxisRaw("MoveHorizontal") > 0 ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < 0 ? -1 : 0);
+        
         
         if (Mathf.Abs (h) > 0) {
             m_bJumpRelease = false;
@@ -458,7 +469,7 @@ public class PlayerControl1 : PlayerControl {
         if(rb.velocity.y != 0 )
         {
             //Rewired------------------------------------------------------------
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)|| player.GetAxis("MoveHorizontal")!=0)
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)|| player.GetAxisRaw("MoveHorizontal")==0)
             {
                 m_bJumpRelease = true;
                 //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
@@ -569,7 +580,7 @@ public class PlayerControl1 : PlayerControl {
 		// 动量指示器
 		HandlePointer ();
 		// 转向动画
-		FlipFace ();
+		FlipFace (rb.velocity.x);
 		// 找到离鼠标最近单位
 		HandleObjectDistance ();
 		// coyote
@@ -693,8 +704,23 @@ public class PlayerControl1 : PlayerControl {
                     Vector3 vecMouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     //Debug.Log(vecMouseWorldPos);
                     float angleToCursor = AngleBetween(transform.position, vecMouseWorldPos);
+
+                    //Rewired------------------------------------------------------------------------------
+                    if (player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)
+                    {
+                        Vector2 dir = new Vector2(player.GetAxis("AimHorizontal"), player.GetAxis("AimVertical")).normalized;
+                        angleToCursor = AngleBetween(Vector2.zero, dir);
+                        aimAngle = angleToCursor;
+                    }
+                    else if (!PlayerControl1.Instance.isKeyboard)
+                    {
+                        angleToCursor = aimAngle;
+                    }
+
                     float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
                     float diff = Mathf.Abs(angleToCursor - angleToPlayer);
+                    
+
                     //Debug.Log(angleToCursor);
                     if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
@@ -1054,11 +1080,11 @@ public class PlayerControl1 : PlayerControl {
 		//transform.localScale = originalScale;
 	}
 
-	private void FlipFace () {
-		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		if (mouseWorldPos.x > transform.position.x) {
-			spriteRenderer.flipX = true;
-		} else spriteRenderer.flipX = false;
+	private void FlipFace (float h) {
+        if(h>0) spriteRenderer.flipX = true;
+        else if(h<0) spriteRenderer.flipX = false;
+        
+
 	}
 
 	//李昊明的数学公式计算*1
@@ -1148,6 +1174,7 @@ public class PlayerControl1 : PlayerControl {
         GetComponent<SpriteRenderer>().color = Color.white;
         invincible = false;
     }
+
     public void SetColShadow()
     {
         if (isPlayColShadow || !swap.col)
@@ -1159,6 +1186,7 @@ public class PlayerControl1 : PlayerControl {
         colShadow.flipX = spriteRenderer.flipX;
         StartCoroutine(PlayColShadow());
     }
+
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
@@ -1195,10 +1223,14 @@ public class PlayerControl1 : PlayerControl {
                 for (int i = 0; i < 4; i++)
                 {
                     Debug.Log(string.Format("swap.gameObject.name {0} [{1}]", swap.gameObject.name,i));
-                    SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
-                    s.enabled = true;
-                    s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
-                    yield return new WaitForSeconds(0.04f);
+                    if (playerShadow != null)
+                    {
+                        SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
+                        s.enabled = true;
+                        s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
+                        yield return new WaitForSeconds(0.04f);
+                    }
+                    
                 }
 
             }
