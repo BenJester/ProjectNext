@@ -730,11 +730,24 @@ public class PlayerControl1 : PlayerControl {
 
         if (toggleSwapTarget) return;
 
-        closestDistance = Mathf.Infinity;
-        closestPlayerDistance = Mathf.Infinity;
+        // 手柄瞄准缓存上一个瞄准的物体
+        // 如果距离太远，清掉缓存
+        // 或者如果玩家移动了瞄准摇杆，清掉缓存
+        if (!isKeyboard && laserBulletAngle
+            && 
+                    (closestObjectToCursor
+                    && Vector3.Distance(closestObjectToCursor.transform.position, transform.position) > shootDistance)
+                || 
+                    ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)))
+        {
+            closestDistance = Mathf.Infinity;
+            closestPlayerDistance = Mathf.Infinity;
 
-        closestObjectToCursor = null;
-        closestObjectToPlayer = null;
+            closestObjectToCursor = null;
+            closestObjectToPlayer = null;
+        }
+
+        
 
         foreach (var thing in thingList) {
 
@@ -779,37 +792,36 @@ public class PlayerControl1 : PlayerControl {
                         Vector2 dir = new Vector2(player.GetAxis("AimHorizontal"), player.GetAxis("AimVertical")).normalized;
                         angleToCursor = AngleBetween(Vector2.zero, dir);
                         aimAngle = angleToCursor;
+
+                        float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
+                        float diff = Mathf.Abs(angleToCursor - angleToPlayer);
+
+
+                        //Debug.Log(angleToCursor);
+                        if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
+                        {
+
+
+                            if (Hit(thing.gameObject))
+                            {
+                                closestDistance = diff;
+                                closestObjectToCursor = thing.gameObject;
+                            }
+
+                        }
+
+                        if (!thing.dead && diff < closestPlayerDistance)
+                        {
+                            closestPlayerDistance = diff;
+                            closestObjectToPlayer = thing.gameObject;
+                        }
                     }
                     else if (!PlayerControl1.Instance.isKeyboard)
                     {
                         angleToCursor = aimAngle;
-                    }
-
-                    float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
-                    float diff = Mathf.Abs(angleToCursor - angleToPlayer);
-
-
-                    //Debug.Log(angleToCursor);
-                    if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
-                    {
-
-
-                        if (Hit(thing.gameObject))
-                        {
-                            closestDistance = diff;
-                            closestObjectToCursor = thing.gameObject;
-                        }
-
-                    }
-
-                    if (!thing.dead && diff < closestPlayerDistance)
-                    {
-                        closestPlayerDistance = diff;
-                        closestObjectToPlayer = thing.gameObject;
-                    }
+                    }                   
                 }
             }
-
         }
 
         // 记号圆圈
