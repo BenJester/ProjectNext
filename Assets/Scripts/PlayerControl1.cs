@@ -537,7 +537,7 @@ public class PlayerControl1 : PlayerControl {
         if (rb.velocity.y != 0)
         {
             //Rewired------------------------------------------------------------
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || player.GetAxisRaw("MoveHorizontal") == 0)
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !isKeyboard))
             {
                 m_bJumpRelease = true;
                 //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
