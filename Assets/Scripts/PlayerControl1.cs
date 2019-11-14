@@ -234,6 +234,8 @@ public class PlayerControl1 : PlayerControl {
     public float onHitMotor1duration;
     public float onHitMotor2duration;
 
+    private bool m_bDashRequest;
+
     void Awake() {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
@@ -602,11 +604,17 @@ public class PlayerControl1 : PlayerControl {
             Time.fixedDeltaTime = startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
         }
-        // 左键子弹时间结束
+        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
+        {
+            dash.RequestDash();
+            m_bDashRequest = true;
+        }
 
-        //处理按下的指示器
-        //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
+            // 左键子弹时间结束
+
+            //处理按下的指示器
+            //Rewired------------------------------------------------------------
+            if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
             if (useLineRenderer) {
                 //lr.enabled = true;
                 HandleLineRenderer();
@@ -629,6 +637,7 @@ public class PlayerControl1 : PlayerControl {
 
             Shoot();
         }
+        m_bDashRequest = false;
 
         //双重交换
         //Rewired------------------------------------------------------------
@@ -1038,7 +1047,7 @@ public class PlayerControl1 : PlayerControl {
             HandleLockLaser();
             return;
         }
-        if (laserBulletAngle)
+        if (laserBulletAngle && m_bDashRequest == false)
         {
             HandleLaserAngle();
             return;
