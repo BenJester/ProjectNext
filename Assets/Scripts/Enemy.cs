@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour{
     public LayerMask floorLayer = 8;
     protected Color originalColor;
 
+    private SpriteRenderer m_spRender;
+
     protected void Start () {
 		//maxHealth = 1;
 		health = maxHealth;
@@ -40,17 +42,17 @@ public class Enemy : MonoBehaviour{
                                     box.size.x / 2f - groundCheckBoxIndent,
                                     -(box.size.y / 2f + groundCheckBoxHeight / 2f)
                                  );
-        SpriteRenderer _spRender = GetComponent<SpriteRenderer>();
-        if(_spRender != null)
+        m_spRender = GetComponent<SpriteRenderer>();
+        if(m_spRender != null)
         {
-            originalColor = _spRender.color;
+            originalColor = m_spRender.color;
         }
         else
         {
-            _spRender = GetComponentInChildren<SpriteRenderer>();
-            if(_spRender != null)
+            m_spRender = GetComponentInChildren<SpriteRenderer>();
+            if(m_spRender != null)
             {
-                originalColor = _spRender.color;
+                originalColor = m_spRender.color;
             }
             else
             {
@@ -93,8 +95,8 @@ public class Enemy : MonoBehaviour{
         Color hitColor = new Color(1f, 0.15f, 0f);
         CameraShaker.Instance.ShakeOnce(35f, 4f, 0.1f, 0.1f);
 
-        GetComponent<SpriteRenderer>().color = hitColor;
+        m_spRender.color = hitColor;
         yield return new WaitForSeconds(0.3f);
-        GetComponent<SpriteRenderer>().color = originalColor;
+        m_spRender.color = originalColor;
     }
 }
