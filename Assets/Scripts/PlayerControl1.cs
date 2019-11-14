@@ -240,7 +240,14 @@ public class PlayerControl1 : PlayerControl {
 
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
-        player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
+        if(player.controllers.joystickCount == 0)
+        {
+            isKeyboard = true;
+        }
+        else
+        {
+            player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
+        }
 
         //
         GlobalVariable.SetPlayer(this);
