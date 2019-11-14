@@ -417,7 +417,6 @@ public class PlayerControl1 : PlayerControl {
         float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
         if (!isKeyboard) h = (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
-        print(h);
 
 
         if (Mathf.Abs(h) > 0) {
