@@ -746,6 +746,14 @@ public class PlayerControl1 : PlayerControl {
             closestObjectToCursor = null;
             closestObjectToPlayer = null;
         }
+        else
+        {
+            closestDistance = Mathf.Infinity;
+            closestPlayerDistance = Mathf.Infinity;
+
+            closestObjectToCursor = null;
+            closestObjectToPlayer = null;
+        }
 
         
 
@@ -786,28 +794,33 @@ public class PlayerControl1 : PlayerControl {
                     //Debug.Log(vecMouseWorldPos);
                     float angleToCursor = AngleBetween(transform.position, vecMouseWorldPos);
 
+                    bool bExecute = false;
+                    float diff = 0.0f;
+
+                    float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
+                    diff = Mathf.Abs(angleToCursor - angleToPlayer);
                     //Rewired------------------------------------------------------------------------------
                     if (player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)
                     {
                         Vector2 dir = new Vector2(player.GetAxis("AimHorizontal"), player.GetAxis("AimVertical")).normalized;
                         angleToCursor = AngleBetween(Vector2.zero, dir);
                         aimAngle = angleToCursor;
-
-                        float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
-                        float diff = Mathf.Abs(angleToCursor - angleToPlayer);
-
-
+                        bExecute = true;
+                    }
+                    else if(isKeyboard == true)
+                    {
+                        bExecute = true;
+                    }
+                    if(bExecute == true)
+                    { 
                         //Debug.Log(angleToCursor);
                         if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                         {
-
-
                             if (Hit(thing.gameObject))
                             {
                                 closestDistance = diff;
                                 closestObjectToCursor = thing.gameObject;
                             }
-
                         }
 
                         if (!thing.dead && diff < closestPlayerDistance)
