@@ -234,9 +234,15 @@ public class PlayerControl1 : PlayerControl {
     public float onHitMotor1duration;
     public float onHitMotor2duration;
 
+    public float DashingMoveTime;
+
     private bool m_bDashRequest;
 
+    private bool m_bDashMove;
+    private bool m_bDashResult;
+    private float m_fCurDashDuration;
     void Awake() {
+        dash.RegisteDashEvent(_dashStart, _dashOver);
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
 
@@ -541,12 +547,20 @@ public class PlayerControl1 : PlayerControl {
             //Rewired------------------------------------------------------------
             if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !isKeyboard))
             {
-                m_bJumpRelease = true;
-                //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
-                //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                if(m_bDashMove == true )
+                {
+                }
+                else
+                {
+                    m_bJumpRelease = true;
+                }
             }
-            if (m_bJumpRelease == true)
+            if (m_bJumpRelease == true || m_bDashResult == true)
             {
+                if(m_bDashResult == true)
+                {
+                    m_bDashResult = false;
+                }
                 if (m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
                 {
                     //Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
@@ -923,6 +937,17 @@ public class PlayerControl1 : PlayerControl {
             }
         } else {
             chargeCounter = 0;
+        }
+
+        if(m_bDashMove == true)
+        {
+            m_fCurDashDuration += Time.fixedDeltaTime;
+            if( m_fCurDashDuration >= DashingMoveTime)
+            {
+                m_bDashMove = false;
+                m_bJumpRelease = true;
+                m_bDashResult = true;
+            }
         }
     }
 
@@ -1449,5 +1474,15 @@ public class PlayerControl1 : PlayerControl {
             lockedOnObjectLine.startWidth = 0f;
             swap.col = null;
         }
+    }
+
+    private void _dashStart()
+    {
+        m_bDashMove = true;
+        m_fCurDashDuration = 0.0f;
+    }
+    private void _dashOver()
+    {
+        //m_bDashing = false;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Rewired;
 
 public class Dash : Skill {
@@ -51,7 +52,10 @@ public class Dash : Skill {
 
     private PlayerStateManager m_stateMgr;
 
-	public override void Init () {
+    private UnityAction m_uaDashStart;
+    private UnityAction m_uaDashOver;
+
+    public override void Init () {
         
 
         lr = GetComponent<LineRenderer> ();
@@ -230,6 +234,10 @@ public class Dash : Skill {
 
         audioSource.PlayOneShot(clip, 0.5f);
         isDashing = true;
+        if(m_uaDashStart != null)
+        {
+            m_uaDashStart.Invoke();
+        }
         Debug.Log("dash start");
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
 
@@ -270,6 +278,10 @@ public class Dash : Skill {
         }
         charge -= 1;
         isDashing = false;
+        if(m_uaDashOver != null)
+        {
+            m_uaDashOver.Invoke();
+        }
         Debug.Log("dash over");
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
         yield return new WaitForSeconds(disableMovementTime - 0.05f);
@@ -303,7 +315,11 @@ public class Dash : Skill {
 
         
     }
-
+    public void RegisteDashEvent(UnityAction uaDashStart, UnityAction uaDashOver)
+    {
+        m_uaDashStart = uaDashStart;
+        m_uaDashOver = uaDashOver;
+    }
 
     //抛物线绘制
     void DrawTrajectory()
