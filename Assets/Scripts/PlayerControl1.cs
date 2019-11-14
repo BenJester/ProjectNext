@@ -730,6 +730,9 @@ public class PlayerControl1 : PlayerControl {
 
         if (toggleSwapTarget) return;
 
+        // 手柄瞄准缓存上一个瞄准的物体
+        // 如果距离太远，清掉缓存
+        // 或者如果玩家移动了瞄准摇杆，清掉缓存
         if (!isKeyboard && laserBulletAngle
             && 
                     (closestObjectToCursor
