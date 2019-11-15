@@ -12,6 +12,7 @@ public class EnemySkillShoot : EnemySkillBase
     protected override void Start()
     {
         base.Start();
+        Registe(this);
     }
     public override void CastSkill()
     {
@@ -31,5 +32,7 @@ public class EnemySkillShoot : EnemySkillBase
         {
             bulletBody.velocity = direction * objSpeed;
         }
+
+        SetSkillCastring(false);
     }
 }
