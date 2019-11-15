@@ -12,6 +12,7 @@ public class EnemySkillThrowBomb : EnemySkillBase
     protected override void Start()
     {
         base.Start();
+        Registe(this);
     }
 
     public override void CastSkill()
@@ -21,5 +22,6 @@ public class EnemySkillThrowBomb : EnemySkillBase
         GameObject newBullet = Instantiate(ObjShoot, transform.position + objInstanceDistance * (Vector3)direction, Quaternion.identity);
         Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
         bulletBody.velocity = direction * objSpeed;
+        SetSkillCastring(false);
     }
 }

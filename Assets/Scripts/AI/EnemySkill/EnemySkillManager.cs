@@ -43,7 +43,7 @@ public class EnemySkillManager : MonoBehaviour
         }
         else
         {
-            Debug.Assert(false);
+            Debug.Assert(false, string.Format("没有找到技能，是否没有在子技能类的start加入registe?"));
         }
         return bCasting;
     }
