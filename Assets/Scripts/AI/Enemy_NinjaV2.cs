@@ -312,6 +312,8 @@ public class Enemy_NinjaV2 : Enemy
         }
         justAttacked = false;
         busy = false;
+
+        m_bDashToggle = false;
     }
 
     IEnumerator Idle()
@@ -389,7 +391,6 @@ public class Enemy_NinjaV2 : Enemy
                 direction = (player.position - transform.position).normalized;
             }
             float timer = 0f;
-            m_enemyFlip.ProcessFlip(true);
             m_animator.SetInteger(m_nAnimatorChargingPara, 1);
             m_animator.SetInteger(m_nAnimatorAttackPara, 0);
             while (timer < dashInteval)
@@ -399,6 +400,7 @@ public class Enemy_NinjaV2 : Enemy
                 yield return new WaitForEndOfFrame();
             }
 
+            m_enemyFlip.ProcessFlip(true);
             yield return new WaitForSeconds(rushDelay);
             m_animator.SetInteger(m_nAnimatorChargingPara, 0);
             m_animator.SetInteger(m_nAnimatorAttackPara, 1);
@@ -423,31 +425,18 @@ public class Enemy_NinjaV2 : Enemy
                 yield return new WaitForEndOfFrame();
                 Physics2D.IgnoreCollision(box, playerBox, false);
             }
+            m_animator.SetInteger(m_nAnimatorChargingPara, 0);
+            m_animator.SetInteger(m_nAnimatorAttackPara, 0);
             m_bDrawGizmos = false;
             timer = 0f;
             body.velocity = Vector2.zero;
         }
-        m_bDashToggle = false;
         m_nBombCounts = 0;
         m_bThrowBomb = true;
         m_animator.SetInteger(m_nAnimatorChargingPara, 0);
         m_animator.SetInteger(m_nAnimatorAttackPara, 0);
         StartCoroutine(StartAttackTimer());
         busy = false;
-    }
-
-    
-
-    private void _FlipBoss(bool bRight)
-    {
-        if (bRight == true)
-        {
-            transform.localRotation = Quaternion.AngleAxis(0, Vector2.up);
-        }
-        else
-        {
-            transform.localRotation = Quaternion.AngleAxis(180, Vector2.up);
-        }
     }
 
     private void FixedUpdate()

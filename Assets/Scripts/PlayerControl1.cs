@@ -234,13 +234,28 @@ public class PlayerControl1 : PlayerControl {
     public float onHitMotor1duration;
     public float onHitMotor2duration;
 
+    public float DashingMoveTime;
+
+    private bool m_bDashRequest;
+
+    private bool m_bDashMove;
+    private bool m_bDashResult;
+    private float m_fCurDashDuration;
     void Awake() {
+        dash.RegisteDashEvent(_dashStart, _dashOver);
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
 
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
-        player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
+        if(player.controllers.joystickCount == 0)
+        {
+            isKeyboard = true;
+        }
+        else
+        {
+            player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
+        }
 
         //
         GlobalVariable.SetPlayer(this);
@@ -410,7 +425,6 @@ public class PlayerControl1 : PlayerControl {
         float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
         if (!isKeyboard) h = (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
-        print(h);
 
 
         if (Mathf.Abs(h) > 0) {
@@ -531,14 +545,22 @@ public class PlayerControl1 : PlayerControl {
         if (rb.velocity.y != 0)
         {
             //Rewired------------------------------------------------------------
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || player.GetAxisRaw("MoveHorizontal") == 0)
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !isKeyboard))
             {
-                m_bJumpRelease = true;
-                //float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, 0.5f);
-                //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                if(m_bDashMove == true )
+                {
+                }
+                else
+                {
+                    m_bJumpRelease = true;
+                }
             }
-            if (m_bJumpRelease == true)
+            if (m_bJumpRelease == true || m_bDashResult == true)
             {
+                if(m_bDashResult == true)
+                {
+                    m_bDashResult = false;
+                }
                 if (m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
                 {
                     //Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
@@ -596,11 +618,17 @@ public class PlayerControl1 : PlayerControl {
             Time.fixedDeltaTime = startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
         }
-        // 左键子弹时间结束
+        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
+        {
+            dash.RequestDash();
+            m_bDashRequest = true;
+        }
 
-        //处理按下的指示器
-        //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
+            // 左键子弹时间结束
+
+            //处理按下的指示器
+            //Rewired------------------------------------------------------------
+            if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
             if (useLineRenderer) {
                 //lr.enabled = true;
                 HandleLineRenderer();
@@ -623,6 +651,7 @@ public class PlayerControl1 : PlayerControl {
 
             Shoot();
         }
+        m_bDashRequest = false;
 
         //双重交换
         //Rewired------------------------------------------------------------
@@ -724,11 +753,32 @@ public class PlayerControl1 : PlayerControl {
 
         if (toggleSwapTarget) return;
 
-        closestDistance = Mathf.Infinity;
-        closestPlayerDistance = Mathf.Infinity;
+        // 手柄瞄准缓存上一个瞄准的物体
+        // 如果距离太远，清掉缓存
+        // 或者如果玩家移动了瞄准摇杆，清掉缓存
+        if (!isKeyboard && laserBulletAngle
+            && 
+                    (closestObjectToCursor
+                    && Vector3.Distance(closestObjectToCursor.transform.position, transform.position) > shootDistance)
+                || 
+                    ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)))
+        {
+            closestDistance = Mathf.Infinity;
+            closestPlayerDistance = Mathf.Infinity;
 
-        closestObjectToCursor = null;
-        closestObjectToPlayer = null;
+            closestObjectToCursor = null;
+            closestObjectToPlayer = null;
+        }
+        else
+        {
+            closestDistance = Mathf.Infinity;
+            closestPlayerDistance = Mathf.Infinity;
+
+            closestObjectToCursor = null;
+            closestObjectToPlayer = null;
+        }
+
+        
 
         foreach (var thing in thingList) {
 
@@ -767,43 +817,47 @@ public class PlayerControl1 : PlayerControl {
                     //Debug.Log(vecMouseWorldPos);
                     float angleToCursor = AngleBetween(transform.position, vecMouseWorldPos);
 
+                    bool bExecute = false;
+                    float diff = 0.0f;
+
+                    float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
+                    diff = Mathf.Abs(angleToCursor - angleToPlayer);
                     //Rewired------------------------------------------------------------------------------
                     if (player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)
                     {
                         Vector2 dir = new Vector2(player.GetAxis("AimHorizontal"), player.GetAxis("AimVertical")).normalized;
                         angleToCursor = AngleBetween(Vector2.zero, dir);
                         aimAngle = angleToCursor;
+                        bExecute = true;
+                    }
+                    else if(isKeyboard == true)
+                    {
+                        bExecute = true;
+                    }
+                    if(bExecute == true)
+                    { 
+                        //Debug.Log(angleToCursor);
+                        if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
+                        {
+                            if (Hit(thing.gameObject))
+                            {
+                                closestDistance = diff;
+                                closestObjectToCursor = thing.gameObject;
+                            }
+                        }
+
+                        if (!thing.dead && diff < closestPlayerDistance)
+                        {
+                            closestPlayerDistance = diff;
+                            closestObjectToPlayer = thing.gameObject;
+                        }
                     }
                     else if (!PlayerControl1.Instance.isKeyboard)
                     {
                         angleToCursor = aimAngle;
-                    }
-
-                    float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
-                    float diff = Mathf.Abs(angleToCursor - angleToPlayer);
-
-
-                    //Debug.Log(angleToCursor);
-                    if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
-                    {
-
-
-                        if (Hit(thing.gameObject))
-                        {
-                            closestDistance = diff;
-                            closestObjectToCursor = thing.gameObject;
-                        }
-
-                    }
-
-                    if (!thing.dead && diff < closestPlayerDistance)
-                    {
-                        closestPlayerDistance = diff;
-                        closestObjectToPlayer = thing.gameObject;
-                    }
+                    }                   
                 }
             }
-
         }
 
         // 记号圆圈
@@ -883,6 +937,17 @@ public class PlayerControl1 : PlayerControl {
             }
         } else {
             chargeCounter = 0;
+        }
+
+        if(m_bDashMove == true)
+        {
+            m_fCurDashDuration += Time.fixedDeltaTime;
+            if( m_fCurDashDuration >= DashingMoveTime)
+            {
+                m_bDashMove = false;
+                m_bJumpRelease = true;
+                m_bDashResult = true;
+            }
         }
     }
 
@@ -1007,7 +1072,7 @@ public class PlayerControl1 : PlayerControl {
             HandleLockLaser();
             return;
         }
-        if (laserBulletAngle)
+        if (laserBulletAngle && m_bDashRequest == false)
         {
             HandleLaserAngle();
             return;
@@ -1409,5 +1474,15 @@ public class PlayerControl1 : PlayerControl {
             lockedOnObjectLine.startWidth = 0f;
             swap.col = null;
         }
+    }
+
+    private void _dashStart()
+    {
+        m_bDashMove = true;
+        m_fCurDashDuration = 0.0f;
+    }
+    private void _dashOver()
+    {
+        //m_bDashing = false;
     }
 }

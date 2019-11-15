@@ -48,7 +48,14 @@ public class Thing : MonoBehaviour {
 	public float distanceToCursor = Mathf.Infinity;
     public float distanceToPlayer = Mathf.Infinity;
 
+    private SpriteRenderer m_spRender;
+
 	public virtual void Start () {
+        m_spRender = GetComponent<SpriteRenderer>();
+        if(m_spRender == null)
+        {
+            m_spRender = GetComponentInChildren<SpriteRenderer>();
+        }
         m_qtOriginalQuat = transform.rotation;
         if ( MomentumMass == 0.0f )
         {
@@ -188,7 +195,7 @@ public class Thing : MonoBehaviour {
 
 	IEnumerator ScaleDown(float duration) {
 		gameObject.GetComponent<BoxCollider2D>().enabled = false;
-		gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        m_spRender.enabled = false;
 		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
 
 		while (transform.localScale.x >= 0.02) {
@@ -200,7 +207,7 @@ public class Thing : MonoBehaviour {
 
 	IEnumerator ScaleUp(float duration) {
 		gameObject.GetComponent<BoxCollider2D>().enabled = true;
-		gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        m_spRender.enabled = true;
 		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
 		while (transform.localScale.x <= originalScale.x) {
 			float perc = Time.deltaTime / duration;

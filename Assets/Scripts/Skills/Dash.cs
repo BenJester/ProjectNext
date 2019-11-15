@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Rewired;
 
 public class Dash : Skill {
@@ -51,7 +52,10 @@ public class Dash : Skill {
 
     private PlayerStateManager m_stateMgr;
 
-	public override void Init () {
+    private UnityAction m_uaDashStart;
+    private UnityAction m_uaDashOver;
+
+    public override void Init () {
         
 
         lr = GetComponent<LineRenderer> ();
@@ -126,34 +130,61 @@ public class Dash : Skill {
 
         //Rewired------------------------------------------------------------
         if (Input.GetMouseButtonUp (1) || rPlayer.GetButtonUp("Dash")) {
-            Do();
-            if (currWaitTime < remainBulletTimeThreshold)
-            {
-                Time.timeScale = 1f;
-                playerControl.targetTimeScale = 1f;
-                Time.fixedDeltaTime = playerControl.startDeltaTime;
-                playerControl.targetDeltaTime = Time.fixedDeltaTime;
-            } else
-            {
-                Time.timeScale = 0.1f;
-                playerControl.targetTimeScale = 0.1f;
-                Time.fixedDeltaTime = playerControl.startDeltaTime * 0.1f;
-                playerControl.targetDeltaTime = playerControl.startDeltaTime * 0.1f;
-                StartCoroutine(CancelBulletTime());
-            }
-            currWaitTime = 0;
+            //Do();
+            //if (currWaitTime < remainBulletTimeThreshold)
+            //{
+            //    Time.timeScale = 1f;
+            //    playerControl.targetTimeScale = 1f;
+            //    Time.fixedDeltaTime = playerControl.startDeltaTime;
+            //    playerControl.targetDeltaTime = Time.fixedDeltaTime;
+            //} else
+            //{
+            //    Time.timeScale = 0.1f;
+            //    playerControl.targetTimeScale = 0.1f;
+            //    Time.fixedDeltaTime = playerControl.startDeltaTime * 0.1f;
+            //    playerControl.targetDeltaTime = playerControl.startDeltaTime * 0.1f;
+            //    StartCoroutine(CancelBulletTime());
+            //}
+            //currWaitTime = 0;
 
-            //辅助线取消
-            lr.enabled = false;
-            //蓄力冲刺特效取消[是不是不生成比较有效率？]
-            if (_dashChargeParticle != null) Destroy(_dashChargeParticle);
-            if (dashPointer != null) dashPointer.SetActive(false);
+            ////辅助线取消
+            //lr.enabled = false;
+            ////蓄力冲刺特效取消[是不是不生成比较有效率？]
+            //if (_dashChargeParticle != null) Destroy(_dashChargeParticle);
+            //if (dashPointer != null) dashPointer.SetActive(false);
 
         }
 		if (playerControl.isTouchingGround) {
 			charge = maxCharge;
 		}
 	}
+
+    public void RequestDash()
+    {
+        Do();
+        if (currWaitTime < remainBulletTimeThreshold)
+        {
+            Time.timeScale = 1f;
+            playerControl.targetTimeScale = 1f;
+            Time.fixedDeltaTime = playerControl.startDeltaTime;
+            playerControl.targetDeltaTime = Time.fixedDeltaTime;
+        }
+        else
+        {
+            Time.timeScale = 0.1f;
+            playerControl.targetTimeScale = 0.1f;
+            Time.fixedDeltaTime = playerControl.startDeltaTime * 0.1f;
+            playerControl.targetDeltaTime = playerControl.startDeltaTime * 0.1f;
+            StartCoroutine(CancelBulletTime());
+        }
+        currWaitTime = 0;
+
+        //辅助线取消
+        lr.enabled = false;
+        //蓄力冲刺特效取消[是不是不生成比较有效率？]
+        if (_dashChargeParticle != null) Destroy(_dashChargeParticle);
+        if (dashPointer != null) dashPointer.SetActive(false);
+    }
 
     IEnumerator CancelBulletTime()
     {
@@ -203,6 +234,10 @@ public class Dash : Skill {
 
         audioSource.PlayOneShot(clip, 0.5f);
         isDashing = true;
+        if(m_uaDashStart != null)
+        {
+            m_uaDashStart.Invoke();
+        }
         Debug.Log("dash start");
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
 
@@ -243,6 +278,10 @@ public class Dash : Skill {
         }
         charge -= 1;
         isDashing = false;
+        if(m_uaDashOver != null)
+        {
+            m_uaDashOver.Invoke();
+        }
         Debug.Log("dash over");
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
         yield return new WaitForSeconds(disableMovementTime - 0.05f);
@@ -276,7 +315,11 @@ public class Dash : Skill {
 
         
     }
-
+    public void RegisteDashEvent(UnityAction uaDashStart, UnityAction uaDashOver)
+    {
+        m_uaDashStart = uaDashStart;
+        m_uaDashOver = uaDashOver;
+    }
 
     //抛物线绘制
     void DrawTrajectory()
