@@ -492,6 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameOfSkill: 
+  ContinuousSkill: 0
   ObjShoot: {fileID: 305787941185668345, guid: f6ea3c2576a57dd4893be0b833582286, type: 3}
   objInstanceDistance: 50
   objSpeed: 900
@@ -508,6 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameOfSkill: Shoot
+  ContinuousSkill: 0
   ObjShoot: {fileID: 1249693321910232, guid: 63bb58a43b890d54eb2132b0bdb9d62d, type: 3}
   objInstanceDistance: 50
   objSpeed: 600
@@ -596,6 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NameOfSkill: dash
+  ContinuousSkill: 1
   OnlyHorizontalDash: 1
   dashSpeed: 1500
   DashHitOffsetY: 45
@@ -637,7 +640,7 @@ MonoBehaviour:
         dataPosition: 000000002800000037000000
         unityObjects: []
         byteData: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
-        byteDataArray: 
+        byteDataArray: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
       Version: 1.6.3
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1

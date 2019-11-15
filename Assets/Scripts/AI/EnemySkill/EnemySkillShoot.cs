@@ -33,6 +33,5 @@ public class EnemySkillShoot : EnemySkillBase
             bulletBody.velocity = direction * objSpeed;
         }
 
-        SetSkillCastring(false);
     }
 }

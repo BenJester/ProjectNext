@@ -6,6 +6,8 @@ public class EnemySkillBase : MonoBehaviour
 {
     public string NameOfSkill;
 
+    public bool ContinuousSkill;
+
     private EnemySkillManager m_skillMgr;
     private bool m_bSkillCasting;
     protected Transform m_transPlayer;
@@ -21,7 +23,14 @@ public class EnemySkillBase : MonoBehaviour
 
     public virtual void CastSkill()
     {
-        m_bSkillCasting = true;
+        if(ContinuousSkill == true)
+        {
+            m_bSkillCasting = true;
+        }
+        else
+        {
+            m_bSkillCasting = false;
+        }
     }
 
     public void Registe(EnemySkillBase _childSkill)
