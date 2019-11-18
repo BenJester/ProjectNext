@@ -242,6 +242,7 @@ public class PlayerControl1 : PlayerControl {
     private bool m_bDashMove;
     private bool m_bDashResult;
     private float m_fCurDashDuration;
+    private bool m_bDashing;
     void Awake() {
         dash.RegisteDashEvent(_dashStart, _dashOver);
         if (Instance == null) { Instance = this; }
@@ -369,6 +370,11 @@ public class PlayerControl1 : PlayerControl {
         if (isTouchingGround == true)
         {
             isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
+        }
+
+        if (isTouchingGround == true)
+        {
+            m_bDashing = false;
         }
         // landing
         if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
@@ -548,20 +554,38 @@ public class PlayerControl1 : PlayerControl {
             //Rewired------------------------------------------------------------
             if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !isKeyboard))
             {
-                if(m_bDashMove == true )
+                if (m_bDashMove == true)
                 {
+                    //还在dash特定时间，不能把水平速度，趋近于零
                 }
                 else
                 {
-                    m_bJumpRelease = true;
+                    if (m_bDashing == true)
+                    {
+                        if (m_bDashResult == true)
+                        {
+                            m_bJumpRelease = true;
+                        }
+                    }
+                    else
+                    {
+                        m_bJumpRelease = true;
+                    }
                 }
             }
-            if (m_bJumpRelease == true || m_bDashResult == true)
+            if ((Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && isKeyboard == true)
+                || (player.GetAxisRaw("MoveHorizontal") == 0 && isKeyboard == false))
             {
-                if(m_bDashResult == true)
+                if (m_bDashing == true)
                 {
-                    m_bDashResult = false;
+                    if (m_bDashResult == true)
+                    {
+                        m_bJumpRelease = true;
+                    }
                 }
+            }
+            if (m_bJumpRelease == true )
+            {
                 if (m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
                 {
                     //Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
@@ -1475,7 +1499,9 @@ public class PlayerControl1 : PlayerControl {
 
     private void _dashStart()
     {
+        m_bDashResult = false;
         m_bDashMove = true;
+        m_bDashing = true;
         m_fCurDashDuration = 0.0f;
     }
     private void _dashOver()
