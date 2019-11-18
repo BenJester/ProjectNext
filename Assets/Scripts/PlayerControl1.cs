@@ -288,7 +288,8 @@ public class PlayerControl1 : PlayerControl {
         swappable = new List<GameObject>();
     }
 
-    void Start() {
+    void Start()
+    {
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
 
         if (objLevelMgr != null)
@@ -730,7 +731,7 @@ public class PlayerControl1 : PlayerControl {
         // 动量指示器
         HandlePointer();
         // 转向动画
-        FlipFace(rb.velocity.x);
+        FlipFace(-rb.velocity.x);
         // 找到离鼠标最近单位
         HandleObjectDistance();
         // coyote
