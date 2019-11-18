@@ -756,12 +756,14 @@ public class PlayerControl1 : PlayerControl {
 
         // 手柄瞄准缓存上一个瞄准的物体
         // 如果距离太远，清掉缓存
+        // 如果已瞄准物体死亡，清掉缓存
         // 或者如果玩家移动了瞄准摇杆，清掉缓存
         if ((closestObjectToCursor && closestObjectToCursor.GetComponent<Thing>().dead)
             || (!isKeyboard && laserBulletAngle
                 && 
                         (closestObjectToCursor
-                        && Vector3.Distance(closestObjectToCursor.transform.position, transform.position) > shootDistance)
+                        && Vector3.Distance(closestObjectToCursor.transform.position, transform.position) 
+                           > shootDistance)
                     || 
                         ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0))))
         {
@@ -824,6 +826,7 @@ public class PlayerControl1 : PlayerControl {
                     }
                     else if (!isKeyboard && closestObjectToCursor)
                     {
+                        // 如果使用手柄并且右摇杆没有推动，并且已经有一个锁定目标，则跳过搜索
                         continue;
                     }
 
