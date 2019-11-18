@@ -165,6 +165,17 @@ void Update() {
     <p><strong>Action Categories</strong></p>
     <p>Actions can be categorized into different lists through the use of Action Categories.</p>
     <p>Action Categories are only for organizational purposes in the Rewired Editor or in lists of Actions for displaying in a UI (a control remapping screen, for example). They have no impact whatsoever on what controls are mapped in a Player and do not affect input in any way.</p>
+    <p><strong>Rewired&rsquo;s Purpose and Responsibilities</strong></p>
+    <p>It is common for Rewired's Action system to be used in an unintended manner as an integral part of or in place of a separate game state management system. This is not what Rewired was designed for and not how it is intended to be used.
+    </p>
+    <ul>
+      <li>Rewired&rsquo;s sole purpose is to read user input.</li>
+      <li>All &ldquo;Actions&rdquo; in Rewired are actually &ldquo;Input Actions&rdquo; and should not be   used for any other purpose than to get information about the user&rsquo;s intent. They should   not be confused with or used as game states or actions.</li>
+      <li>The Action &ldquo;Jump&rdquo; does not designate &ldquo;Player is jumping,&rdquo; but rather &ldquo;The   user wants to jump.&rdquo;</li>
+      <li>The game should implement permission and state management systems that   evaluate user input and then change states. After that point, what happens is outside the   responsibility of the input system.</li>
+</ul>
+    <h3></h3>
+    <p>&nbsp;</p>
     <div class="bottom-pager clearfix">
       <a class="back-button" href="Players.html" title="Players"><span class="button-img"></span>Players</a>
       <a class="forward-button" href="InputBehaviors.html" title="Input Behaviors"><span class="button-img"></span>Input Behaviors</a>

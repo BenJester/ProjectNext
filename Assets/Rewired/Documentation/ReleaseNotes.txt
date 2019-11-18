@@ -1,3 +1,12 @@
+1.1.29.2:
+
+    Changes:
+      - Improved detection of rapid button taps at lower frame rates.
+
+    Bug Fixes:
+      - Rewired Editor saves prefab before exporting constants so changes made before editor recompiles are not lost. (Unity 2018.3+)
+      - Windows Standalone, XInput, Direct Input: Fixed issue causing fast button taps to be missed at high input thread frequency and low frame rates (increased buffer size).
+
 1.1.29.1:
 
     Changes:
