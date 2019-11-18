@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Enemy_FlipByPlayer : MonoBehaviour
 {
+    public bool ForceUpdateInFixedUpdate;
     private Transform m_transPlayer;
     private bool m_bCurrentRight;
+    private bool m_bValid;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +16,21 @@ public class Enemy_FlipByPlayer : MonoBehaviour
             m_transPlayer = GlobalVariable.GetPlayer().transform;
         }
         _processFlipEnemy(true);
+        m_bValid = true;
     }
-
+    public void UpdateValid(bool bValid)
+    {
+        m_bValid = bValid;
+    }
     private void FixedUpdate()
     {
+        if(ForceUpdateInFixedUpdate==true)
+        {
+            if(m_bValid == true)
+            {
+                _processFlipEnemy(false);
+            }
+        }
     }
     private void _processFlipEnemy(bool bForce)
     {

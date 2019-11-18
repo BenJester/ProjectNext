@@ -17,11 +17,14 @@ public class EnemySkillDash : EnemySkillBase
 
     private float m_fCurrentTime;
     private PlayerControl1 m_playerCtrl;
+
+    private Enemy_FlipByPlayer m_flipEnemy;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         Registe(this);
+        m_flipEnemy = GetComponent<Enemy_FlipByPlayer>();
         m_rigidBody = GetComponent<Rigidbody2D>();
 
         m_ColliderPlayerBox = m_transPlayer.GetComponent<BoxCollider2D>();
@@ -37,6 +40,10 @@ public class EnemySkillDash : EnemySkillBase
             {
                 SetSkillCastring(false);
                 m_rigidBody.velocity = Vector2.zero;
+                if(m_flipEnemy != null)
+                {
+                    m_flipEnemy.UpdateValid(true);
+                }
             }
             else
             {
@@ -73,5 +80,9 @@ public class EnemySkillDash : EnemySkillBase
             m_vecDashDir = (m_transPlayer.position - transform.position).normalized;
         }
         m_fCurrentTime = 0.0f;
+        if (m_flipEnemy != null)
+        {
+            m_flipEnemy.UpdateValid(false);
+        }
     }
 }
