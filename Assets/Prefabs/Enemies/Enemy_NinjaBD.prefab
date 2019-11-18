@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: -7175264519000090635}
   - component: {fileID: 1822075790804457673}
   - component: {fileID: 4908773754255238964}
+  - component: {fileID: 8868780347860922713}
   m_Layer: 8
   m_Name: Enemy_NinjaBD
   m_TagString: thing
@@ -526,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b83e1b1835f1634586f3ffcd1596cc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ForceUpdateInFixedUpdate: 1
 --- !u!114 &6614817534376132197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,6 +646,20 @@ MonoBehaviour:
       Version: 1.6.3
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
+--- !u!114 &8868780347860922713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553974cd7c547cf418dcad6bd0cfa210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: Shield
+  ContinuousSkill: 0
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
