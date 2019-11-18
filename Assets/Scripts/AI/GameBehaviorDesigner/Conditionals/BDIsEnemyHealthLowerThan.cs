@@ -3,13 +3,13 @@ using UnityEngine;
 using BehaviorDesigner.Runtime.Tasks;
 using BehaviorDesigner.Runtime;
 [TaskCategory("Game/Tasks/Conditionals")]
-public class BDCheckEnemyHealth : Conditional
+public class BDIsEnemyHealthLowerThan : Conditional
 {
-    public float HealthCheck;
+    public float JudgeHealthValue;
     private Enemy m_enemy;
     public override TaskStatus OnUpdate()
     {
-        if(m_enemy.health >= HealthCheck )
+        if (m_enemy.health < JudgeHealthValue)
         {
             return TaskStatus.Success;
         }
@@ -21,5 +21,5 @@ public class BDCheckEnemyHealth : Conditional
     public override void OnStart()
     {
         m_enemy = GetComponent<Enemy>();
-    } 
+    }
 }
