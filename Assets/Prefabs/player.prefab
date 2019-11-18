@@ -785,6 +785,7 @@ MonoBehaviour:
   pointer: {fileID: 1899453179180814}
   swapTarget: {fileID: 0}
   thingList: []
+  prevClosestObjectToCursor: {fileID: 0}
   closestObjectToCursor: {fileID: 0}
   closestObjectToPlayer: {fileID: 0}
   closestDistance: Infinity
@@ -812,9 +813,9 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: cb805db46ca35eb44be50a37c06155d8, type: 3}
   lockedOnObjectLine: {fileID: 6146267691645847945}
   landingMotor1Level: 0
-  landingMotor2Level: 0.5
-  landingMotor1duration: 0.05
-  landingMotor2duration: 0.05
+  landingMotor2Level: 0.4
+  landingMotor1duration: 0.1
+  landingMotor2duration: 0.1
   dieMotor1Level: 2.5
   dieMotor2Level: 2.5
   dieMotor1duration: 0.5
@@ -920,10 +921,10 @@ MonoBehaviour:
   TrajectoryStepCounts: 24
   dir: {x: 0, y: 0}
   dashDir: {x: 0, y: 0}
-  motor1Level: 0.8
-  motor2Level: 1.2
+  motor1Level: 0.7
+  motor2Level: 0.9
   motor1duration: 0.2
-  motor2duration: 0.28
+  motor2duration: 0.2
 --- !u!114 &114325612499970784
 MonoBehaviour:
   m_ObjectHideFlags: 0

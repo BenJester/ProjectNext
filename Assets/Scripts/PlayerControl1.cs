@@ -757,12 +757,13 @@ public class PlayerControl1 : PlayerControl {
         // 手柄瞄准缓存上一个瞄准的物体
         // 如果距离太远，清掉缓存
         // 或者如果玩家移动了瞄准摇杆，清掉缓存
-        if (!isKeyboard && laserBulletAngle
-            && 
-                    (closestObjectToCursor
-                    && Vector3.Distance(closestObjectToCursor.transform.position, transform.position) > shootDistance)
-                || 
-                    ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)))
+        if ((closestObjectToCursor && closestObjectToCursor.GetComponent<Thing>().dead)
+            || (!isKeyboard && laserBulletAngle
+                && 
+                        (closestObjectToCursor
+                        && Vector3.Distance(closestObjectToCursor.transform.position, transform.position) > shootDistance)
+                    || 
+                        ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0))))
         {
             closestDistance = Mathf.Infinity;
             closestPlayerDistance = Mathf.Infinity;
@@ -805,7 +806,7 @@ public class PlayerControl1 : PlayerControl {
             // 选择角度最近物体
             else
             {
-                if (thing != null)
+                if (thing != null && !thing.dead)
                 {
                     Vector3 vecMouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     //Debug.Log(vecMouseWorldPos);
@@ -821,9 +822,9 @@ public class PlayerControl1 : PlayerControl {
                         angleToCursor = AngleBetween(Vector2.zero, dir);
                         aimAngle = angleToCursor;
                     }
-                    else if (!isKeyboard)
+                    else if (!isKeyboard && closestObjectToCursor)
                     {
-                        angleToCursor = aimAngle;
+                        continue;
                     }
 
                     diff = AngleDiff(angleToCursor, angleToPlayer);
@@ -847,7 +848,7 @@ public class PlayerControl1 : PlayerControl {
                 
             }
         }
-        if (!prevClosestObjectToCursor || prevClosestObjectToCursor != closestObjectToCursor)
+        if ((!prevClosestObjectToCursor && closestObjectToCursor) || prevClosestObjectToCursor != closestObjectToCursor)
         {
             prevClosestObjectToCursor = closestObjectToCursor;
             PlayerControl1.Instance.player.SetVibration(0, landingMotor1Level, landingMotor1duration);
