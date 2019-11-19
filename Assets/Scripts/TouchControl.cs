@@ -46,6 +46,7 @@ public class TouchControl : MonoBehaviour
         if (prevAimMagnitude > 0 && aimMag == 0)
         {
             PlayerControl1.Instance.swap.Do();
+            PlayerControl1.Instance.CancelAimBulletTime();
         }
             
 

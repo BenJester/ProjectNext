@@ -618,17 +618,11 @@ public class PlayerControl1 : PlayerControl {
 
         //Rewired------------------------------------------------------------
         if (Input.GetMouseButtonUp(0) 
-            || player.GetButtonUp("Switch") 
-            )
+            || player.GetButtonUp("Switch") || player.GetButtonUp("QuichSwitch"))
         {
-            currWaitTime = 0;
-            Time.timeScale = 1f;
-            targetTimeScale = 1f;
-            Time.fixedDeltaTime = startDeltaTime;
-            targetDeltaTime = Time.fixedDeltaTime;
-
-            
+            CancelAimBulletTime();
         }
+
         if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
         {          
             dash.RequestDash();
@@ -699,6 +693,15 @@ public class PlayerControl1 : PlayerControl {
         HandleShootSlowBullet();
 
         HandleToggleSwapTarget();
+    }
+
+    public void CancelAimBulletTime()
+    {
+        currWaitTime = 0;
+        Time.timeScale = 1f;
+        targetTimeScale = 1f;
+        Time.fixedDeltaTime = startDeltaTime;
+        targetDeltaTime = Time.fixedDeltaTime;
     }
 
     void Jump() {
