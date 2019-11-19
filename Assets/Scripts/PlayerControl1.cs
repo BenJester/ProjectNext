@@ -474,32 +474,8 @@ public class PlayerControl1 : PlayerControl {
         if (canJump == false)
         {
 
-            //Rewired-----------------------------------------------------------------------test
-            //if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.W) || player.GetButtonUp("Jump"))
-            //{
-            //    m_bJumpingWindow = false;
-            //    rb.velocity -= new Vector2(, 0);
-            //    print("stopJump!");
-            //    return;
-            //}
-
             if (h > 0)
             {
-
-                ////手柄空中跳跃处理 Rewired---------------------------------------------
-                //if (!isKeyboard)
-                //{
-                //    if (player.GetAxis("MoveHorizontal") < 0.3f)
-                //    {
-                //        h = 0;
-                //    }
-                //    else h = 1f;
-                //}
-
-
-
-
-
                 if (rb.velocity.y > 0)
                 {
                     if (rb.velocity.x < JumpingHorizontalUpMaxSpeed)
@@ -517,18 +493,6 @@ public class PlayerControl1 : PlayerControl {
             }
             else if (h < 0)
             {
-                //手柄空中跳跃处理 Rewired---------------------------------------------
-                //if (!isKeyboard)
-                //{
-
-                //    if (player.GetAxis("MoveHorizontal") > -0.3f)
-                //    {
-                //        h = 0;
-                //    }
-                //    else h = -1f;
-
-                //}
-
 
                 if (rb.velocity.y > 0)
                 {
@@ -639,14 +603,12 @@ public class PlayerControl1 : PlayerControl {
 
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        //|| player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0 && currWaitTime >= waitTime
         if ((Input.GetMouseButton(0) && currWaitTime >= waitTime)
             || (player.GetButton("Switch") && currWaitTime >= waitTime)
             || (isKeyboard == false && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
             )
         {
-            if (isMobile) isPrepareToSwitch = true;
-
+           
             Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
             Time.fixedDeltaTime = dash.reducedTimeScale * startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
@@ -655,11 +617,10 @@ public class PlayerControl1 : PlayerControl {
 
 
         //Rewired------------------------------------------------------------
-        // || isPrepareToSwitch && player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude == 0f
-        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch"))
+        if (Input.GetMouseButtonUp(0) 
+            || player.GetButtonUp("Switch") 
+            || !TouchControl.Instance.aimDrag && !TouchControl.Instance.dashDrag)
         {
-
-
             currWaitTime = 0;
             Time.timeScale = 1f;
             targetTimeScale = 1f;
@@ -669,11 +630,7 @@ public class PlayerControl1 : PlayerControl {
             
         }
         if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
-        {
-            // || isPrepareToDash && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
-            //取消手机上的子弹时间
-            if (isMobile) isPrepareToDash = false;
-
+        {          
             dash.RequestDash();
             m_bDashRequest = true;
         }
