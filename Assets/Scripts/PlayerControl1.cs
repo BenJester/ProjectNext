@@ -639,7 +639,8 @@ public class PlayerControl1 : PlayerControl {
 
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) && currWaitTime >= waitTime || player.GetButton("Switch") && currWaitTime >= waitTime || player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0 && currWaitTime >= waitTime)
+        //|| player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0 && currWaitTime >= waitTime
+        if (Input.GetMouseButton(0) && currWaitTime >= waitTime || player.GetButton("Switch") && currWaitTime >= waitTime )
         {
             if (isMobile) isPrepareToSwitch = true;
 
@@ -651,7 +652,8 @@ public class PlayerControl1 : PlayerControl {
 
 
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch") || isPrepareToSwitch && player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude == 0f)
+        // || isPrepareToSwitch && player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude == 0f
+        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch"))
         {
 
 
@@ -663,8 +665,9 @@ public class PlayerControl1 : PlayerControl {
 
             
         }
-        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash") || isPrepareToDash && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f)
+        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
         {
+            // || isPrepareToDash && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
             //取消手机上的子弹时间
             if (isMobile) isPrepareToDash = false;
 
@@ -685,9 +688,9 @@ public class PlayerControl1 : PlayerControl {
             IncreaseBulletSpeed();
 
         } else //Rewired------------------------------------------------------------
-    if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch") || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f)) {
+    if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch")) {
 
-           
+            // || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
 
 
             anim.SetTrigger("Shot");
@@ -695,7 +698,7 @@ public class PlayerControl1 : PlayerControl {
             chargeCounter = 0;
             
             //这边好像没有效果
-            isPrepareToSwitch = false; 
+            //isPrepareToSwitch = false; 
             
             
             //bulletSpeed = minBulletSpeed;
