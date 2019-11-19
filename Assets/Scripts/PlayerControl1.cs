@@ -69,6 +69,19 @@ public class PlayerControl1 : PlayerControl {
 
     [Space]
     public bool isKeyboard;
+
+    #region //手机内容
+    public bool isMobile = false;
+    private bool isPrepareToSwitch = false;
+    private bool isPrepareToDash = false;
+
+
+
+
+    #endregion
+
+
+
     [Header("点击直接瞬间交换，不会被阻挡")]
     public bool ClickChangeDirectly;
     [Header("按键切换目标")]
@@ -250,7 +263,7 @@ public class PlayerControl1 : PlayerControl {
 
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
-        if(player.controllers.joystickCount == 0)
+        if (player.controllers.joystickCount == 0)
         {
             isKeyboard = true;
         }
@@ -275,7 +288,8 @@ public class PlayerControl1 : PlayerControl {
         swappable = new List<GameObject>();
     }
 
-    void Start() {
+    void Start()
+    {
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
 
         if (objLevelMgr != null)
@@ -584,7 +598,7 @@ public class PlayerControl1 : PlayerControl {
                     }
                 }
             }
-            if (m_bJumpRelease == true )
+            if (m_bJumpRelease == true)
             {
                 if (m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_ChangingSpeed && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
                 {
@@ -625,8 +639,10 @@ public class PlayerControl1 : PlayerControl {
 
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) && currWaitTime >= waitTime || player.GetButton("Switch") && currWaitTime >= waitTime)
+        if (Input.GetMouseButton(0) && currWaitTime >= waitTime || player.GetButton("Switch") && currWaitTime >= waitTime || player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0 && currWaitTime >= waitTime)
         {
+            if (isMobile) isPrepareToSwitch = true;
+
             Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
             Time.fixedDeltaTime = dash.reducedTimeScale * startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
@@ -635,25 +651,32 @@ public class PlayerControl1 : PlayerControl {
 
 
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch"))
+        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch") || isPrepareToSwitch && player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude == 0f)
         {
+
+
             currWaitTime = 0;
             Time.timeScale = 1f;
             targetTimeScale = 1f;
             Time.fixedDeltaTime = startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
+
+            
         }
-        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
+        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash") || isPrepareToDash && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f)
         {
+            //取消手机上的子弹时间
+            if (isMobile) isPrepareToDash = false;
+
             dash.RequestDash();
             m_bDashRequest = true;
         }
 
-            // 左键子弹时间结束
+        // 左键子弹时间结束
 
-            //处理按下的指示器
-            //Rewired------------------------------------------------------------
-            if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
+        //处理按下的指示器
+        //Rewired------------------------------------------------------------
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude != 0f) {
             if (useLineRenderer) {
                 //lr.enabled = true;
                 HandleLineRenderer();
@@ -662,10 +685,19 @@ public class PlayerControl1 : PlayerControl {
             IncreaseBulletSpeed();
 
         } else //Rewired------------------------------------------------------------
-        if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch")) {
+    if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch") || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f)) {
+
+           
+
+
             anim.SetTrigger("Shot");
             anim.SetBool("IsCharging", false);
             chargeCounter = 0;
+            
+            //这边好像没有效果
+            isPrepareToSwitch = false; 
+            
+            
             //bulletSpeed = minBulletSpeed;
             StartCoroutine(RestoreTimeScale(0.035f));
 
@@ -675,6 +707,9 @@ public class PlayerControl1 : PlayerControl {
             }
 
             Shoot();
+
+           
+            
         }
         m_bDashRequest = false;
 
@@ -696,7 +731,7 @@ public class PlayerControl1 : PlayerControl {
         // 动量指示器
         HandlePointer();
         // 转向动画
-        FlipFace(rb.velocity.x);
+        FlipFace(-rb.velocity.x);
         // 找到离鼠标最近单位
         HandleObjectDistance();
         // coyote
@@ -784,11 +819,11 @@ public class PlayerControl1 : PlayerControl {
         // 或者如果玩家移动了瞄准摇杆，清掉缓存
         if ((closestObjectToCursor && closestObjectToCursor.GetComponent<Thing>().dead)
             || (!isKeyboard && laserBulletAngle
-                && 
+                &&
                         (closestObjectToCursor
-                        && Vector3.Distance(closestObjectToCursor.transform.position, transform.position) 
+                        && Vector3.Distance(closestObjectToCursor.transform.position, transform.position)
                            > shootDistance)
-                    || 
+                    ||
                         ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0))))
         {
             closestDistance = Mathf.Infinity;
@@ -797,9 +832,9 @@ public class PlayerControl1 : PlayerControl {
             closestObjectToCursor = null;
             closestObjectToPlayer = null;
         }
-        
 
-        
+
+
 
         foreach (var thing in thingList) {
 
@@ -855,7 +890,7 @@ public class PlayerControl1 : PlayerControl {
                     }
 
                     diff = AngleDiff(angleToCursor, angleToPlayer);
-                    
+
                     if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
                         if (Hit(thing.gameObject))
@@ -869,10 +904,10 @@ public class PlayerControl1 : PlayerControl {
                     {
                         closestPlayerDistance = diff;
                         closestObjectToPlayer = thing.gameObject;
-                    
+
                     }
                 }
-                
+
             }
         }
         if ((!prevClosestObjectToCursor && closestObjectToCursor) || prevClosestObjectToCursor != closestObjectToCursor)
@@ -918,7 +953,7 @@ public class PlayerControl1 : PlayerControl {
     void FixedUpdate() {
         if (m_bJumpingWindow == true)
         {
-           
+
 
             m_fCurrentKeepJumping += Time.fixedDeltaTime;
             if (m_fCurrentKeepJumping <= JumpAddForceTime)
@@ -933,10 +968,10 @@ public class PlayerControl1 : PlayerControl {
         }
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch"))
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0f)
             currWaitTime += 1;
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch")) {
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0f) {
 
             anim.SetBool("IsCharging", true);
 
