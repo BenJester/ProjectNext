@@ -85,7 +85,9 @@ public class Dash : Skill {
         }
 
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime || rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime) {
+        if ((Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) 
+            || (rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime)
+            || (TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
             
             //播放动画
             if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
@@ -195,7 +197,7 @@ public class Dash : Skill {
 
     //Rewired------------------------------------------------------------
     void FixedUpdate () {
-		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash"))
+		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash") || TouchControl.Instance.dashDrag)
 			currWaitTime += 1;
         if (Input.GetMouseButtonDown(1)|| rPlayer.GetButtonDown("Dash"))
             playerControl.swap.curr = 0f;
@@ -231,6 +233,9 @@ public class Dash : Skill {
 
         if (useKeyboard)
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+
+        if (playerControl.isMobile)
+            dir = TouchControl.Instance.finalDashDir.normalized;
 
         audioSource.PlayOneShot(clip, 0.5f);
         isDashing = true;
