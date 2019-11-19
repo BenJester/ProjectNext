@@ -8,6 +8,7 @@ public class AnimationNotify : MonoBehaviour
 {
     public string NameOfOverAnimation;
     public UnityEvent AnimationOverEvent;
+    public bool CheckChild;
 
     private int m_hashAnimation;
     private int m_lastHash;
@@ -16,6 +17,10 @@ public class AnimationNotify : MonoBehaviour
     void Start()
     {
         m_animator = GetComponent<Animator>();
+        if(m_animator == null && CheckChild == true)
+        {
+            m_animator = GetComponentInChildren<Animator>();
+        }
         m_hashAnimation = Animator.StringToHash(NameOfOverAnimation);
     }
 

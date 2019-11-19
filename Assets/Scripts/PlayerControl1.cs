@@ -605,7 +605,7 @@ public class PlayerControl1 : PlayerControl {
         //Rewired------------------------------------------------------------
         if ((Input.GetMouseButton(0) && currWaitTime >= waitTime)
             || (player.GetButton("Switch") && currWaitTime >= waitTime)
-            || (TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
+            || (isKeyboard == false && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
             )
         {
            
@@ -931,10 +931,10 @@ public class PlayerControl1 : PlayerControl {
         }
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || TouchControl.Instance.aimDrag)
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (isKeyboard == false && TouchControl.Instance.aimDrag))
             currWaitTime += 1;
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || TouchControl.Instance.aimDrag) {
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (isKeyboard == false && TouchControl.Instance.aimDrag)) {
 
             anim.SetBool("IsCharging", true);
 
