@@ -445,7 +445,7 @@ public class PlayerControl1 : PlayerControl {
         //左右移动
         float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
-        if (!isKeyboard) h = (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
+        if (!isKeyboard) h = (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0);
 
 
         if (Mathf.Abs(h) > 0) {
@@ -619,7 +619,7 @@ public class PlayerControl1 : PlayerControl {
         //Rewired------------------------------------------------------------
         if (Input.GetMouseButtonUp(0) 
             || player.GetButtonUp("Switch") 
-            || !TouchControl.Instance.aimDrag && !TouchControl.Instance.dashDrag)
+            )
         {
             currWaitTime = 0;
             Time.timeScale = 1f;
@@ -639,7 +639,7 @@ public class PlayerControl1 : PlayerControl {
 
         //处理按下的指示器
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude != 0f) {
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") ) {
             if (useLineRenderer) {
                 //lr.enabled = true;
                 HandleLineRenderer();
@@ -656,12 +656,7 @@ public class PlayerControl1 : PlayerControl {
             anim.SetTrigger("Shot");
             anim.SetBool("IsCharging", false);
             chargeCounter = 0;
-            
-            //这边好像没有效果
-            //isPrepareToSwitch = false; 
-            
-            
-            //bulletSpeed = minBulletSpeed;
+          
             StartCoroutine(RestoreTimeScale(0.035f));
 
             if (useLineRenderer) {
