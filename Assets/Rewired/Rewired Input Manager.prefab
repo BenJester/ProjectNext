@@ -246,10 +246,28 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 16
+      _name: QuickSwitch
+      _type: 1
+      _descriptiveName: QuickSwitch
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
     - _id: 2
       _name: Dash
       _type: 1
       _descriptiveName: Dash
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
+    - _id: 15
+      _name: QuickDash
+      _type: 1
+      _descriptiveName: QuickDash
       _positiveDescriptiveName: 
       _negativeDescriptiveName: 
       _behaviorId: 0
@@ -345,7 +363,7 @@ MonoBehaviour:
     actionCategoryMap:
       list:
       - categoryId: 0
-        actionIds: 000000000900000008000000010000000200000003000000040000000500000006000000070000000a0000000b0000000c0000000d000000
+        actionIds: 0000000009000000080000000100000010000000020000000f00000003000000040000000500000006000000070000000a0000000b0000000c0000000d000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -775,6 +793,28 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 15
+        _elementType: 1
+        _elementIdentifierId: 11
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 0
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: 16
+        _elementType: 1
+        _elementIdentifierId: 12
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 0
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
     customControllers:
     - _name: MobileControl
       _descriptiveName: 
@@ -819,6 +859,18 @@ MonoBehaviour:
         _compoundElementType: 0
       - _id: 3
         _name: Jump
+        _positiveName: 
+        _negativeName: 
+        _elementType: 1
+        _compoundElementType: 0
+      - _id: 11
+        _name: Dash
+        _positiveName: 
+        _negativeName: 
+        _elementType: 1
+        _compoundElementType: 0
+      - _id: 12
+        _name: Switch
         _positiveName: 
         _negativeName: 
         _elementType: 1
@@ -1073,15 +1125,19 @@ MonoBehaviour:
       _buttons:
       - elementIdentifierId: 3
         name: Jump
+      - elementIdentifierId: 11
+        name: Dash
+      - elementIdentifierId: 12
+        name: Switch
       - elementIdentifierId: 9
         name: Restart
       - elementIdentifierId: 10
         name: DoubleSwitch
-      _elementIdentifierIdCounter: 11
+      _elementIdentifierIdCounter: 13
     controllerMapLayoutManagerRuleSets: []
     controllerMapEnablerRuleSets: []
     playerIdCounter: 2
-    actionIdCounter: 14
+    actionIdCounter: 17
     actionCategoryIdCounter: 1
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 1

@@ -640,7 +640,10 @@ public class PlayerControl1 : PlayerControl {
         // 左键子弹时间
         //Rewired------------------------------------------------------------
         //|| player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0 && currWaitTime >= waitTime
-        if (Input.GetMouseButton(0) && currWaitTime >= waitTime || player.GetButton("Switch") && currWaitTime >= waitTime )
+        if ((Input.GetMouseButton(0) && currWaitTime >= waitTime)
+            || (player.GetButton("Switch") && currWaitTime >= waitTime)
+            || (TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
+            )
         {
             if (isMobile) isPrepareToSwitch = true;
 
@@ -971,10 +974,10 @@ public class PlayerControl1 : PlayerControl {
         }
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0f)
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || TouchControl.Instance.aimDrag)
             currWaitTime += 1;
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || player.GetAxis2DRaw("AimHorizontal", "AimVertical").magnitude != 0f) {
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || TouchControl.Instance.aimDrag) {
 
             anim.SetBool("IsCharging", true);
 
