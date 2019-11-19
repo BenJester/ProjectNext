@@ -55,6 +55,7 @@ public class Dash : Skill {
     private UnityAction m_uaDashStart;
     private UnityAction m_uaDashOver;
 
+    private PlayerAnimationComponent m_aniCom;
     public override void Init () {
         
 
@@ -65,9 +66,11 @@ public class Dash : Skill {
 
         //Rewired------------------------------------------------------------
         rPlayer = ReInput.players.GetPlayer(0);
+        m_aniCom = GetComponent<PlayerAnimationComponent>();
+
     }
 
-	public override bool Check () {
+    public override bool Check () {
 		return charge > 0;
 	}
 
@@ -77,17 +80,14 @@ public class Dash : Skill {
         if (isDashing)
         {
             //冲刺中动画
-            if (!amin.GetCurrentAnimatorStateInfo(0).IsName("Dashing"))
-            {
-                //amin.CrossFade("Dashing", 0.01f);
-            }
-            transform.rotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, GetComponent<Rigidbody2D>().velocity));
+            //gaidao要求去除这个旋转
+            //transform.rotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, GetComponent<Rigidbody2D>().velocity));
         }
 
         //Rewired------------------------------------------------------------
         if ((Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) 
             || (rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime)
-            || (TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
+            || (playerControl.isKeyboard == false && TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
             
             //播放动画
             if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
@@ -121,7 +121,6 @@ public class Dash : Skill {
 			Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
 			playerControl.targetDeltaTime = Time.fixedDeltaTime;
 			playerControl.targetTimeScale = Time.timeScale;
-
 
             //辅助线指示
             DrawTrajectory();
@@ -197,8 +196,14 @@ public class Dash : Skill {
 
     //Rewired------------------------------------------------------------
     void FixedUpdate () {
-		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash") || TouchControl.Instance.dashDrag)
-			currWaitTime += 1;
+		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash") || (playerControl.isKeyboard == false && TouchControl.Instance.dashDrag))
+        {
+            if(currWaitTime == 0)
+            {
+                m_aniCom.PlayerDashCharging();
+            }
+            currWaitTime += 1;
+        }
         if (Input.GetMouseButtonDown(1)|| rPlayer.GetButtonDown("Dash"))
             playerControl.swap.curr = 0f;
     }
@@ -244,6 +249,8 @@ public class Dash : Skill {
             m_uaDashStart.Invoke();
         }
         Debug.Log("dash start");
+        m_aniCom.PlayerDashStart();
+
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
 
         //冲刺特效
@@ -252,14 +259,12 @@ public class Dash : Skill {
             GameObject dashP = Instantiate(dashParticle, transform.position, Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir)),null);
         }
 
-		if (isShadowDash) {
-		    player.GetComponent<SpriteRenderer> ().color = Color.black;
+        //gaidao要求去除变黑
+		//if (isShadowDash) {
+		//    player.GetComponent<SpriteRenderer> ().color = Color.black;
 			//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),true);
 			
-			
-		}
-
-        
+		
         float curr = 0f;
         //		while (curr < pauseDuration) 
         //		{
@@ -288,6 +293,8 @@ public class Dash : Skill {
             m_uaDashOver.Invoke();
         }
         Debug.Log("dash over");
+        m_aniCom.PlayerDashStop();
+
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
         yield return new WaitForSeconds(disableMovementTime - 0.05f);
         playerControl.canMove = true;
