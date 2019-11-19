@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class Swap : Skill {
 
@@ -77,8 +78,8 @@ public class Swap : Skill {
     {	
 		StartCoroutine (SwapDamageEffect ());
 
-		//屏幕震动	
-		CameraShaker.Instance.ShakeOnce(1f,0.1f,0.02f,0.05f);
+        //屏幕震动	
+        ProCamera2DShake.Instance.Shake("ShakePreset"); 
 
         //手柄震动 Rewired------------------------------------------------------------------------------------
         PlayerControl1.Instance.player.SetVibration(motorIndex,level, duration);
