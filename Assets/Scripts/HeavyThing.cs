@@ -29,7 +29,10 @@ public class HeavyThing : MonoBehaviour {
 		}
 		if (isFastFall && rb.velocity.y==0)
 		{
-			CameraShaker.Instance.ShakeOnce(15,1f,0.02f,0.05f);
+            if(CameraShaker.Instance != null)
+            {
+                CameraShaker.Instance.ShakeOnce(15, 1f, 0.02f, 0.05f);
+            }
 			isFastFall=false;
 			//print("HeavyThingLanding!");
 			GameObject par = Instantiate(landingParticle,transform.position+new Vector3(0,yOffset,0),Quaternion.identity);

@@ -79,7 +79,10 @@ public class Swap : Skill {
 		StartCoroutine (SwapDamageEffect ());
 
         //屏幕震动	
-        ProCamera2DShake.Instance.Shake("ShakePreset"); 
+        if (ProCamera2DShake.Instance != null)
+        {
+            ProCamera2DShake.Instance.Shake("ShakePreset");
+        }
 
         //手柄震动 Rewired------------------------------------------------------------------------------------
         PlayerControl1.Instance.player.SetVibration(motorIndex,level, duration);
