@@ -1,7 +1,37 @@
 fileFormatVersion: 2
 guid: 81a8acce55984d94d8e4dbe7b3fe2563
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 6059937411714992196
+    second: Effect-Jump2_0
+  - first:
+      213: 7549114769568877394
+    second: Effect-Jump2_1
+  - first:
+      213: -1873879224385669229
+    second: Effect-Jump2_2
+  - first:
+      213: 3534172449427566155
+    second: Effect-Jump2_3
+  - first:
+      213: -6465443034664017894
+    second: Effect-Jump2_4
+  - first:
+      213: -6144292504077203255
+    second: Effect-Jump2_5
+  - first:
+      213: -1100857244136112964
+    second: Effect-Jump2_6
+  - first:
+      213: 1289844347699872115
+    second: Effect-Jump2_7
+  - first:
+      213: -8335124793794548446
+    second: Effect-Jump2_8
+  - first:
+      213: 6590532095050727187
+    second: Effect-Jump2_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +61,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +70,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 0.6
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,9 +100,231 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Effect-Jump2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 567bc5bcda4224041aa95604a14b62ca
+      internalID: 6059937411714992196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_1
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdd89b4a903444e4e9aab165e7fab193
+      internalID: 7549114769568877394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_2
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 797a73b752c16564ea6d27cbf68e1efb
+      internalID: -1873879224385669229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_3
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c057ccbfb6179524b918e258a407901e
+      internalID: 3534172449427566155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_4
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f617dd12e07c9dd4983b652c9b6a6e03
+      internalID: -6465443034664017894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_5
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df0c10fdc737557438b98bd2b01e1bb4
+      internalID: -6144292504077203255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_6
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737b17edeafccc84fb265a3e1e9454ce
+      internalID: -1100857244136112964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_7
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 421e6f01b36deb04ca00af230399bc14
+      internalID: 1289844347699872115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_8
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6b9ca7f7e37ac54e963d1ddd57a0b7d
+      internalID: -8335124793794548446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Jump2_9
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f47b25ae09bed3479c95351085ababc
+      internalID: 6590532095050727187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

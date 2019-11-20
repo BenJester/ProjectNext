@@ -160,6 +160,7 @@ public class PlayerControl1 : PlayerControl {
     [Space]
     [Space]
     public GameObject landingParticle;
+    public GameObject FirstJumpEffect;
 
     public Vector3 originalScale;
 
@@ -741,6 +742,10 @@ public class PlayerControl1 : PlayerControl {
         m_fHeight = transform.position.y;
 
         audioSource.PlayOneShot(jumpClip);
+        if(FirstJumpEffect != null)
+        {
+            Instantiate(FirstJumpEffect, transform.position - Vector3.up * 10, Quaternion.identity);
+        }
     }
 
     bool Hit(GameObject target)
