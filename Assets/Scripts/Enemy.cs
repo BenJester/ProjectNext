@@ -93,7 +93,10 @@ public class Enemy : MonoBehaviour{
     IEnumerator OnHit()
     {
         Color hitColor = new Color(1f, 0.15f, 0f);
-        CameraShaker.Instance.ShakeOnce(35f, 4f, 0.1f, 0.1f);
+        if(CameraShaker.Instance != null)
+        {
+            CameraShaker.Instance.ShakeOnce(35f, 4f, 0.1f, 0.1f);
+        }
 
         m_spRender.color = hitColor;
         yield return new WaitForSeconds(0.3f);
