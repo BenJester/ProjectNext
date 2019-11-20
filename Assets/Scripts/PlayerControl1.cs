@@ -452,7 +452,7 @@ public class PlayerControl1 : PlayerControl {
         //左右移动
         float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
-        if (!isKeyboard) h = (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0);
+        if (!isKeyboard) h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0);
 
 
         if (Mathf.Abs(h) > 0) {
