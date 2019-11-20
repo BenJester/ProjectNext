@@ -1,7 +1,34 @@
 fileFormatVersion: 2
 guid: 989f815a4cd00ed458c901faceb4eed3
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 6130828821741789410
+    second: Effect-Move_0
+  - first:
+      213: -6679683984450999517
+    second: Effect-Move_1
+  - first:
+      213: -8848398782716028883
+    second: Effect-Move_2
+  - first:
+      213: 8796247329890659539
+    second: Effect-Move_3
+  - first:
+      213: -8539428950729593034
+    second: Effect-Move_4
+  - first:
+      213: -2534466662668584703
+    second: Effect-Move_5
+  - first:
+      213: -8023865042494084381
+    second: Effect-Move_6
+  - first:
+      213: 7727875175513841182
+    second: Effect-Move_7
+  - first:
+      213: -7135948292170042489
+    second: Effect-Move_8
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +67,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 0.6
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,9 +97,210 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Effect-Move_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af752415ca6cbce4cbd129e1b9128e88
+      internalID: 6130828821741789410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_1
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 127ba4ed8e3f342408dc00301a8d6278
+      internalID: -6679683984450999517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_2
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5eda3dec166788b498c38409d844b067
+      internalID: -8848398782716028883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_3
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a99aad7ab4b21ae4ab74839b3ea531fc
+      internalID: 8796247329890659539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_4
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67188a5ea46cd374f98a038743529941
+      internalID: -8539428950729593034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_5
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b65231b4f1dfb24394aeeb423d503f5
+      internalID: -2534466662668584703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_6
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe27ad9bddd61be49b7762b289bee885
+      internalID: -8023865042494084381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_7
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7c2b9ebfaaff3641b35a3e7e618a486
+      internalID: 7727875175513841182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Effect-Move_8
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 0
+        width: 54.545456
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2dbd1414ef70fd4c915bc45f27c1bd3
+      internalID: -7135948292170042489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

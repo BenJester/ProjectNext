@@ -162,6 +162,8 @@ public class PlayerControl1 : PlayerControl {
     public GameObject landingParticle;
     public GameObject FirstJumpEffect;
 
+    public GameObject MoveSmokeEffect;
+
     public Vector3 originalScale;
 
     private Animator anim;
@@ -1550,5 +1552,9 @@ public class PlayerControl1 : PlayerControl {
             return Mathf.Min(Mathf.Abs(angle1) + Mathf.Abs(angle2), angle2 + Mathf.PI + Mathf.PI - angle1);
 
         }
+    }
+    public void GenerateMoveEffect()
+    {
+        Instantiate(MoveSmokeEffect, transform.position - Vector3.up * 10, Quaternion.identity);
     }
 }
