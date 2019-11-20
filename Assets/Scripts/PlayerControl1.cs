@@ -452,14 +452,20 @@ public class PlayerControl1 : PlayerControl {
             m_bJumpRelease = false;
 
             anim.SetBool("Moving", true);
-            legAnim.SetBool("Moving", true);
+            if(legAnim != null)
+            {
+                legAnim.SetBool("Moving", true);
+            }
             if (h > 0) legsSpriteRenderer.flipX = true;
             else legsSpriteRenderer.flipX = false;
         } else
         {
             m_bJumpRelease = false;
             anim.SetBool("Moving", false);
-            legAnim.SetBool("Moving", false);
+            if (legAnim != null && legAnim.gameObject.activeInHierarchy == true)
+            {
+                legAnim.SetBool("Moving", false);
+            }
         }
 
         //if (Mathf.Abs(rb.velocity.x) <= speed)
@@ -594,10 +600,23 @@ public class PlayerControl1 : PlayerControl {
 
         if (isTouchingGround) {
             anim.SetBool("Jumping", false);
-            legAnim.SetBool("Jumping", false);
+            if (legAnim != null && legAnim.gameObject.activeInHierarchy == true)
+            {
+                legAnim.SetBool("Jumping", false);
+            }
         } else {
-            anim.SetBool("Jumping", true);
-            legAnim.SetBool("Jumping", true);
+            if( dash.isDashing == true )
+            {
+
+            }
+            else
+            {
+                anim.SetBool("Jumping", true);
+                if (legAnim != null && legAnim.gameObject.activeInHierarchy == true)
+                {
+                    legAnim.SetBool("Jumping", true);
+                }
+            }
         }
 
 
