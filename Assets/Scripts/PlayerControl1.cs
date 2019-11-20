@@ -12,8 +12,19 @@ using Com.LuisPedroFonseca.ProCamera2D;
 
 public class PlayerControl1 : PlayerControl {
 
+   
+
     public static PlayerControl1 Instance { get; private set; }
     //Rewired------------------------------------------------------------
+
+
+    public enum ControlWay
+    {
+        isKeyboard=0,
+        isJoystick=1,
+        isMobile=2,
+    }
+    public ControlWay controlState = ControlWay.isKeyboard;
 
     public int playerId = 0;
     public Player player;
@@ -68,18 +79,6 @@ public class PlayerControl1 : PlayerControl {
     [Header("子弹参数")]
     public GameObject bullet;
 
-    [Space]
-    public bool isKeyboard;
-
-    #region //手机内容
-    public bool isMobile = false;
-    private bool isPrepareToSwitch = false;
-    private bool isPrepareToDash = false;
-
-
-
-
-    #endregion
 
 
 
@@ -272,16 +271,13 @@ public class PlayerControl1 : PlayerControl {
 
         //Rewired------------------------------------------------------------
         player = ReInput.players.GetPlayer(playerId);
-        if (player.controllers.joystickCount == 0)
-        {
-            isKeyboard = true;
-        }
-        else
+       
+        //手柄死区
+        if(controlState==ControlWay.isJoystick)
         {
             player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
         }
 
-        //
         GlobalVariable.SetPlayer(this);
         originalScale = transform.localScale;
         startDeltaTime = Time.fixedDeltaTime;
@@ -408,7 +404,7 @@ public class PlayerControl1 : PlayerControl {
 
             GameObject part = Instantiate(landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
             Destroy(part, 2f);
-            if (isKeyboard && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
+            if (controlState==ControlWay.isKeyboard && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
             {
 
                 rb.velocity = Vector2.zero;
@@ -416,7 +412,8 @@ public class PlayerControl1 : PlayerControl {
             }
 
             //Rewired------------------------------------------------------------
-            if (!isKeyboard && (player.GetAxisRaw("MoveHorizontal") == 0))
+            if (controlState == ControlWay.isJoystick && (player.GetAxisRaw("MoveHorizontal") == 0)
+                || controlState == ControlWay.isMobile && (player.GetAxisRaw("MoveHorizontal") == 0))
             {
                 rb.velocity = Vector2.zero;
             }
@@ -454,7 +451,10 @@ public class PlayerControl1 : PlayerControl {
         //左右移动
         float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         //Rewired------------------------------------------------------------
-        if (!isKeyboard) h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0);
+        if (controlState == ControlWay.isJoystick || controlState == ControlWay.isMobile) 
+        {
+            h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0); 
+        }
 
 
         if (Mathf.Abs(h) > 0) {
@@ -545,7 +545,7 @@ public class PlayerControl1 : PlayerControl {
         if (rb.velocity.y != 0)
         {
             //Rewired------------------------------------------------------------
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !isKeyboard))
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState==ControlWay.isKeyboard)))
             {
                 if (m_bDashMove == true)
                 {
@@ -566,8 +566,8 @@ public class PlayerControl1 : PlayerControl {
                     }
                 }
             }
-            if ((Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && isKeyboard == true)
-                || (player.GetAxisRaw("MoveHorizontal") == 0 && isKeyboard == false))
+            if ((Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && controlState == ControlWay.isKeyboard)
+                || (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState == ControlWay.isKeyboard)))
             {
                 if (m_bDashing == true)
                 {
@@ -633,7 +633,7 @@ public class PlayerControl1 : PlayerControl {
         //Rewired------------------------------------------------------------
         if ((Input.GetMouseButton(0) && currWaitTime >= waitTime)
             || (player.GetButton("Switch") && currWaitTime >= waitTime)
-            || (isKeyboard == false && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
+            || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
             )
         {
            
@@ -811,13 +811,8 @@ public class PlayerControl1 : PlayerControl {
         // 如果已瞄准物体死亡，清掉缓存
         // 或者如果玩家移动了瞄准摇杆，清掉缓存
         if ((closestObjectToCursor && closestObjectToCursor.GetComponent<Thing>().dead)
-            || (!isKeyboard && laserBulletAngle
-                &&
-                        (closestObjectToCursor
-                        && Vector3.Distance(closestObjectToCursor.transform.position, transform.position)
-                           > shootDistance)
-                    ||
-                        ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0))))
+            || !(controlState == ControlWay.isKeyboard) && laserBulletAngle && (closestObjectToCursor && Vector3.Distance(closestObjectToCursor.transform.position, transform.position)> shootDistance)
+            || ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)))
         {
             closestDistance = Mathf.Infinity;
             closestPlayerDistance = Mathf.Infinity;
@@ -876,7 +871,7 @@ public class PlayerControl1 : PlayerControl {
                         angleToCursor = AngleBetween(Vector2.zero, dir);
                         aimAngle = angleToCursor;
                     }
-                    else if (!isKeyboard && closestObjectToCursor)
+                    else if (!(controlState == ControlWay.isKeyboard) && closestObjectToCursor)
                     {
                         // 如果使用手柄并且右摇杆没有推动，并且已经有一个锁定目标，则跳过搜索
                         continue;
@@ -961,10 +956,10 @@ public class PlayerControl1 : PlayerControl {
         }
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (isKeyboard == false && TouchControl.Instance.aimDrag))
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
             currWaitTime += 1;
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (isKeyboard == false && TouchControl.Instance.aimDrag)) {
+        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag)) {
 
             anim.SetBool("IsCharging", true);
 

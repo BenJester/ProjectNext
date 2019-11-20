@@ -5,7 +5,6 @@ using UnityEngine.Events;
 using Rewired;
 
 public class Dash : Skill {
-    public bool useKeyboard;
 	public bool isShadowDash = false;
 	public float DashSpeed;
 	public float DashDuration;
@@ -87,7 +86,7 @@ public class Dash : Skill {
         //Rewired------------------------------------------------------------
         if ((Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) 
             || (rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime)
-            || (playerControl.isKeyboard == false && TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
+            || (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard) && TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
             
             //播放动画
             if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
@@ -196,7 +195,7 @@ public class Dash : Skill {
 
     //Rewired------------------------------------------------------------
     void FixedUpdate () {
-		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash") || (playerControl.isKeyboard == false && TouchControl.Instance.dashDrag))
+		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash") || (playerControl.controlState == PlayerControl1.ControlWay.isMobile && TouchControl.Instance.dashDrag))
         {
             if(currWaitTime == 0)
             {
@@ -231,15 +230,15 @@ public class Dash : Skill {
             dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("MoveVertical")).normalized;
             dashDir = dir;
         }
-        else if (!PlayerControl1.Instance.isKeyboard)
+        else if (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard))
         {
             dir = dashDir;
         }
 
-        if (useKeyboard)
+        if (playerControl.controlState == PlayerControl1.ControlWay.isKeyboard)
             dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
 
-        if (playerControl.isMobile)
+        if (playerControl.controlState == PlayerControl1.ControlWay.isMobile)
             dir = TouchControl.Instance.finalDashDir.normalized;
 
         audioSource.PlayOneShot(clip, 0.5f);
@@ -346,7 +345,7 @@ public class Dash : Skill {
             dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("MoveVertical")).normalized;
             dashDir = dir;
         }
-        else if (!PlayerControl1.Instance.isKeyboard)
+        else if (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard))
         {
             dir = dashDir;
         }
