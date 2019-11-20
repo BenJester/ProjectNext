@@ -6,6 +6,7 @@ using EZCameraShake;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Rewired;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 //using UnityEngine.Rendering.LWRP;
 
@@ -257,6 +258,8 @@ public class PlayerControl1 : PlayerControl {
     private float m_fCurDashDuration;
     private bool m_bDashing;
     void Awake() {
+        ProCamera2D.Instance.AddCameraTarget(transform);
+
         dash.RegisteDashEvent(_dashStart, _dashOver);
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
