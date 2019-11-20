@@ -258,7 +258,10 @@ public class PlayerControl1 : PlayerControl {
     private float m_fCurDashDuration;
     private bool m_bDashing;
     void Awake() {
-        ProCamera2D.Instance.AddCameraTarget(transform);
+        if(ProCamera2D.Exists == true)
+        {
+            ProCamera2D.Instance.AddCameraTarget(transform);
+        }
 
         dash.RegisteDashEvent(_dashStart, _dashOver);
         if (Instance == null) { Instance = this; }
