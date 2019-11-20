@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: -5255660820106590308}
   - component: {fileID: 3083705841405597585}
   - component: {fileID: 5106352768758706149}
+  - component: {fileID: 3718439903707798091}
   m_Layer: 9
   m_Name: player_newAnimation
   m_TagString: player
@@ -747,7 +748,7 @@ MonoBehaviour:
   playerRespawnPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 3}
   isKeyboard: 0
-  isMobile: 0
+  isMobile: 1
   ClickChangeDirectly: 0
   toggleSwapTarget: 0
   toggleTarget: {fileID: 0}
@@ -781,7 +782,9 @@ MonoBehaviour:
   startDeltaTime: 0.0167
   targetDeltaTime: 0.0167
   targetTimeScale: 1
-  landingParticle: {fileID: 1760684535814648, guid: 73e1ea2ab6a1ba64c96de3502e70c87b,
+  landingParticle: {fileID: 7148430179392135044, guid: f55b788d1bab86547be68bbc8acc5389,
+    type: 3}
+  FirstJumpEffect: {fileID: 3184412615620200525, guid: 32507ba98585dff4a9d29dfb9887d0ea,
     type: 3}
   originalScale: {x: 1, y: 1, z: 1}
   legAnim: {fileID: 95738157068914426}
@@ -913,7 +916,7 @@ MonoBehaviour:
   maxCharge: 1
   charge: 0
   multiplier: 122
-  dashParticle: {fileID: 9163682763277132950, guid: d831f243a3d274d44bef28016962fa66,
+  dashParticle: {fileID: 2678965535988136888, guid: 81384d933b5cf644581d5675a7d982e1,
     type: 3}
   dashPointer: {fileID: 9163682765064726003}
   dashChargingParticle: {fileID: 9163682763277132950, guid: af26e5e4b3e9c4b49b3bafabd149203d,
@@ -1259,6 +1262,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyParticle: {fileID: 9163682763277132950, guid: f8704878f9759e24e9ef364369b3f057,
     type: 3}
+--- !u!114 &3718439903707798091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147906740149146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81694a43f687fcf458992a78802ee5ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevMagnitude: 0
+  prevAimMagnitude: 0
+  dragStartMag: 0.2
+  finalDashDir: {x: 0, y: 0}
+  finalAimDir: {x: 0, y: 0}
+  dashDrag: 0
+  aimDrag: 0
 --- !u!1 &1193951111751896
 GameObject:
   m_ObjectHideFlags: 0

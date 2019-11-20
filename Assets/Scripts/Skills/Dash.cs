@@ -256,7 +256,9 @@ public class Dash : Skill {
         //冲刺特效
         if (dashParticle != null)
         {
-            GameObject dashP = Instantiate(dashParticle, transform.position, Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir)),null);
+            //gaidao要求这里新的冲刺动画，角度不需要变了。
+            GameObject dashP = Instantiate(dashParticle, transform.position, Quaternion.identity, null);
+            //GameObject dashP = Instantiate(dashParticle, transform.position, Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir)),null);
         }
 
         //gaidao要求去除变黑
