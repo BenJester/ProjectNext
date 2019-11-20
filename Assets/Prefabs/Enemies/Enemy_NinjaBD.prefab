@@ -117,6 +117,7 @@ MonoBehaviour:
   AnimationOverEvent:
     m_PersistentCalls:
       m_Calls: []
+  CheckChild: 0
 --- !u!1 &5775181348552360192
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6bf6b50423bf24fb87fb2808f55a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NameOfSkill: 
+  NameOfSkill: Throw
   ContinuousSkill: 0
   ObjShoot: {fileID: 305787941185668345, guid: f6ea3c2576a57dd4893be0b833582286, type: 3}
   objInstanceDistance: 50
