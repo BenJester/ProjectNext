@@ -178,7 +178,7 @@ public class Enemy_NinjaV2 : Enemy
                     {
                         m_bDashToggle = true;
                     }
-                    StartCoroutine(StartAttackTimer());
+                    StartCoroutine(StartAttackTimer(false));
                 }
             }
         }
@@ -301,7 +301,7 @@ public class Enemy_NinjaV2 : Enemy
         _processAnimation();
     }
 
-    IEnumerator StartAttackTimer()
+    IEnumerator StartAttackTimer(bool bProcessDashToggle = true)
     {
         justAttacked = true;
         float timer = 0f;
@@ -313,7 +313,10 @@ public class Enemy_NinjaV2 : Enemy
         justAttacked = false;
         busy = false;
 
-        m_bDashToggle = false;
+        if(bProcessDashToggle == true)
+        {
+            m_bDashToggle = false;
+        }
     }
 
     IEnumerator Idle()
