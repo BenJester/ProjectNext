@@ -14,7 +14,7 @@ public class AnimationParamData
     }
     public string AnimationParam;
     public AnimationParamTyp ParamTyp;
-    public string Paramvalue;
+    public string ParamValue;
 
     private int m_nHashParam;
     public void ParamGenerate()
@@ -27,7 +27,7 @@ public class AnimationParamData
     }
     public bool GetIntValue(out int nVal)
     {
-        return int.TryParse(Paramvalue, out nVal);
+        return int.TryParse(ParamValue, out nVal);
     }
 }
 [System.Serializable]
@@ -46,14 +46,22 @@ public class AnimationData
     {
         foreach (AnimationParamData _data in LstParam)
         {
-            //if(_data.ParamTyp == AnimationParamData.AnimationParamTyp.AnimationParamTyp_Int)
-            //{
-            //    _animator.SetInteger(_data.GetHashParam(),_data)
-            //}
-            //else if (_data.ParamTyp == AnimationParamData.AnimationParamTyp.AnimationParamTyp_String)
-            //{
+            if (_data.ParamTyp == AnimationParamData.AnimationParamTyp.AnimationParamTyp_Int)
+            {
+                int nVal = 0;
+                if( _data.GetIntValue(out nVal) == true)
+                {
+                    _animator.SetInteger(_data.GetHashParam(), nVal);
+                }
+                else
+                {
+                    Debug.Assert(false);
+                }
+            }
+            else if (_data.ParamTyp == AnimationParamData.AnimationParamTyp.AnimationParamTyp_String)
+            {
 
-            //}
+            }
         }
     }
 }
