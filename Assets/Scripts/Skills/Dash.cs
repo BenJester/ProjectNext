@@ -345,7 +345,7 @@ public class Dash : Skill {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
 
-        if (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("MoveVertical") != 0)
+        if (playerControl.IsKeyBoard() == false && (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("MoveVertical") != 0))
         {
             dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("MoveVertical")).normalized;
             dashDir = dir;
