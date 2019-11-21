@@ -452,12 +452,10 @@ public class PlayerControl1 : PlayerControl {
 
 
         //左右移动
-        float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
+        //float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
+        float h = 0.0f;
         //Rewired------------------------------------------------------------
-        if (controlState == ControlWay.isJoystick || controlState == ControlWay.isMobile) 
-        {
-            h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0); 
-        }
+        h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0); 
 
 
         if (Mathf.Abs(h) > 0) {
@@ -541,14 +539,16 @@ public class PlayerControl1 : PlayerControl {
         }
 
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) || player.GetButtonUp("Jump"))
+        //if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) || player.GetButtonUp("Jump"))
+        if (player.GetButtonUp("Jump"))
         {
             m_bJumpingWindow = false;
         }
         if (rb.velocity.y != 0)
         {
             //Rewired------------------------------------------------------------
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState==ControlWay.isKeyboard)))
+            //if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState==ControlWay.isKeyboard)))
+            if (player.GetAxisRaw("MoveHorizontal") == 0 )
             {
                 if (m_bDashMove == true)
                 {
@@ -598,7 +598,8 @@ public class PlayerControl1 : PlayerControl {
 
         //跳跃代码
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || player.GetButtonDown("Jump"))
+        //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || player.GetButtonDown("Jump"))
+        if (player.GetButtonDown("Jump"))
         {
             if (canJump)
             {
@@ -698,7 +699,9 @@ public class PlayerControl1 : PlayerControl {
 
         //双重交换
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.F) && doubleSwap || player.GetButtonDown("DoubleSwap") && doubleSwap) {
+        //if (Input.GetKeyDown(KeyCode.F) && doubleSwap || player.GetButtonDown("DoubleSwap") && doubleSwap) {
+        if (player.GetButtonDown("DoubleSwap") && doubleSwap)
+        {
             //原先是通过子弹进行呼唤，所以这里需要false，但是现在情况变了，这个作为一个功能开关，而不是一个属性值
             //doubleSwap = false;
             if (swap.CanDoubleSwap())
