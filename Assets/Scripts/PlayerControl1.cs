@@ -1558,4 +1558,17 @@ public class PlayerControl1 : PlayerControl {
     {
         Instantiate(MoveSmokeEffect, transform.position - Vector3.up * 10, Quaternion.identity);
     }
+
+    public bool IsKeyBoard()
+    {
+        return controlState == ControlWay.isKeyboard;
+    }
+    public bool IsJoystick()
+    {
+        return controlState == ControlWay.isJoystick;
+    }
+    public bool IsMobile()
+    {
+        return controlState == ControlWay.isMobile;
+    }
 }
