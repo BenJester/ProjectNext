@@ -25,7 +25,7 @@ public class ConeLight : MonoBehaviour
         Vector3 vecMouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Debug.Log(vecMouseWorldPos);
         float angleToCursor = Mathf.Rad2Deg * PlayerControl1.AngleBetween(player.position, vecMouseWorldPos);
-        if (PlayerControl1.Instance.player.GetAxis("AimHorizontal") != 0 || PlayerControl1.Instance.player.GetAxis("AimVertical") != 0)
+        if (PlayerControl1.Instance.player != null && (PlayerControl1.Instance.player.GetAxis("AimHorizontal") != 0 || PlayerControl1.Instance.player.GetAxis("AimVertical") != 0))
         {
             m_Light2D.enabled = true;
             Vector2 dir = new Vector2(PlayerControl1.Instance.player.GetAxis("AimHorizontal"), PlayerControl1.Instance.player.GetAxis("AimVertical")).normalized;

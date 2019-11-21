@@ -270,7 +270,10 @@ public class PlayerControl1 : PlayerControl {
         else { Destroy(gameObject); }
 
         //Rewired------------------------------------------------------------
-        player = ReInput.players.GetPlayer(playerId);
+        if(ReInput.players != null)
+        {
+            player = ReInput.players.GetPlayer(playerId);
+        }
        
         //手柄死区
         if(controlState==ControlWay.isJoystick)
