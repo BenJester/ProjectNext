@@ -407,16 +407,20 @@ public class PlayerControl1 : PlayerControl {
 
             GameObject part = Instantiate(landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
             Destroy(part, 2f);
-            if (controlState==ControlWay.isKeyboard && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
-            {
+            //if (controlState==ControlWay.isKeyboard && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(rb.velocity.y) <= 5f)
+            //{
 
-                rb.velocity = Vector2.zero;
+            //    rb.velocity = Vector2.zero;
 
-            }
+            //}
 
-            //Rewired------------------------------------------------------------
-            if (controlState == ControlWay.isJoystick && (player.GetAxisRaw("MoveHorizontal") == 0)
-                || controlState == ControlWay.isMobile && (player.GetAxisRaw("MoveHorizontal") == 0))
+            ////Rewired------------------------------------------------------------
+            //if (controlState == ControlWay.isJoystick && (player.GetAxisRaw("MoveHorizontal") == 0)
+            //    || controlState == ControlWay.isMobile && (player.GetAxisRaw("MoveHorizontal") == 0))
+            //{
+            //    rb.velocity = Vector2.zero;
+            //}
+            if ((player.GetAxisRaw("MoveHorizontal") == 0))
             {
                 rb.velocity = Vector2.zero;
             }
@@ -432,7 +436,7 @@ public class PlayerControl1 : PlayerControl {
 
 
         //Rewired------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.R) || player.GetButtonDown("Restart")) {
+        if (player.GetButtonDown("Restart")) {
 
             Time.fixedDeltaTime = startDeltaTime;
             Time.timeScale = 1f;
@@ -569,8 +573,7 @@ public class PlayerControl1 : PlayerControl {
                     }
                 }
             }
-            if ((Input.GetKey(KeyCode.D) == false && Input.GetKey(KeyCode.A) == false && controlState == ControlWay.isKeyboard)
-                || (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState == ControlWay.isKeyboard)))
+            if ( (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState == ControlWay.isKeyboard)))
             {
                 if (m_bDashing == true)
                 {
@@ -1388,7 +1391,7 @@ public class PlayerControl1 : PlayerControl {
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
-        while (Input.GetMouseButton(1) || player.GetButton("Switch")/*&& swap.delaying*/)
+        while (player.GetButton("Dash") || player.GetButton("Switch")/*&& swap.delaying*/)
         {
             if ((Vector2)lr.GetPosition(5) != Vector2.zero)
             {

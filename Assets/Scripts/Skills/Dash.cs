@@ -231,8 +231,11 @@ public class Dash : Skill {
         //Rewired------------------------------------------------------------
         if (rPlayer.GetAxis("MoveHorizontal") != 0 || rPlayer.GetAxis("MoveVertical") != 0)
         {
-            dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("MoveVertical")).normalized;
-            dashDir = dir;
+            if(playerControl.IsKeyBoard() == false)
+            {
+                dir = new Vector2(rPlayer.GetAxis("MoveHorizontal"), rPlayer.GetAxis("MoveVertical")).normalized;
+                dashDir = dir;
+            }
         }
         else if (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard))
         {
