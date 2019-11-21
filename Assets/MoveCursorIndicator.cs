@@ -20,7 +20,7 @@ public class MoveCursorIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerControl1.Instance.player.GetAxis("MoveHorizontal") != 0 || PlayerControl1.Instance.player.GetAxis("MoveVertical") != 0)
+        if (PlayerControl1.Instance.player != null && (PlayerControl1.Instance.player.GetAxis("MoveHorizontal") != 0 || PlayerControl1.Instance.player.GetAxis("MoveVertical") != 0))
         {
             sr.enabled = true;
             transform.position = (Vector2)transform.parent.position + new Vector2(PlayerControl1.Instance.player.GetAxis("MoveHorizontal"), PlayerControl1.Instance.player.GetAxis("MoveVertical")).normalized * distance;

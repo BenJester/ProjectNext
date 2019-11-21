@@ -34,6 +34,10 @@ public class TouchControl : MonoBehaviour
     }
     private void Update()
     {
+        if(player == null)
+        {
+            return;
+        }
         Vector2 dashDir = player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical");
         float dashMag = dashDir.magnitude;
 

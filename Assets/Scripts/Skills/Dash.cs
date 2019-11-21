@@ -74,6 +74,10 @@ public class Dash : Skill {
 	}
 
 	void Update () {
+        if( Mathf.Abs(rPlayer.GetAxis("MoveHorizontal")) > 0 )
+        {
+            int a = 0;
+        }
         //Debug.Log(Time.timeScale);
         //播放冲刺情况下的动画
         if (isDashing)
@@ -195,7 +199,7 @@ public class Dash : Skill {
 
     //Rewired------------------------------------------------------------
     void FixedUpdate () {
-		if (Input.GetMouseButton (1)|| rPlayer.GetButton("Dash") || (playerControl.controlState == PlayerControl1.ControlWay.isMobile && TouchControl.Instance.dashDrag))
+		if (Input.GetMouseButton (1)|| (rPlayer != null && rPlayer.GetButton("Dash")) || (playerControl.controlState == PlayerControl1.ControlWay.isMobile && TouchControl.Instance.dashDrag))
         {
             if(currWaitTime == 0)
             {
@@ -235,8 +239,9 @@ public class Dash : Skill {
             dir = dashDir;
         }
 
-        if (playerControl.controlState == PlayerControl1.ControlWay.isKeyboard)
-            dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+        //反正Input.GetAxis也得不到东西，就给keyboard配置rewired的数据然后通过MoveHorizontal进行处理即可。
+        //if (playerControl.controlState == PlayerControl1.ControlWay.isKeyboard)
+        //    dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
 
         if (playerControl.controlState == PlayerControl1.ControlWay.isMobile)
             dir = TouchControl.Instance.finalDashDir.normalized;
