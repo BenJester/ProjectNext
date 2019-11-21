@@ -635,8 +635,7 @@ public class PlayerControl1 : PlayerControl {
 
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if ((Input.GetMouseButton(0) && currWaitTime >= waitTime)
-            || (player.GetButton("Switch") && currWaitTime >= waitTime)
+        if ( (player.GetButton("Switch") && currWaitTime >= waitTime)
             || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
             )
         {
@@ -665,7 +664,7 @@ public class PlayerControl1 : PlayerControl {
 
         //处理按下的指示器
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") ) {
+        if ( player.GetButton("Switch") ) {
             if (useLineRenderer) {
                 //lr.enabled = true;
                 HandleLineRenderer();
@@ -962,11 +961,15 @@ public class PlayerControl1 : PlayerControl {
         }
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        if (player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        {
             currWaitTime += 1;
+        }
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag)) {
-
+        //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag)) {
+        if (player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        {
             anim.SetBool("IsCharging", true);
 
             chargeCounter += 1;
@@ -1385,7 +1388,7 @@ public class PlayerControl1 : PlayerControl {
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
-        while (Input.GetMouseButton(1) || Input.GetMouseButton(0)/*&& swap.delaying*/)
+        while (Input.GetMouseButton(1) || player.GetButton("Switch")/*&& swap.delaying*/)
         {
             if ((Vector2)lr.GetPosition(5) != Vector2.zero)
             {
