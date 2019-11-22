@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2033823740119832506}
   - component: {fileID: 5466655594703043781}
   - component: {fileID: 1401659020518980044}
+  - component: {fileID: 2453211098618491410}
+  - component: {fileID: 2858320828625540444}
   m_Layer: 8
   m_Name: Animation
   m_TagString: Untagged
@@ -152,7 +154,58 @@ MonoBehaviour:
     - AnimationParam: 
       ParamTyp: 0
       ParamValue: 
-  NameOfAnimation: blabla
+  NameOfAnimation: ChargingAnimation
+--- !u!114 &2453211098618491410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253930418674161855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cb44ad2c3a1304999726cf3775706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationData:
+    LstParam:
+    - AnimationParam: Attacking
+      ParamTyp: 1
+      ParamValue: 1
+    - AnimationParam: Charging
+      ParamTyp: 1
+      ParamValue: 0
+  NameOfAnimation: DashAnimation
+--- !u!114 &2858320828625540444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253930418674161855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cb44ad2c3a1304999726cf3775706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationData:
+    LstParam:
+    - AnimationParam: Charging
+      ParamTyp: 1
+      ParamValue: 0
+    - AnimationParam: Attacking
+      ParamTyp: 1
+      ParamValue: 0
+    - AnimationParam: ThrowBomb
+      ParamTyp: 1
+      ParamValue: 0
+    - AnimationParam: ShootingBullet
+      ParamTyp: 1
+      ParamValue: 0
+    - AnimationParam: ThrowBombReady
+      ParamTyp: 1
+      ParamValue: 0
+  NameOfAnimation: IdleAnimation
 --- !u!1 &5775181348552360192
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +234,8 @@ GameObject:
   - component: {fileID: 8868780347860922713}
   - component: {fileID: 1743113659723793866}
   - component: {fileID: 4969472600556388781}
+  - component: {fileID: 3425024574878054850}
+  - component: {fileID: 8557469246409838221}
   m_Layer: 8
   m_Name: Enemy_NinjaBD
   m_TagString: thing
@@ -643,7 +698,7 @@ MonoBehaviour:
   dashSpeed: 1500
   DashHitOffsetY: 45
   hitboxWidth: 15
-  DashDuration: 0.2
+  DashDuration: 0.3
 --- !u!114 &4908773754255238964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -722,7 +777,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b45b3541931eb4786cace4b1dc48d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NameOfSkill: blabla
+  NameOfSkill: ChargingAnimation
+  ContinuousSkill: 0
+  AniManager: {fileID: 5466655594703043781}
+--- !u!114 &3425024574878054850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b45b3541931eb4786cace4b1dc48d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: DashAnimation
+  ContinuousSkill: 0
+  AniManager: {fileID: 5466655594703043781}
+--- !u!114 &8557469246409838221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b45b3541931eb4786cace4b1dc48d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: IdleAnimation
   ContinuousSkill: 0
   AniManager: {fileID: 5466655594703043781}
 --- !u!1001 &7073229056481827778
