@@ -5,23 +5,43 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     Thing thing;
-
+    public string NameOfState;
+    public string ParamAnimation;
+    private Animator m_animator;
+    private Animation m_animation;
+    public bool bTest;
     void Start()
     {
-        thing = transform.parent.GetComponent<Thing>();
-        thing.shield = gameObject;
+        if(transform.parent != null)
+        {
+            thing = transform.parent.GetComponent<Thing>();
+            if(thing != null)
+            {
+                thing.shield = gameObject;
+            }
+        }
+        m_animator = GetComponent<Animator>();
+        //m_animation = GetComponent<Animation>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!thing.hasShield)
+        if(thing != null)
         {
-            Deactivate();
+            if (!thing.hasShield)
+            {
+                Deactivate();
+            }
+            else
+            {
+                Activate();
+            }
         }
-        else
+        if(bTest == true)
         {
             Activate();
+            bTest = false;
         }
     }
 
@@ -35,5 +55,8 @@ public class Shield : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
+        //m_animation.Play();
+        //m_animator.CrossFade(NameOfState,0);
+        m_animator.SetInteger(ParamAnimation, 1);
     }
 }
