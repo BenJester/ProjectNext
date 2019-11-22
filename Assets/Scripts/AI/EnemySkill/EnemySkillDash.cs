@@ -38,7 +38,7 @@ public class EnemySkillDash : EnemySkillBase
         {
             if (m_fCurrentTime >= DashDuration)
             {
-                SetSkillCastring(false);
+                SetSkillCasting(false);
                 m_rigidBody.velocity = Vector2.zero;
                 if(m_flipEnemy != null)
                 {

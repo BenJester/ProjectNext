@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 1401659020518980044}
   - component: {fileID: 2453211098618491410}
   - component: {fileID: 2858320828625540444}
+  - component: {fileID: 7468211302769194939}
+  - component: {fileID: 3261077823782684656}
   m_Layer: 8
   m_Name: Animation
   m_TagString: Untagged
@@ -117,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55dbdb9069b171f41a421b91d0bc11f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NameOfOverAnimation: 
+  NameOfOverAnimation: ChargingAnimation
   AnimationOverEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -155,6 +157,7 @@ MonoBehaviour:
       ParamTyp: 0
       ParamValue: 
   NameOfAnimation: ChargingAnimation
+  NameInAnimationCtrl: 
 --- !u!114 &2453211098618491410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +179,7 @@ MonoBehaviour:
       ParamTyp: 1
       ParamValue: 0
   NameOfAnimation: DashAnimation
+  NameInAnimationCtrl: 
 --- !u!114 &2858320828625540444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +210,48 @@ MonoBehaviour:
       ParamTyp: 1
       ParamValue: 0
   NameOfAnimation: IdleAnimation
+  NameInAnimationCtrl: 
+--- !u!114 &7468211302769194939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253930418674161855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cb44ad2c3a1304999726cf3775706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationData:
+    LstParam:
+    - AnimationParam: ThrowBomb
+      ParamTyp: 1
+      ParamValue: 1
+    - AnimationParam: ThrowBombReady
+      ParamTyp: 1
+      ParamValue: 0
+  NameOfAnimation: ThrowAnimation
+  NameInAnimationCtrl: NinjaBossThrowBomb
+--- !u!114 &3261077823782684656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253930418674161855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cb44ad2c3a1304999726cf3775706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationData:
+    LstParam:
+    - AnimationParam: ThrowBombReady
+      ParamTyp: 1
+      ParamValue: 1
+  NameOfAnimation: ThrowBombReady
+  NameInAnimationCtrl: NinjaBossReadyThrowBomb
 --- !u!1 &5775181348552360192
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +282,8 @@ GameObject:
   - component: {fileID: 4969472600556388781}
   - component: {fileID: 3425024574878054850}
   - component: {fileID: 8557469246409838221}
+  - component: {fileID: 9219038894787655334}
+  - component: {fileID: 2709046440783315901}
   m_Layer: 8
   m_Name: Enemy_NinjaBD
   m_TagString: thing
@@ -809,6 +857,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfSkill: IdleAnimation
   ContinuousSkill: 0
+  AniManager: {fileID: 5466655594703043781}
+--- !u!114 &9219038894787655334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b45b3541931eb4786cace4b1dc48d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: ThrowAnimation
+  ContinuousSkill: 1
+  AniManager: {fileID: 5466655594703043781}
+--- !u!114 &2709046440783315901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b45b3541931eb4786cace4b1dc48d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: ThrowBombReady
+  ContinuousSkill: 1
   AniManager: {fileID: 5466655594703043781}
 --- !u!1001 &7073229056481827778
 PrefabInstance:

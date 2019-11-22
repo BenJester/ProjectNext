@@ -45,7 +45,7 @@ public class EnemySkillBase : MonoBehaviour
     {
         return m_bSkillCasting;
     }
-    public void SetSkillCastring(bool bCasting)
+    public void SetSkillCasting(bool bCasting)
     {
         m_bSkillCasting = bCasting;
     }

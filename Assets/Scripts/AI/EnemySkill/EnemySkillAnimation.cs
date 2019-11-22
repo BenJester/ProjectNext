@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySkillAnimation : EnemySkillBase
 {
     public AnimationPlayManager AniManager;
+    private bool m_bHasEventRegiste;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -14,6 +15,15 @@ public class EnemySkillAnimation : EnemySkillBase
     public override void CastSkill()
     {
         base.CastSkill();
-        AniManager.CastSkill(NameOfSkill);
-    } 
+        AniManager.PlayAnimation(NameOfSkill);
+        if(m_bHasEventRegiste == false)
+        {
+            AniManager.RegisteAnimationOverEvent(NameOfSkill, _animationFinished);
+            m_bHasEventRegiste = true;
+        }
+    }
+    private void _animationFinished()
+    {
+        SetSkillCasting(false);
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AnimationPlayManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class AnimationPlayManager : MonoBehaviour
     void Start()
     {
     }
-    public void RegisteSkill(string strAnimationName, AnimationPlayComponent _singleAnimation)
+    public void RegisteAnimation(string strAnimationName, AnimationPlayComponent _singleAnimation)
     {
         if (m_dic == null)
         {
@@ -24,10 +25,22 @@ public class AnimationPlayManager : MonoBehaviour
             Debug.Assert(false, string.Format("动画已经被注册过了"));
         }
     }
-    public void CastSkill(string strNameOfSkill)
+    public void RegisteAnimationOverEvent(string strAnimationName, UnityAction acAnimationFinished)
     {
         AnimationPlayComponent _aniCom;
-        if (m_dic.TryGetValue(strNameOfSkill, out _aniCom))
+        if (m_dic.TryGetValue(strAnimationName, out _aniCom))
+        {
+            _aniCom.RegisteFinishedEvent(acAnimationFinished);
+        }
+        else
+        {
+            Debug.Assert(false);
+        }
+    }
+    public void PlayAnimation(string strNameOfAnimation)
+    {
+        AnimationPlayComponent _aniCom;
+        if (m_dic.TryGetValue(strNameOfAnimation, out _aniCom))
         {
             _aniCom.PlayAnimation();
         }
