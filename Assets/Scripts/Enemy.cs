@@ -90,6 +90,16 @@ public class Enemy : MonoBehaviour{
         StartCoroutine(OnHit());
 	}
 
+    public void EnemyDie()
+    {
+        StartCoroutine(SelfDestroy());
+    }
+    IEnumerator SelfDestroy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
+
     IEnumerator OnHit()
     {
         Color hitColor = new Color(1f, 0.15f, 0f);
