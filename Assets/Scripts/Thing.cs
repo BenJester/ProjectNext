@@ -179,6 +179,7 @@ public class Thing : MonoBehaviour {
         {
             goal.enemyCount -= 1;
             hasShield = false;
+            gameObject.GetComponent<Enemy>().EnemyDie();
         }
         if (dieParticle!=null)
         {
