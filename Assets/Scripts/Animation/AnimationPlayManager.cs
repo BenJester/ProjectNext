@@ -26,10 +26,14 @@ public class AnimationPlayManager : MonoBehaviour
     }
     public void CastSkill(string strNameOfSkill)
     {
-        AnimationPlayComponent _skill;
-        if (m_dic.TryGetValue(strNameOfSkill, out _skill))
+        AnimationPlayComponent _aniCom;
+        if (m_dic.TryGetValue(strNameOfSkill, out _aniCom))
         {
-            //_skill.CastSkill();
+            _aniCom.PlayAnimation();
+        }
+        else
+        {
+            Debug.Assert(false);
         }
     }
 }

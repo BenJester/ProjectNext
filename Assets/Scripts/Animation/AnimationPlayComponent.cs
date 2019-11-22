@@ -5,13 +5,17 @@ using UnityEngine;
 public class AnimationPlayComponent : MonoBehaviour
 {
     public AnimationData AnimationData;
-    private Animator m_animator;
     public string NameOfAnimation;
+
+    private AnimationPlayManager m_aniManager;
+    private Animator m_animator;
     // Start is called before the first frame update
     void Start()
     {
         AnimationData.Generate();
         m_animator = GetComponent<Animator>();
+        m_aniManager = GetComponent<AnimationPlayManager>();
+        m_aniManager.RegisteSkill(NameOfAnimation, this);
     }
 
     // Update is called once per frame

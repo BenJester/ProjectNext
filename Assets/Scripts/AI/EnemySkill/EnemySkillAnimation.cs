@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySkillAnimation : EnemySkillBase
 {
-    public AnimationPlayComponent AniPlayCom;
+    public AnimationPlayManager AniManager;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -14,5 +14,6 @@ public class EnemySkillAnimation : EnemySkillBase
     public override void CastSkill()
     {
         base.CastSkill();
+        AniManager.CastSkill(NameOfSkill);
     } 
 }
