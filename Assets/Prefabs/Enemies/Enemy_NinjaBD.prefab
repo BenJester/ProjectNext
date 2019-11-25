@@ -285,7 +285,6 @@ GameObject:
   - component: {fileID: 9219038894787655334}
   - component: {fileID: 2709046440783315901}
   - component: {fileID: 6582313651601791562}
-  - component: {fileID: 9101057438806050011}
   m_Layer: 8
   m_Name: Enemy_NinjaBD
   m_TagString: thing
@@ -912,18 +911,6 @@ MonoBehaviour:
   MeleeGameObject: {fileID: 522231788412236581, guid: 0b888a089ddcd3447804d7d354d7f446,
     type: 3}
   OffsetWithParent: {x: -80, y: 0, z: 0}
---- !u!114 &9101057438806050011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 375fa38e8f70f1f41b5987c6c86c90b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
