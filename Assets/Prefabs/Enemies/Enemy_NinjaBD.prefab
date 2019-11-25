@@ -279,7 +279,6 @@ GameObject:
   - component: {fileID: 1822075790804457673}
   - component: {fileID: 4908773754255238964}
   - component: {fileID: 8868780347860922713}
-  - component: {fileID: 1743113659723793866}
   - component: {fileID: 4969472600556388781}
   - component: {fileID: 3425024574878054850}
   - component: {fileID: 8557469246409838221}
@@ -819,18 +818,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfSkill: Shield
   ContinuousSkill: 0
---- !u!114 &1743113659723793866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a14e0b055b7b32438b04dc0a7435d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4969472600556388781
 MonoBehaviour:
   m_ObjectHideFlags: 0
