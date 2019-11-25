@@ -7,9 +7,8 @@ public class Shield : MonoBehaviour
     Thing thing;
     public string NameOfState;
     public string ParamAnimation;
+    public bool ActiveSelf;
     private Animator m_animator;
-    private Animation m_animation;
-    public bool bTest;
     void Start()
     {
         if(transform.parent != null)
@@ -21,7 +20,10 @@ public class Shield : MonoBehaviour
             }
         }
         m_animator = GetComponent<Animator>();
-        //m_animation = GetComponent<Animation>();
+        if(ActiveSelf == true)
+        {
+            Activate();
+        }
     }
 
     // Update is called once per frame
@@ -38,11 +40,6 @@ public class Shield : MonoBehaviour
                 Activate();
             }
         }
-        if(bTest == true)
-        {
-            Activate();
-            bTest = false;
-        }
     }
 
     public void Deactivate()
@@ -55,8 +52,6 @@ public class Shield : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
-        //m_animation.Play();
-        //m_animator.CrossFade(NameOfState,0);
         m_animator.SetInteger(ParamAnimation, 1);
     }
 }

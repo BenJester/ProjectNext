@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 5875537879067148406}
   - component: {fileID: 461005181}
   - component: {fileID: 4608901840260904553}
+  - component: {fileID: 327932037883352327}
   - component: {fileID: 43854695}
   - component: {fileID: 1117773378}
   - component: {fileID: 6614817534376132197}
@@ -636,6 +637,23 @@ MonoBehaviour:
   NameOfSkill: Throw
   ContinuousSkill: 0
   ObjShoot: {fileID: 305787941185668345, guid: f6ea3c2576a57dd4893be0b833582286, type: 3}
+  objInstanceDistance: 50
+  objSpeed: 900
+--- !u!114 &327932037883352327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d6bf6b50423bf24fb87fb2808f55a8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: ThrowShieldBomb
+  ContinuousSkill: 0
+  ObjShoot: {fileID: 305787941185668345, guid: 7a8451598ec9d0449a802dffc27cbfa6, type: 3}
   objInstanceDistance: 50
   objSpeed: 900
 --- !u!114 &43854695
