@@ -279,12 +279,13 @@ GameObject:
   - component: {fileID: 1822075790804457673}
   - component: {fileID: 4908773754255238964}
   - component: {fileID: 8868780347860922713}
-  - component: {fileID: 1743113659723793866}
   - component: {fileID: 4969472600556388781}
   - component: {fileID: 3425024574878054850}
   - component: {fileID: 8557469246409838221}
   - component: {fileID: 9219038894787655334}
   - component: {fileID: 2709046440783315901}
+  - component: {fileID: 6582313651601791562}
+  - component: {fileID: 1122384040826477014}
   m_Layer: 8
   m_Name: Enemy_NinjaBD
   m_TagString: thing
@@ -819,18 +820,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfSkill: Shield
   ContinuousSkill: 0
---- !u!114 &1743113659723793866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a14e0b055b7b32438b04dc0a7435d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4969472600556388781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,6 +895,40 @@ MonoBehaviour:
   NameOfSkill: ThrowBombReady
   ContinuousSkill: 1
   AniManager: {fileID: 5466655594703043781}
+--- !u!114 &6582313651601791562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b70005dde50d140866855f7292d09a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: melee
+  ContinuousSkill: 0
+  MeleeGameObject: {fileID: 522231788412236581, guid: 0b888a089ddcd3447804d7d354d7f446,
+    type: 3}
+  OffsetWithParent: {x: -80, y: 0, z: 0}
+--- !u!114 &1122384040826477014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c239001746fb82e409571e95dc9b5fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: Jump
+  ContinuousSkill: 0
+  JumpUPForce: 5000000
+  JumpForwardForce: -300000
+  JumpTime: 0.1
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
