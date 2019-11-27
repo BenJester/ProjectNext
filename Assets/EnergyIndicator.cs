@@ -5,14 +5,20 @@ using UnityEngine;
 public class  EnergyIndicator : MonoBehaviour
 {
 
-    public static EnergyIndicator instance;
+    public static EnergyIndicator instance = null;
 
     public GameObject energyParticle;
     private GameObject _energyParticle;
 
     private void Awake()
     {
-        if (instance == null) instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+        }
     }
     void Start()
     {
@@ -32,16 +38,24 @@ public class  EnergyIndicator : MonoBehaviour
 
     public void CloseEnergyParticle()
     {
-        _energyParticle.SetActive(false);
+        if(_energyParticle != null)
+        {
+            _energyParticle.SetActive(false);
+        }
+        else
+        {
+        }
         //Debug.Log("setfalse energy");
     }
     public void TransferEnergyParticle(Transform target)
     {
-        
-        _energyParticle.transform.position = target.transform.position;
-        _energyParticle.SetActive(true);
-        _energyParticle.transform.SetParent(target);
-        Destroy(_energyParticle, 1f);
+        if(_energyParticle != null)
+        {
+            _energyParticle.transform.position = target.transform.position;
+            _energyParticle.SetActive(true);
+            _energyParticle.transform.SetParent(target);
+            Destroy(_energyParticle, 1f);
+        }
     }
 
     //玩家自己出现力量

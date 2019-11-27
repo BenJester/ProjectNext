@@ -11,6 +11,7 @@ public class GlobalVariable
 
     private static UnityAction<PlayerControl1> m_playerAc;
 
+    public static UIDebugWindow StaticUIDebugWindow;
     public static UIPlayerController GetUIPlayerCtrl()
     {
         if( s_UIPlayerCtrl == null )

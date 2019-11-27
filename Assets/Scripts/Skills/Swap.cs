@@ -53,9 +53,11 @@ public class Swap : Skill {
     public float duration;
     public override void Do()
 	{
-		if (!active || !col || col.GetComponent<Thing> ().dead || !cooldowned)
-			return;
-		StartCoroutine(DelayedSwap(waitTime));
+        if (!active || !col || col.GetComponent<Thing>().dead || !cooldowned)
+        {
+            return;
+        }
+        StartCoroutine(DelayedSwap(waitTime));
 
        // playerControl.SetColShadow();
 
@@ -75,8 +77,8 @@ public class Swap : Skill {
     }
 
 	public void DoSwap ()
-    {	
-		StartCoroutine (SwapDamageEffect ());
+    {
+        StartCoroutine (SwapDamageEffect ());
 
         //屏幕震动	
         if (ProCamera2DShake.Instance != null)
@@ -124,9 +126,20 @@ public class Swap : Skill {
                 m_swapEffect.StartMoving( _readySwapCol.transform.position, transform.position);
             }
         }
+        else
+        {
+        }
         ScanEnemies(_readySwapCol);
         Rigidbody2D thingBody = _readySwapCol.gameObject.GetComponent<Rigidbody2D> ();
+        if(thingBody == null)
+        {
+            Debug.Assert(false);
+        }
 		Thing _swapThing = _readySwapCol.gameObject.GetComponent<Thing> ();
+        if (_swapThing == null)
+        {
+            Debug.Assert(false);
+        }
         _swapThing.ThingSwap();
         Thing _playerThing = player.gameObject.GetComponent<Thing>();
         _playerThing.ThingSwap();
@@ -134,7 +147,13 @@ public class Swap : Skill {
 		Vector3 posPlayer = player.transform.position;
 		Vector3 _posSwapThing = _readySwapCol.transform.position;
 
-        EnergyIndicator.instance.CloseEnergyParticle();
+        if(EnergyIndicator.instance != null)
+        {
+            EnergyIndicator.instance.CloseEnergyParticle();
+        }
+        else
+        {
+        }
         BoxCollider2D objCol2d = _readySwapCol.GetComponent<BoxCollider2D>();
         //float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
         float playerRadiusY = player.GetComponent<BoxCollider2D>().bounds.size.y / 2f;
@@ -169,8 +188,14 @@ public class Swap : Skill {
         Smoke();
 
         //转移粒子：
-        EnergyIndicator.instance.TransferEnergyParticle(_readySwapCol.transform);
-        EnergyIndicator.instance.RespawnEnergyParticle();
+        if (EnergyIndicator.instance != null)
+        {
+            EnergyIndicator.instance.TransferEnergyParticle(_readySwapCol.transform);
+            EnergyIndicator.instance.RespawnEnergyParticle();
+        }
+        else
+        {
+        }
 
         Vector2 MomentumPlayer = playerBody.velocity * _playerThing.MomentumMass;
         Vector2 MomentumSwapThing = thingBody.velocity * _swapThing.MomentumMass;
