@@ -259,6 +259,8 @@ public class PlayerControl1 : PlayerControl {
     private bool m_bDashResult;
     private float m_fCurDashDuration;
     private bool m_bDashing;
+
+    private Vector3 m_vecMouseWorldPos;
     void Awake() {
         if(ProCamera2D.Exists == true)
         {
@@ -301,6 +303,7 @@ public class PlayerControl1 : PlayerControl {
 
     void Start()
     {
+        m_vecMouseWorldPos = new Vector3();
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
 
         if (objLevelMgr != null)
@@ -811,7 +814,14 @@ public class PlayerControl1 : PlayerControl {
     {
         swap.col = null;
     }
+    private void _resetClosestData()
+    {
+        closestDistance = Mathf.Infinity;
+        closestPlayerDistance = Mathf.Infinity;
 
+        closestObjectToCursor = null;
+        closestObjectToPlayer = null;
+    }
     // 计算与鼠标和玩家最近的物体
     void HandleObjectDistance() {
 
@@ -825,11 +835,16 @@ public class PlayerControl1 : PlayerControl {
             || !(controlState == ControlWay.isKeyboard) && laserBulletAngle && (closestObjectToCursor && Vector3.Distance(closestObjectToCursor.transform.position, transform.position)> shootDistance)
             || ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)))
         {
-            closestDistance = Mathf.Infinity;
-            closestPlayerDistance = Mathf.Infinity;
-
-            closestObjectToCursor = null;
-            closestObjectToPlayer = null;
+            _resetClosestData();
+        }
+        if( controlState == ControlWay.isKeyboard )
+        {
+            Vector3 vecMouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if(m_vecMouseWorldPos != vecMouseWorldPos)
+            {
+                m_vecMouseWorldPos = vecMouseWorldPos;
+                _resetClosestData();
+            }
         }
 
 
