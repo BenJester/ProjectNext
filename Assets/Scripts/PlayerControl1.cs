@@ -278,7 +278,10 @@ public class PlayerControl1 : PlayerControl {
         //手柄死区
         if(controlState==ControlWay.isJoystick)
         {
-            player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
+            if(player.controllers.Joysticks.Count > 0 )
+            {
+                player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
+            }
         }
 
         GlobalVariable.SetPlayer(this);
