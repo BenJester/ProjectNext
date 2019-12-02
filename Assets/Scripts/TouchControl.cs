@@ -27,6 +27,8 @@ public class TouchControl : MonoBehaviour
     public Vector2 finalAimDir;
     public bool dashDrag;
     public bool aimDrag;
+    private float m_fPrevPrevAimMagnitude;
+    private bool m_bAimDrag;
 
     private void Start()
     {
@@ -47,10 +49,16 @@ public class TouchControl : MonoBehaviour
         if (prevMagnitude > 0 && dashMag == 0)
             PlayerControl1.Instance.dash.RequestDash();
 
-        if (prevAimMagnitude > 0 && aimMag == 0)
+        //这里改为，如果瞄准轴被拖动过之后，只要前两桢瞄准的值为0的话，才会执行交换。
+        //之前一桢判断的话，如果轴在移动到0，0时也会产生交换。
+        if (m_bAimDrag == true)
         {
-            PlayerControl1.Instance.swap.Do();
-            PlayerControl1.Instance.CancelAimBulletTime();
+            if (prevAimMagnitude == 0 && aimMag == 0 && m_fPrevPrevAimMagnitude == 0)
+            {
+                m_bAimDrag = false;
+                PlayerControl1.Instance.swap.Do();
+                PlayerControl1.Instance.CancelAimBulletTime();
+            }
         }
             
 
@@ -67,6 +75,7 @@ public class TouchControl : MonoBehaviour
 
         if (aimMag >= dragStartMag)
         {
+            m_bAimDrag = true;
             finalAimDir = aimDir;
             aimDrag = true;
         }
@@ -86,6 +95,7 @@ public class TouchControl : MonoBehaviour
         }
 
         prevMagnitude = dashMag;
+        m_fPrevPrevAimMagnitude = prevAimMagnitude;
         prevAimMagnitude = aimMag;
     }
     
