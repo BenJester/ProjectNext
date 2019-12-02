@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
 using Com.LuisPedroFonseca.ProCamera2D;
-
+using UnityEngine.Rendering.PostProcessing;
 public class Swap : Skill {
 
 
@@ -51,6 +51,22 @@ public class Swap : Skill {
     public int motorIndex;
     public float level;
     public float duration;
+
+    private Vector3 m_vecPlayerDst;
+    private Vector3 m_vecSwapDst;
+    private bool m_bSwaping;
+    private bool m_bStayinSwap;
+    private float m_fCurrentSwapTime;
+    public float m_fSwapTime = 5;
+    public float m_fSwapSpeed = 1;
+    private Transform m_TransSwap;
+    private Vector2 m_cachePlayerVelocity;
+    private Vector2 m_cacheBodyVelocity;
+
+    private float m_fStayingTime;
+
+    public PostProcessVolume dashVolume;
+    public float StayingTime;
     public override void Do()
 	{
         if (!active || !col || col.GetComponent<Thing>().dead || !cooldowned)
@@ -182,28 +198,40 @@ public class Swap : Skill {
         {
             _readySwapCol.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
             player.transform.position = new Vector3(_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
+            #region 交换效果1
+            //Vector3 vecDstObj = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
+            //Vector3 vecDstPlayer = new Vector3(_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
+            //dashVolume.enabled = true;
+            //m_vecPlayerDst = vecDstPlayer;
+            //m_vecSwapDst = vecDstObj;
+            //m_bSwaping = true;
+            //m_TransSwap = _readySwapCol.gameObject.transform;
+            //m_fCurrentSwapTime = 0.0f;
+            //player.transform.GetComponent<Rigidbody2D>().isKinematic = true;
+            //m_TransSwap.GetComponent<Rigidbody2D>().isKinematic = true;
+            #endregion
             PostEffectManager.instance.Blink (0.03f);
 			//print ("Exchange!");
         }
         Smoke();
 
         //转移粒子：
-        if (EnergyIndicator.instance != null)
-        {
-            EnergyIndicator.instance.TransferEnergyParticle(_readySwapCol.transform);
-            EnergyIndicator.instance.RespawnEnergyParticle();
-        }
-        else
-        {
-        }
+        //if (EnergyIndicator.instance != null)
+        //{
+        //    EnergyIndicator.instance.TransferEnergyParticle(_readySwapCol.transform);
+        //    EnergyIndicator.instance.RespawnEnergyParticle();
+        //}
+        //else
+        //{
+        //}
 
         Vector2 MomentumPlayer = playerBody.velocity * _playerThing.MomentumMass;
         Vector2 MomentumSwapThing = thingBody.velocity * _swapThing.MomentumMass;
         //
-        playerBody.velocity = thingBody.velocity;
+        m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
         //
         //playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-		thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+        m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
         Thing _thingInstance = thingBody.GetComponent<Thing>();
         if(_thingInstance != null && _thingInstance.IsSwapRotationByVelocity == true)
         {
@@ -222,8 +250,13 @@ public class Swap : Skill {
 
         audioSource.PlayOneShot(clip, 0.8f);
     }
-		
-	void ScanEnemies (Collider2D _swapCol) {
+
+    private void SwapObject(Transform _trans, Vector3 vecDst)
+    {
+        _trans.position = Vector3.MoveTowards(_trans.position, vecDst,m_fSwapSpeed);
+    }
+
+    void ScanEnemies (Collider2D _swapCol) {
 		if (!swapDamageOn)
 			return;
 
@@ -352,6 +385,49 @@ public class Swap : Skill {
             StopAllCoroutines();
             StartCoroutine(CancelDelay());
         }
+        //if(m_bSwaping == true)
+        //{
+        //    m_fCurrentSwapTime += Time.fixedDeltaTime;
+        //    SwapObject(m_TransSwap, m_vecSwapDst);
+        //    SwapObject(player.transform, m_vecPlayerDst);
+        //    //if ( m_fCurrentSwapTime >= m_fSwapTime )
+        //    //{
+        //    //    _SwitchToStaying();
+        //    //}
+        //    if (m_TransSwap.position.Equals(m_vecSwapDst) == true)
+        //    {
+        //        _SwitchToStaying();
+        //        dashVolume.enabled = false;
+        //    }
+        //}
+        //if(m_bStayinSwap == true )
+        //{
+        //    m_fStayingTime += Time.fixedDeltaTime;
+        //    if(m_fStayingTime >= StayingTime )
+        //    {
+        //        m_bStayinSwap = false;
+        //        _resetVelocity();
+        //        EnergyIndicator.instance.RespawnEnergyParticle();
+        //    }
+        //}
+    }
+
+    private void _SwitchToStaying()
+    {
+        m_bSwaping = false;
+        m_bStayinSwap = true;
+        m_fStayingTime = 0.0f;
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        m_TransSwap.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+    private void _resetVelocity()
+    {
+        player.GetComponent<Rigidbody2D>().isKinematic = false;
+        player.GetComponent<Rigidbody2D>().velocity = m_cacheBodyVelocity;
+
+        m_TransSwap.GetComponent<Rigidbody2D>().isKinematic = false;
+        m_TransSwap.GetComponent<Rigidbody2D>().velocity = m_cachePlayerVelocity;
     }
     public void SetDoubleSwap(bool bDouble)
     {
