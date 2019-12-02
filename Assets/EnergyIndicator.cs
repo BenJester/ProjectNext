@@ -58,6 +58,11 @@ public class  EnergyIndicator : MonoBehaviour
         }
     }
 
+    public void DestroyParticle()
+    {
+        Destroy(_energyParticle, 1f);
+    }
+
     //玩家自己出现力量
    
 }
