@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Ben;
 public class Box : MonoBehaviour {
 
 	public float killDropSpeed;
