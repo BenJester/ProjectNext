@@ -12,6 +12,8 @@ public class Strawberry : MonoBehaviour
 
     public float FollowingSpeed;
 
+    public GameObject getParticle;
+
     SpriteRenderer sr;
     CheckPointTotalManager worldManager;
 
@@ -89,6 +91,17 @@ public class Strawberry : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             m_bFollingPlayer = true;
             m_fCurFollingTime = 0.0f;
+
+            if (getParticle != null)
+            {
+                GameObject g = Instantiate(getParticle, transform.position, Quaternion.identity);
+                Destroy(g, 1.5f);
+            }
+
+            if (col.GetComponent<PlayerEnergyCatch>() != null)
+            {
+                col.GetComponent<PlayerEnergyCatch>().SetstarberryParticle();
+            }
 
         }
     }

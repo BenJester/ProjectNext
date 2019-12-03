@@ -31,7 +31,11 @@ public class CheckPointTotalManager : MonoBehaviour {
 
     public void SetStrawBerryText()
     {
-        strawberryText.text = strawberryCount.ToString() + "/" + maxStrawberryCount.ToString();
+        if (strawberryText != null)
+        {
+            strawberryText.text = strawberryCount.ToString() + "/" + maxStrawberryCount.ToString();
+        }
+        
     }
 	
 	// Update is called once per frame
