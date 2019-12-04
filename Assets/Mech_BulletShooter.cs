@@ -29,6 +29,6 @@ public class Mech_BulletShooter : MonoBehaviour
 
     void Shoot(){
         GameObject bullet =  Instantiate(bulletToShoot,(Vector2)transform.position+Vector2.right*10,Quaternion.identity) as GameObject;
-        bullet.GetComponent<Rigidbody2D>().velocity = Vector2.right*bulletSpeed;
+        bullet.GetComponent<Rigidbody2D>().velocity = transform.up*bulletSpeed;
     }
 }
