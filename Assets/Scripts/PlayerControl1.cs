@@ -924,6 +924,20 @@ public class PlayerControl1 : PlayerControl {
 
             }
         }
+
+        if (controlState != ControlWay.isKeyboard)
+        {
+            float fHorizontal = player.GetAxis("AimHorizontal");
+            float fVertical = player.GetAxis("AimVertical");
+            Vector2 vec = new Vector2(fHorizontal, fVertical);
+            float fDis = vec.magnitude;
+
+            if (fDis < 1)
+            {
+                closestObjectToCursor = null;
+            }
+
+        }
         if ((!prevClosestObjectToCursor && closestObjectToCursor) || prevClosestObjectToCursor != closestObjectToCursor)
         {
             prevClosestObjectToCursor = closestObjectToCursor;
