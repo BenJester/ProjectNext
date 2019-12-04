@@ -8,8 +8,9 @@ public class EnemyBullet : Bullet {
 //	SpriteRenderer sr;
 //	Collider2D collider;
 	PlayerControl pc;
-//	GameObject player;
-	void Start () {
+    public bool floorCollide = true;
+    //	GameObject player;
+    void Start () {
 		base.Start();
 //		player = GameObject.FindWithTag ("player");
 		pc = player.GetComponent<PlayerControl> ();
@@ -48,7 +49,7 @@ public class EnemyBullet : Bullet {
 			pc.Die ();
 			Deactivate ();
 		}
-		else if (col.CompareTag ("floor")) {
+		else if (col.CompareTag ("floor") && floorCollide) {
 			Deactivate ();
 		}
 

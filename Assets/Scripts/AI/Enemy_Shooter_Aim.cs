@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Enemy_Shooter_Aim : Enemy {
 
-	// Use this for initialization
+    // Use this for initialization
 
-	[Space]
-	[Header ("静态敌人————会主动瞄准玩家进行射击")]
-	
+    [Space]
+    [Header("静态敌人————会主动瞄准玩家进行射击")]
+
+
+    public bool aimNoCollider=false;
 	public float distance;
 	public GameObject bullet;
 	private Vector2 direction;
@@ -20,6 +22,7 @@ public class Enemy_Shooter_Aim : Enemy {
 	public Transform player;
 	public bool isInSight = false;
 	public LineRenderer lr;
+   
 
 	private void Awake () {
 		animator = GetComponent<Animator> ();
@@ -90,6 +93,14 @@ public class Enemy_Shooter_Aim : Enemy {
 	}
 
 	public bool CheckPlayerInSight () {
+
+
+        if (aimNoCollider)
+        {
+            if(Vector2.Distance(transform.position, player.position) <= distance) return true;
+            else return false;
+        }
+
 		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, (player.position - transform.position).normalized, distance, (1 << 10) | (1 << 8) | (1 << 9));
 		RaycastHit2D hitNear;
 		if (hits.Length >= 2) {
