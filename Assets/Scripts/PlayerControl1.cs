@@ -426,10 +426,10 @@ public class PlayerControl1 : PlayerControl {
             //{
             //    rb.velocity = Vector2.zero;
             //}
-            if ((player.GetAxisRaw("MoveHorizontal") == 0))
-            {
-                rb.velocity = Vector2.zero;
-            }
+            //if ((player.GetAxisRaw("MoveHorizontal") == 0))
+            //{
+            //    rb.velocity = Vector2.zero;
+            //}
 
 
         }
@@ -935,6 +935,7 @@ public class PlayerControl1 : PlayerControl {
             if (fDis < 1)
             {
                 closestObjectToCursor = null;
+                closestObjectToPlayer = null;
             }
 
         }
@@ -986,7 +987,8 @@ public class PlayerControl1 : PlayerControl {
             m_fCurrentKeepJumping += Time.fixedDeltaTime;
             if (m_fCurrentKeepJumping <= JumpAddForceTime)
             {
-                rb.AddForce(transform.up * Time.fixedDeltaTime * jumpForceAir);
+                float fTimeBase = Time.fixedDeltaTime / Time.timeScale;
+                rb.AddForce(transform.up * fTimeBase * jumpForceAir);
             }
             else
             {
