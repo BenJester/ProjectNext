@@ -426,10 +426,10 @@ public class PlayerControl1 : PlayerControl {
             //{
             //    rb.velocity = Vector2.zero;
             //}
-            if ((player.GetAxisRaw("MoveHorizontal") == 0))
-            {
-                rb.velocity = Vector2.zero;
-            }
+            //if ((player.GetAxisRaw("MoveHorizontal") == 0))
+            //{
+            //    rb.velocity = Vector2.zero;
+            //}
 
 
         }
