@@ -55,9 +55,11 @@ public class Dash : Skill {
     private UnityAction m_uaDashOver;
 
     private PlayerAnimationComponent m_aniCom;
-    public override void Init () {
-        
 
+    private BulletTime m_bulletTime;
+    public override void Init () {
+
+        m_bulletTime = GetComponent<BulletTime>();
         lr = GetComponent<LineRenderer> ();
         amin = GetComponent<Animator>();
         m_stateMgr = GetComponent<PlayerStateManager>();
@@ -120,10 +122,13 @@ public class Dash : Skill {
 
 
             playerControl.swap.realWaitTime = playerControl.swap.waitTime;
-			Time.timeScale = Mathf.Min (Time.timeScale, reducedTimeScale);
-			Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
 			playerControl.targetDeltaTime = Time.fixedDeltaTime;
 			playerControl.targetTimeScale = Time.timeScale;
+
+            m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
+
+            //Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
+            //Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
 
             //辅助线指示
             DrawTrajectory();
@@ -133,7 +138,9 @@ public class Dash : Skill {
 		}
 
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButtonUp (1) || rPlayer.GetButtonUp("Dash")) {
+        if (Input.GetMouseButtonUp (1) || rPlayer.GetButtonUp("Dash"))
+        {
+            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
             //Do();
             //if (currWaitTime < remainBulletTimeThreshold)
             //{
