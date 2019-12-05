@@ -468,8 +468,9 @@ public class PlayerControl1 : PlayerControl {
         //float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
         float h = 0.0f;
         //Rewired------------------------------------------------------------
-        h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0); 
-
+        //h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0);
+        h += (player.GetAxisRaw("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
+        Debug.Log(string.Format("{0}",h));
 
         if (Mathf.Abs(h) > 0) {
             m_bJumpRelease = false;
@@ -834,8 +835,6 @@ public class PlayerControl1 : PlayerControl {
 
         if (toggleSwapTarget) return;
 
-        Debug.Log("HandleObjectDistance");
-
         // 手柄瞄准缓存上一个瞄准的物体
         // 如果距离太远，清掉缓存
         // 如果已瞄准物体死亡，清掉缓存
@@ -976,7 +975,6 @@ public class PlayerControl1 : PlayerControl {
             }
             m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
         } else {
-            Debug.Log("Missing");
             //swap.col = null;
             marker.transform.position = new Vector3(-10000f, 0f, 0f);
             lockedOnObjectLine.SetPosition(0, Vector3.zero);

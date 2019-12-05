@@ -64,20 +64,14 @@ public class BulletTime : MonoBehaviour {
 			Time.fixedDeltaTime = startDeltaTime * 0.1f;
 			targetDeltaTime = startDeltaTime * 0.1f;
 			bulletTimePostEffect.enabled=true;
-            Debug.Log("yesyes");
 		} else {
 			targetTimeScale = 1f;
 			targetDeltaTime = startDeltaTime;
 			bulletTimePostEffect.enabled=false;
-            Debug.Log("nonono");
         }
 	}
     public void ActiveBulletTime(bool bActive, BulletTimePriority ePriority)
     {
-        if( bActive == false)
-        {
-            Debug.Log("no");
-        }
         if(m_curPriority <= ePriority)
         {
             bulletTimeActive = bActive;
