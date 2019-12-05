@@ -28,7 +28,7 @@ public class Area_BulletTime : MonoBehaviour
     {
         if (collision.tag == "player")
         {
-            bulletTime.bulletTimeActive = true;
+            bulletTime.ActiveBulletTime( true, BulletTime.BulletTimePriority.BulletTimePriority_High);
         }
     }
 
@@ -37,7 +37,7 @@ public class Area_BulletTime : MonoBehaviour
     {
         if (collision.tag == "player")
         {
-            bulletTime.bulletTimeActive = false;
+            bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
         }
     }
 }
