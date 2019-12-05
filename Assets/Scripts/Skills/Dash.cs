@@ -199,9 +199,11 @@ public class Dash : Skill {
 
     IEnumerator CancelBulletTime()
     {
+        m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
         yield return new WaitForSecondsRealtime(remainBulletTimeDuration);
         playerControl.targetTimeScale = 1f;
         playerControl.targetDeltaTime = playerControl.startDeltaTime * 1f;
+        m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
     }
 
     //Rewired------------------------------------------------------------
