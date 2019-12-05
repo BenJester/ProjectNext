@@ -470,7 +470,6 @@ public class PlayerControl1 : PlayerControl {
         //Rewired------------------------------------------------------------
         //h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0);
         h += (player.GetAxisRaw("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
-        Debug.Log(string.Format("{0}",h));
 
         if (Mathf.Abs(h) > 0) {
             m_bJumpRelease = false;
