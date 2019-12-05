@@ -14,7 +14,7 @@ public class Mech_BulletShooter : MonoBehaviour
 
     void Start()
     {
-        
+        timeTemp = Time.time;
     }
 
     // Update is called once per frame
