@@ -678,6 +678,7 @@ public class PlayerControl1 : PlayerControl {
         //处理按下的指示器
         //Rewired------------------------------------------------------------
         if ( player.GetButton("Switch") ) {
+            m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_Low);
             if (useLineRenderer) {
                 //lr.enabled = true;
                 HandleLineRenderer();
@@ -688,6 +689,7 @@ public class PlayerControl1 : PlayerControl {
         } else //Rewired------------------------------------------------------------
     if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch")) {
 
+            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
             // || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
 
 
@@ -944,10 +946,15 @@ public class PlayerControl1 : PlayerControl {
             {
                 closestObjectToCursor = null;
                 closestObjectToPlayer = null;
+                if( fDis <= 0 )
+                {
+                    m_bulletTime.ActiveBulletTime(false,BulletTime.BulletTimePriority.BulletTimePriority_Low);
+                }
             }
             else
             {
-                if(closestObjectToCursor != null)
+                m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
+                if (closestObjectToCursor != null)
                 {
                     Debug.Log("haha");
                 }
@@ -973,13 +980,13 @@ public class PlayerControl1 : PlayerControl {
                 lockedOnObjectLine.SetPosition(0, transform.position);
                 lockedOnObjectLine.SetPosition(1, swap.col.transform.position);
             }
-            m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
+            //m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
         } else {
             //swap.col = null;
             marker.transform.position = new Vector3(-10000f, 0f, 0f);
             lockedOnObjectLine.SetPosition(0, Vector3.zero);
             lockedOnObjectLine.SetPosition(1, Vector3.zero);
-            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+            //m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
         }
         if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing>().dead) {
             targetMarker.transform.position = new Vector3(swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
