@@ -261,6 +261,8 @@ public class PlayerControl1 : PlayerControl {
     private bool m_bDashing;
 
     private Vector3 m_vecMouseWorldPos;
+
+    private BulletTime m_bulletTime;
     void Awake() {
         if(ProCamera2D.Exists == true)
         {
@@ -330,6 +332,7 @@ public class PlayerControl1 : PlayerControl {
         trajectoryStartColor = lr.startColor;
         trajectoryEndColor = lr.endColor;
 
+        m_bulletTime = GetComponent<BulletTime>();
     }
 
     public void RegisteDieAction(UnityAction<PlayerControl1> _act)
@@ -801,6 +804,10 @@ public class PlayerControl1 : PlayerControl {
             lockedOnObjectLine.startWidth = 5f;
             res = true;
         }
+        else
+        {
+            int a = 0;
+        }
         if (swap.col && Vector3.Distance(swap.col.transform.position, transform.position) > shootDistance)
         {
             lockedOnObjectLine.startWidth = 0f;
@@ -826,6 +833,8 @@ public class PlayerControl1 : PlayerControl {
     void HandleObjectDistance() {
 
         if (toggleSwapTarget) return;
+
+        Debug.Log("HandleObjectDistance");
 
         // 手柄瞄准缓存上一个瞄准的物体
         // 如果距离太远，清掉缓存
@@ -937,6 +946,17 @@ public class PlayerControl1 : PlayerControl {
                 closestObjectToCursor = null;
                 closestObjectToPlayer = null;
             }
+            else
+            {
+                if(closestObjectToCursor != null)
+                {
+                    Debug.Log("haha");
+                }
+                else
+                {
+                    Debug.Log("no haha");
+                }
+            }
 
         }
         if ((!prevClosestObjectToCursor && closestObjectToCursor) || prevClosestObjectToCursor != closestObjectToCursor)
@@ -954,10 +974,14 @@ public class PlayerControl1 : PlayerControl {
                 lockedOnObjectLine.SetPosition(0, transform.position);
                 lockedOnObjectLine.SetPosition(1, swap.col.transform.position);
             }
+            m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
         } else {
+            Debug.Log("Missing");
+            //swap.col = null;
             marker.transform.position = new Vector3(-10000f, 0f, 0f);
             lockedOnObjectLine.SetPosition(0, Vector3.zero);
             lockedOnObjectLine.SetPosition(1, Vector3.zero);
+            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
         }
         if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing>().dead) {
             targetMarker.transform.position = new Vector3(swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);

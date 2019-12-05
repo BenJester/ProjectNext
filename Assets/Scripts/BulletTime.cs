@@ -16,9 +16,16 @@ public class BulletTime : MonoBehaviour {
 		ClickToInOut = 0,
 		HoldToIn = 1,
 	}
+    public enum BulletTimePriority
+    {
+        BulletTimePriority_None = 0,
+        BulletTimePriority_Low = 1,
+        BulletTimePriority_High = 2,
+    }
 
-	// Use this for initialization
-	private void Awake () {
+    private BulletTimePriority m_curPriority;
+    // Use this for initialization
+    private void Awake () {
 		startDeltaTime = Time.fixedDeltaTime;
 		targetDeltaTime = startDeltaTime;
 		targetTimeScale = 1f;
@@ -34,14 +41,19 @@ public class BulletTime : MonoBehaviour {
 		switch (mode) {
 			case inputMode.ClickToInOut:
 				if (Input.GetKeyDown (KeyCode.LeftShift)) {
-					bulletTimeActive = !bulletTimeActive;
+                    ActiveBulletTime(!bulletTimeActive, BulletTimePriority.BulletTimePriority_High);
 				}
 				break;
 
 			case inputMode.HoldToIn:
-				if (Input.GetKey (KeyCode.LeftShift)) {
-					bulletTimeActive = true;
-				} else bulletTimeActive = false;
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    ActiveBulletTime(true, BulletTimePriority.BulletTimePriority_High);
+                }
+                else
+                {
+                    ActiveBulletTime(false, BulletTimePriority.BulletTimePriority_High);
+                }
 				break;
 
 		}
@@ -52,11 +64,31 @@ public class BulletTime : MonoBehaviour {
 			Time.fixedDeltaTime = startDeltaTime * 0.1f;
 			targetDeltaTime = startDeltaTime * 0.1f;
 			bulletTimePostEffect.enabled=true;
+            Debug.Log("yesyes");
 		} else {
 			targetTimeScale = 1f;
 			targetDeltaTime = startDeltaTime;
 			bulletTimePostEffect.enabled=false;
-		}
-
+            Debug.Log("nonono");
+        }
 	}
+    public void ActiveBulletTime(bool bActive, BulletTimePriority ePriority)
+    {
+        if( bActive == false)
+        {
+            Debug.Log("no");
+        }
+        if(m_curPriority <= ePriority)
+        {
+            bulletTimeActive = bActive;
+            if(bActive == false)
+            {
+                m_curPriority = BulletTimePriority.BulletTimePriority_None;
+            }
+            else
+            {
+                m_curPriority = ePriority;
+            }
+        }
+    }
 }
