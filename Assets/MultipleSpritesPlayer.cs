@@ -2,14 +2,18 @@
 using System.Collections;
 public class MultipleSpritesPlayer : MonoBehaviour
 {
+
+    [Header("将你想要播放的Gif放在Asset/Resources文件夹下")]
+    public string gitFileName;
     private Coroutine AnimationPlay;//播放协程  
     private Sprite[] sprites;//被切割的序列图数组  
     private SpriteRenderer spriteRenderer;//精灵控制器  
     public float fps = 30;
 
+
     void Start()
     {
-        sprites = Resources.LoadAll<Sprite>("aa");//载入资源aa.png  
+        sprites = Resources.LoadAll<Sprite>(gitFileName);//载入资源aa.png  
         spriteRenderer = GetComponent<SpriteRenderer>() as SpriteRenderer;//这东西在精灵身上自带的，直接拿就行  }
 
     }
