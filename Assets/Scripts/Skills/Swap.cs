@@ -210,7 +210,8 @@ public class Swap : Skill {
             //player.transform.GetComponent<Rigidbody2D>().isKinematic = true;
             //m_TransSwap.GetComponent<Rigidbody2D>().isKinematic = true;
             #endregion
-            PostEffectManager.instance.Blink (0.03f);
+            //叶梓涛说这个可以暂时去掉了。如果不去掉，交换后的子弹时间因为这个代码关闭，但是没有地方打开，所以就会产生子弹时间没有画面表现。
+            //PostEffectManager.instance.Blink (0.03f);
 			//print ("Exchange!");
         }
         Smoke();
