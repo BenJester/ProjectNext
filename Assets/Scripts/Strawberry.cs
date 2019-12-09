@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Strawberry : MonoBehaviour
 {
+    public static int currentAddNum;
     public bool active;
     public float animDuration;
     public Vector3 translation;
@@ -30,7 +31,6 @@ public class Strawberry : MonoBehaviour
         m_vecOriginalPos = transform.position;
         sr = GetComponent<SpriteRenderer>();
         worldManager = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<CheckPointTotalManager>();
-        worldManager.maxStrawberryCount += 1;
         m_playerCtrl = GlobalVariable.GetPlayer();
         GlobalVariable.RegisteSetPlayerEvent(_setPlayer);
 
@@ -69,6 +69,7 @@ public class Strawberry : MonoBehaviour
                 m_bFollingPlayer = false;
                 StartCoroutine(Anim(animDuration));
                 worldManager.strawberryCount += 1;
+                currentAddNum += 1;
                 worldManager.SetStrawBerryText();
                 active = false;
             }
