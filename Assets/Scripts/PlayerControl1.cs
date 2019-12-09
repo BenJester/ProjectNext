@@ -934,6 +934,7 @@ public class PlayerControl1 : PlayerControl {
             }
         }
 
+        bool bAimingCancel = false;
         if (controlState != ControlWay.isKeyboard)
         {
             float fHorizontal = player.GetAxis("AimHorizontal");
@@ -952,6 +953,7 @@ public class PlayerControl1 : PlayerControl {
             }
             else
             {
+                bAimingCancel = true;
                 m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
                 if (closestObjectToCursor != null)
                 {
@@ -981,7 +983,10 @@ public class PlayerControl1 : PlayerControl {
             }
             //m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
         } else {
-            //swap.col = null;
+            if(bAimingCancel == true)
+            {
+                swap.col = null;
+            }
             marker.transform.position = new Vector3(-10000f, 0f, 0f);
             lockedOnObjectLine.SetPosition(0, Vector3.zero);
             lockedOnObjectLine.SetPosition(1, Vector3.zero);

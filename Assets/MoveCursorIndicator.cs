@@ -6,6 +6,7 @@ public class MoveCursorIndicator : MonoBehaviour
 {
     public float distance = 5f;
     private SpriteRenderer sr;
+   
 
     // Start is called before the first frame update
     private void Awake()
@@ -33,5 +34,10 @@ public class MoveCursorIndicator : MonoBehaviour
 
             }
         }
+        else
+        {
+            sr.enabled = false;
+        }
+                
     }
 }
