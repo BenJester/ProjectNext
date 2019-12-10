@@ -159,7 +159,7 @@ public class Door : MonoBehaviour
                     index += 2;
                 }
             }
-            }
+            
         }
     }
 }
