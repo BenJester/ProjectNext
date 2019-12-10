@@ -6,10 +6,14 @@ public class MovingPlatform : MonoBehaviour
 {
     private void OnCollisionStay2D(Collision2D collision)
     {
-        collision.transform.SetParent(transform);
+        if (collision.gameObject.tag == "player")
+        {
+            Debug.Log("playerenter");
+            collision.transform.SetParent(transform);
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        collision.transform.SetParent(null);
+        if (collision.gameObject.tag == "player") collision.transform.SetParent(null);
     }
 }
