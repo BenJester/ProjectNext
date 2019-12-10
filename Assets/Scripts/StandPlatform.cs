@@ -20,7 +20,10 @@ public class StandPlatform : MonoBehaviour
     {
         if (collision.gameObject.tag == "player")
         {
-            isStand = true;
+            if (collision.transform.position.y > transform.position.y)
+                isStand = true;
+            else
+                isStand = false;
             collision.transform.SetParent(transform);
         }
     }
