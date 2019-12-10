@@ -20,12 +20,12 @@ public class CheckPointTotalManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		savedPos=pivot.transform.position;
         SetStrawBerryText();
-
     }
     private void Start()
     {
         QualitySettings.vSyncCount = 0;  // VSync must be disabled 
         Application.targetFrameRate = 60;
+        SetStrawBerryNum();
         SetStrawBerryText();
     }
 
@@ -37,7 +37,11 @@ public class CheckPointTotalManager : MonoBehaviour {
         }
         
     }
-	
+	private void SetStrawBerryNum()
+    {
+        Strawberry[] strawberries = FindObjectsOfType<Strawberry>();
+        maxStrawberryCount=strawberries.Length;
+    }
 	// Update is called once per frame
 	void Update () {
 		

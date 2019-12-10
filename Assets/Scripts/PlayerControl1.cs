@@ -1326,6 +1326,8 @@ public class PlayerControl1 : PlayerControl {
         Time.timeScale = 1f;
         if (levelTest)
             levelTest.AddDeadNum(1);
+        CheckPointTotalManager.instance.strawberryCount -= Strawberry.currentAddNum;
+        CheckPointTotalManager.instance.SetStrawBerryText();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public override void Revive() {
