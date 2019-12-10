@@ -29,7 +29,7 @@ public class Door : MonoBehaviour
 	{
         if (lr != null)
         {
-            lr.positionCount = 10;
+            lr.positionCount = 3*(enemyList.Count+buttonList.Count+hostageList.Count);
             for (int i = 0; i < lr.positionCount; i++)
             {
                 lr.SetPosition(i, transform.position);
@@ -131,10 +131,12 @@ public class Door : MonoBehaviour
         {
             for (int i = 0; i < enemyList.Count; i++)
             {
-                
-                lr.SetPosition(index, transform.position);
-                lr.SetPosition(index + 1, enemyList[i].gameObject.transform.position);
-                index += 1;
+                if (enemyList[i] != null)
+                {
+                    lr.SetPosition(index, transform.position);
+                    lr.SetPosition(index + 1, enemyList[i].gameObject.transform.position);
+                    index += 1;
+                }          
             }
         }else if (!checkButtons())
         {
