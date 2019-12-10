@@ -135,7 +135,7 @@ public class Door : MonoBehaviour
                 {
                     lr.SetPosition(index, transform.position);
                     lr.SetPosition(index + 1, enemyList[i].gameObject.transform.position);
-                    index += 1;
+                    index += 2;
                 }          
             }
         }else if (!checkButtons())
@@ -145,17 +145,20 @@ public class Door : MonoBehaviour
                 
                 lr.SetPosition(index, transform.position);
                 lr.SetPosition(index + 1, buttonList[i].gameObject.transform.position);
-                index += 1;
+                index += 2;
             }
         }
         else if (!checkHostages())
         {
             for (int i = 0; i < hostageList.Count; i++)
             {
-                
-                lr.SetPosition(index, transform.position);
-                lr.SetPosition(index + 1, hostageList[i].gameObject.transform.position);
-                index += 1;
+                if (hostageList[i] != null)
+                {
+                    lr.SetPosition(index, transform.position);
+                    lr.SetPosition(index + 1, hostageList[i].gameObject.transform.position);
+                    index += 2;
+                }
+            }
             }
         }
     }
