@@ -10,7 +10,8 @@ public class Door : MonoBehaviour
 	public List<PhysicalButton> buttonList;
 	public List<Thing> hostageList;
 
-
+    public bool hasUIIndicator = false;
+    private LineRenderer lr;
 	public Vector3 origin;
 	public Vector3 target;
 
@@ -21,12 +22,21 @@ public class Door : MonoBehaviour
 	void Awake()
 	{
 		origin = transform.position;
+        lr = GetComponent<LineRenderer>();
 		//buttonList = new List<PhysicalButton>();
 	}
 	void Start()
 	{
-
-	}
+        if (lr != null)
+        {
+            lr.positionCount = 10;
+            for (int i = 0; i < lr.positionCount; i++)
+            {
+                lr.SetPosition(i, transform.position);
+            }
+        }
+        
+    }
 
 	void Update()
 	{
@@ -35,12 +45,22 @@ public class Door : MonoBehaviour
 			active = true;
 			//anim.SetBool("Active", true);
 			Open ();
-		}
+
+            if (hasUIIndicator) ClearUI();
+
+        }
 		else
 		{
+            if (hasUIIndicator)
+            {
+                SetUIIndicator();
+            }
 			active = false;
 			//anim.SetBool("Active", false);
 			Close ();
+
+
+
 		}
 	}
 
@@ -53,6 +73,7 @@ public class Door : MonoBehaviour
 
 	void Close()
 	{
+
 		if (transform.position.y <= origin.y)
 			return;
 		transform.Translate (0f, -speed, 0f);
@@ -94,4 +115,46 @@ public class Door : MonoBehaviour
 		return true;
 	}
 
+
+    void ClearUI()
+    {
+        lr.enabled = false;
+    }
+
+    void SetUIIndicator()
+    {
+        lr.enabled = true;
+        
+        int index = 0;
+
+        if (!checkEnemies())
+        {
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                
+                lr.SetPosition(index, transform.position);
+                lr.SetPosition(index + 1, enemyList[i].gameObject.transform.position);
+                index += 1;
+            }
+        }else if (!checkButtons())
+        {
+            for (int i = 0; i < buttonList.Count; i++)
+            {
+                
+                lr.SetPosition(index, transform.position);
+                lr.SetPosition(index + 1, buttonList[i].gameObject.transform.position);
+                index += 1;
+            }
+        }
+        else if (!checkHostages())
+        {
+            for (int i = 0; i < hostageList.Count; i++)
+            {
+                
+                lr.SetPosition(index, transform.position);
+                lr.SetPosition(index + 1, hostageList[i].gameObject.transform.position);
+                index += 1;
+            }
+        }
+    }
 }

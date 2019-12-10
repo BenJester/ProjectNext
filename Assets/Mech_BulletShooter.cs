@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mech_BulletShooter : MonoBehaviour
+public class Mech_BulletShooter : Mech_base
 {
     // Start is called before the first frame update
+
+
 
     public GameObject bulletToShoot;
     public float coolDown = 1f;
@@ -20,8 +22,8 @@ public class Mech_BulletShooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //TODO:要考虑到整体的子弹时间到底要怎么写老哥！
-        if(timeTemp<Time.time){
+        
+        if(type==MechType.update && timeTemp<Time.time){
             Shoot();
             timeTemp+=coolDown;
         }
@@ -30,5 +32,16 @@ public class Mech_BulletShooter : MonoBehaviour
     void Shoot(){
         GameObject bullet =  Instantiate(bulletToShoot,(Vector2)transform.position+Vector2.right*10,Quaternion.identity) as GameObject;
         bullet.GetComponent<Rigidbody2D>().velocity = transform.up*bulletSpeed;
+    }
+
+    public override void DoOnce()
+    {
+        base.DoOnce();
+        Shoot();
+    }
+
+    public override void Doing()
+    {
+        base.Doing();
     }
 }
