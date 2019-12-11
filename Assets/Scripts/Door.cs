@@ -32,7 +32,7 @@ public class Door : MonoBehaviour
             lr.positionCount = 3*(enemyList.Count+buttonList.Count+hostageList.Count);
             for (int i = 0; i < lr.positionCount; i++)
             {
-                lr.SetPosition(i, transform.position);
+                lr.SetPosition(i, origin);
             }
         }
         
@@ -118,12 +118,15 @@ public class Door : MonoBehaviour
 
     void ClearUI()
     {
-        lr.enabled = false;
+        for (int i = 0; i < lr.positionCount; i++)
+        {
+            lr.SetPosition(i, origin);
+        }
     }
 
     void SetUIIndicator()
     {
-        lr.enabled = true;
+       
         
         int index = 0;
 
