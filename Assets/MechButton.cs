@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MechButton : MonoBehaviour
 {
-
+    public bool onlyOnce;
     public bool isPressed=false;
     public Mech_base mech;
     public LineRenderer lr;
@@ -43,6 +43,8 @@ public class MechButton : MonoBehaviour
             if (cd <= 0)
             {
                 mech.DoOnce();
+                if (onlyOnce)
+                    Destroy(gameObject);
                 cd = 1;
             }
         }        
