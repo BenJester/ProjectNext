@@ -187,11 +187,8 @@ public class PlayerControl1 : PlayerControl {
     public float cursorSnapThreshold;
     public GameObject marker;
 
-    public GameObject targetMarker;
-
     public Swap swap;
     public Dash dash;
-    public bool doubleSwap;
 
     public LayerMask TouchLayer;
     public LayerMask BoxLayer;
@@ -263,6 +260,7 @@ public class PlayerControl1 : PlayerControl {
     private Vector3 m_vecMouseWorldPos;
 
     private BulletTime m_bulletTime;
+    private PlayerDoubleSwap m_doubleSwap;
     void Awake() {
         if(ProCamera2D.Exists == true)
         {
@@ -305,6 +303,7 @@ public class PlayerControl1 : PlayerControl {
 
     void Start()
     {
+        m_doubleSwap = GetComponent<PlayerDoubleSwap>();
         m_vecMouseWorldPos = new Vector3();
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
 
@@ -713,7 +712,7 @@ public class PlayerControl1 : PlayerControl {
         //双重交换
         //Rewired------------------------------------------------------------
         //if (Input.GetKeyDown(KeyCode.F) && doubleSwap || player.GetButtonDown("DoubleSwap") && doubleSwap) {
-        if (player.GetButtonDown("DoubleSwap") && doubleSwap)
+        if (player.GetButtonDown("DoubleSwap") && m_doubleSwap.DoubleSwap)
         {
             //原先是通过子弹进行呼唤，所以这里需要false，但是现在情况变了，这个作为一个功能开关，而不是一个属性值
             //doubleSwap = false;
@@ -955,14 +954,6 @@ public class PlayerControl1 : PlayerControl {
             {
                 bAimingCancel = true;
                 m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
-                if (closestObjectToCursor != null)
-                {
-                    Debug.Log("haha");
-                }
-                else
-                {
-                    Debug.Log("no haha");
-                }
             }
 
         }
@@ -992,12 +983,12 @@ public class PlayerControl1 : PlayerControl {
             lockedOnObjectLine.SetPosition(1, Vector3.zero);
             //m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
         }
-        if (swap.col != null && doubleSwap && !swap.col.GetComponent<Thing>().dead) {
-            targetMarker.transform.position = new Vector3(swap.col.transform.position.x, swap.col.gameObject.transform.position.y, -1f);
-        } else {
-            targetMarker.transform.position = new Vector3(-10000f, 0f, 0f);
-        }
+        m_doubleSwap.ProcessDoubleSwap(swap);
 
+    }
+    public PlayerDoubleSwap GetPlayerDoubleSwap()
+    {
+        return m_doubleSwap;
     }
 
     void HandlePointer() {
@@ -1574,19 +1565,19 @@ public class PlayerControl1 : PlayerControl {
             index = swappable.IndexOf(toggleTarget);
         }
 
-        if (Input.GetKeyUp(KeyCode.E)||player.GetButtonDown("LockLeft"))
-        {
-            if (index == swappable.Count - 1) index = -1;
-            toggleTarget = swappable[index + 1];
-            index += 1;
-        }
+        //if (Input.GetKeyUp(KeyCode.E)||player.GetButtonDown("LockLeft"))
+        //{
+        //    if (index == swappable.Count - 1) index = -1;
+        //    toggleTarget = swappable[index + 1];
+        //    index += 1;
+        //}
 
-        if (Input.GetKeyUp(KeyCode.Q) || player.GetButtonDown("LockRight"))
-        {
-            if (index == 0) index = swappable.Count;
-            toggleTarget = swappable[index - 1];
-            index -= 1;
-        }
+        //if (Input.GetKeyUp(KeyCode.Q) || player.GetButtonDown("LockRight"))
+        //{
+        //    if (index == 0) index = swappable.Count;
+        //    toggleTarget = swappable[index - 1];
+        //    index -= 1;
+        //}
 
         marker.transform.position = new Vector3(toggleTarget.transform.position.x, toggleTarget.transform.position.y, -1f);
 
