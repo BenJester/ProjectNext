@@ -151,7 +151,7 @@ public class Bullet : MonoBehaviour {
 		if (col.collider.CompareTag ("thing") && !col.collider.GetComponent<Thing>().hasShield) {
 			playerControl.swap.col = col.collider;
 			playerControl.swap.Do ();
-			playerControl.doubleSwap = true;
+			playerControl.GetPlayerDoubleSwap().DoubleSwap = true;
             CameraShaker.Instance.ShakeOnce(15, 1f, 0.02f, 0.05f);
 
 

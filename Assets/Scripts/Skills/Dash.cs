@@ -264,7 +264,6 @@ public class Dash : Skill {
         {
             m_uaDashStart.Invoke();
         }
-        Debug.Log("dash start");
         m_aniCom.PlayerDashStart();
 
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
@@ -310,7 +309,6 @@ public class Dash : Skill {
         {
             m_uaDashOver.Invoke();
         }
-        Debug.Log("dash over");
         m_aniCom.PlayerDashStop();
 
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
