@@ -659,13 +659,12 @@ public class PlayerControl1 : PlayerControl {
 
 
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButtonUp(0) 
-            || player.GetButtonUp("Switch") || player.GetButtonUp("QuichSwitch"))
+        if (player.GetButtonUp("Switch") || player.GetButtonUp("QuichSwitch"))
         {
             CancelAimBulletTime();
         }
 
-        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
+        if (player.GetButtonUp("Dash"))
         {          
             dash.RequestDash();
             m_bDashRequest = true;
@@ -685,7 +684,7 @@ public class PlayerControl1 : PlayerControl {
             IncreaseBulletSpeed();
 
         } else //Rewired------------------------------------------------------------
-    if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch")) {
+    if (player.GetButtonUp("Switch")) {
 
             m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
             // || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
@@ -1073,10 +1072,6 @@ public class PlayerControl1 : PlayerControl {
 
     IEnumerator RestoreTimeScale(float duration) {
         yield return new WaitForSeconds(duration);
-        if (!Input.GetMouseButton(0)) {
-            // targetTimeScale = 1f;
-            // targetDeltaTime = startDeltaTime;
-        }
 
     }
 
