@@ -67,9 +67,10 @@ public class Swap : Skill {
 
     public PostProcessVolume dashVolume;
     public float StayingTime;
+
     public override void Do()
 	{
-        if (!active || !col || col.GetComponent<Thing>().dead || !cooldowned)
+        if (!active || !col || col.GetComponent<Thing>().dead /*|| !cooldowned*/)
         {
             return;
         }
@@ -376,6 +377,10 @@ public class Swap : Skill {
         cooldowned = false;
         yield return new WaitForSecondsRealtime(cooldown);
         cooldowned = true;
+    }
+    public bool IsSwapCoolDownValid()
+    {
+        return cooldowned;
     }
 
     void FixedUpdate()

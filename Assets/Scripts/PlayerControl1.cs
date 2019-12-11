@@ -647,7 +647,7 @@ public class PlayerControl1 : PlayerControl {
 
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if ( (player.GetButton("Switch") && currWaitTime >= waitTime)
+        if ( (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true && currWaitTime >= waitTime )
             || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
             )
         {
@@ -661,7 +661,7 @@ public class PlayerControl1 : PlayerControl {
 
 
         //Rewired------------------------------------------------------------
-        if (player.GetButtonUp("Switch") || player.GetButtonUp("QuichSwitch"))
+        if (player.GetButtonUp("Switch") && swap.IsSwapCoolDownValid() == true || player.GetButtonUp("QuichSwitch"))
         {
             CancelAimBulletTime();
         }
@@ -676,7 +676,7 @@ public class PlayerControl1 : PlayerControl {
 
         //处理按下的指示器
         //Rewired------------------------------------------------------------
-        if ( player.GetButton("Switch") ) {
+        if ( player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true) {
             //m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_Low);
             //m_bulletTime.DelayActive(DelaySwitchTime);
             if (useLineRenderer) {
@@ -687,7 +687,7 @@ public class PlayerControl1 : PlayerControl {
             IncreaseBulletSpeed();
 
         } else //Rewired------------------------------------------------------------
-    if (player.GetButtonUp("Switch")) {
+    if (player.GetButtonUp("Switch") && swap.IsSwapCoolDownValid() == true) {
 
             m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
             // || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
@@ -1025,13 +1025,13 @@ public class PlayerControl1 : PlayerControl {
         // 左键子弹时间
         //Rewired------------------------------------------------------------
         //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
-        if (player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        if (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
         {
             currWaitTime += 1;
         }
         //Rewired------------------------------------------------------------
         //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag)) {
-        if (player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        if (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
         {
             anim.SetBool("IsCharging", true);
 
@@ -1449,7 +1449,7 @@ public class PlayerControl1 : PlayerControl {
     IEnumerator PlayColShadow()
     {
         colShadow.transform.position = transform.position;
-        while (player.GetButton("Dash") || player.GetButton("Switch")/*&& swap.delaying*/)
+        while (player.GetButton("Dash") || player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true/*&& swap.delaying*/)
         {
             if ((Vector2)lr.GetPosition(5) != Vector2.zero)
             {

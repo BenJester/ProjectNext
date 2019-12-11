@@ -24,8 +24,11 @@ public class Box : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.CompareTag("thing")) {
 			Thing colThing = col.gameObject.GetComponent<Thing> ();
-			if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
-                if( colThing.GetLowerY() > _boxThing.GetLowerY() )
+            //这里逻辑有点奇怪
+            //if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
+            if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() >= colThing.GetUpperY() )
+            {
+                if ( colThing.GetLowerY() > _boxThing.GetLowerY() )
                 {
                     //碰撞物在箱子上面。就不处理。
                 }
