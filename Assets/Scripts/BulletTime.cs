@@ -40,13 +40,13 @@ public class BulletTime : MonoBehaviour {
 
 		switch (mode) {
 			case inputMode.ClickToInOut:
-				if (Input.GetKeyDown (KeyCode.LeftShift)) {
+				if (Input.GetKeyDown (KeyCode.C)) {
                     ActiveBulletTime(!bulletTimeActive, BulletTimePriority.BulletTimePriority_High);
 				}
 				break;
 
 			case inputMode.HoldToIn:
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.C))
                 {
                     ActiveBulletTime(true, BulletTimePriority.BulletTimePriority_High);
                 }
