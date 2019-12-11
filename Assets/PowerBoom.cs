@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerBoom : MonoBehaviour
 {
-
+    public float cd;
     private Rigidbody2D myRb;
     public bool isBurst = false;
     [Range(0,1)]
@@ -14,6 +14,8 @@ public class PowerBoom : MonoBehaviour
 
     public float burstPower;
     public float targetPower;
+    private float timer;
+    private bool isColdDown=true;
 
     // Start is called before the first frame update
     private void Awake()
@@ -28,17 +30,22 @@ public class PowerBoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (timer < Time.time) isColdDown = true;
+
         Vector2 dir = new Vector2(myRb.velocity.x, myRb.velocity.y).normalized;
         dir = new Vector2(dir.x * horizontalRatio, dir.y * verticalRatio);
 
-        if (isBurst)
+        if (isBurst && isColdDown)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                myRb.velocity += dir * burstPower;
+                myRb.velocity += dir * burstPower/Time.timeScale;
+                timer = Time.time + cd;
+                isColdDown = false;
             }
         }
-        else
+        else if(!isBurst && isColdDown)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
