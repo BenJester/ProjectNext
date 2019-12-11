@@ -263,6 +263,8 @@ public class PlayerControl1 : PlayerControl {
     private Vector3 m_vecMouseWorldPos;
 
     private BulletTime m_bulletTime;
+
+    private bool m_bCanJumpingDash;
     void Awake() {
         if(ProCamera2D.Exists == true)
         {
@@ -406,6 +408,8 @@ public class PlayerControl1 : PlayerControl {
         if (isTouchingGround == true)
         {
             m_bDashing = false;
+
+            m_bCanJumpingDash = false;
         }
         // landing
         if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
@@ -555,7 +559,18 @@ public class PlayerControl1 : PlayerControl {
         //if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) || player.GetButtonUp("Jump"))
         if (player.GetButtonUp("Jump"))
         {
-            m_bJumpingWindow = false;
+            if(m_bCanJumpingDash == true)
+            {
+                m_bCanJumpingDash = false;
+                dash.RequestDash();
+                m_bDashRequest = true;
+                m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+            }
+            else
+            {
+                m_bJumpingWindow = false;
+                m_bCanJumpingDash = true;
+            }
         }
         if (rb.velocity.y != 0)
         {
@@ -618,8 +633,8 @@ public class PlayerControl1 : PlayerControl {
                 Jump();
             }
             else {
-                cachedJump = true;
-                StartCoroutine(CacheJump());
+                //cachedJump = true;
+                //StartCoroutine(CacheJump());
             }
         }
 
@@ -660,13 +675,13 @@ public class PlayerControl1 : PlayerControl {
 
 
         //Rewired------------------------------------------------------------
-        if (Input.GetMouseButtonUp(0) 
-            || player.GetButtonUp("Switch") || player.GetButtonUp("QuichSwitch"))
+        if (/*Input.GetMouseButtonUp(0) ||*/
+             player.GetButtonUp("Switch") || player.GetButtonUp("QuichSwitch"))
         {
             CancelAimBulletTime();
         }
 
-        if (Input.GetMouseButtonUp(1) || player.GetButtonUp("Dash"))
+        if (/*Input.GetMouseButtonUp(1) || */player.GetButtonUp("Dash"))
         {          
             dash.RequestDash();
             m_bDashRequest = true;
@@ -686,7 +701,7 @@ public class PlayerControl1 : PlayerControl {
             IncreaseBulletSpeed();
 
         } else //Rewired------------------------------------------------------------
-    if (Input.GetMouseButtonUp(0) || player.GetButtonUp("Switch")) {
+    if (/*Input.GetMouseButtonUp(0) || */player.GetButtonUp("Switch")) {
 
             m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
             // || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
@@ -1026,6 +1041,7 @@ public class PlayerControl1 : PlayerControl {
             else
             {
                 m_bJumpingWindow = false;
+                //m_bCanJumpingDash = true;
             }
 
         }
@@ -1646,5 +1662,10 @@ public class PlayerControl1 : PlayerControl {
     public bool IsMobile()
     {
         return controlState == ControlWay.isMobile;
+    }
+
+    public bool CanJumpingDash()
+    {
+        return m_bCanJumpingDash;
     }
 }

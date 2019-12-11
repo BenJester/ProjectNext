@@ -92,7 +92,10 @@ public class Dash : Skill {
         //Rewired------------------------------------------------------------
         if ((Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) 
             || (rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime)
-            || (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard) && TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
+            || (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard) && TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)
+            //|| ((rPlayer.GetButton("Jump") && PlayerControl1.Instance.canJump == false))
+            ||(rPlayer.GetButton("Jump") && PlayerControl1.Instance.CanJumpingDash())
+            ){
             
             //播放动画
             if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
