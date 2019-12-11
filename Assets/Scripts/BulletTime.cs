@@ -12,7 +12,16 @@ public class BulletTime : MonoBehaviour {
 	public  PostProcessVolume bulletTimePostEffect;
 	public inputMode mode = inputMode.ClickToInOut;
 	public bool bulletTimeActive = false;
-	public enum inputMode {
+
+    private float m_fCurDelayActiveTime;
+    private float m_fDelayActiveTime;
+    private bool m_bDelayActive;
+
+    private bool m_bCustomizeTime;
+    private float m_fFixedDeltaTime;
+    private float m_fTimeScale;
+
+    public enum inputMode {
 		ClickToInOut = 0,
 		HoldToIn = 1,
 	}
@@ -59,15 +68,34 @@ public class BulletTime : MonoBehaviour {
 		}
 
 		if (bulletTimeActive) {
-			Time.timeScale = 0.1f;
-			targetTimeScale = 0.1f;
-			Time.fixedDeltaTime = startDeltaTime * 0.1f;
+            if(m_bCustomizeTime == true)
+            {
+                Time.timeScale = m_fTimeScale;
+                Time.fixedDeltaTime = m_fFixedDeltaTime;
+            }
+            else
+            {
+                Time.timeScale = 0.1f;
+                Time.fixedDeltaTime = startDeltaTime * 0.1f;
+            }
+            targetTimeScale = 0.1f;
 			targetDeltaTime = startDeltaTime * 0.1f;
 			bulletTimePostEffect.enabled=true;
 		} else {
 			targetTimeScale = 1f;
 			targetDeltaTime = startDeltaTime;
 			bulletTimePostEffect.enabled=false;
+            bulletTimeActive = false;
+        }
+
+        if(m_bDelayActive == true)
+        {
+            m_fCurDelayActiveTime += Time.deltaTime;
+            if( m_fCurDelayActiveTime >= m_fDelayActiveTime)
+            {
+                m_bDelayActive = false;
+                ActiveBulletTime(true, BulletTimePriority.BulletTimePriority_Low);
+            }
         }
 	}
     public void ActiveBulletTime(bool bActive, BulletTimePriority ePriority)
@@ -78,11 +106,29 @@ public class BulletTime : MonoBehaviour {
             if(bActive == false)
             {
                 m_curPriority = BulletTimePriority.BulletTimePriority_None;
+                m_bDelayActive = false;
+                m_bCustomizeTime = false;
             }
             else
             {
                 m_curPriority = ePriority;
             }
+        }
+    }
+    public void SetCustomizeTime(float fTimeScale, float fixedDeltaTime)
+    {
+        m_fFixedDeltaTime = fixedDeltaTime;
+        m_fTimeScale = fTimeScale;
+        m_bCustomizeTime = true;
+    }
+
+    public void DelayActive(float fTime)
+    {
+        if(m_bDelayActive == false)
+        {
+            m_fDelayActiveTime = fTime;
+            m_bDelayActive = true;
+            m_fCurDelayActiveTime = 0.0f;
         }
     }
 }

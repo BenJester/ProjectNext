@@ -89,6 +89,7 @@ public class PlayerControl1 : PlayerControl {
     public GameObject toggleTarget;
     public List<GameObject> swappable;
     public int index;
+    public float DelaySwitchTime;
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
     public float aimAngle;
@@ -650,9 +651,10 @@ public class PlayerControl1 : PlayerControl {
             || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
             )
         {
-           
-            Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
-            Time.fixedDeltaTime = dash.reducedTimeScale * startDeltaTime;
+            m_bulletTime.SetCustomizeTime(Mathf.Min(Time.timeScale, dash.reducedTimeScale), dash.reducedTimeScale * startDeltaTime);
+            m_bulletTime.DelayActive(DelaySwitchTime);
+            //Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
+            //Time.fixedDeltaTime = dash.reducedTimeScale * startDeltaTime;
             targetDeltaTime = Time.fixedDeltaTime;
             targetTimeScale = Time.timeScale;
         }
@@ -675,7 +677,8 @@ public class PlayerControl1 : PlayerControl {
         //处理按下的指示器
         //Rewired------------------------------------------------------------
         if ( player.GetButton("Switch") ) {
-            m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+            //m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+            //m_bulletTime.DelayActive(DelaySwitchTime);
             if (useLineRenderer) {
                 //lr.enabled = true;
                 HandleLineRenderer();

@@ -767,6 +767,7 @@ MonoBehaviour:
   toggleTarget: {fileID: 0}
   swappable: []
   index: 0
+  DelaySwitchTime: 0.2
   laserBulletAngle: 1
   aimAngle: 0
   laserBullet: 0
@@ -814,7 +815,6 @@ MonoBehaviour:
   closestPlayerDistance: 974.4824
   cursorSnapThreshold: 1000
   marker: {fileID: 1948678748210214}
-  targetMarker: {fileID: 1193951111751896}
   swap: {fileID: 114163332939612696}
   dash: {fileID: 114591261722450940}
   TouchLayer:
