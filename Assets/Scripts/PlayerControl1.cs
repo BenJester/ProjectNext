@@ -563,7 +563,7 @@ public class PlayerControl1 : PlayerControl {
         {
             PlayerBoostyAttr.Update(h);
         }
-        if (h == 0.0f)
+        if (h == 0.0f && dash.isDashing == false && isTouchingGround)
         {
             rb.velocity = new Vector2(0, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         }
