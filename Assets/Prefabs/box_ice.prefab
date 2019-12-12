@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8513283095165448714}
   - component: {fileID: 8416743333795790692}
   - component: {fileID: 8513605229039245392}
+  - component: {fileID: 3332965003674244118}
   m_Layer: 12
   m_Name: box_ice
   m_TagString: thing
@@ -214,3 +215,15 @@ MonoBehaviour:
   yOffset: -10
   landingParticle: {fileID: 1760684535814648, guid: ee50c78203c1d9544b65bf8cef6cd6e7,
     type: 3}
+--- !u!114 &3332965003674244118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8626506822276585638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ea7507543a74754d8e71aea080ad2b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
