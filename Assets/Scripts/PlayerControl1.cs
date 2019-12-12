@@ -546,7 +546,6 @@ public class PlayerControl1 : PlayerControl {
         }
         else
         {
-            PlayerBoostyAttr.BoostyProcess();
             if (Mathf.Abs(rb.velocity.x) <= speed && dash.isDashing == false)
             {
                 rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
@@ -555,17 +554,18 @@ public class PlayerControl1 : PlayerControl {
             {
                 rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
             }
-            if (PlayerBoostyAttr.IsBoosty() == false)
-            {
-            }
-            else
-            {
-                PlayerBoostyAttr.Update(h);
-            }
-            if (h == 0.0f)
-            {
-                rb.velocity = new Vector2(0, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
-            }
+        }
+        PlayerBoostyAttr.BoostyProcess();
+        if (PlayerBoostyAttr.IsBoosty() == false)
+        {
+        }
+        else
+        {
+            PlayerBoostyAttr.Update(h);
+        }
+        if (h == 0.0f)
+        {
+            rb.velocity = new Vector2(0, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         }
 
 
