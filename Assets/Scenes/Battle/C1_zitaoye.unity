@@ -575,6 +575,66 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 173609519755970627}
+    ActiveGameObject: {fileID: 173609519755970627}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 7553658365397677987}
+    ActiveGameObject: {fileID: 7553658365397677987}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 1489546731}
+    ActiveGameObject: {fileID: 1489546731}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 7553658365397677987}
+    ActiveGameObject: {fileID: 7553658365397677987}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 1489546731}
+    ActiveGameObject: {fileID: 1489546731}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 8398601985790928495}
     ActiveGameObject: {fileID: 8398601985790928495}
     GUIDsList: []
@@ -793,66 +853,6 @@ MonoBehaviour:
     list:
     - {fileID: 3005318731743738253}
     ActiveGameObject: {fileID: 3005318731743738253}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1489546731}
-    ActiveGameObject: {fileID: 1489546731}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 7553658365397677987}
-    ActiveGameObject: {fileID: 7553658365397677987}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1476001904}
-    ActiveGameObject: {fileID: 1476001904}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1041874435}
-    ActiveGameObject: {fileID: 1041874435}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 2084496734}
-    ActiveGameObject: {fileID: 2084496734}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -7095,12 +7095,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8216425734695469572, guid: 2209f75bc742f98498811a663003f192,
     type: 3}
   m_PrefabInstance: {fileID: 8216425735063268918}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1041874435 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6514921003144982074, guid: 534015ec671060345b701721c7ff3fd5,
-    type: 3}
-  m_PrefabInstance: {fileID: 247868777}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1053385406 stripped
 Transform:
@@ -20520,12 +20514,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e25fdec069c43144ba238fca38a49e0, type: 3}
---- !u!1 &1476001904 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8626506822276585638, guid: 87b204d7d00d982489766ae41ac8be4b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1740219812}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1478171942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5387951609078307653, guid: 918e6294228c21340ac6da000eb745a4,
@@ -77892,7 +77880,7 @@ TilemapRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -77915,7 +77903,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
