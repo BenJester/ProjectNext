@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class CheckPointTotalManager : MonoBehaviour {
 
@@ -12,14 +13,27 @@ public class CheckPointTotalManager : MonoBehaviour {
     // Use this for initialization
     public int strawberryCount = 0;
     public int maxStrawberryCount = 0;
-    public Text strawberryText;
+
+    private UnityAction<int, int> m_actStrawBerry;
 	void Awake () {
 		if (instance)
+        {
 			Destroy (gameObject);
-		if (!instance)instance=this;
-		DontDestroyOnLoad(gameObject);
-		savedPos=pivot.transform.position;
-        SetStrawBerryText();
+        }
+        else
+        {
+            instance = this;
+            UIStrawberry _strawberry = FindObjectOfType<UIStrawberry>();
+            if(_strawberry != null )
+            {
+                _strawberry.RegisteLate();
+            }
+            DontDestroyOnLoad(gameObject);
+            savedPos = pivot.transform.position;
+
+            SetStrawBerryNum();
+            SetStrawBerryText();
+        }
     }
     private void Start()
     {
@@ -31,11 +45,23 @@ public class CheckPointTotalManager : MonoBehaviour {
 
     public void SetStrawBerryText()
     {
-        if (strawberryText != null)
+        if(m_actStrawBerry != null)
         {
-            strawberryText.text = strawberryCount.ToString() + "/" + maxStrawberryCount.ToString();
+            m_actStrawBerry.Invoke(strawberryCount, maxStrawberryCount);
         }
-        
+    }
+    public void RegisteStrawberryUI(UnityAction<int,int> ua)
+    {
+        m_actStrawBerry += ua;
+    }
+    public void UnregisteStrawberryUI(UnityAction<int, int> ua)
+    {
+        m_actStrawBerry -= ua;
+    }
+    public void DescreaseAndUpdate()
+    {
+        maxStrawberryCount--;
+        SetStrawBerryText();
     }
 	private void SetStrawBerryNum()
     {
