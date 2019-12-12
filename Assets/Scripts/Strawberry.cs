@@ -22,29 +22,50 @@ public class Strawberry : MonoBehaviour
     private PlayerControl1 m_playerCtrl;
     private float m_fCurFollingTime;
     private Vector3 m_vecOriginalPos;
+    private int m_nIndexOfStrawberry;
     private void Start()
     {
-        if(StrawBerryFolloingTime == 0.0f)
+        if(StrawberryMgr.instance == null)
         {
-            StrawBerryFolloingTime = 3.0f;
+            Debug.Assert(false, string.Format("场景缺少assets\\prefabs\\world\\StrawberryMgr物件，请摆放上去"));
         }
-        m_vecOriginalPos = transform.position;
-        sr = GetComponent<SpriteRenderer>();
-        worldManager = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<CheckPointTotalManager>();
-        m_playerCtrl = GlobalVariable.GetPlayer();
-        GlobalVariable.RegisteSetPlayerEvent(_setPlayer);
-
-        if (m_playerCtrl != null)
+        m_nIndexOfStrawberry = StrawberryMgr.instance.GetCurrentIndex();
+        if( StrawberryMgr.instance.IsIndexHasBeenTake(m_nIndexOfStrawberry) == true)
         {
-            m_playerCtrl.RegisteDieAction(_playerDie);
+            Destroy(gameObject);
+        }
+        else if(StrawberryMgr.instance.IsSceneStrawberryInit(m_nIndexOfStrawberry) == true)
+        {
+            //CheckPointTotalManager.instance.DescreaseAndUpdate();
+            Destroy(gameObject);
         }
         else
         {
-            Debug.Assert(false);
-        }
-        if(FollowingSpeed == 0.0f)
-        {
-            FollowingSpeed = 3.0f;
+            StrawberryMgr.instance.InitStrawberry(m_nIndexOfStrawberry);
+            transform.SetParent(null);
+            DontDestroyOnLoad(gameObject);
+            if (StrawBerryFolloingTime == 0.0f)
+            {
+                StrawBerryFolloingTime = 3.0f;
+            }
+            m_vecOriginalPos = transform.position;
+            sr = GetComponent<SpriteRenderer>();
+            worldManager = GameObject.FindGameObjectWithTag("WorldManager").GetComponent<CheckPointTotalManager>();
+            m_playerCtrl = GlobalVariable.GetPlayer();
+            GlobalVariable.RegisteSetPlayerEvent(_setPlayer);
+
+            if (m_playerCtrl != null)
+            {
+                m_playerCtrl.RegisteDieAction(_playerDie);
+            }
+            else
+            {
+                Debug.Assert(false);
+            }
+            if (FollowingSpeed == 0.0f)
+            {
+                FollowingSpeed = 3.0f;
+            }
         }
         
     }
@@ -92,6 +113,7 @@ public class Strawberry : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             m_bFollingPlayer = true;
             m_fCurFollingTime = 0.0f;
+            StrawberryMgr.instance.TakeStrawberry(m_nIndexOfStrawberry);
 
             if (getParticle != null)
             {

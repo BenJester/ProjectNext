@@ -163,6 +163,8 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!251 &251765734672004794
@@ -338,9 +340,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   state: 0
-  aimFrame: 100
+  aimFrame: 50
   lockFrame: 50
-  dashFrame: 100
+  dashFrame: 25
   dashSpeed: 1200
   recoverFrame: 120
   animChargingParam: Enemy_dash_charging
@@ -360,3 +362,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b83e1b1835f1634586f3ffcd1596cc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ForceUpdateInFixedUpdate: 0
