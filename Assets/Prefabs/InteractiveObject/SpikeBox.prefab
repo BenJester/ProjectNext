@@ -162,6 +162,8 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!114 &6283809346106925847
@@ -178,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killDropSpeed: 200
   killRange: 60
-  spikeColor: {r: 0, g: 0, b: 0, a: 0}
+  spikeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!251 &6187829236189884025
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -347,6 +349,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
+      propertyPath: m_Color.r
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.12775902
+      objectReference: {fileID: 0}
+    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.12775902
+      objectReference: {fileID: 0}
+    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
+        type: 3}
       propertyPath: m_DrawMode
       value: 2
       objectReference: {fileID: 0}
@@ -355,21 +372,6 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 60
       objectReference: {fileID: 0}
-    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
       propertyPath: m_IsTrigger
@@ -377,8 +379,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
+      propertyPath: m_Offset.y
+      value: -7.65
       objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
@@ -387,8 +389,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
-      propertyPath: m_Offset.y
-      value: -7.65
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c4416679ef5249cf86de765186bc165, type: 3}
@@ -455,6 +457,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
+      propertyPath: m_Color.r
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.12775902
+      objectReference: {fileID: 0}
+    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.12775902
+      objectReference: {fileID: 0}
+    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
+        type: 3}
       propertyPath: m_DrawMode
       value: 2
       objectReference: {fileID: 0}
@@ -463,21 +480,6 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 60
       objectReference: {fileID: 0}
-    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212871533801896662, guid: 0c4416679ef5249cf86de765186bc165,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
       propertyPath: m_IsTrigger
@@ -485,8 +487,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
+      propertyPath: m_Offset.y
+      value: -7.65
       objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
@@ -495,8 +497,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 61413024864992408, guid: 0c4416679ef5249cf86de765186bc165,
         type: 3}
-      propertyPath: m_Offset.y
-      value: -7.65
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c4416679ef5249cf86de765186bc165, type: 3}
