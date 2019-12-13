@@ -685,9 +685,8 @@ public class PlayerControl1 : PlayerControl {
         }
 
         if (player.GetButtonUp("Dash"))
-        {          
-            dash.RequestDash();
-            m_bDashRequest = true;
+        {
+            DashRequestByPlayer();
         }
 
         // 左键子弹时间结束
@@ -760,7 +759,11 @@ public class PlayerControl1 : PlayerControl {
 
         HandleToggleSwapTarget();
     }
-
+    public void DashRequestByPlayer()
+    {
+        dash.RequestDash();
+        m_bDashRequest = true;
+    }
     public void CancelAimBulletTime()
     {
         currWaitTime = 0;
