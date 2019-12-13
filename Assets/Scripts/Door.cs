@@ -107,6 +107,8 @@ public class Door : MonoBehaviour
 	{
 		for (int i = 0; i < enemyList.Count; i++)
 		{
+            if (enemyList[i] == null)
+                continue;
 			if (!enemyList[i].dead)
 			{
 				return false;
