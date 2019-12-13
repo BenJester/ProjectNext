@@ -81,6 +81,7 @@ public class Door : MonoBehaviour
 
 	bool checkButtons()
 	{
+
 		for (int i = 0; i < buttonList.Count; i++)
 		{
 			if (buttonList[i].state != ClickState.IsClick)
