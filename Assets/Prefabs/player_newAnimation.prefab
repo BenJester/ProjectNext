@@ -770,9 +770,9 @@ MonoBehaviour:
   swappable: []
   index: 0
   DelaySwitchTime: 0.2
-  laserBulletAngle: 1
+  laserBulletAngle: 0
   aimAngle: 0
-  laserBullet: 0
+  laserBullet: 1
   lockLaserBullet: 0
   isHomingBullet: 0
   homingBulletSpeed: 2000
@@ -899,7 +899,7 @@ MonoBehaviour:
   reducedTimeScale: 0.3
   realWaitTime: 0
   curr: 0
-  cooldown: 0.5
+  cooldown: 0.3
   m_swapEffect: {fileID: 0}
   motorIndex: 1
   level: 0.7
