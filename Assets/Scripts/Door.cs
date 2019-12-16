@@ -27,6 +27,9 @@ public class Door : MonoBehaviour
 	}
 	void Start()
 	{
+
+      
+
         if (lr != null)
         {
             lr.positionCount = 3*(enemyList.Count+buttonList.Count+hostageList.Count);

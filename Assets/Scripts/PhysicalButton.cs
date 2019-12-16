@@ -69,7 +69,7 @@ public class PhysicalButton : MonoBehaviour {
     {
 
 
-		if (!(col.CompareTag("floor") || col.CompareTag("CameraTrigger")))
+		if (!(col.CompareTag("floor") || col.CompareTag("CameraTrigger") || col.CompareTag("Untagged")))
         {
 			state = ClickState.IsClick;
 
