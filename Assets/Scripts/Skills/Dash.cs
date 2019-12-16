@@ -47,6 +47,9 @@ public class Dash : Skill {
     public float motor2Level;
     public float motor1duration;
     public float motor2duration;
+
+    public float DashLimitChargingTime;
+    private float m_fDashLimitChargingTime;
     private Player rPlayer;
 
     private PlayerStateManager m_stateMgr;
@@ -57,6 +60,9 @@ public class Dash : Skill {
     private PlayerAnimationComponent m_aniCom;
 
     private BulletTime m_bulletTime;
+
+    private bool m_bDashCharging;
+    private bool m_bChargeZero;
     public override void Init () {
 
         m_bulletTime = GetComponent<BulletTime>();
@@ -88,14 +94,14 @@ public class Dash : Skill {
             //gaidao要求去除这个旋转
             //transform.rotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, GetComponent<Rigidbody2D>().velocity));
         }
-
+        bool bChargingDash = false;
         //Rewired------------------------------------------------------------
         if ((Input.GetMouseButton (1) && charge >= 1 && currWaitTime >= waitTime) 
             || (rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime)
             || (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard) && TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
-            
+
             //播放动画
-            if(!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
+            //if (!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
             //amin.CrossFade("Dash_Charging", 0.01f);
 
 
@@ -135,6 +141,27 @@ public class Dash : Skill {
 
             //播放动态残影
             playerControl.SetColShadow();
+
+            if(isDashing == false)
+            {
+                if (m_bDashCharging == false)
+                {
+                    m_bDashCharging = true;
+                    m_fDashLimitChargingTime = 0.0f;
+                }
+                else
+                {
+                    m_fDashLimitChargingTime += (Time.deltaTime / Time.timeScale);
+                    if (m_fDashLimitChargingTime >= DashLimitChargingTime)
+                    {
+                        m_bDashCharging = false;
+                        m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+                        m_bChargeZero = true;
+                        playerControl.DashRequestByPlayer();
+                        bChargingDash = true;
+                    }
+                }
+            }
 		}
 
         //Rewired------------------------------------------------------------
@@ -165,8 +192,9 @@ public class Dash : Skill {
             //if (dashPointer != null) dashPointer.SetActive(false);
 
         }
-		if (playerControl.isTouchingGround) {
-			charge = maxCharge;
+		if (playerControl.isTouchingGround && bChargingDash == false && isDashing == false)
+        {
+            charge = maxCharge;
 		}
 	}
 
@@ -223,7 +251,11 @@ public class Dash : Skill {
 	public override void Do () {
         if (!active || !playerControl.canMove || !Check ())
 			return;
-
+        if(m_bChargeZero == true)
+        {
+            charge = 0;
+            m_bChargeZero = false;
+        }
 		//playerControl.canMove = false;
 		StartCoroutine (DoDash ());
 	}
@@ -304,6 +336,7 @@ public class Dash : Skill {
             yield return new WaitForSeconds(DashTime);
         }
         charge -= 1;
+        m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
         isDashing = false;
         if(m_uaDashOver != null)
         {
@@ -341,7 +374,7 @@ public class Dash : Skill {
         
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        
+
     }
     public void RegisteDashEvent(UnityAction uaDashStart, UnityAction uaDashOver)
     {
@@ -404,7 +437,6 @@ public class Dash : Skill {
 
         float timestep = 0.04f;
         //timestep = Time.deltaTime / Time.timeScale;
-        //Debug.Log(timestep);/// (1f * Physics2D.velocityIterations);
         Vector2 gravityAccel = Physics2D.gravity * rigidbody.gravityScale;// * timestep;
         Vector2 moveStep = velocity * timestep;
 

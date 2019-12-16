@@ -263,6 +263,14 @@ public class PlayerControl1 : PlayerControl {
     private BulletTime m_bulletTime;
     private PlayerDoubleSwap m_doubleSwap;
 
+    float wallCheckBoxWidth = 10f;
+    float wallCheckBoxIndent = 2f;
+    Vector2 wallCheckTopLeft;
+    Vector2 wallCheckBottomRight;
+    Vector2 leftWallCheckTopLeft;
+    Vector2 leftWallCheckBottomRight;
+    public bool wallJump;
+
     public PlayerBoosty PlayerBoostyAttr;
     void Awake() {
         if(ProCamera2D.Exists == true)
@@ -338,6 +346,26 @@ public class PlayerControl1 : PlayerControl {
         trajectoryEndColor = lr.endColor;
 
         m_bulletTime = GetComponent<BulletTime>();
+        wallCheckTopLeft = new Vector2
+                         (
+                            (box.size.x / 2f - wallCheckBoxWidth / 2f),
+                            (box.size.y / 2f - wallCheckBoxIndent)
+                         );
+        wallCheckBottomRight = new Vector2
+                                 (
+                                    box.size.x / 2f + wallCheckBoxWidth / 2f,
+                                    -(box.size.y / 2f - wallCheckBoxIndent)
+                                 );
+        leftWallCheckTopLeft = new Vector2
+                         (
+                            -(box.size.x / 2f + wallCheckBoxWidth / 2f),
+                            (box.size.y / 2f - wallCheckBoxIndent)
+                         );
+        leftWallCheckBottomRight = new Vector2
+                                 (
+                                    -(box.size.x / 2f - wallCheckBoxWidth / 2f),
+                                    -(box.size.y / 2f - wallCheckBoxIndent)
+                                 );
     }
 
     public void RegisteDieAction(UnityAction<PlayerControl1> _act)
@@ -389,7 +417,20 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void Update() {
-
+        if (wallJump)
+            isTouchingGround = Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + wallCheckTopLeft,
+                    (Vector2)transform.position + wallCheckBottomRight,
+                    TouchLayer
+                )
+                ||
+                Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + leftWallCheckTopLeft,
+                    (Vector2)transform.position + leftWallCheckBottomRight,
+                    TouchLayer
+                );
         anim.SetFloat("SpeedY", rb.velocity.y);
         //isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
         //          Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
@@ -401,9 +442,11 @@ public class PlayerControl1 : PlayerControl {
         RaycastHit2D _ray3 = Physics2D.Raycast(groundCheckPoint3.position, Vector3.down, 5f, TouchLayer);
         RaycastHit2D _ray4 = Physics2D.Raycast(groundCheckPoint4.position, Vector3.down, 5f, TouchLayer);
         RaycastHit2D _ray5 = Physics2D.Raycast(groundCheckPoint5.position, Vector3.down, 5f, TouchLayer);
-        isTouchingGround = _ray1 | _ray2 | _ray3 | _ray4 | _ray5;
 
-        if (isTouchingGround == true)
+
+        isTouchingGround = (_ray1 | _ray2 | _ray3 | _ray4 | _ray5) || (wallJump ? isTouchingGround : false);
+
+        if (isTouchingGround == true && !wallJump)
         {
             isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
         }
@@ -685,9 +728,8 @@ public class PlayerControl1 : PlayerControl {
         }
 
         if (player.GetButtonUp("Dash"))
-        {          
-            dash.RequestDash();
-            m_bDashRequest = true;
+        {
+            DashRequestByPlayer();
         }
 
         // 左键子弹时间结束
@@ -760,7 +802,11 @@ public class PlayerControl1 : PlayerControl {
 
         HandleToggleSwapTarget();
     }
-
+    public void DashRequestByPlayer()
+    {
+        dash.RequestDash();
+        m_bDashRequest = true;
+    }
     public void CancelAimBulletTime()
     {
         currWaitTime = 0;
