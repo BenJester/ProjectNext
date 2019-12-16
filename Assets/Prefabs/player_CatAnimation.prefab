@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 5887859343163684090}
   - component: {fileID: 5467996819000875214}
   m_Layer: 9
-  m_Name: player_newAnimation
+  m_Name: player_CatAnimation
   m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,7 +539,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 160, y: 75}
+  m_Size: {x: 80, y: 75}
   m_EdgeRadius: 0
 --- !u!114 &114667413169427506
 MonoBehaviour:
@@ -830,6 +830,7 @@ MonoBehaviour:
   onHitMotor1duration: 0.2
   onHitMotor2duration: 0.2
   DashingMoveTime: 0.5
+  wallJump: 0
   PlayerBoostyAttr:
     BoostyValue: 5000
     MaxBoostySpeed: 1000
@@ -964,8 +965,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383db9630de0a434199ad77928f563c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Head: {fileID: 21300000, guid: 30362d5c52ed1e142a12f49b91b11c73, type: 3}
-  Body: {fileID: 21300000, guid: a62f747a1639231419d16806d978b514, type: 3}
+  Head: {fileID: 21300000, guid: 4e721e6050ebddc42bd2e9497a99dafd, type: 3}
+  Body: {fileID: 21300000, guid: 348a12009644e234296ede17ebdf313b, type: 3}
   PlayerLegs: {fileID: 0}
   clip: {fileID: 0}
 --- !u!114 &790404172
