@@ -852,15 +852,41 @@ public class PlayerControl1 : PlayerControl {
     {
         bool res = false;
         lockedOnObjectLine.SetPosition(0, transform.position);
-        lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
+        //lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
         BoxCollider2D targetBox = closestObjectToCursor.GetComponent<BoxCollider2D>();
         float targetX = Mathf.Max(0f, targetBox.size.x / 2f - fourCornerScanMargin);
         float targetY = Mathf.Max(0f, targetBox.size.y / 2f - fourCornerScanMargin);
-        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+
+        Vector3 vecHit1Pos = (closestObjectToCursor.transform.position + new Vector3(targetX, targetY, 0f) - transform.position);
+        Vector3 vecHit2Pos = (closestObjectToCursor.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position);
+        Vector3 vecHit3Pos = (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position);
+        Vector3 vecHit4Pos = (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position);
+        //RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, new Vector2(0,0), shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, vecHit1Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, vecHit2Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, vecHit3Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, vecHit4Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+
+        List<RaycastHit2D> lstHit = new List<RaycastHit2D>();
+        lstHit.Add(hit1);
+        lstHit.Add(hit2);
+        lstHit.Add(hit3);
+        lstHit.Add(hit4);
+
+        float fDistance = Mathf.Infinity;
+        RaycastHit2D _lessDistanceHit;
+        Vector3 vecPoint = new Vector3();
+        foreach (RaycastHit2D _hitSample in lstHit)
+        {
+            if(_hitSample.distance < fDistance && _hitSample.collider == targetBox)
+            {
+                _lessDistanceHit = _hitSample;
+                fDistance = _hitSample.distance;
+                vecPoint = _hitSample.point;
+            }
+        }
+        lockedOnObjectLine.SetPosition(1, vecPoint);
 
         lockedOnObjectLine.startWidth = 1f;
         swap.col = null;
@@ -920,9 +946,6 @@ public class PlayerControl1 : PlayerControl {
                 _resetClosestData();
             }
         }
-
-
-
 
         foreach (var thing in thingList) {
 
