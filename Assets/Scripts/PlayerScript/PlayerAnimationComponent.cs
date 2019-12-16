@@ -44,9 +44,20 @@ public class PlayerAnimationComponent : MonoBehaviour
     }
     public void PlayerDashStop()
     {
-        m_animator.SetBool(DashChargingParam, false);
-        m_animator.SetBool(DashEndParam, true);
-        m_animator.SetBool(DashProcessParam, false);
+        if (m_playerControl.isTouchingGround)
+        {
+            m_animator.SetBool(DashChargingParam, false);
+            m_animator.SetBool(DashEndParam, true);
+            m_animator.SetBool(DashProcessParam, false);
+            m_animator.SetBool(DashToIdleParam, true);
+        }
+        else
+        {
+            m_animator.SetBool(DashChargingParam, false);
+            m_animator.SetBool(DashEndParam, true);
+            m_animator.SetBool(DashProcessParam, false);
+            m_animator.SetBool(DashToIdleParam, false);
+        }
     }
     public void PlayerDashToIdle()
     {
@@ -59,6 +70,7 @@ public class PlayerAnimationComponent : MonoBehaviour
         }
         else
         {
+            //Debug.Assert(false);
             m_animator.SetBool(DashEndParam, false);
             m_animator.SetBool(DashProcessParam, false);
             m_animator.SetBool(DashChargingParam, false);
