@@ -7,8 +7,11 @@ public class PlayerAnimationComponent : MonoBehaviour
     public string DashChargingParam;
     public string DashProcessParam;
     public string DashEndParam;
+    public string DashToIdleParam;
+
 
     private Animator m_animator;
+    private PlayerControl1 m_playerControl;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +20,7 @@ public class PlayerAnimationComponent : MonoBehaviour
         {
             Debug.Assert(false);
         }
+        m_playerControl = GetComponent<PlayerControl1>();
     }
 
     // Update is called once per frame
@@ -46,8 +50,19 @@ public class PlayerAnimationComponent : MonoBehaviour
     }
     public void PlayerDashToIdle()
     {
-        m_animator.SetBool(DashEndParam, false);
-        m_animator.SetBool(DashProcessParam, false);
-        m_animator.SetBool(DashChargingParam, false);
+        if(m_playerControl.isTouchingGround)
+        {
+            m_animator.SetBool(DashEndParam, false);
+            m_animator.SetBool(DashProcessParam, false);
+            m_animator.SetBool(DashChargingParam, false);
+            m_animator.SetBool(DashToIdleParam, true);
+        }
+        else
+        {
+            m_animator.SetBool(DashEndParam, false);
+            m_animator.SetBool(DashProcessParam, false);
+            m_animator.SetBool(DashChargingParam, false);
+            m_animator.SetBool(DashToIdleParam, false);
+        }
     }
 }
