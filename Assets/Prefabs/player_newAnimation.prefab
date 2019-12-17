@@ -461,7 +461,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -848,6 +848,7 @@ MonoBehaviour:
   onHitMotor1duration: 0.2
   onHitMotor2duration: 0.2
   DashingMoveTime: 0.5
+  wallJump: 0
   PlayerBoostyAttr:
     BoostyValue: 5000
     MaxBoostySpeed: 1000
@@ -1215,6 +1216,7 @@ MonoBehaviour:
   DashChargingParam: DashCharging
   DashProcessParam: DashProcess
   DashEndParam: DashEnd
+  DashToIdleParam: 
 --- !u!114 &3083705841405597585
 MonoBehaviour:
   m_ObjectHideFlags: 0
