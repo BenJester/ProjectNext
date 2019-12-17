@@ -30,5 +30,13 @@ public class NextScene : MonoBehaviour
             Destroy(levelTest);
             SceneManager.LoadScene(1);
         }
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            GameObject worldManager = GameObject.FindGameObjectWithTag("WorldManager");
+            GameObject levelTest = GameObject.FindGameObjectWithTag("LevelManager");
+            Destroy(worldManager);
+            Destroy(levelTest);
+            SceneManager.LoadScene(2);
+        }
     }
 }
