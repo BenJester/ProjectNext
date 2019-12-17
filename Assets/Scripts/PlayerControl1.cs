@@ -1555,7 +1555,7 @@ public class PlayerControl1 : PlayerControl {
         colShadow.sprite = spriteRenderer.sprite; //swap.col.GetComponent<SpriteRenderer>().sprite;
         //colShadow.transform.localScale = swap.col.transform.localScale;
         colShadow.flipX = spriteRenderer.flipX;
-        StartCoroutine(PlayColShadow());
+        //StartCoroutine(PlayColShadow());
     }
 
     IEnumerator PlayColShadow()
@@ -1580,6 +1580,7 @@ public class PlayerControl1 : PlayerControl {
         }
         colShadow.enabled = false;
         colShadow.transform.position = transform.position;
+
         swapColPosition = swap.col.transform.position;
 
         yield return new WaitForSeconds(0.1f);
