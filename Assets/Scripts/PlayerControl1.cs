@@ -458,6 +458,7 @@ public class PlayerControl1 : PlayerControl {
         if (isTouchingGround == true)
         {
             m_bDashing = false;
+            dash.PlayerTouchGround();
         }
         // landing
         if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)

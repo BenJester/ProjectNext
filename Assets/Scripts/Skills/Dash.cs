@@ -198,6 +198,14 @@ public class Dash : Skill {
 		}
 	}
 
+    public void PlayerTouchGround()
+    {
+        if(m_bDashCharging == true)
+        {
+            m_bDashCharging = false;
+        }
+    }
+
     public void RequestDash()
     {
         Do();
