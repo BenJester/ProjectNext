@@ -182,6 +182,10 @@ public class PlayerControl1 : PlayerControl {
     public List<Thing> thingList;
     public GameObject prevClosestObjectToCursor;
     public GameObject closestObjectToCursor;
+    private GameObject TempObjectToCursor;
+    private float m_fTickWaitCursorTime;
+    public float WaitCursorTime;
+    private GameObject cacheCursorTarget = null;
     public GameObject closestObjectToPlayer;
     public float closestDistance = Mathf.Infinity;
     public float closestPlayerDistance = Mathf.Infinity;
@@ -926,8 +930,9 @@ public class PlayerControl1 : PlayerControl {
         closestDistance = Mathf.Infinity;
         closestPlayerDistance = Mathf.Infinity;
 
-        closestObjectToCursor = null;
+        //closestObjectToCursor = null;
         closestObjectToPlayer = null;
+        cacheCursorTarget = null;
     }
     // 计算与鼠标和玩家最近的物体
     void HandleObjectDistance() {
@@ -1014,7 +1019,7 @@ public class PlayerControl1 : PlayerControl {
                         if (Hit(thing.gameObject))
                         {
                             closestDistance = diff;
-                            closestObjectToCursor = thing.gameObject;
+                            /*closestObjectToCursor = */cacheCursorTarget = thing.gameObject;
                         }
                     }
 
@@ -1022,11 +1027,24 @@ public class PlayerControl1 : PlayerControl {
                     {
                         closestPlayerDistance = diff;
                         closestObjectToPlayer = thing.gameObject;
-
                     }
                 }
-
             }
+        }
+
+        if( TempObjectToCursor == cacheCursorTarget && cacheCursorTarget != null)
+        {
+            m_fTickWaitCursorTime += Time.deltaTime;
+            if(m_fTickWaitCursorTime >= WaitCursorTime)
+            {
+                closestObjectToCursor = cacheCursorTarget;
+            }
+        }
+        else
+        {
+            //Debug.Log(string.Format("cacheCursorTarget[{0}]", cacheCursorTarget));
+            m_fTickWaitCursorTime = 0.0f;
+            TempObjectToCursor = cacheCursorTarget;
         }
 
         bool bAimingCancel = false;
