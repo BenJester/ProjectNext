@@ -868,24 +868,31 @@ public class PlayerControl1 : PlayerControl {
         RaycastHit2D hit3 = Physics2D.Raycast(transform.position, vecHit3Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
         RaycastHit2D hit4 = Physics2D.Raycast(transform.position, vecHit4Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
 
-        List<RaycastHit2D> lstHit = new List<RaycastHit2D>();
-        lstHit.Add(hit1);
-        lstHit.Add(hit2);
-        lstHit.Add(hit3);
-        lstHit.Add(hit4);
 
+        //如果放到list的话每次update，add和遍历lst会带来比较明显的性能损耗。所以这里就用单纯的比较来判断了。
         float fDistance = Mathf.Infinity;
-        RaycastHit2D _lessDistanceHit;
         Vector3 vecPoint = new Vector3();
-        foreach (RaycastHit2D _hitSample in lstHit)
+        if (hit1.collider == targetBox && hit1.distance < fDistance )
         {
-            if(_hitSample.distance < fDistance && _hitSample.collider == targetBox)
-            {
-                _lessDistanceHit = _hitSample;
-                fDistance = _hitSample.distance;
-                vecPoint = _hitSample.point;
-            }
+            fDistance = hit1.distance;
+            vecPoint = hit1.point;
         }
+        if (hit2.collider == targetBox && hit2.distance < fDistance)
+        {
+            fDistance = hit2.distance;
+            vecPoint = hit2.point;
+        }
+        if (hit3.collider == targetBox && hit3.distance < fDistance)
+        {
+            fDistance = hit3.distance;
+            vecPoint = hit3.point;
+        }
+        if (hit4.collider == targetBox && hit4.distance < fDistance)
+        {
+            fDistance = hit4.distance;
+            vecPoint = hit4.point;
+        }
+
         lockedOnObjectLine.SetPosition(1, vecPoint);
 
         lockedOnObjectLine.startWidth = 1f;
