@@ -53,6 +53,7 @@ public class StrawberryMgr : MonoBehaviour
     public List<StrawberryInScene> LstScenes;
 
     private StrawberryInScene m_curScene;
+    private string m_strSceneName;
     // Start is called before the first frame update
     void Start()
     {
@@ -113,6 +114,16 @@ public class StrawberryMgr : MonoBehaviour
             LstScenes.Add(_newScene);
             m_curScene = _newScene;
         }
+
+        if(m_strSceneName != scene.name && m_strSceneName != null)
+        {
+            Strawberry[] lstStrawberry = FindObjectsOfType<Strawberry>();
+            foreach(Strawberry _strawberry in lstStrawberry)
+            {
+                Destroy(_strawberry.gameObject);
+            }
+        }
+        m_strSceneName = scene.name;
     }
     void OnSceneUnloaded(Scene scene)
     {

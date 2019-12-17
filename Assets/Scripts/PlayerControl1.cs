@@ -458,6 +458,7 @@ public class PlayerControl1 : PlayerControl {
         if (isTouchingGround == true)
         {
             m_bDashing = false;
+            dash.PlayerTouchGround();
         }
         // landing
         if (isTouchingGround != isGroundTemp && isTouchingGround == true && landingParticle != null)
@@ -1580,6 +1581,8 @@ public class PlayerControl1 : PlayerControl {
         }
         colShadow.enabled = false;
         colShadow.transform.position = transform.position;
+        if(swap.col==null)
+        StopAllCoroutines();
         swapColPosition = swap.col.transform.position;
 
         yield return new WaitForSeconds(0.1f);
@@ -1593,10 +1596,13 @@ public class PlayerControl1 : PlayerControl {
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Debug.Log(string.Format("swap.gameObject.name {0} [{1}]", swap.gameObject.name,i));
                     if (playerShadow != null)
                     {
+                        if (playerShadow == null || swap.col==null)
+                            StopAllCoroutines();
                         SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
+                        if (s == null)
+                            StopAllCoroutines();
                         s.enabled = true;
                         s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
                         yield return new WaitForSeconds(0.04f);
