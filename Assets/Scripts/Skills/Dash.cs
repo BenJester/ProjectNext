@@ -65,6 +65,15 @@ public class Dash : Skill {
     private bool m_bChargeZero;
     public override void Init () {
 
+        LevelSetting _levelSet = FindObjectOfType<LevelSetting>();
+        if(_levelSet != null)
+        {
+            active = _levelSet.DashOpen;
+        }
+        else
+        {
+            active = true;
+        }
         m_bulletTime = GetComponent<BulletTime>();
         lr = GetComponent<LineRenderer> ();
         amin = GetComponent<Animator>();
@@ -82,6 +91,10 @@ public class Dash : Skill {
 	}
 
 	void Update () {
+        if(active == false)
+        {
+            return;
+        }
         if( Mathf.Abs(rPlayer.GetAxis("MoveHorizontal")) > 0 )
         {
             int a = 0;
@@ -244,6 +257,10 @@ public class Dash : Skill {
 
     //Rewired------------------------------------------------------------
     void FixedUpdate () {
+        if( active == false)
+        {
+            return;
+        }
 		if (Input.GetMouseButton (1)|| (rPlayer != null && rPlayer.GetButton("Dash")) || (playerControl.controlState == PlayerControl1.ControlWay.isMobile && TouchControl.Instance.dashDrag))
         {
             if(currWaitTime == 0)
