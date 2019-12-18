@@ -1590,10 +1590,14 @@ public class PlayerControl1 : PlayerControl {
         colShadow.enabled = false;
         colShadow.transform.position = transform.position;
         if(swap.col==null)
-        StopAllCoroutines();
+        {
+            isPlayColShadow = false;
+            StopAllCoroutines();
+        }
         if(swap.col )
         {
             swapColPosition = swap.col.transform.position;
+            isPlayColShadow = false;
         }
 
         yield return new WaitForSeconds(0.1f);
@@ -1610,13 +1614,18 @@ public class PlayerControl1 : PlayerControl {
                     if (playerShadow != null)
                     {
                         if (playerShadow == null || swap.col==null)
+                        {
                             StopAllCoroutines();
-                        SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
-                        if (s == null)
-                            StopAllCoroutines();
-                        s.enabled = true;
-                        s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
-                        yield return new WaitForSeconds(0.04f);
+                        }
+                        else
+                        {
+                            SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
+                            if (s == null)
+                                StopAllCoroutines();
+                            s.enabled = true;
+                            s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
+                            yield return new WaitForSeconds(0.04f);
+                        }
                     }
                     
                 }
