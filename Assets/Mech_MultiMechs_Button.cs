@@ -10,18 +10,21 @@ public class Mech_MultiMechs_Button : MonoBehaviour
     //public LineRenderer lr;
     private Vector3 oriPos;
     private float cd;
+    public bool isFinish=false;
+    private bool canPressed=true;
 
     void Start()
     {
         //lr.SetPosition(0, transform.position);
         //lr.SetPosition(1, mech.transform.position);
         oriPos = transform.position;
+
     }
 
 
     void Update()
     {
-        if (isPressed)
+        if (canPressed && isPressed)
         {
             foreach (var mech in mechs)
             {
@@ -42,7 +45,7 @@ public class Mech_MultiMechs_Button : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((!isPressed && collision.tag == "thing") || (!isPressed && collision.tag == "player"))
+        if (canPressed && (!isPressed && collision.tag == "thing") || (!isPressed && collision.tag == "player"))
         {
             isPressed = true;
             transform.position = oriPos - new Vector3(0, 10, 0);
@@ -52,17 +55,21 @@ public class Mech_MultiMechs_Button : MonoBehaviour
                 foreach (var mech in mechs)
                 {
                     mech.DoOnce();
+                    
                 }
                 
                 if (onlyOnce)
-                    Destroy(gameObject);
+                {
+                    canPressed = false;
+                }
+                    
                 cd = 1;
             }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if ((isPressed && collision.tag == "thing") || (isPressed && collision.tag == "player"))
+        if (((isPressed && collision.tag == "thing") || (isPressed && collision.tag == "player") )&& !onlyOnce)
         {
             isPressed = false;
             transform.position = oriPos;

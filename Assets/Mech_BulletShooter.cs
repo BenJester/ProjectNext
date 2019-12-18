@@ -12,6 +12,9 @@ public class Mech_BulletShooter : Mech_base
     public float coolDown = 1f;
     public float bulletSpeed = 20f;
 
+    [HideInInspector]
+    public Enemy enemyInstance;
+
     private float timeTemp;
 
     void Start()
@@ -31,6 +34,10 @@ public class Mech_BulletShooter : Mech_base
 
     void Shoot(){
         GameObject bullet =  Instantiate(bulletToShoot,(Vector2)transform.position+Vector2.right*10,Quaternion.identity) as GameObject;
+        if (bullet.GetComponent<Enemy>() != null)
+        {
+            enemyInstance = bullet.GetComponent<Enemy>();
+        }
         bullet.GetComponent<Rigidbody2D>().velocity = transform.up*bulletSpeed;
     }
 
