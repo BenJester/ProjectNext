@@ -983,7 +983,8 @@ public class PlayerControl1 : PlayerControl {
                         if (Hit(thing.gameObject))
                         {
                             closestDistance = distanceToCursor;
-                            closestObjectToCursor = thing.gameObject;
+                            //closestObjectToCursor = thing.gameObject;
+                            cacheCursorTarget = thing.gameObject;
                         }
 
                     }
@@ -1040,7 +1041,7 @@ public class PlayerControl1 : PlayerControl {
             }
         }
 
-        if( TempObjectToCursor == cacheCursorTarget && cacheCursorTarget != null)
+        if( TempObjectToCursor == cacheCursorTarget )
         {
             m_fTickWaitCursorTime += Time.deltaTime;
             if(m_fTickWaitCursorTime >= WaitCursorTime)
@@ -1589,8 +1590,15 @@ public class PlayerControl1 : PlayerControl {
         colShadow.enabled = false;
         colShadow.transform.position = transform.position;
         if(swap.col==null)
-        StopAllCoroutines();
-        swapColPosition = swap.col.transform.position;
+        {
+            isPlayColShadow = false;
+            StopAllCoroutines();
+        }
+        if(swap.col )
+        {
+            swapColPosition = swap.col.transform.position;
+            isPlayColShadow = false;
+        }
 
         yield return new WaitForSeconds(0.1f);
         playerShadow.sprite = spriteRenderer.sprite;
@@ -1606,13 +1614,18 @@ public class PlayerControl1 : PlayerControl {
                     if (playerShadow != null)
                     {
                         if (playerShadow == null || swap.col==null)
+                        {
                             StopAllCoroutines();
-                        SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
-                        if (s == null)
-                            StopAllCoroutines();
-                        s.enabled = true;
-                        s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
-                        yield return new WaitForSeconds(0.04f);
+                        }
+                        else
+                        {
+                            SpriteRenderer s = Instantiate(playerShadow, swap.col.transform.position, Quaternion.identity);
+                            if (s == null)
+                                StopAllCoroutines();
+                            s.enabled = true;
+                            s.GetComponent<AutoDestroy>().StartDestroy(0.5f + i / 10f);
+                            yield return new WaitForSeconds(0.04f);
+                        }
                     }
                     
                 }

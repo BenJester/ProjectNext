@@ -8,6 +8,7 @@ public class PlayerDoubleSwap : MonoBehaviour
     public GameObject DoubleSwapMarker;
     private Thing m_thingDoubleSwap;
     private Swap m_swap;
+    private bool m_bDoubleSwap;
     //private Thing m_objDoubleSwap;
     // Start is called before the first frame update
     void Start()
@@ -26,16 +27,35 @@ public class PlayerDoubleSwap : MonoBehaviour
     {
         if( DoubleSwap == true )
         {
-            m_thingDoubleSwap = objThing;
-            GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
-            objThing.RegisteDestroyNotify(_swapThingDestroy);
-            DoubleSwapMarker.transform.SetParent(objThing.transform);
-            DoubleSwapMarker.transform.localPosition = new Vector3(0,0,-1f);
+            if( m_bDoubleSwap == false)
+            {
+                m_thingDoubleSwap = objThing;
+                GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
+                objThing.RegisteDestroyNotify(_swapThingDestroy);
+                DoubleSwapMarker.transform.SetParent(null);
+                DoubleSwapMarker.transform.position = new Vector3(objThing.transform.position.x, objThing.transform.position.y, -1);
+            }
+            else
+            {
+                m_thingDoubleSwap = null;
+                GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
+            }
+        }
+    }
+    private void FixedUpdate()
+    {
+        if( DoubleSwap == true )
+        {
+            if(m_thingDoubleSwap != null)
+            {
+                DoubleSwapMarker.transform.position = new Vector3(m_thingDoubleSwap.transform.position.x, m_thingDoubleSwap.transform.position.y, -1);
+            }
         }
     }
     private void _swapThingDestroy()
     {
         m_thingDoubleSwap = null;
+        GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
     }
 
     public bool CanDoubleSwap()
@@ -50,7 +70,9 @@ public class PlayerDoubleSwap : MonoBehaviour
             if (m_thingDoubleSwap != null)
             {
                 m_swap.col = m_thingDoubleSwap.GetComponent<Collider2D>();
+                m_bDoubleSwap = true;
                 m_swap.Do();
+                m_bDoubleSwap = false;
             }
         }
     }
