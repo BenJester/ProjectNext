@@ -1591,7 +1591,10 @@ public class PlayerControl1 : PlayerControl {
         colShadow.transform.position = transform.position;
         if(swap.col==null)
         StopAllCoroutines();
-        swapColPosition = swap.col.transform.position;
+        if(swap.col )
+        {
+            swapColPosition = swap.col.transform.position;
+        }
 
         yield return new WaitForSeconds(0.1f);
         playerShadow.sprite = spriteRenderer.sprite;

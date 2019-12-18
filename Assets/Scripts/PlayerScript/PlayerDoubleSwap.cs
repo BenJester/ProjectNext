@@ -29,13 +29,24 @@ public class PlayerDoubleSwap : MonoBehaviour
             m_thingDoubleSwap = objThing;
             GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
             objThing.RegisteDestroyNotify(_swapThingDestroy);
-            DoubleSwapMarker.transform.SetParent(objThing.transform);
-            DoubleSwapMarker.transform.localPosition = new Vector3(0,0,-1f);
+            DoubleSwapMarker.transform.SetParent(null);
+            DoubleSwapMarker.transform.position = objThing.transform.position;
+        }
+    }
+    private void FixedUpdate()
+    {
+        if( DoubleSwap == true )
+        {
+            if(m_thingDoubleSwap != null)
+            {
+                DoubleSwapMarker.transform.position = m_thingDoubleSwap.transform.position;
+            }
         }
     }
     private void _swapThingDestroy()
     {
         m_thingDoubleSwap = null;
+        GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
     }
 
     public bool CanDoubleSwap()
