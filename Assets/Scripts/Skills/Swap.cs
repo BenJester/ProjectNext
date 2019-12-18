@@ -326,9 +326,9 @@ public class Swap : Skill {
                 m_swapEffect = _movement.GetComponent<SwapEffectMovement>();
             }
 
-            yield return new WaitForSeconds (0.1f);
-			par3.transform.SetParent(null);
-			Destroy(par3,1f);
+   //         yield return new WaitForSeconds (0.1f);
+			//par3.transform.SetParent(null);
+			//Destroy(par3,1f);
 		} else {
 			yield return null;
 		}
