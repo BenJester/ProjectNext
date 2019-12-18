@@ -1423,7 +1423,7 @@ public class PlayerControl1 : PlayerControl {
         }
         else
         {
-            Debug.Assert(false);
+            //Debug.Assert(false);
         }
         yield return new WaitForSeconds(PlayerSpawnTime);
         StartCoroutine(DelayLoadScene());
