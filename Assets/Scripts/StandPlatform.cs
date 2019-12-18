@@ -10,7 +10,7 @@ public class StandPlatform : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.tag == "player")
+        if (collision.gameObject.tag=="player")
         {
             player = collision.gameObject;
             delta = transform.position.x - player.transform.position.x;
