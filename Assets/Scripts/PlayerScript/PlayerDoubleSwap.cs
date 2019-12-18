@@ -22,6 +22,7 @@ public class PlayerDoubleSwap : MonoBehaviour
         else
         {
             m_swap = GetComponent<Swap>();
+            DoubleSwapMarker.gameObject.SetActive(false);
         }
     }
 
