@@ -1423,7 +1423,7 @@ public class PlayerControl1 : PlayerControl {
         }
         else
         {
-            Debug.Assert(false);
+            //Debug.Assert(false);
         }
         yield return new WaitForSeconds(PlayerSpawnTime);
         StartCoroutine(DelayLoadScene());
@@ -1436,7 +1436,8 @@ public class PlayerControl1 : PlayerControl {
         Time.timeScale = 1f;
         if (levelTest)
             levelTest.AddDeadNum(1);
-        CheckPointTotalManager.instance.strawberryCount -= Strawberry.currentAddNum;
+        //CheckPointTotalManager.instance.strawberryCount = CheckPointTotalManager.instance.maxStrawberryCount - Strawberry.currentAddNum;
+        CheckPointTotalManager.instance.strawberryCount = Strawberry.currentAddNum;
         CheckPointTotalManager.instance.SetStrawBerryText();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

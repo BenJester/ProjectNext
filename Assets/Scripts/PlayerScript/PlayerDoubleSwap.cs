@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerDoubleSwap : MonoBehaviour
 {
     public bool DoubleSwap;
     public GameObject DoubleSwapMarker;
+    public bool SwapDamage;
+    public UnityEvent MarkerDestroy;
     private Thing m_thingDoubleSwap;
     private Swap m_swap;
     private bool m_bDoubleSwap;
@@ -20,25 +23,29 @@ public class PlayerDoubleSwap : MonoBehaviour
         else
         {
             m_swap = GetComponent<Swap>();
+            DoubleSwapMarker.gameObject.SetActive(false);
         }
     }
 
     public void SetDoubleSwapObject(Thing objThing)
     {
-        if( DoubleSwap == true )
+        if(DoubleSwapMarker != null)
         {
-            if( m_bDoubleSwap == false)
+            if (DoubleSwap == true)
             {
-                m_thingDoubleSwap = objThing;
-                GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
-                objThing.RegisteDestroyNotify(_swapThingDestroy);
-                DoubleSwapMarker.transform.SetParent(null);
-                DoubleSwapMarker.transform.position = new Vector3(objThing.transform.position.x, objThing.transform.position.y, -1);
-            }
-            else
-            {
-                m_thingDoubleSwap = null;
-                GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
+                if (m_bDoubleSwap == false)
+                {
+                    m_thingDoubleSwap = objThing;
+                    GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
+                    objThing.RegisteDestroyNotify(_swapThingDestroy);
+                    DoubleSwapMarker.transform.SetParent(null);
+                    DoubleSwapMarker.transform.position = new Vector3(objThing.transform.position.x, objThing.transform.position.y, -1);
+                }
+                else
+                {
+                    m_thingDoubleSwap = null;
+                    GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
+                }
             }
         }
     }
@@ -48,14 +55,20 @@ public class PlayerDoubleSwap : MonoBehaviour
         {
             if(m_thingDoubleSwap != null)
             {
-                DoubleSwapMarker.transform.position = new Vector3(m_thingDoubleSwap.transform.position.x, m_thingDoubleSwap.transform.position.y, -1);
+                if(DoubleSwapMarker != null)
+                {
+                    DoubleSwapMarker.transform.position = new Vector3(m_thingDoubleSwap.transform.position.x, m_thingDoubleSwap.transform.position.y, -1);
+                }
             }
         }
     }
     private void _swapThingDestroy()
     {
         m_thingDoubleSwap = null;
-        GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
+        if(DoubleSwapMarker != null)
+        {
+            GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
+        }
     }
 
     public bool CanDoubleSwap()
@@ -71,9 +84,16 @@ public class PlayerDoubleSwap : MonoBehaviour
             {
                 m_swap.col = m_thingDoubleSwap.GetComponent<Collider2D>();
                 m_bDoubleSwap = true;
+                m_swap.swapDamageOn = SwapDamage;
                 m_swap.Do();
+                m_swap.ResetSwapDamageOn();
                 m_bDoubleSwap = false;
             }
         }
+    }
+
+    public void MarkerDestroyFunction()
+    {
+        DoubleSwapMarker = null;
     }
 }
