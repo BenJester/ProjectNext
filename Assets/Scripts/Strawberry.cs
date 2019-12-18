@@ -99,10 +99,18 @@ public class Strawberry : MonoBehaviour
 
     private void _playerDie(PlayerControl1 _ctrl)
     {
-        m_bFollingPlayer = false;
-        transform.position = m_vecOriginalPos;
-        GetComponent<BoxCollider2D>().enabled = true;
-        active = true;
+        if(active == true)
+        {
+            m_bFollingPlayer = false;
+            transform.position = m_vecOriginalPos;
+            GetComponent<BoxCollider2D>().enabled = true;
+            active = true;
+        }
+        else
+        {
+            StopAllCoroutines();
+            sr.color = new Color(1f, 1f, 1f, 0f);
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D col)

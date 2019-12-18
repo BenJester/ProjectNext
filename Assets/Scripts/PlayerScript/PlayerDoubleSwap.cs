@@ -7,6 +7,7 @@ public class PlayerDoubleSwap : MonoBehaviour
 {
     public bool DoubleSwap;
     public GameObject DoubleSwapMarker;
+    public bool SwapDamage;
     public UnityEvent MarkerDestroy;
     private Thing m_thingDoubleSwap;
     private Swap m_swap;
@@ -83,7 +84,9 @@ public class PlayerDoubleSwap : MonoBehaviour
             {
                 m_swap.col = m_thingDoubleSwap.GetComponent<Collider2D>();
                 m_bDoubleSwap = true;
+                m_swap.swapDamageOn = SwapDamage;
                 m_swap.Do();
+                m_swap.ResetSwapDamageOn();
                 m_bDoubleSwap = false;
             }
         }
