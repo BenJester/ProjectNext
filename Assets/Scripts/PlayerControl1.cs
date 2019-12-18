@@ -983,7 +983,8 @@ public class PlayerControl1 : PlayerControl {
                         if (Hit(thing.gameObject))
                         {
                             closestDistance = distanceToCursor;
-                            closestObjectToCursor = thing.gameObject;
+                            //closestObjectToCursor = thing.gameObject;
+                            cacheCursorTarget = thing.gameObject;
                         }
 
                     }
@@ -1040,7 +1041,7 @@ public class PlayerControl1 : PlayerControl {
             }
         }
 
-        if( TempObjectToCursor == cacheCursorTarget && cacheCursorTarget != null)
+        if( TempObjectToCursor == cacheCursorTarget )
         {
             m_fTickWaitCursorTime += Time.deltaTime;
             if(m_fTickWaitCursorTime >= WaitCursorTime)
