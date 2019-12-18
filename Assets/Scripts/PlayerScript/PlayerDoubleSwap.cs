@@ -30,7 +30,7 @@ public class PlayerDoubleSwap : MonoBehaviour
             GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
             objThing.RegisteDestroyNotify(_swapThingDestroy);
             DoubleSwapMarker.transform.SetParent(null);
-            DoubleSwapMarker.transform.position = objThing.transform.position;
+            DoubleSwapMarker.transform.position = new Vector3(objThing.transform.position.x, objThing.transform.position.y,-1);
         }
     }
     private void FixedUpdate()
@@ -39,7 +39,7 @@ public class PlayerDoubleSwap : MonoBehaviour
         {
             if(m_thingDoubleSwap != null)
             {
-                DoubleSwapMarker.transform.position = m_thingDoubleSwap.transform.position;
+                DoubleSwapMarker.transform.position = new Vector3(m_thingDoubleSwap.transform.position.x, m_thingDoubleSwap.transform.position.y, -1);
             }
         }
     }
