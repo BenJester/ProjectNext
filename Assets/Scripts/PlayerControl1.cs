@@ -783,12 +783,7 @@ public class PlayerControl1 : PlayerControl {
         {
             //原先是通过子弹进行呼唤，所以这里需要false，但是现在情况变了，这个作为一个功能开关，而不是一个属性值
             //doubleSwap = false;
-            if (swap.CanDoubleSwap())
-            {
-                swap.SetDoubleSwap(true);
-
-                swap.Do();
-            }
+            m_doubleSwap.DoDoubleSwap();
         }
 
         //冲刺触发
@@ -856,7 +851,6 @@ public class PlayerControl1 : PlayerControl {
     bool FourCornerHit()
     {
         bool res = false;
-        lockedOnObjectLine.SetPosition(0, transform.position);
         //lockedOnObjectLine.SetPosition(1, closestObjectToCursor.transform.position);
         BoxCollider2D targetBox = closestObjectToCursor.GetComponent<BoxCollider2D>();
         float targetX = Mathf.Max(0f, targetBox.size.x / 2f - fourCornerScanMargin);
@@ -877,30 +871,43 @@ public class PlayerControl1 : PlayerControl {
         //如果放到list的话每次update，add和遍历lst会带来比较明显的性能损耗。所以这里就用单纯的比较来判断了。
         float fDistance = Mathf.Infinity;
         Vector3 vecPoint = new Vector3();
+        bool bDrawLine = false;
         if (hit1.collider == targetBox && hit1.distance < fDistance )
         {
             fDistance = hit1.distance;
             vecPoint = hit1.point;
+            bDrawLine = true;
         }
         if (hit2.collider == targetBox && hit2.distance < fDistance)
         {
             fDistance = hit2.distance;
             vecPoint = hit2.point;
+            bDrawLine = true;
         }
         if (hit3.collider == targetBox && hit3.distance < fDistance)
         {
             fDistance = hit3.distance;
             vecPoint = hit3.point;
+            bDrawLine = true;
         }
         if (hit4.collider == targetBox && hit4.distance < fDistance)
         {
             fDistance = hit4.distance;
             vecPoint = hit4.point;
+            bDrawLine = true;
+        }
+        if(bDrawLine == true)
+        {
+            lockedOnObjectLine.SetPosition(0, transform.position);
+            lockedOnObjectLine.SetPosition(1, vecPoint);
+            lockedOnObjectLine.startWidth = 1f;
+        }
+        else
+        {
+            lockedOnObjectLine.startWidth = 0;
         }
 
-        lockedOnObjectLine.SetPosition(1, vecPoint);
 
-        lockedOnObjectLine.startWidth = 1f;
         swap.col = null;
         if (hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox)
         {
@@ -1098,7 +1105,7 @@ public class PlayerControl1 : PlayerControl {
             lockedOnObjectLine.SetPosition(1, Vector3.zero);
             //m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
         }
-        m_doubleSwap.ProcessDoubleSwap(swap);
+        //m_doubleSwap.ProcessDoubleSwap(swap);
 
     }
     public PlayerDoubleSwap GetPlayerDoubleSwap()
