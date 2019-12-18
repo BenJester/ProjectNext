@@ -8,6 +8,7 @@ public class PlayerDoubleSwap : MonoBehaviour
     public GameObject DoubleSwapMarker;
     private Thing m_thingDoubleSwap;
     private Swap m_swap;
+    private bool m_bDoubleSwap;
     //private Thing m_objDoubleSwap;
     // Start is called before the first frame update
     void Start()
@@ -26,11 +27,19 @@ public class PlayerDoubleSwap : MonoBehaviour
     {
         if( DoubleSwap == true )
         {
-            m_thingDoubleSwap = objThing;
-            GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
-            objThing.RegisteDestroyNotify(_swapThingDestroy);
-            DoubleSwapMarker.transform.SetParent(null);
-            DoubleSwapMarker.transform.position = objThing.transform.position;
+            if( m_bDoubleSwap == false)
+            {
+                m_thingDoubleSwap = objThing;
+                GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
+                objThing.RegisteDestroyNotify(_swapThingDestroy);
+                DoubleSwapMarker.transform.SetParent(null);
+                DoubleSwapMarker.transform.position = new Vector3(objThing.transform.position.x, objThing.transform.position.y, -1);
+            }
+            else
+            {
+                m_thingDoubleSwap = null;
+                GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
+            }
         }
     }
     private void FixedUpdate()
@@ -39,7 +48,7 @@ public class PlayerDoubleSwap : MonoBehaviour
         {
             if(m_thingDoubleSwap != null)
             {
-                DoubleSwapMarker.transform.position = m_thingDoubleSwap.transform.position;
+                DoubleSwapMarker.transform.position = new Vector3(m_thingDoubleSwap.transform.position.x, m_thingDoubleSwap.transform.position.y, -1);
             }
         }
     }
@@ -61,7 +70,9 @@ public class PlayerDoubleSwap : MonoBehaviour
             if (m_thingDoubleSwap != null)
             {
                 m_swap.col = m_thingDoubleSwap.GetComponent<Collider2D>();
+                m_bDoubleSwap = true;
                 m_swap.Do();
+                m_bDoubleSwap = false;
             }
         }
     }
