@@ -40,10 +40,7 @@ public class Swap : Skill {
     private float m_fCacheDrawBoxAngle;
 
     private bool m_bDrawBox;
-
-    private Collider2D m_lastTargetCol;
-    private bool m_bDoubleSwap;
-
+    
     public SwapEffectMovement m_swapEffect;
 
 
@@ -68,12 +65,19 @@ public class Swap : Skill {
     public PostProcessVolume dashVolume;
     public float StayingTime;
 
+    private PlayerDoubleSwap m_doubleSwap;
+    private void Start()
+    {
+        m_doubleSwap = GetComponent<PlayerDoubleSwap>();
+    }
+
     public override void Do()
 	{
         if (!active || !col || col.GetComponent<Thing>().dead /*|| !cooldowned*/)
         {
             return;
         }
+        m_doubleSwap.SetDoubleSwapObject(col.GetComponent<Thing>());
         StartCoroutine(DelayedSwap(waitTime));
 
        // playerControl.SetColShadow();
@@ -86,12 +90,6 @@ public class Swap : Skill {
 		powerParticle.transform.SetParent(col.transform);
 		Destroy(powerParticle,0.5f);
 	}
-
-    private void _swapThingDestroy()
-    {
-        m_lastTargetCol = null;
-        m_bDoubleSwap = false;
-    }
 
 	public void DoSwap ()
     {
@@ -111,30 +109,6 @@ public class Swap : Skill {
             return;
         }
         Collider2D _readySwapCol = col;
-        if( m_bDoubleSwap == false )
-        {
-            Thing _colThing = _readySwapCol.GetComponent<Thing>();
-            if(_colThing != null)
-            {
-                m_lastTargetCol = _readySwapCol;
-                _colThing.RegisteDestroyNotify(_swapThingDestroy);
-            }
-            else
-            {
-                Debug.Assert(false);
-            }
-        }
-        else
-        {
-            _readySwapCol = m_lastTargetCol;
-            m_bDoubleSwap = false;
-            if (m_lastTargetCol == null)
-            {
-                return;
-            }
-            m_lastTargetCol = null;
-        }
-
         if( _readySwapCol != null)
         {
             if(m_swapEffect != null)
@@ -290,8 +264,6 @@ public class Swap : Skill {
         m_fCacheDrawBoxAngle = angle;
         m_bDrawBox = true;
 
-        m_bDoubleSwap = false;
-
         Destroy (temp);
 		Destroy (scan);
 	}
@@ -326,9 +298,9 @@ public class Swap : Skill {
                 m_swapEffect = _movement.GetComponent<SwapEffectMovement>();
             }
 
-            yield return new WaitForSeconds (0.1f);
-			par3.transform.SetParent(null);
-			Destroy(par3,1f);
+   //         yield return new WaitForSeconds (0.1f);
+			//par3.transform.SetParent(null);
+			//Destroy(par3,1f);
 		} else {
 			yield return null;
 		}
@@ -435,15 +407,5 @@ public class Swap : Skill {
         m_TransSwap.GetComponent<Rigidbody2D>().isKinematic = false;
         m_TransSwap.GetComponent<Rigidbody2D>().velocity = m_cachePlayerVelocity;
     }
-    public void SetDoubleSwap(bool bDouble)
-    {
-        if(m_lastTargetCol != null )
-        {
-            m_bDoubleSwap = bDouble;
-        }
-    }
-    public bool CanDoubleSwap()
-    {
-        return (m_bDoubleSwap == false && m_lastTargetCol != null);
-    }
+
 }

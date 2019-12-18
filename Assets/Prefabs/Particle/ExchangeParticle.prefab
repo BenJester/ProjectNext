@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4868120016839910}
   - component: {fileID: 198859731588730566}
   - component: {fileID: 199344483177434872}
-  - component: {fileID: 114755455863767006}
   - component: {fileID: -6093746801913218757}
+  - component: {fileID: -8101876391347191575}
   m_Layer: 0
   m_Name: ExchangeParticle
   m_TagString: Untagged
@@ -4773,19 +4773,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &114755455863767006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1350374086244790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fae85322f6bf7e0418d1e6b9cb2f88c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &-6093746801913218757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4798,6 +4785,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39935a1d46ec3d74293dba4b07b4c553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovingSpeed: 15
+  MovingSpeed: 1500
   DistanceOffset: 1
   PlayerTrans: {fileID: 0}
+  DestroyInvoke:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8101876391347191575}
+        m_MethodName: DestroyCommand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-8101876391347191575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350374086244790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6d8d39264ac824787a6284df3e484a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
