@@ -66,9 +66,11 @@ public class Swap : Skill {
     public float StayingTime;
 
     private PlayerDoubleSwap m_doubleSwap;
+    private bool m_bOriginalSwapDamageOn;
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
+        m_bOriginalSwapDamageOn = swapDamageOn;
     }
 
     public override void Do()
@@ -406,6 +408,10 @@ public class Swap : Skill {
 
         m_TransSwap.GetComponent<Rigidbody2D>().isKinematic = false;
         m_TransSwap.GetComponent<Rigidbody2D>().velocity = m_cachePlayerVelocity;
+    }
+    public void ResetSwapDamageOn()
+    {
+        swapDamageOn = m_bOriginalSwapDamageOn ;
     }
 
 }
