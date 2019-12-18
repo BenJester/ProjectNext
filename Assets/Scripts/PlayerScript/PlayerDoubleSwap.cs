@@ -6,6 +6,9 @@ public class PlayerDoubleSwap : MonoBehaviour
 {
     public bool DoubleSwap;
     public GameObject DoubleSwapMarker;
+    private Thing m_thingDoubleSwap;
+    private Swap m_swap;
+    //private Thing m_objDoubleSwap;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,26 +16,41 @@ public class PlayerDoubleSwap : MonoBehaviour
         {
             DoubleSwapMarker.gameObject.SetActive(false);
         }
-    }
-    public void ProcessDoubleSwap(Swap _swap)
-    {
-        if (DoubleSwap == true)
+        else
         {
-            if (_swap.CanDoubleSwap())
+            m_swap = GetComponent<Swap>();
+        }
+    }
+
+    public void SetDoubleSwapObject(Thing objThing)
+    {
+        if( DoubleSwap == true )
+        {
+            m_thingDoubleSwap = objThing;
+            GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
+            objThing.RegisteDestroyNotify(_swapThingDestroy);
+            DoubleSwapMarker.transform.SetParent(objThing.transform);
+            DoubleSwapMarker.transform.localPosition = new Vector3(0,0,-1f);
+        }
+    }
+    private void _swapThingDestroy()
+    {
+        m_thingDoubleSwap = null;
+    }
+
+    public bool CanDoubleSwap()
+    {
+        return m_thingDoubleSwap != null;
+    }
+
+    public void DoDoubleSwap()
+    {
+        if(DoubleSwap == true)
+        {
+            if (m_thingDoubleSwap != null)
             {
-                if (_swap.col != null && !_swap.col.GetComponent<Thing>().dead)
-                {
-                    GameObjectUtil.SafeSetActive(true, DoubleSwapMarker);
-                    DoubleSwapMarker.transform.position = new Vector3(_swap.col.transform.position.x, _swap.col.gameObject.transform.position.y, -1f);
-                }
-                else
-                {
-                    GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
-                }
-            }
-            else
-            {
-                GameObjectUtil.SafeSetActive(false, DoubleSwapMarker);
+                m_swap.col = m_thingDoubleSwap.GetComponent<Collider2D>();
+                m_swap.Do();
             }
         }
     }
