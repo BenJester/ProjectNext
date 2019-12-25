@@ -11,7 +11,8 @@ public class Swap : Skill {
 	public bool swapDamageOn;
 	public int swapDamage;
 	public bool smokeOn;
-	public bool damageEffectOn = true;
+	[HideInInspector]
+    public bool damageEffectOn =false;
     
 	public Collider2D col;
     public bool delaying;
@@ -299,11 +300,9 @@ public class Swap : Skill {
                 _movement.PlayerTrans = transform;
                 m_swapEffect = _movement.GetComponent<SwapEffectMovement>();
             }
+            damageEffectOn = false;
 
-   //         yield return new WaitForSeconds (0.1f);
-			//par3.transform.SetParent(null);
-			//Destroy(par3,1f);
-		} else {
+        } else {
 			yield return null;
 		}
 
