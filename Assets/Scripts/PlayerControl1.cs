@@ -185,6 +185,7 @@ public class PlayerControl1 : PlayerControl {
     private GameObject TempObjectToCursor;
     private float m_fTickWaitCursorTime;
     public float WaitCursorTime;
+    public float WaitCursorTimeForKeyboard;
     private GameObject cacheCursorTarget = null;
     public GameObject closestObjectToPlayer;
     public float closestDistance = Mathf.Infinity;
@@ -1043,8 +1044,8 @@ public class PlayerControl1 : PlayerControl {
 
         if( TempObjectToCursor == cacheCursorTarget )
         {
-            m_fTickWaitCursorTime += Time.deltaTime;
-            if(m_fTickWaitCursorTime >= WaitCursorTime)
+            m_fTickWaitCursorTime += ( Time.deltaTime / Time.timeScale);
+            if(m_fTickWaitCursorTime >= GetWaitCursorTime())
             {
                 closestObjectToCursor = cacheCursorTarget;
             }
@@ -1053,6 +1054,10 @@ public class PlayerControl1 : PlayerControl {
         {
             //Debug.Log(string.Format("cacheCursorTarget[{0}]", cacheCursorTarget));
             m_fTickWaitCursorTime = 0.0f;
+            if(TempObjectToCursor == null && cacheCursorTarget != null)
+            {
+                closestObjectToCursor = cacheCursorTarget;
+            }
             TempObjectToCursor = cacheCursorTarget;
         }
 
@@ -1108,6 +1113,18 @@ public class PlayerControl1 : PlayerControl {
         }
         //m_doubleSwap.ProcessDoubleSwap(swap);
 
+    }
+
+    public float GetWaitCursorTime()
+    {
+        if (controlState == ControlWay.isKeyboard)
+        {
+            return WaitCursorTimeForKeyboard;
+        }
+        else
+        {
+            return WaitCursorTime;
+        }
     }
     public PlayerDoubleSwap GetPlayerDoubleSwap()
     {
