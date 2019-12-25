@@ -57,6 +57,7 @@ public class Enemy_IronFoot : Enemy_Base {
     {
         bool bNewFalling = !_isHit();
         m_bFalling = bNewFalling;
+        isFalling=m_bFalling;
         _processFalling();
     }
     private void _processFalling()
