@@ -6,9 +6,7 @@ using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine.Rendering.PostProcessing;
 public class Swap : Skill {
 
-
-
-	public bool swapDamageOn;
+    public bool swapDamageOn;
 	public int swapDamage;
 	public bool smokeOn;
 	[HideInInspector]
@@ -239,19 +237,16 @@ public class Swap : Skill {
 		if (!swapDamageOn)
 			return;
 
-
-		//Collider2D[] cols = Physics2D.OverlapAreaAll ((Vector2) (player.transform.position + scanBoxHeight / 2f * Vector3.up), (Vector2) (col.transform.position - scanBoxHeight / 2f * Vector3.down));
 		Vector2 midPoint = (player.transform.position + _swapCol.transform.position) / 2f;
-		Vector2 size = new Vector2 (Vector2.Distance ((Vector2)player.transform.position, (Vector2)_swapCol.transform.position), scanBoxHeight);
-		float angle = Vector2.SignedAngle (player.transform.position, _swapCol.transform.position);
-		//RaycastHit2D[] cols = Physics2D.LinecastAll ((Vector2)player.transform.position, (Vector2)col.transform.position);
-		GameObject temp = new GameObject();
+        Vector2 size = new Vector2 (Vector2.Distance (player.transform.position, _swapCol.transform.position), scanBoxHeight);
+        float angle = Vector2.SignedAngle(Vector2.right, (Vector2)player.transform.position - (Vector2)col.transform.position);
+
+        GameObject temp = new GameObject();
 		GameObject scan = Instantiate(temp, midPoint, Quaternion.Euler(0f,0f, Vector2.SignedAngle (Vector2.right, (Vector2)player.transform.position - (Vector2)col.transform.position)));
 		scan.transform.position = midPoint;
 		BoxCollider2D scanBox = scan.AddComponent<BoxCollider2D> ();
 		scanBox.isTrigger = true;
 		scanBox.size = size;
-		//Collider2D[] cols = Physics2D.OverlapBoxAll (midPoint, size, angle);
 		Collider2D[] cols = new Collider2D[32];
 		int count = Physics2D.OverlapCollider(scanBox, new ContactFilter2D(), cols);
 		for (int i = 0; i < count; i ++) {
@@ -275,7 +270,7 @@ public class Swap : Skill {
     {
         if (m_bDrawBox == true)
         {
-            MathUtil.DrawDebugBox(m_vecCacheDrawBoxPos, m_vecCacheDrawBoxSize, m_fCacheDrawBoxAngle,3);
+            MathUtil.DrawDebugBox(m_vecCacheDrawBoxPos, m_vecCacheDrawBoxSize, m_fCacheDrawBoxAngle,1);
         }
     }
 
