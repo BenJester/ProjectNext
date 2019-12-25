@@ -1054,6 +1054,10 @@ public class PlayerControl1 : PlayerControl {
         {
             //Debug.Log(string.Format("cacheCursorTarget[{0}]", cacheCursorTarget));
             m_fTickWaitCursorTime = 0.0f;
+            if(TempObjectToCursor == null && cacheCursorTarget != null)
+            {
+                closestObjectToCursor = cacheCursorTarget;
+            }
             TempObjectToCursor = cacheCursorTarget;
         }
 
