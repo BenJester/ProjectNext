@@ -21,6 +21,8 @@ public class PhysicalButton : MonoBehaviour {
     public bool canRevert=true;
     public bool animationRevert = true;
 
+    public Sprite buttonSprite;
+    public Sprite clickSprite;
     public GameObject[] objectToActives;
     public GameObject[] objectToDisactives;
 
@@ -28,6 +30,7 @@ public class PhysicalButton : MonoBehaviour {
     public Vector3 offset;
     private Vector3 targetPosition;
     private Vector3 originalPosition;
+    private SpriteRenderer spr;
 
 	Goal goal;
 
@@ -41,6 +44,7 @@ public class PhysicalButton : MonoBehaviour {
         targetPosition = transform.position + offset;
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.buttonList.Add(GetComponent<PhysicalButton>());
+        spr= GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -71,7 +75,12 @@ public class PhysicalButton : MonoBehaviour {
 
 		if (!(col.CompareTag("floor") || col.CompareTag("CameraTrigger") || col.CompareTag("Untagged")))
         {
-			state = ClickState.IsClick;
+			if(clickSprite!=null && state!=ClickState.IsClick){
+                spr.sprite = clickSprite;
+            }
+            state = ClickState.IsClick;
+            
+            
 
             foreach (var objectToActive in objectToActives)
             {
@@ -93,6 +102,9 @@ public class PhysicalButton : MonoBehaviour {
 
         if (!col.CompareTag("floor"))
         {
+            if(buttonSprite!=null && state!=ClickState.NoClick){
+                spr.sprite = buttonSprite;
+            }
 
 			state = ClickState.NoClick;
 
