@@ -12,9 +12,11 @@ public class PlayerAnimationComponent : MonoBehaviour
 
     private Animator m_animator;
     private PlayerControl1 m_playerControl;
+    private PlayerStateManager m_stateMgr;
     // Start is called before the first frame update
     void Start()
     {
+        m_stateMgr = GetComponent<PlayerStateManager>();
         m_animator = GetComponentInChildren<Animator>();
         if(m_animator == null)
         {
@@ -66,7 +68,8 @@ public class PlayerAnimationComponent : MonoBehaviour
             m_animator.SetBool(DashEndParam, false);
             m_animator.SetBool(DashProcessParam, false);
             m_animator.SetBool(DashChargingParam, false);
-            m_animator.SetBool(DashToIdleParam, true);
+            m_animator.SetBool(DashToIdleParam, false);
+            m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
         }
         else
         {
@@ -75,6 +78,14 @@ public class PlayerAnimationComponent : MonoBehaviour
             m_animator.SetBool(DashProcessParam, false);
             m_animator.SetBool(DashChargingParam, false);
             m_animator.SetBool(DashToIdleParam, false);
+            m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Jumping);
         }
+    }
+    public void PlayerToIdle()
+    {
+        m_animator.SetBool(DashEndParam, false);
+        m_animator.SetBool(DashProcessParam, false);
+        m_animator.SetBool(DashChargingParam, false);
+        m_animator.SetBool(DashToIdleParam, false);
     }
 }

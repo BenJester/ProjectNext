@@ -21,6 +21,7 @@ public class Dash : Skill {
 
     public GameObject dashParticle;
     public GameObject dashPointer;
+    public bool DashPointerShow;
     public GameObject dashChargingParticle;
     private GameObject _dashChargeParticle;
 
@@ -63,6 +64,7 @@ public class Dash : Skill {
 
     private bool m_bDashCharging;
     private bool m_bChargeZero;
+    private bool m_bDashStart;
     public override void Init () {
 
         LevelSetting _levelSet = FindObjectOfType<LevelSetting>();
@@ -95,7 +97,32 @@ public class Dash : Skill {
         {
             return;
         }
-        if( Mathf.Abs(rPlayer.GetAxis("MoveHorizontal")) > 0 )
+
+        if (Input.GetMouseButton(1) || (rPlayer != null && rPlayer.GetButton("Dash")) || (playerControl.controlState == PlayerControl1.ControlWay.isMobile && TouchControl.Instance.dashDrag))
+        {
+            if (m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Idle)
+            {
+                if (currWaitTime == 0)
+                {
+                    m_aniCom.PlayerDashCharging();
+                    m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
+                }
+                else
+                {
+                }
+            }
+            else
+            {
+                if( m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Dash)
+                {
+                    currWaitTime += 1;
+                }
+            }
+        }
+        if (Input.GetMouseButtonDown(1) || rPlayer.GetButtonDown("Dash"))
+            playerControl.swap.curr = 0f;
+
+        if ( Mathf.Abs(rPlayer.GetAxis("MoveHorizontal")) > 0 )
         {
             int a = 0;
         }
@@ -130,11 +157,14 @@ public class Dash : Skill {
             //显示箭头
             if (dashPointer != null)
             {
-                Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
-                dashPointer.SetActive(true);
-                dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
-                dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir));
+                if(DashPointerShow == true)
+                {
+                    Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
+                    dashPointer.SetActive(true);
+                    dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
+                    dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir));
+                }
             }
             
 
@@ -261,16 +291,6 @@ public class Dash : Skill {
         {
             return;
         }
-		if (Input.GetMouseButton (1)|| (rPlayer != null && rPlayer.GetButton("Dash")) || (playerControl.controlState == PlayerControl1.ControlWay.isMobile && TouchControl.Instance.dashDrag))
-        {
-            if(currWaitTime == 0)
-            {
-                m_aniCom.PlayerDashCharging();
-            }
-            currWaitTime += 1;
-        }
-        if (Input.GetMouseButtonDown(1)|| rPlayer.GetButtonDown("Dash"))
-            playerControl.swap.curr = 0f;
     }
 
 	public override void Do () {
@@ -323,7 +343,7 @@ public class Dash : Skill {
         }
         m_aniCom.PlayerDashStart();
 
-        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
+        //m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
 
         //冲刺特效
         if (dashParticle != null)
@@ -369,7 +389,7 @@ public class Dash : Skill {
         }
         m_aniCom.PlayerDashStop();
 
-        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
+        //m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
         yield return new WaitForSeconds(disableMovementTime - 0.05f);
         playerControl.canMove = true;
         yield return null;
@@ -492,6 +512,18 @@ public class Dash : Skill {
         }
 
         return angle;
+    }
+
+    public void DashStart()
+    {
+        //m_bDashStart = true;
+    }
+    public void DashEndToIdle()
+    {
+        //if(playerControl.isTouchingGround == true)
+        //{
+        //    m_bDashStart = false;
+        //}
     }
 }
 

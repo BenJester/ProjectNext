@@ -9,5 +9,7 @@ public class PlayerStateDefine
         PlayerState_None = 0,
         playerState_ChangingSpeed,
         playerState_Dash,
+        playerState_Idle,
+        playerState_Jumping,
     }
 }

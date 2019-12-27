@@ -276,6 +276,7 @@ public class PlayerControl1 : PlayerControl {
     Vector2 leftWallCheckBottomRight;
     public bool wallJump;
 
+    private PlayerAnimationComponent m_aniCom;
     public PlayerBoosty PlayerBoostyAttr;
     void Awake() {
         if(ProCamera2D.Exists == true)
@@ -322,6 +323,7 @@ public class PlayerControl1 : PlayerControl {
 
     void Start()
     {
+        m_aniCom = GetComponent<PlayerAnimationComponent>();
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
         m_vecMouseWorldPos = new Vector3();
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");
@@ -691,10 +693,15 @@ public class PlayerControl1 : PlayerControl {
         }
 
         if (isTouchingGround) {
-            anim.SetBool("Jumping", false);
-            if (legAnim != null && legAnim.gameObject.activeInHierarchy == true)
+            if( m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
             {
-                legAnim.SetBool("Jumping", false);
+                anim.SetBool("Jumping", false);
+                if (legAnim != null && legAnim.gameObject.activeInHierarchy == true)
+                {
+                    legAnim.SetBool("Jumping", false);
+                }
+                m_aniCom.PlayerToIdle();
+                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
             }
         } else {
             if( dash.isDashing == true )
@@ -1506,7 +1513,7 @@ public class PlayerControl1 : PlayerControl {
             {
                 _logHeight();
                 canJump = true;
-                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
+                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
                 m_bJumpRelease = false;
             }
             else
@@ -1526,7 +1533,8 @@ public class PlayerControl1 : PlayerControl {
 
                 _logHeight();
                 canJump = true;
-                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
+                //m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
+                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
                 m_bJumpRelease = false;
                 yield return null;
             }
