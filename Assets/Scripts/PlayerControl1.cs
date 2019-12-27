@@ -965,7 +965,7 @@ public class PlayerControl1 : PlayerControl {
         // 或者如果玩家移动了瞄准摇杆，清掉缓存
         if ((closestObjectToCursor && closestObjectToCursor.GetComponent<Thing>().dead)
             || !(controlState == ControlWay.isKeyboard) && laserBulletAngle && (closestObjectToCursor && Vector3.Distance(closestObjectToCursor.transform.position, transform.position)> shootDistance)
-            || ((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)))
+            || (((player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)) && _canUsingAim()))
         {
             _resetClosestData();
         }
@@ -1021,7 +1021,7 @@ public class PlayerControl1 : PlayerControl {
 
                     float angleToPlayer = AngleBetween(transform.position, thing.transform.position);
                     //Rewired------------------------------------------------------------------------------
-                    if (player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0)
+                    if (_canUsingAim() && (player.GetAxis("AimHorizontal") != 0 || player.GetAxis("AimVertical") != 0))
                     {
                         Vector2 dir = new Vector2(player.GetAxis("AimHorizontal"), player.GetAxis("AimVertical")).normalized;
                         angleToCursor = AngleBetween(Vector2.zero, dir);
@@ -1037,7 +1037,7 @@ public class PlayerControl1 : PlayerControl {
 
                     if (!thing.dead && diff < closestDistance && diff < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                     {
-                        if (Hit(thing.gameObject))
+                        if (Hit(thing.gameObject) && _canUsingAim())
                         {
                             closestDistance = diff;
                             /*closestObjectToCursor = */cacheCursorTarget = thing.gameObject;
@@ -1091,8 +1091,11 @@ public class PlayerControl1 : PlayerControl {
             }
             else
             {
-                bAimingCancel = true;
-                m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
+                if(_canUsingAim() == true)
+                {
+                    bAimingCancel = true;
+                    m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+                }
             }
 
         }
@@ -1103,7 +1106,7 @@ public class PlayerControl1 : PlayerControl {
             PlayerControl1.Instance.player.SetVibration(1, landingMotor2Level, landingMotor2duration);
         }
         // 记号圆圈
-        if (closestObjectToCursor != null) {
+        if (closestObjectToCursor != null && _canUsingAim() == true) {
             marker.transform.position = new Vector3(closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
             FourCornerHit();
             if (locked)
@@ -1113,17 +1116,40 @@ public class PlayerControl1 : PlayerControl {
             }
             //m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
         } else {
-            if(bAimingCancel == true)
-            {
-                swap.col = null;
-            }
-            marker.transform.position = new Vector3(-10000f, 0f, 0f);
-            lockedOnObjectLine.SetPosition(0, Vector3.zero);
-            lockedOnObjectLine.SetPosition(1, Vector3.zero);
+            CancelMarker(bAimingCancel);
             //m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
         }
         //m_doubleSwap.ProcessDoubleSwap(swap);
 
+    }
+    public void CancelMarker(bool bAimingCancel)
+    {
+        if (bAimingCancel == true)
+        {
+            swap.col = null;
+        }
+        marker.transform.position = new Vector3(-10000f, 0f, 0f);
+        lockedOnObjectLine.SetPosition(0, Vector3.zero);
+        lockedOnObjectLine.SetPosition(1, Vector3.zero);
+    }
+
+    private bool _canUsingAim()
+    {
+        if( controlState == ControlWay.isJoystick )
+        {
+            if( TouchControl.Instance.CancelLockfunc() == true )
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public float GetWaitCursorTime()
