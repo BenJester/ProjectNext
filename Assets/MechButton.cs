@@ -7,15 +7,25 @@ public class MechButton : MonoBehaviour
     public bool onlyOnce;
     public bool isPressed=false;
     public Mech_base mech;
+    public SpriteRenderer sr;
+    public Sprite normalSpr;
+    public Sprite clickSpr;
     public LineRenderer lr;
     private Vector3 oriPos;
     private float cd;
 
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    
     void Start()
     {        
         lr.SetPosition(0, transform.position);
         lr.SetPosition(1, mech.transform.position);
-        oriPos = transform.position;
+        sr = GetComponent<SpriteRenderer>();
+        sr.sprite = normalSpr;
+        
     }
 
     
@@ -38,7 +48,7 @@ public class MechButton : MonoBehaviour
         if((!isPressed && collision.tag == "thing") || (!isPressed && collision.tag =="player"))
         {
             isPressed = true;
-            transform.position = oriPos - new Vector3(0, 10,0);
+            sr.sprite = clickSpr;
 
             if (cd <= 0)
             {
@@ -53,7 +63,7 @@ public class MechButton : MonoBehaviour
     {
         if((isPressed && collision.tag == "thing") || (isPressed && collision.tag == "player")){
             isPressed = false;
-            transform.position = oriPos;
+           sr.sprite = normalSpr;
         }
     }
 }

@@ -103,7 +103,7 @@ Rigidbody2D:
   m_Mass: 800
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 150
+  m_GravityScale: 125
   m_Material: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -161,6 +161,8 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!251 &524570173449380667
