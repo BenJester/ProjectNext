@@ -323,6 +323,10 @@ public class PlayerControl1 : PlayerControl {
 
     void Start()
     {
+        if(controlState == ControlWay.isJoystick)
+        {
+            laserBulletAngle = true;
+        }
         m_aniCom = GetComponent<PlayerAnimationComponent>();
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
         m_vecMouseWorldPos = new Vector3();
