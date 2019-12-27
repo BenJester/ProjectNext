@@ -30,9 +30,12 @@ public class TouchControl : MonoBehaviour
     private float m_fPrevPrevAimMagnitude;
     private bool m_bAimDrag;
 
+    private bool m_bCancelLock;
+    private BulletTime m_bulletTime;
     private void Start()
     {
         player = ReInput.players.GetPlayer(0);
+        m_bulletTime = GetComponent<BulletTime>();
     }
     private void Update()
     {
@@ -45,6 +48,10 @@ public class TouchControl : MonoBehaviour
 
         Vector2 aimDir = player.GetAxis2DRaw("AimHorizontal", "AimVertical");
         float aimMag = aimDir.magnitude;
+        if(m_bCancelLock == true)
+        {
+            //aimMag = 0.0f;
+        }
 
         if (prevMagnitude > 0 && dashMag == 0)
             PlayerControl1.Instance.dash.RequestDash();
@@ -53,11 +60,24 @@ public class TouchControl : MonoBehaviour
         //之前一桢判断的话，如果轴在移动到0，0时也会产生交换。
         if (m_bAimDrag == true)
         {
+            if( player.GetButtonUp("CancelLock"))
+            {
+                m_bCancelLock = true;
+                m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+                PlayerControl1.Instance.CancelMarker(true);
+            }
             if (prevAimMagnitude == 0 && aimMag == 0 && m_fPrevPrevAimMagnitude == 0)
             {
+                if(m_bCancelLock == false)
+                {
+                    PlayerControl1.Instance.swap.Do();
+                    PlayerControl1.Instance.CancelAimBulletTime();
+                }
+                else
+                {
+                    m_bCancelLock = false;
+                }
                 m_bAimDrag = false;
-                PlayerControl1.Instance.swap.Do();
-                PlayerControl1.Instance.CancelAimBulletTime();
             }
         }
             
@@ -75,7 +95,10 @@ public class TouchControl : MonoBehaviour
 
         if (aimMag >= dragStartMag)
         {
-            m_bAimDrag = true;
+            if(m_bCancelLock==false)
+            {
+                m_bAimDrag = true;
+            }
             finalAimDir = aimDir;
             aimDrag = true;
         }
@@ -98,5 +121,9 @@ public class TouchControl : MonoBehaviour
         m_fPrevPrevAimMagnitude = prevAimMagnitude;
         prevAimMagnitude = aimMag;
     }
-    
+ 
+    public bool CancelLockfunc()
+    {
+        return m_bCancelLock;
+    }
 }

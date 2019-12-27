@@ -369,6 +369,15 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 18
+      _name: CancelLock
+      _type: 1
+      _descriptiveName: CancelLockAction
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
     actionCategories:
     - _name: Default
       _descriptiveName: Default
@@ -378,7 +387,7 @@ MonoBehaviour:
     actionCategoryMap:
       list:
       - categoryId: 0
-        actionIds: 0000000009000000080000000100000010000000020000000f00000003000000040000000500000006000000070000000a0000000b0000000c0000000d00000011000000
+        actionIds: 0000000009000000080000000100000010000000020000000f00000003000000040000000500000006000000070000000a0000000b0000000c0000000d0000001100000012000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -546,7 +555,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: 17
+        _actionId: -1
         _elementType: 1
         _elementIdentifierId: 10
         _axisRange: 0
@@ -689,9 +698,20 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: -1
+        _actionId: 9
         _elementType: 1
         _elementIdentifierId: 13
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 0
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 0
+        _actionId: -1
+        _elementType: 1
+        _elementIdentifierId: 10
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
@@ -807,7 +827,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: 17
+        _actionId: 0
         _elementType: 1
         _elementIdentifierId: -1
         _axisRange: 0
@@ -1309,7 +1329,7 @@ MonoBehaviour:
     controllerMapLayoutManagerRuleSets: []
     controllerMapEnablerRuleSets: []
     playerIdCounter: 2
-    actionIdCounter: 18
+    actionIdCounter: 19
     actionCategoryIdCounter: 1
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 1
