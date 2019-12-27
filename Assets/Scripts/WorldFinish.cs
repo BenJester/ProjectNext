@@ -14,8 +14,8 @@ public class WorldFinish : MonoBehaviour
         {
             if (text != null)
             {
-                text.text = "Congratulations! \nStrawberries: " + worldManager.strawberryCount.ToString()
-                      + "/" + worldManager.maxStrawberryCount.ToString() + "\nMade by yzt and yjc\n09.22.19\nbest of yjc: 230s\nbest of yzt: 245s";
+                text.text = "Congratulations! \nStrawberries: " + StrawberryMgr.instance.GetStrawberryCounts().ToString()
+                      + "/" + StrawberryMgr.instance.GetMaxCounts().ToString() + "\nMade by yzt and yjc\n09.22.19\nbest of yjc: 230s\nbest of yzt: 245s";
             }
             
         }

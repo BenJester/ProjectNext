@@ -383,6 +383,10 @@ public class PlayerControl1 : PlayerControl {
     {
         m_playDieAction += _act;
     }
+    public void UnregisteDieAction(UnityAction<PlayerControl1> _act)
+    {
+        m_playDieAction -= _act;
+    }
 
     private void OnDestroy()
     {
@@ -1491,8 +1495,8 @@ public class PlayerControl1 : PlayerControl {
         if (levelTest)
             levelTest.AddDeadNum(1);
         //CheckPointTotalManager.instance.strawberryCount = CheckPointTotalManager.instance.maxStrawberryCount - Strawberry.currentAddNum;
-        CheckPointTotalManager.instance.strawberryCount = Strawberry.currentAddNum;
-        CheckPointTotalManager.instance.SetStrawBerryText();
+        StrawberryMgr.instance.UpdateStrawberryCoutns( Strawberry.currentAddNum);
+        StrawberryMgr.instance.SetStrawBerryText();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public override void Revive() {
