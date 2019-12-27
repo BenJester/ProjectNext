@@ -23,6 +23,11 @@ public class Strawberry : MonoBehaviour
     private float m_fCurFollingTime;
     private Vector3 m_vecOriginalPos;
     private int m_nIndexOfStrawberry;
+    public string sceneName;
+    private void Awake()
+    {
+        int a = 0;
+    }
     private void Start()
     {
         if(StrawberryMgr.instance == null)
@@ -76,6 +81,10 @@ public class Strawberry : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if(m_playerCtrl != null)
+        {
+            m_playerCtrl.UnregisteDieAction(_playerDie);
+        }
         GlobalVariable.UnregisteSetPlayerEvent(_setPlayer);
     }
     private void FixedUpdate()
@@ -89,9 +98,11 @@ public class Strawberry : MonoBehaviour
             {
                 m_bFollingPlayer = false;
                 StartCoroutine(Anim(animDuration));
-                worldManager.strawberryCount += 1;
+                //worldManager.strawberryCount += 1;
+                StrawberryMgr.instance.AddStrawBerry();
                 currentAddNum += 1;
-                worldManager.SetStrawBerryText();
+                //worldManager.SetStrawBerryText();
+                StrawberryMgr.instance.SetStrawBerryText();
                 active = false;
             }
         }

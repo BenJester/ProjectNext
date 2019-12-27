@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class StrawberryInScene
 {
@@ -52,12 +53,40 @@ public class StrawberryMgr : MonoBehaviour
     public static StrawberryMgr instance;
     public List<StrawberryInScene> LstScenes;
 
+
     private StrawberryInScene m_curScene;
     private string m_strSceneName;
+    private int m_nStrawberryCount;
+    private int m_nMaxStrawberryCount;
+    private UnityAction<int, int> m_actStrawBerry;
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    public void AddStrawBerry()
+    {
+        m_nStrawberryCount++;
+    }
+    public int GetStrawberryCounts()
+    {
+        return m_nStrawberryCount;
+    }
+    public void UpdateStrawberryCoutns(int nCounts)
+    {
+        m_nStrawberryCount = nCounts;
+    }
+    public int GetMaxCounts()
+    {
+        return m_nMaxStrawberryCount;
+    }
+    public void SetStrawBerryText()
+    {
+        if(m_actStrawBerry != null)
+        {
+            m_actStrawBerry(m_nStrawberryCount, m_nMaxStrawberryCount);
+        }
     }
 
     // Update is called once per frame
@@ -77,6 +106,7 @@ public class StrawberryMgr : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
+            SceneManager.activeSceneChanged += OnSceneChange;
             LstScenes = new List<StrawberryInScene>();
         }
     }
@@ -115,18 +145,46 @@ public class StrawberryMgr : MonoBehaviour
             m_curScene = _newScene;
         }
 
-        if(m_strSceneName != scene.name && m_strSceneName != null)
+        //if(m_strSceneName != scene.name && m_strSceneName != null)
+        //{
+        //    Strawberry[] lstStrawberry = FindObjectsOfType<Strawberry>();
+        //    foreach(Strawberry _strawberry in lstStrawberry)
+        //    {
+        //        Destroy(_strawberry.gameObject);
+        //    }
+        //}
+        m_strSceneName = scene.name;
+    }
+    void OnSceneChange(Scene _scene1, Scene _scene2)
+    {
+        int nCounts = 0;
+        Strawberry[] lstStrawberry = FindObjectsOfType<Strawberry>();
+        foreach (Strawberry _strawberry in lstStrawberry)
         {
-            Strawberry[] lstStrawberry = FindObjectsOfType<Strawberry>();
-            foreach(Strawberry _strawberry in lstStrawberry)
+            if(_strawberry.sceneName == null || _strawberry.sceneName == "")
             {
-                Destroy(_strawberry.gameObject);
+                _strawberry.sceneName = _scene2.name;
+                nCounts++;
+            }
+            else
+            {
+                if(_strawberry.sceneName.CompareTo( _scene2.name) != 0)
+                {
+                    Destroy(_strawberry.gameObject);
+                }
             }
         }
-        m_strSceneName = scene.name;
+        int a = 0;
+        m_nMaxStrawberryCount = nCounts;
+        SetStrawBerryText();
     }
     void OnSceneUnloaded(Scene scene)
     {
+        Strawberry[] lstStrawberry = FindObjectsOfType<Strawberry>();
+        foreach (Strawberry _strawberry in lstStrawberry)
+        {
+            int a = 0;
+        }
     }
     public int GetCurrentIndex()
     {
@@ -160,5 +218,13 @@ public class StrawberryMgr : MonoBehaviour
     public bool IsSceneStrawberryInit(int nIdx)
     {
         return m_curScene.IsStrawBerryInit(nIdx);
+    }
+    public void RegisteStrawberryUI(UnityAction<int, int> ua)
+    {
+        m_actStrawBerry += ua;
+    }
+    public void UnregisteStrawberryUI(UnityAction<int, int> ua)
+    {
+        m_actStrawBerry -= ua;
     }
 }
