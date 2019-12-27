@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1373724081911814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 166, y: -310, z: 0}
-  m_LocalScale: {x: 0.04444444, y: 0.04444444, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4281809523698614}
   m_Father: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 50511993014603016}
   - component: {fileID: 114520426510490504}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Button_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,8 +59,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627050778409602}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalPosition: {x: -506, y: -4.5, z: 0}
+  m_LocalScale: {x: 1.1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4940104352154400}
   m_RootOrder: 0
@@ -102,9 +102,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -15
-  m_Sprite: {fileID: 21300000, guid: 8e9516e0c219f49ebbc3b21d2b166184, type: 3}
-  m_Color: {r: 0.96098113, g: 1, b: 0, a: 1}
+  m_SortingOrder: 15
+  m_Sprite: {fileID: 21300000, guid: 8b41366617adc4249a24191d203bbded, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -127,18 +127,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.6793213, y: 2.9296265}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1089, y: 250}
+    oldSize: {x: 48, y: 34}
     newSize: {x: 40, y: 40}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1089, y: 250}
+  m_Size: {x: 46.35913, y: 25.663208}
   m_EdgeRadius: 0
 --- !u!50 &50511993014603016
 Rigidbody2D:
@@ -175,6 +175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canRevert: 1
   animationRevert: 1
+  buttonSprite: {fileID: 21300000, guid: 8b41366617adc4249a24191d203bbded, type: 3}
+  clickSprite: {fileID: 21300000, guid: 45f573981b437de4e806da6d4cde8927, type: 3}
   objectToActives: []
   objectToDisactives: []
   offset: {x: 0, y: -11, z: 0}
