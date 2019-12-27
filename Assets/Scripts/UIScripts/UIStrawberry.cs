@@ -21,7 +21,7 @@ public class UIStrawberry : MonoBehaviour
 
     private void OnDestroy()
     {
-        CheckPointTotalManager.instance.UnregisteStrawberryUI(UpdateStrawberryText);
+        StrawberryMgr.instance.UnregisteStrawberryUI(UpdateStrawberryText);
     }
     private void Awake()
     {
@@ -32,8 +32,8 @@ public class UIStrawberry : MonoBehaviour
     }
     public void RegisteLate()
     {
-        CheckPointTotalManager.instance.RegisteStrawberryUI(UpdateStrawberryText);
-        CheckPointTotalManager.instance.SetStrawBerryText();
+        StrawberryMgr.instance.RegisteStrawberryUI(UpdateStrawberryText);
+        StrawberryMgr.instance.SetStrawBerryText();
     }
     public void UpdateStrawberryText(int nCurCnt, int nMaxCnt)
     {
