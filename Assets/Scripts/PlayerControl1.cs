@@ -1836,4 +1836,17 @@ public class PlayerControl1 : PlayerControl {
     {
         return controlState == ControlWay.isMobile;
     }
+
+    public void PlayerDieImmediately()
+    {
+        Thing _playerThing = GetComponent<Thing>();
+        if(_playerThing != null)
+        {
+            if (_playerThing.type == Ben.Type.player)
+            {
+                _playerThing.Die();
+                StartCoroutine(_playerThing.GetComponent<PlayerControl1>().DelayRestart());
+            }
+        }
+    }
 }

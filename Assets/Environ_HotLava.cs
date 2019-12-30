@@ -23,7 +23,7 @@ public class Environ_HotLava : MonoBehaviour
             collision.GetComponent<Thing>().Die();
         }else if(collision.tag == "player")
         {
-            PlayerControl1.Instance.Die();
+            PlayerControl1.Instance.PlayerDieImmediately();
         }
     }
 }
