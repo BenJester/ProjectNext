@@ -347,6 +347,9 @@ MonoBehaviour:
   recoverFrame: 120
   animChargingParam: Enemy_dash_charging
   animAttackParam: Enemy_dash_attack
+  CheckMask:
+    serializedVersion: 2
+    m_Bits: 5888
   distance: 800
   player: {fileID: 0}
   lr: {fileID: 0}

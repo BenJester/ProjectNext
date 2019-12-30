@@ -18,6 +18,8 @@ public class Enemy_Dasher_Aim :  Enemy {
     public string animChargingParam;
     public string animAttackParam;
 
+	public LayerMask CheckMask;
+
     private int m_nHashChargingParam;
     private int m_nHashAttackParam;
 
@@ -201,7 +203,7 @@ public class Enemy_Dasher_Aim :  Enemy {
 		
 		//transform.GetComponent<Rigidbody2D>().AddForce(transform.position+(Vector3)direction*dashSpeed);
 		transform.GetComponent<Rigidbody2D>().velocity = (Vector2) (direction * dashSpeed);
-		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, direction, 50, (1 << 10) | (1 << 8) | (1 << 9));
+		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, direction, 50, CheckMask);
 		RaycastHit2D hitNear;
 		if (hits.Length >= 2) {
 			hitNear = hits[1];
@@ -211,7 +213,7 @@ public class Enemy_Dasher_Aim :  Enemy {
 	}
 
 	public bool CheckPlayerInSight () {
-		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, (player.position - transform.position).normalized, distance, (1 << 10) | (1 << 8) | (1 << 9));
+		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, (player.position - transform.position).normalized, distance, CheckMask);
 		RaycastHit2D hitNear;
 		foreach (var item in hits)
 		{
@@ -219,8 +221,14 @@ public class Enemy_Dasher_Aim :  Enemy {
 		}
 		if (hits.Length >= 2) {
 			hitNear = hits[1];
-			if (hitNear.collider.tag == "player") return true;
-			else return false;
+			if (hitNear.collider.tag == "player")
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		} else return false;
 	}
 
