@@ -26,6 +26,10 @@ public class CheckPointTotalManager : MonoBehaviour {
             }
             DontDestroyOnLoad(gameObject);
             savedPos = pivot.transform.position;
+            if(PlayerControl1.Instance != null)
+            {
+                PlayerControl1.Instance.transform.position = savedPos;
+            }
         }
     }
     private void Start()
