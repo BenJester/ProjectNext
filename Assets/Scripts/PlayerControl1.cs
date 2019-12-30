@@ -193,6 +193,8 @@ public class PlayerControl1 : PlayerControl {
     public float cursorSnapThreshold;
     public GameObject marker;
 
+    private PlayerMarkerComponent m_marker;
+
     public Swap swap;
     public Dash dash;
 
@@ -323,7 +325,8 @@ public class PlayerControl1 : PlayerControl {
 
     void Start()
     {
-        if(controlState == ControlWay.isJoystick)
+        m_marker = marker.GetComponent<PlayerMarkerComponent>();
+        if (controlState == ControlWay.isJoystick)
         {
             laserBulletAngle = true;
         }
@@ -1111,7 +1114,8 @@ public class PlayerControl1 : PlayerControl {
         }
         // 记号圆圈
         if (closestObjectToCursor != null && _canUsingAim() == true) {
-            marker.transform.position = new Vector3(closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
+            //marker.transform.position = new Vector3(closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
+            m_marker.UpdateTarget(closestObjectToCursor.transform);
             FourCornerHit();
             if (locked)
             {
@@ -1132,7 +1136,8 @@ public class PlayerControl1 : PlayerControl {
         {
             swap.col = null;
         }
-        marker.transform.position = new Vector3(-10000f, 0f, 0f);
+        //marker.transform.position = new Vector3(-10000f, 0f, 0f);
+        m_marker.CloseMarker();
         lockedOnObjectLine.SetPosition(0, Vector3.zero);
         lockedOnObjectLine.SetPosition(1, Vector3.zero);
     }
@@ -1775,7 +1780,8 @@ public class PlayerControl1 : PlayerControl {
         //    index -= 1;
         //}
 
-        marker.transform.position = new Vector3(toggleTarget.transform.position.x, toggleTarget.transform.position.y, -1f);
+        //marker.transform.position = new Vector3(toggleTarget.transform.position.x, toggleTarget.transform.position.y, -1f);
+        m_marker.UpdateTarget(toggleTarget.transform);
 
         if (Hit(toggleTarget))
         {
