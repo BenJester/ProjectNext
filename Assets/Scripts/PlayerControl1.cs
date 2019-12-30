@@ -280,8 +280,16 @@ public class PlayerControl1 : PlayerControl {
 
     private PlayerAnimationComponent m_aniCom;
     public PlayerBoosty PlayerBoostyAttr;
-    void Awake() {
-        if(ProCamera2D.Exists == true)
+    void Awake()
+    {
+        if (HasRepawnPoint)
+        {
+            if(CheckPointTotalManager.instance != null)
+            {
+                transform.position = CheckPointTotalManager.instance.GetPlayerPos();
+            }
+        }
+        if (ProCamera2D.Exists == true)
         {
             ProCamera2D.Instance.AddCameraTarget(transform);
         }
@@ -349,8 +357,6 @@ public class PlayerControl1 : PlayerControl {
 
         InitSkills();
 
-        if (HasRepawnPoint)
-            transform.position = CheckPointTotalManager.instance.GetPlayerPos();
 
         //设置射程和灯光
         if (hasShootDistance) HandleShootDistanceAndLight();
