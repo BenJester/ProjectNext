@@ -813,6 +813,7 @@ MonoBehaviour:
   prevClosestObjectToCursor: {fileID: 0}
   closestObjectToCursor: {fileID: 0}
   WaitCursorTime: 0
+  WaitCursorTimeForKeyboard: 0
   closestObjectToPlayer: {fileID: 0}
   closestDistance: Infinity
   closestPlayerDistance: 974.4824
@@ -943,6 +944,7 @@ MonoBehaviour:
   dashParticle: {fileID: 2678965535988136888, guid: 81384d933b5cf644581d5675a7d982e1,
     type: 3}
   dashPointer: {fileID: 9163682765064726003}
+  DashPointerShow: 0
   dashChargingParticle: {fileID: 9163682763277132950, guid: af26e5e4b3e9c4b49b3bafabd149203d,
     type: 3}
   isDashing: 0
@@ -1293,6 +1295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DoubleSwap: 1
   DoubleSwapMarker: {fileID: 1193951111751896}
+  SwapDamage: 0
   MarkerDestroy:
     m_PersistentCalls:
       m_Calls: []
@@ -1841,6 +1844,7 @@ GameObject:
   - component: {fileID: 114717237027278080}
   - component: {fileID: 95509646095054184}
   - component: {fileID: 114524067577932440}
+  - component: {fileID: 2172034853599295140}
   m_Layer: 9
   m_Name: marker
   m_TagString: Untagged
@@ -1949,9 +1953,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948678748210214}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e481b2cb83c6bf45b2c1c34929650de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2172034853599295140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948678748210214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b91b458f3887147b1ab9197ca9b429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3245598983363720757
