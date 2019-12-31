@@ -710,7 +710,7 @@ public class PlayerControl1 : PlayerControl {
         }
 
         if (isTouchingGround) {
-            if( m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash)
+            if( m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_Dash && m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_IdleDash)
             {
                 anim.SetBool("Jumping", false);
                 if (legAnim != null && legAnim.gameObject.activeInHierarchy == true)
@@ -842,6 +842,8 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void Jump() {
+
+        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Jumping);
         box.sharedMaterial = slipperyMat;
         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         canJump = false;
@@ -1556,10 +1558,13 @@ public class PlayerControl1 : PlayerControl {
         {
             if (m_bJumpingWindow == false && dash.isDashing == false)
             {
-                _logHeight();
-                canJump = true;
-                m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
-                m_bJumpRelease = false;
+                if( m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_IdleDash)
+                {
+                    _logHeight();
+                    canJump = true;
+                    m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
+                    m_bJumpRelease = false;
+                }
             }
             else
             {

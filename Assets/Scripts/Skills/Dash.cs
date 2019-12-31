@@ -100,20 +100,28 @@ public class Dash : Skill {
 
         if (Input.GetMouseButton(1) || (rPlayer != null && rPlayer.GetButton("Dash")) || (playerControl.controlState == PlayerControl1.ControlWay.isMobile && TouchControl.Instance.dashDrag))
         {
-            if (m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Idle)
+            if (m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Idle || m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Jumping)
             {
                 if (currWaitTime == 0)
                 {
                     m_aniCom.PlayerDashCharging();
-                    m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
+                    if(m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Jumping)
+                    {
+                        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
+                    }
+                    else if(m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Idle)
+                    {
+                        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_IdleDash);
+                    }
                 }
                 else
                 {
+                    int a = 0;
                 }
             }
             else
             {
-                if( m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Dash)
+                if( m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Dash || m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_IdleDash)
                 {
                     currWaitTime += 1;
                 }
@@ -140,12 +148,6 @@ public class Dash : Skill {
             || (rPlayer.GetButton("Dash") && charge >= 1 && currWaitTime >= waitTime)
             || (!(playerControl.controlState == PlayerControl1.ControlWay.isKeyboard) && TouchControl.Instance.dashDrag && charge >= 1 && currWaitTime >= waitTime)) {
 
-            //播放动画
-            //if (!amin.GetCurrentAnimatorStateInfo(0).IsName("Dash_Charging"))
-            //amin.CrossFade("Dash_Charging", 0.01f);
-
-
-            
 
             //蓄力粒子
             if (_dashChargeParticle == null)
@@ -166,18 +168,12 @@ public class Dash : Skill {
                     dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -AngleBetween(Vector2.up, dir));
                 }
             }
-            
-
-
-
+ 
             playerControl.swap.realWaitTime = playerControl.swap.waitTime;
 			playerControl.targetDeltaTime = Time.fixedDeltaTime;
 			playerControl.targetTimeScale = Time.timeScale;
 
             m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
-
-            //Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
-            //Time.fixedDeltaTime = reducedTimeScale * playerControl.startDeltaTime;
 
             //辅助线指示
             DrawTrajectory();
@@ -211,29 +207,6 @@ public class Dash : Skill {
         if (Input.GetMouseButtonUp (1) || rPlayer.GetButtonUp("Dash"))
         {
             m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
-            //Do();
-            //if (currWaitTime < remainBulletTimeThreshold)
-            //{
-            //    Time.timeScale = 1f;
-            //    playerControl.targetTimeScale = 1f;
-            //    Time.fixedDeltaTime = playerControl.startDeltaTime;
-            //    playerControl.targetDeltaTime = Time.fixedDeltaTime;
-            //} else
-            //{
-            //    Time.timeScale = 0.1f;
-            //    playerControl.targetTimeScale = 0.1f;
-            //    Time.fixedDeltaTime = playerControl.startDeltaTime * 0.1f;
-            //    playerControl.targetDeltaTime = playerControl.startDeltaTime * 0.1f;
-            //    StartCoroutine(CancelBulletTime());
-            //}
-            //currWaitTime = 0;
-
-            ////辅助线取消
-            //lr.enabled = false;
-            ////蓄力冲刺特效取消[是不是不生成比较有效率？]
-            //if (_dashChargeParticle != null) Destroy(_dashChargeParticle);
-            //if (dashPointer != null) dashPointer.SetActive(false);
-
         }
 		if (playerControl.isTouchingGround && bChargingDash == false && isDashing == false)
         {
@@ -301,7 +274,6 @@ public class Dash : Skill {
             charge = 0;
             m_bChargeZero = false;
         }
-		//playerControl.canMove = false;
 		StartCoroutine (DoDash ());
 	}
 
@@ -328,10 +300,6 @@ public class Dash : Skill {
             dir = dashDir;
         }
 
-        //反正Input.GetAxis也得不到东西，就给keyboard配置rewired的数据然后通过MoveHorizontal进行处理即可。
-        //if (playerControl.controlState == PlayerControl1.ControlWay.isKeyboard)
-        //    dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
-
         if (playerControl.controlState == PlayerControl1.ControlWay.isMobile)
             dir = TouchControl.Instance.finalDashDir.normalized;
 
@@ -342,8 +310,6 @@ public class Dash : Skill {
             m_uaDashStart.Invoke();
         }
         m_aniCom.PlayerDashStart();
-
-        //m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
 
         //冲刺特效
         if (dashParticle != null)
@@ -358,18 +324,6 @@ public class Dash : Skill {
 		//    player.GetComponent<SpriteRenderer> ().color = Color.black;
 			//Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),true);
 			
-		
-        float curr = 0f;
-        //		while (curr < pauseDuration) 
-        //		{
-        //			playerBody.velocity = Vector2.zero;
-        //			curr += Time.deltaTime;
-        //			yield return new WaitForEndOfFrame ();
-        //		}
-        //		curr = 0f;
-        //		float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
-        //		float v = (Input.GetKey(KeyCode.W) ? 1 : 0) + (Input.GetKey(KeyCode.S) ? -1 : 0);
-        //		Vector2 dir = new Vector2(h, v).normalized;
         playerControl.canMove = false;
         playerBody.velocity = dir * DashSpeed;
         if( DashTime <= 0 )
@@ -389,31 +343,12 @@ public class Dash : Skill {
         }
         m_aniCom.PlayerDashStop();
 
-        //m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.PlayerState_None);
         yield return new WaitForSeconds(disableMovementTime - 0.05f);
         playerControl.canMove = true;
         yield return null;
-        //      while (curr < DashDuration) {
-        //          //playerBody.velocity = dir * DashSpeed;
-        //          curr += Time.deltaTime;
-        //	yield return new WaitForEndOfFrame ();
-        //}
-
-        //playerControl.canMove = true;
-        //      playerBody.velocity = dir * playerControl.speed;
-        //      curr = 0f;
-        //      playerControl.canMove = true;
-        //      while (curr < CoyoteDuration)
-        //      {
-        //          playerBody.gravityScale = 75f;
-        //          curr += Time.deltaTime;
-        //          yield return new WaitForEndOfFrame();
-        //      }
-        //      playerBody.gravityScale = gravity;
 
         if (isShadowDash)
         {
-            //Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("CanCrossFloor"),false);
             player.GetComponent<SpriteRenderer>().color = Color.white;
         }
         
@@ -444,13 +379,8 @@ public class Dash : Skill {
         }
         lr.enabled = true;
 
-        GameObject target = gameObject;// playerControl.swap.col.gameObject;
-        //lr.SetPositions(Plot(playerBody,
-        //                        target.transform.position,
-        //                        dir * DashSpeed,
-        //                        24));
+        GameObject target = gameObject;
         lr.SetPositions(PlotTrajectory(target.transform.position, dir * DashSpeed, TrajectoryTimeStep, TrajectoryStepCounts));
-        //PlotTrajectory(target.transform.position, dir * DashSpeed, 0.02f,1);
     }
 
     public Vector3 PlotTrajectoryAtTime(Vector3 start, Vector3 startVelocity, float time)
@@ -469,7 +399,6 @@ public class Dash : Skill {
             if (t >= maxTime) break;
             Vector3 pos = PlotTrajectoryAtTime(start, startVelocity, t);
             if (Physics.Linecast(prev, pos)) break;
-            //Debug.DrawLine(prev, pos, Color.red);
             prev = pos;
             results[i -1] = pos;
         }
@@ -479,9 +408,7 @@ public class Dash : Skill {
     public Vector3[] Plot(Rigidbody2D rigidbody, Vector3 pos, Vector2 velocity, int steps)
     {
         Vector3[] results = new Vector3[steps];
-
         float timestep = 0.04f;
-        //timestep = Time.deltaTime / Time.timeScale;
         Vector2 gravityAccel = Physics2D.gravity * rigidbody.gravityScale;// * timestep;
         Vector2 moveStep = velocity * timestep;
 
@@ -489,7 +416,6 @@ public class Dash : Skill {
         {
             moveStep += velocity * Time.fixedDeltaTime;
             velocity += gravityAccel;
-            //moveStep *= drag;
             pos += (Vector3)moveStep;
             results[i] = pos;
         }
