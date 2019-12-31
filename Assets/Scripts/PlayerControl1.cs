@@ -842,6 +842,8 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void Jump() {
+
+        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Jumping);
         box.sharedMaterial = slipperyMat;
         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         canJump = false;
