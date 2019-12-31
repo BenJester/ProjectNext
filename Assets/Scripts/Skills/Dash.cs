@@ -105,7 +105,14 @@ public class Dash : Skill {
                 if (currWaitTime == 0)
                 {
                     m_aniCom.PlayerDashCharging();
-                    m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
+                    if(m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Jumping)
+                    {
+                        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
+                    }
+                    else if(m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Idle)
+                    {
+                        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_IdleDash);
+                    }
                 }
                 else
                 {
@@ -114,7 +121,7 @@ public class Dash : Skill {
             }
             else
             {
-                if( m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Dash)
+                if( m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Dash || m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_IdleDash)
                 {
                     currWaitTime += 1;
                 }
