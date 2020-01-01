@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3217124586044657071}
   - component: {fileID: 4408032869895345234}
   - component: {fileID: 1061179844365703976}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: enemyVelocityBullet
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -141,8 +141,12 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
+  hasShield: 0
+  shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
+  MomentumMass: 7
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!61 &4408032869895345234
