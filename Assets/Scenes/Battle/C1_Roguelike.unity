@@ -25835,6 +25835,30 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 1013214244}
+    ActiveGameObject: {fileID: 1013214244}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 744683299}
+    ActiveGameObject: {fileID: 744683299}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 194218537}
     ActiveGameObject: {fileID: 194218537}
     GUIDsList: []
@@ -26090,30 +26114,6 @@ MonoBehaviour:
     list:
     - {fileID: 664168641}
     ActiveGameObject: {fileID: 664168641}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 744683299}
-    ActiveGameObject: {fileID: 744683299}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 771015085}
-    ActiveGameObject: {fileID: 771015085}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -36186,12 +36186,6 @@ PrefabInstance:
       objectReference: {fileID: 985346115}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bef656448db51ff40a3e911676e2d798, type: 3}
---- !u!1 &771015085 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2944454396522636833, guid: bef656448db51ff40a3e911676e2d798,
-    type: 3}
-  m_PrefabInstance: {fileID: 770126494}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &771015086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2940953156517860487, guid: bef656448db51ff40a3e911676e2d798,
@@ -58388,11 +58382,16 @@ PrefabInstance:
     - target: {fileID: 114415816227692440, guid: b071ac063cf7afc4ba8005d7a986cfc4,
         type: 3}
       propertyPath: controlState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114415816227692440, guid: b071ac063cf7afc4ba8005d7a986cfc4,
         type: 3}
       propertyPath: laserBulletAngle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415816227692440, guid: b071ac063cf7afc4ba8005d7a986cfc4,
+        type: 3}
+      propertyPath: active
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114163332939612696, guid: b071ac063cf7afc4ba8005d7a986cfc4,
@@ -59126,8 +59125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivot: {fileID: 3005318731743738253}
-  strawberryCount: 0
-  maxStrawberryCount: 0
 --- !u!4 &3005318731707339273
 Transform:
   m_ObjectHideFlags: 0
