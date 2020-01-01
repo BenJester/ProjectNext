@@ -11,5 +11,6 @@ public class PlayerStateDefine
         playerState_Dash,
         playerState_Idle,
         playerState_Jumping,
+        playerState_IdleDash,
     }
 }
