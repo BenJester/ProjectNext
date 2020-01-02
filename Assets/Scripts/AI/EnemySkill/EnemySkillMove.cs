@@ -6,6 +6,7 @@ public class EnemySkillMove : EnemySkillBase
 {
     public float MoveForwardForce;
     public float MoveTime;
+    public bool RightDir;
     private bool m_bMoving;
     private float m_fMovingTime;
     private Rigidbody2D m_rigid;
@@ -27,7 +28,14 @@ public class EnemySkillMove : EnemySkillBase
         if (m_bMoving == true)
         {
             m_fMovingTime += Time.fixedDeltaTime;
-            m_rigid.AddForce(transform.right * MoveForwardForce);
+            if(RightDir == true)
+            {
+                transform.Translate(Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+            }
+            else
+            {
+                transform.Translate(-Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+            }
             if (m_fMovingTime >= MoveTime)
             {
                 m_bMoving = false;
