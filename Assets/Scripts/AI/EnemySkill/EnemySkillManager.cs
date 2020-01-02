@@ -33,6 +33,20 @@ public class EnemySkillManager : MonoBehaviour
             _skill.CastSkill();
         }
     }
+    public bool IsSkillConditionValid(string strNameOfSkill)
+    {
+        bool bValid = false;
+        EnemySkillBase _skill;
+        if (m_dic.TryGetValue(strNameOfSkill, out _skill))
+        {
+            bValid = _skill.IsConditionValid();
+        }
+        else
+        {
+            Debug.Assert(false, string.Format("[IsSkillConditionValid]没有找到技能，是否没有在子技能类的start加入registe?"));
+        }
+        return bValid;
+    }
     public bool IsSkillCasting(string strNameOfSkill)
     {
         bool bCasting = false;

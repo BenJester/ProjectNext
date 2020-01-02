@@ -32,6 +32,10 @@ public class EnemySkillBase : MonoBehaviour
             m_bSkillCasting = false;
         }
     }
+    public virtual bool IsConditionValid()
+    {
+        return true;
+    }
 
     public void Registe(EnemySkillBase _childSkill)
     {
