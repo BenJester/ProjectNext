@@ -21,6 +21,10 @@ public class BDEnemyCastSkill : Action
     public override void OnAwake()
     {
         m_skillMgr = GetComponent<EnemySkillManager>();
+        if(NameOfSkill == null)
+        {
+            Debug.Assert(false, "BDEnemyCastSkill NameOfSkill is null");
+        }
     }
     public override void OnStart()
     {

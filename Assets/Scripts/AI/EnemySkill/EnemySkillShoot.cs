@@ -8,6 +8,7 @@ public class EnemySkillShoot : EnemySkillBase
     public float objInstanceDistance;
     public float objSpeed;
     public bool IsLocal;
+    public bool IsHorizontal;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -19,7 +20,15 @@ public class EnemySkillShoot : EnemySkillBase
         base.CastSkill();
 
 
-        Vector3 direction = (m_transPlayer.position - transform.position).normalized;
+        Vector3 direction;
+        if(IsHorizontal == false)
+        {
+            direction = (m_transPlayer.position - transform.position).normalized;
+        }
+        else
+        {
+            direction = transform.right;
+        }
         GameObject newBullet = Instantiate(ObjShoot, transform.position + objInstanceDistance * (Vector3)direction, Quaternion.identity);
         if (IsLocal == true)
         {
@@ -31,6 +40,10 @@ public class EnemySkillShoot : EnemySkillBase
         if(bulletBody != null)
         {
             bulletBody.velocity = direction * objSpeed;
+        }
+        else
+        {
+            Debug.Assert(false, "没有找到rigidbody");
         }
 
     }
