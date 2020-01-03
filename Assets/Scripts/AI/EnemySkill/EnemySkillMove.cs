@@ -7,6 +7,7 @@ public class EnemySkillMove : EnemySkillBase
     public float MoveForwardForce;
     public float MoveTime;
     public bool RightDir;
+    public bool AlwaysRight;
     private float m_fMovingTime;
     private Rigidbody2D m_rigid;
     // Start is called before the first frame update
@@ -31,13 +32,20 @@ public class EnemySkillMove : EnemySkillBase
         if (IsSkillCasting() == true)
         {
             m_fMovingTime += Time.fixedDeltaTime;
-            if(RightDir == true)
+            if(AlwaysRight == false)
             {
-                transform.Translate(Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+                if (RightDir == true)
+                {
+                    m_rigid.MovePosition(transform.position + Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+                }
+                else
+                {
+                    m_rigid.MovePosition(transform.position + -Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+                }
             }
             else
             {
-                transform.Translate(-Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+                m_rigid.MovePosition(transform.position + transform.right * MoveForwardForce * Time.fixedDeltaTime);
             }
             if (m_fMovingTime >= MoveTime)
             {
