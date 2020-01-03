@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CollisionDisappear : MonoBehaviour
 {
+    [Tooltip("CollisionThing 优先判断")]
+    public bool CollisionThing;
     public bool CollisionPlayer;
     // Start is called before the first frame update
     void Start()
@@ -19,16 +21,27 @@ public class CollisionDisappear : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(CollisionPlayer == true)
+        if(CollisionThing == true)
         {
-            if (collision.gameObject.CompareTag(GlobalTagDefine.TagName_player))
+            Thing _thing = collision.gameObject.GetComponent<Thing>();
+            if(_thing != null)
             {
                 Destroy(gameObject);
             }
         }
         else
         {
-            Destroy(gameObject);
+            if (CollisionPlayer == true)
+            {
+                if (collision.gameObject.CompareTag(GlobalTagDefine.TagName_player))
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
