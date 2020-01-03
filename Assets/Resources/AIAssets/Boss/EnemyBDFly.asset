@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23f08d2ae4cba14087c1ed36193d82b, type: 3}
+  m_Name: EnemyBDFly
+  m_EditorClassIdentifier: 
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: "{\n\t\"EntryTask\":{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.EntryTask\",\n\t\t\"NodeData\":{\n\t\t\t\"Offset\":\"(264.9286,30)\"\n\t\t},\n\t\t\"ID\":0,\n\t\t\"Name\":\"Entry\",\n\t\t\"Instant\":true\n\t},\n\t\"RootTask\":{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Selector\",\n\t\t\"NodeData\":{\n\t\t\t\"Offset\":\"(0,130)\"\n\t\t},\n\t\t\"ID\":1,\n\t\t\"Name\":\"Selector\",\n\t\t\"Instant\":true,\n\t\t\"AbortTypeabortType\":\"None\",\n\t\t\"Children\":[{\n\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Sequence\",\n\t\t\t\"NodeData\":{\n\t\t\t\t\"Offset\":\"(-116.666656,130)\"\n\t\t\t},\n\t\t\t\"ID\":2,\n\t\t\t\"Name\":\"Sequence\",\n\t\t\t\"Instant\":true,\n\t\t\t\"AbortTypeabortType\":\"LowerPriority\",\n\t\t\t\"Children\":[{\n\t\t\t\t\"Type\":\"BDCheckSkillValid\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(-142.261917,163.214233)\"\n\t\t\t\t},\n\t\t\t\t\"ID\":3,\n\t\t\t\t\"Name\":\"playercheck\",\n\t\t\t\t\"Instant\":true,\n\t\t\t\t\"StringNameOfSkill\":\"playercheck\"\n\t\t\t},{\n\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Log\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(146.4557,148.47673)\",\n\t\t\t\t\t\"Comment\":\"test1\"\n\t\t\t\t},\n\t\t\t\t\"ID\":4,\n\t\t\t\t\"Name\":\"Log\",\n\t\t\t\t\"Instant\":true,\n\t\t\t\t\"SharedStringtext\":{\n\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedString\",\n\t\t\t\t\t\"Name\":null,\n\t\t\t\t\t\"StringmValue\":\"test1\"\n\t\t\t\t},\n\t\t\t\t\"SharedBoollogError\":{\n\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedBool\",\n\t\t\t\t\t\"Name\":null,\n\t\t\t\t\t\"BooleanmValue\":false\n\t\t\t\t}\n\t\t\t}]\n\t\t},{\n\t\t\t\"Type\":\"BDOnlyRunningAction\",\n\t\t\t\"NodeData\":{\n\t\t\t\t\"Offset\":\"(180,109.999992)\"\n\t\t\t},\n\t\t\t\"ID\":5,\n\t\t\t\"Name\":\"BD
+        Only Running Action\",\n\t\t\t\"Instant\":true\n\t\t}]\n\t},\n\t\"Variables\":[{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedTransform\",\n\t\t\"Name\":\"PlayerTransform\",\n\t\t\"IsShared\":true\n\t}]\n}"
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 1.6.3
