@@ -7,7 +7,6 @@ public class EnemySkillMove : EnemySkillBase
     public float MoveForwardForce;
     public float MoveTime;
     public bool RightDir;
-    private bool m_bMoving;
     private float m_fMovingTime;
     private Rigidbody2D m_rigid;
     // Start is called before the first frame update
@@ -20,12 +19,16 @@ public class EnemySkillMove : EnemySkillBase
     public override void CastSkill()
     {
         base.CastSkill();
-        m_bMoving = true;
         m_fMovingTime = 0.0f;
+    }
+    public override void EndSkill()
+    {
+        base.EndSkill();
+        SetSkillCasting(false);
     }
     private void FixedUpdate()
     {
-        if (m_bMoving == true)
+        if (IsSkillCasting() == true)
         {
             m_fMovingTime += Time.fixedDeltaTime;
             if(RightDir == true)
@@ -38,7 +41,7 @@ public class EnemySkillMove : EnemySkillBase
             }
             if (m_fMovingTime >= MoveTime)
             {
-                m_bMoving = false;
+                SetSkillCasting(false);
             }
         }
     }

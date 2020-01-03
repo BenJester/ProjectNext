@@ -37,6 +37,11 @@ public class EnemySkillBase : MonoBehaviour
         return true;
     }
 
+    public virtual void EndSkill()
+    {
+
+    }
+
     public void Registe(EnemySkillBase _childSkill)
     {
         m_skillMgr = GetComponent<EnemySkillManager>();

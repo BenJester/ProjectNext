@@ -26,5 +26,9 @@ public class BDEnemyCastSkill : Action
     {
         m_skillMgr.CastSkill(NameOfSkill);
     }
-    
+
+    public override void OnEnd()
+    {
+        m_skillMgr.EndSkill(NameOfSkill);
+    }
 }

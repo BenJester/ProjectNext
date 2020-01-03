@@ -33,6 +33,14 @@ public class EnemySkillManager : MonoBehaviour
             _skill.CastSkill();
         }
     }
+    public void EndSkill(string strNameOfSkill)
+    {
+        EnemySkillBase _skill;
+        if (m_dic.TryGetValue(strNameOfSkill, out _skill))
+        {
+            _skill.EndSkill();
+        }
+    }
     public bool IsSkillConditionValid(string strNameOfSkill)
     {
         bool bValid = false;
