@@ -266,18 +266,10 @@ GameObject:
   - component: {fileID: 5888003526284935376}
   - component: {fileID: 6007764596947709370}
   - component: {fileID: 5887499759665113030}
-  - component: {fileID: 4608901840260904553}
-  - component: {fileID: 43854695}
-  - component: {fileID: 1117773378}
   - component: {fileID: 8480733611822575076}
   - component: {fileID: 2444404852198788428}
   - component: {fileID: -7175264519000090635}
-  - component: {fileID: 1822075790804457673}
   - component: {fileID: 4908773754255238964}
-  - component: {fileID: 8868780347860922713}
-  - component: {fileID: 4969472600556388781}
-  - component: {fileID: 6582313651601791562}
-  - component: {fileID: 1122384040826477014}
   m_Layer: 8
   m_Name: Enemy_Template
   m_TagString: thing
@@ -414,54 +406,6 @@ MonoBehaviour:
   Body: {fileID: 21300000, guid: 0ba11a578efa2124882994fa5d299745, type: 3}
   PlayerLegs: {fileID: 0}
   clip: {fileID: 0}
---- !u!114 &4608901840260904553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d6bf6b50423bf24fb87fb2808f55a8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameOfSkill: Throw
-  ContinuousSkill: 0
-  ObjShoot: {fileID: 305787941185668345, guid: f6ea3c2576a57dd4893be0b833582286, type: 3}
-  objInstanceDistance: 50
-  objSpeed: 900
---- !u!114 &43854695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e08a22eecf9d54e918f84e3eaca607, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameOfSkill: Shoot
-  ContinuousSkill: 0
-  ObjShoot: {fileID: 1249693321910232, guid: 63bb58a43b890d54eb2132b0bdb9d62d, type: 3}
-  objInstanceDistance: 50
-  objSpeed: 600
-  IsLocal: 0
---- !u!114 &1117773378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b83e1b1835f1634586f3ffcd1596cc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ForceUpdateInFixedUpdate: 1
 --- !u!114 &8480733611822575076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,25 +453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2f9eca629826d458fd008a585a98ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1822075790804457673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1b800012d4fe87439a969698e45afde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameOfSkill: dash
-  ContinuousSkill: 1
-  OnlyHorizontalDash: 1
-  dashSpeed: 1500
-  DashHitOffsetY: 45
-  hitboxWidth: 15
-  DashDuration: 0.3
 --- !u!114 &4908773754255238964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,69 +493,6 @@ MonoBehaviour:
       Version: 1.6.3
   gizmoViewMode: 0
   showBehaviorDesignerGizmo: 0
---- !u!114 &8868780347860922713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 553974cd7c547cf418dcad6bd0cfa210, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameOfSkill: Shield
-  ContinuousSkill: 0
---- !u!114 &4969472600556388781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6b45b3541931eb4786cace4b1dc48d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameOfSkill: ChargingAnimation
-  ContinuousSkill: 0
-  AniManager: {fileID: 5466655594703043781}
---- !u!114 &6582313651601791562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16b70005dde50d140866855f7292d09a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameOfSkill: melee
-  ContinuousSkill: 0
-  MeleeGameObject: {fileID: 522231788412236581, guid: 0b888a089ddcd3447804d7d354d7f446,
-    type: 3}
-  OffsetWithParent: {x: -80, y: 0, z: 0}
---- !u!114 &1122384040826477014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775181348552360192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c239001746fb82e409571e95dc9b5fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NameOfSkill: Jump
-  ContinuousSkill: 0
-  JumpUPForce: 5000000
-  JumpForwardForce: -300000
-  JumpTime: 0.1
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
