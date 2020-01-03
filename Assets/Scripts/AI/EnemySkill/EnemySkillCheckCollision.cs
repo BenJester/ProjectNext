@@ -34,7 +34,14 @@ public class EnemySkillCheckCollision : EnemySkillBase
         RaycastHit2D[] lstHit = Physics2D.RaycastAll(transform.position, transform.right, CheckDistance, CheckMask);
         if( lstHit.Length > 0 )
         {
-            return true;
+            foreach(RaycastHit2D _hit in lstHit)
+            {
+                if(_hit.collider.gameObject != transform.gameObject)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         return false;
     }

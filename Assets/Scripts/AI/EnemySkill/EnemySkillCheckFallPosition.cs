@@ -23,7 +23,7 @@ public class EnemySkillCheckFallPosition : EnemySkillBase
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position + transform.right * CheckDistance, transform.position + transform.right * CheckDistance - transform.up * CheckFallDistance);
     }
 
