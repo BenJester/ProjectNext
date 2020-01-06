@@ -32,13 +32,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253930418674161855}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 59.8, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5777747690463099770}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &6858946727205143843
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3639ad36b69f13f47b8c646d5661c854, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca4486be4086c6943972202202f06525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 253930418674161855}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2356ab086983b6a45b69152f41205a75, type: 2}
+  m_Controller: {fileID: 9100000, guid: b8fed4efec60367499837398b56aafbd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -269,6 +269,11 @@ GameObject:
   - component: {fileID: 8480733611822575076}
   - component: {fileID: 2444404852198788428}
   - component: {fileID: -7175264519000090635}
+  - component: {fileID: 1600080609}
+  - component: {fileID: 1600080610}
+  - component: {fileID: 1600080611}
+  - component: {fileID: 1600080612}
+  - component: {fileID: 1600080622}
   m_Layer: 8
   m_Name: Enemy_Jump
   m_TagString: thing
@@ -285,7 +290,7 @@ Transform:
   m_GameObject: {fileID: 5775181348552360192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6650.491, y: -197.51572, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.04444444, y: 0.04444444, z: 1}
   m_Children:
   - {fileID: 8317492435047961541}
   - {fileID: 765655762772530091}
@@ -326,7 +331,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 3.1104736, y: 7.83}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -337,7 +342,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 46.70172, y: 99.91057}
+  m_Size: {x: 60, y: 60}
   m_EdgeRadius: 0
 --- !u!114 &5888003526284935376
 MonoBehaviour:
@@ -433,8 +438,8 @@ MonoBehaviour:
   thing: {fileID: 0}
   dropKillSpeed: 50
   goal: {fileID: 0}
-  maxHealth: 5
-  health: 5
+  maxHealth: 1
+  health: 1
   canShuaisi: 0
   groundCheckBoxHeight: 60
   floorLayer:
@@ -452,6 +457,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2f9eca629826d458fd008a585a98ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1600080609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: a8b68e3e367a4f341bf4577c697f8d39, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 00000000
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: f9be55564aaa52567707a104
+        startIndex: 000000000100000002000000
+        dataPosition: 000000002800000037000000
+        unityObjects: []
+        byteData: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
+        byteDataArray: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
+      Version: 1.6.3
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
+--- !u!114 &1600080610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c239001746fb82e409571e95dc9b5fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: EnemySkillJump
+  ContinuousSkill: 1
+  JumpUPForce: 30
+  JumpForwardForce: 6
+  JumpTime: 0.2
+--- !u!114 &1600080611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4d7024a86c9c742a201b8e0ca52d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: EnemySkillCheckWall
+  ContinuousSkill: 0
+  CheckMask:
+    serializedVersion: 2
+    m_Bits: 256
+  CheckDistance: 200
+  AngleToWatch: 0
+--- !u!114 &1600080612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0062ab668a5ad4182ffb60381238ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: EnemySkillFlip
+  ContinuousSkill: 0
+--- !u!114 &1600080622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775181348552360192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1bf39bd5e192c44910e81629c88c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: EnemySkillCheckCircle
+  ContinuousSkill: 0
+  CircleRadius: 500
+  CheckMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &7073229056481827778
 PrefabInstance:
   m_ObjectHideFlags: 0
