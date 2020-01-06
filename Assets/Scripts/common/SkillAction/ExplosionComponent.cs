@@ -28,6 +28,7 @@ public class ExplosionComponent : MonoBehaviour
             if (m_fCurrentTime >= TimeOfChagngingRadius)
             {
                 m_bRunning = false;
+                Destroy(gameObject);
             }
         }
     }
