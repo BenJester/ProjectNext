@@ -42,7 +42,7 @@ public class Thing : MonoBehaviour {
     private UnityAction m_acDestroy;
 
     private Quaternion m_qtOriginalQuat;
-
+    private bool m_bThingSwap;
     public bool IsSwapRotationByVelocity;
 	
 	
@@ -100,6 +100,15 @@ public class Thing : MonoBehaviour {
         {
             m_swapAction.Invoke();
         }
+        SetThingSwap(true);
+    }
+    public void SetThingSwap(bool bSwap)
+    {
+        m_bThingSwap = bSwap;
+    }
+    public bool IsThingSwap()
+    {
+        return m_bThingSwap;
     }
     void HandleRewind()
     {
