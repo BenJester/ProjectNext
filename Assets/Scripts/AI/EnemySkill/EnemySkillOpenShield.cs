@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySkillOpenShield : EnemySkillBase
 {
+    public bool CloseShield;
     private Thing m_thing;
     // Start is called before the first frame update
     protected override void Start()
@@ -15,6 +16,6 @@ public class EnemySkillOpenShield : EnemySkillBase
     public override void CastSkill()
     {
         base.CastSkill();
-        m_thing.hasShield = true;
+        m_thing.hasShield = !CloseShield;
     } 
 }
