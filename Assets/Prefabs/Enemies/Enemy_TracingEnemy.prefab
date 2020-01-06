@@ -51,14 +51,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5775181348552360192}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 500
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 200
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -260,7 +260,7 @@ MonoBehaviour:
   CircleRadius: 100
   CheckMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
 --- !u!114 &1632856969541301856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +273,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d554bf55dd56dab48a4ed1524407e488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NameOfSkill: tracePlayer
+  ContinuousSkill: 1
+  SpeedOfEnemy: 1
 --- !u!1 &9056132585173656010
 GameObject:
   m_ObjectHideFlags: 0
