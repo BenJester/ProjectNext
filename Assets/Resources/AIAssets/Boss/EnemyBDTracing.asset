@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23f08d2ae4cba14087c1ed36193d82b, type: 3}
+  m_Name: EnemyBDTracing
+  m_EditorClassIdentifier: 
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: "{\n\t\"EntryTask\":{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.EntryTask\",\n\t\t\"NodeData\":{\n\t\t\t\"Offset\":\"(264.9286,30)\"\n\t\t},\n\t\t\"ID\":0,\n\t\t\"Name\":\"Entry\",\n\t\t\"Instant\":true\n\t},\n\t\"RootTask\":{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Sequence\",\n\t\t\"NodeData\":{\n\t\t\t\"Offset\":\"(-65.00003,116.666672)\"\n\t\t},\n\t\t\"ID\":1,\n\t\t\"Name\":\"Sequence\",\n\t\t\"Instant\":true,\n\t\t\"AbortTypeabortType\":\"None\",\n\t\t\"Children\":[{\n\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\"NodeData\":{\n\t\t\t\t\"Offset\":\"(-293.690552,110.476128)\"\n\t\t\t},\n\t\t\t\"ID\":2,\n\t\t\t\"Name\":\"OpenShield\",\n\t\t\t\"Instant\":true,\n\t\t\t\"Disabled\":true,\n\t\t\t\"StringNameOfSkill\":\"OpenShield\"\n\t\t},{\n\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\"NodeData\":{\n\t\t\t\t\"Offset\":\"(-26.0713863,126.1905)\"\n\t\t\t},\n\t\t\t\"ID\":3,\n\t\t\t\"Name\":\"tracePlayer\",\n\t\t\t\"Instant\":true,\n\t\t\t\"StringNameOfSkill\":\"tracePlayer\"\n\t\t},{\n\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Selector\",\n\t\t\t\"NodeData\":{\n\t\t\t\t\"Offset\":\"(213.809387,124.166756)\"\n\t\t\t},\n\t\t\t\"ID\":4,\n\t\t\t\"Name\":\"Selector\",\n\t\t\t\"Instant\":true,\n\t\t\t\"Disabled\":true,\n\t\t\t\"AbortTypeabortType\":\"None\",\n\t\t\t\"Children\":[{\n\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Sequence\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(-308.3333,153.333374)\"\n\t\t\t\t},\n\t\t\t\t\"ID\":5,\n\t\t\t\t\"Name\":\"Sequence\",\n\t\t\t\t\"Instant\":true,\n\t\t\t\t\"AbortTypeabortType\":\"LowerPriority\",\n\t\t\t\t\"Children\":[{\n\t\t\t\t\t\"Type\":\"BDCheckSkillValid\",\n\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\"Offset\":\"(-303.030334,123.181564)\"\n\t\t\t\t\t},\n\t\t\t\t\t\"ID\":6,\n\t\t\t\t\t\"Name\":\"checkPlayer\",\n\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\"StringNameOfSkill\":\"checkPlayer\"\n\t\t\t\t},{\n\t\t\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\"Offset\":\"(-120.0108,125.930435)\"\n\t\t\t\t\t},\n\t\t\t\t\t\"ID\":7,\n\t\t\t\t\t\"Name\":\"CloseShield\",\n\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\"StringNameOfSkill\":\"CloseShield\"\n\t\t\t\t},{\n\t\t\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\"Offset\":\"(41.6667328,129.7616)\"\n\t\t\t\t\t},\n\t\t\t\t\t\"ID\":8,\n\t\t\t\t\t\"Name\":\"ChangeRigidBody\",\n\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\"StringNameOfSkill\":\"ChangeRigidBody\"\n\t\t\t\t},{\n\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Sequence\",\n\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\"Offset\":\"(302.408051,145.606018)\"\n\t\t\t\t\t},\n\t\t\t\t\t\"ID\":9,\n\t\t\t\t\t\"Name\":\"Sequence\",\n\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\"AbortTypeabortType\":\"LowerPriority\",\n\t\t\t\t\t\"Children\":[{\n\t\t\t\t\t\t\"Type\":\"BDCheckSkillValid\",\n\t\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\t\"Offset\":\"(-303.030243,154.545349)\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"ID\":10,\n\t\t\t\t\t\t\"Name\":\"collisionThing\",\n\t\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\t\"StringNameOfSkill\":\"collisionThing\"\n\t\t\t\t\t},{\n\t\t\t\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\t\"Offset\":\"(-148.317047,152.640259)\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"ID\":11,\n\t\t\t\t\t\t\"Name\":\"explosion\",\n\t\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\t\"StringNameOfSkill\":\"explosion\"\n\t\t\t\t\t},{\n\t\t\t\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\t\"Offset\":\"(-14.3776283,153.246292)\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"ID\":12,\n\t\t\t\t\t\t\"Name\":\"destroySelf\",\n\t\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\t\"StringNameOfSkill\":\"destroySelf\"\n\t\t\t\t\t},{\n\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.ReturnFailure\",\n\t\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\t\"Offset\":\"(122.31073,159.296143)\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"ID\":13,\n\t\t\t\t\t\t\"Name\":\"Return
+        Failure\",\n\t\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\t\"Children\":[{\n\t\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Log\",\n\t\t\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\t\t\"Offset\":\"(0,94.6424561)\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"ID\":14,\n\t\t\t\t\t\t\t\"Name\":\"Log\",\n\t\t\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\t\t\"SharedStringtext\":{\n\t\t\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedString\",\n\t\t\t\t\t\t\t\t\"Name\":null\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"SharedBoollogError\":{\n\t\t\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedBool\",\n\t\t\t\t\t\t\t\t\"Name\":null,\n\t\t\t\t\t\t\t\t\"BooleanmValue\":false\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}]\n\t\t\t\t\t}]\n\t\t\t\t},{\n\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.ReturnFailure\",\n\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\"Offset\":\"(523.809631,123.690247)\"\n\t\t\t\t\t},\n\t\t\t\t\t\"ID\":15,\n\t\t\t\t\t\"Name\":\"Return
+        Failure\",\n\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\"Children\":[{\n\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Log\",\n\t\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\t\"Offset\":\"(1.1920929E-06,94.64245)\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"ID\":16,\n\t\t\t\t\t\t\"Name\":\"Log\",\n\t\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\t\"SharedStringtext\":{\n\t\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedString\",\n\t\t\t\t\t\t\t\"Name\":null\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"SharedBoollogError\":{\n\t\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedBool\",\n\t\t\t\t\t\t\t\"Name\":null,\n\t\t\t\t\t\t\t\"BooleanmValue\":false\n\t\t\t\t\t\t}\n\t\t\t\t\t}]\n\t\t\t\t}]\n\t\t\t},{\n\t\t\t\t\"Type\":\"BDOnlyRunningAction\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(169.848633,106.774231)\"\n\t\t\t\t},\n\t\t\t\t\"ID\":17,\n\t\t\t\t\"Name\":\"BD
+        Only Running Action\",\n\t\t\t\t\"Instant\":true\n\t\t\t}]\n\t\t}]\n\t},\n\t\"Variables\":[{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedTransform\",\n\t\t\"Name\":\"PlayerTransform\",\n\t\t\"IsShared\":true\n\t}]\n}"
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 1.6.3

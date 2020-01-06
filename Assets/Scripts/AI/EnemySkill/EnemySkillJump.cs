@@ -36,6 +36,7 @@ public class EnemySkillJump : EnemySkillBase
             if (m_fJumpingTime >= JumpTime)
             {
                 m_bJumping = false;
+                SetSkillCasting(false);
             }
         }
     }
