@@ -41,5 +41,16 @@ public class ExplosionComponent : MonoBehaviour
                 _player.Die();
             }
         }
+        else
+        {
+            if (collision.gameObject.CompareTag("thing"))
+            {
+                Thing colThing = collision.gameObject.GetComponent<Thing>();
+                if (colThing.type == Ben.Type.enemy)
+                {
+                    colThing.Die();
+                }
+            }
+        }
     }
 }
