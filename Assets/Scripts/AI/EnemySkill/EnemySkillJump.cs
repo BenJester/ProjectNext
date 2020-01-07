@@ -17,6 +17,8 @@ public class EnemySkillJump : EnemySkillBase
         base.Start();
         Registe(this);
         m_rigid = GetComponent<Rigidbody2D>();
+        JumpUPForce *= m_rigid.mass * m_rigid.gravityScale;
+        JumpForwardForce *= m_rigid.mass * m_rigid.gravityScale;
     }
     public override void CastSkill()
     {
