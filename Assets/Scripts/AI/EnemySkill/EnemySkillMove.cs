@@ -8,6 +8,8 @@ public class EnemySkillMove : EnemySkillBase
     public float MoveTime;
     public bool RightDir;
     public bool AlwaysRight;
+    public bool UsingAnimationCurve;
+    public AnimationCurve AniCurve;
     private float m_fMovingTime;
     private Rigidbody2D m_rigid;
     // Start is called before the first frame update
@@ -32,20 +34,30 @@ public class EnemySkillMove : EnemySkillBase
         if (IsSkillCasting() == true)
         {
             m_fMovingTime += Time.fixedDeltaTime;
-            if(AlwaysRight == false)
+            if(UsingAnimationCurve == true)
             {
-                if (RightDir == true)
-                {
-                    m_rigid.MovePosition(transform.position + Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
-                }
-                else
-                {
-                    m_rigid.MovePosition(transform.position + -Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
-                }
+                float fRate = m_fMovingTime / MoveTime;
+                float fCurveValue = AniCurve.Evaluate(fRate);
+                float fForce = fCurveValue * MoveForwardForce;
+                m_rigid.MovePosition(transform.position + Vector3.right * fForce * Time.fixedDeltaTime);
             }
             else
             {
-                m_rigid.MovePosition(transform.position + transform.right * MoveForwardForce * Time.fixedDeltaTime);
+                if (AlwaysRight == false)
+                {
+                    if (RightDir == true)
+                    {
+                        m_rigid.MovePosition(transform.position + Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+                    }
+                    else
+                    {
+                        m_rigid.MovePosition(transform.position + -Vector3.right * MoveForwardForce * Time.fixedDeltaTime);
+                    }
+                }
+                else
+                {
+                    m_rigid.MovePosition(transform.position + transform.right * MoveForwardForce * Time.fixedDeltaTime);
+                }
             }
             if (m_fMovingTime >= MoveTime)
             {
