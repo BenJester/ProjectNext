@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//依据左右方向翻转物体
 public class EnemySkillFlip : EnemySkillBase
 {
+    [Header("依据左右方向翻转物体")]
+    [Tooltip("左右朝向")]
     public bool RightDir;
     // Start is called before the first frame update
     protected override void Start()

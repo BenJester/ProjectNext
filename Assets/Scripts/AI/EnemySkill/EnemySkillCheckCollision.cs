@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//检测碰撞物的判断
 public class EnemySkillCheckCollision : EnemySkillBase
 {
+    [Header("检测碰撞物的判断")]
+    [Tooltip("待检测物的masklayer")]
     public LayerMask CheckMask;
+    [Tooltip("检测距离")]
     public float CheckDistance;
+    [Tooltip("检测角度")]
     public float AngleToWatch;
-    // Start is called before the first frame update
-    private bool m_bChecking;
     protected override void Start()
     {
         base.Start();
@@ -17,11 +20,6 @@ public class EnemySkillCheckCollision : EnemySkillBase
     public override void CastSkill()
     {
         base.CastSkill();
-        m_bChecking = true;
-    }
-
-    private void FixedUpdate()
-    {
     }
 
     private void OnDrawGizmos()

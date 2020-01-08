@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//执行玩家立即死亡节点
 public class EnemySkillPlayerDie : EnemySkillBase
 {
     // Start is called before the first frame update

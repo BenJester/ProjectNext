@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//飞行道具释放
 public class EnemySkillShoot : EnemySkillBase
 {
+    [Header("飞行道具释放")]
+    [Tooltip("释放的prefab")]
     public GameObject ObjShoot;
+    [Tooltip("释放朝前距离")]
     public float objInstanceDistance;
+    [Tooltip("释放飞行速度")]
     public float objSpeed;
+    [Tooltip("如果是local的话就是相对于本身transform位置")]
     public bool IsLocal;
+    [Tooltip("不是水平移动就是根据玩家位置进行")]
     public bool IsHorizontal;
     // Start is called before the first frame update
     protected override void Start()

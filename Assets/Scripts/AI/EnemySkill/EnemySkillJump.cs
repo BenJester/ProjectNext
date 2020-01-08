@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//跳跃节点
 public class EnemySkillJump : EnemySkillBase
 {
+    [Header("跳跃节点")]
+    [Tooltip("朝上力")]
     public float JumpUPForce;
+    [Tooltip("朝前力，相当于transform.right")]
     public float JumpForwardForce;
+    [Tooltip("跳跃力时间")]
     public float JumpTime;
     private float m_fJumpingTime;
     private bool m_bJumping;

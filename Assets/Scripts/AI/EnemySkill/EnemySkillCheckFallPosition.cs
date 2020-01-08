@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//检测掉落判定
 public class EnemySkillCheckFallPosition : EnemySkillBase
 {
+    [Header("检测掉落判定")]
+    [Tooltip("待检测masklayer")]
     public LayerMask CheckMask;
+    [Tooltip("检测距离")]
     public float CheckDistance;
+    [Tooltip("检测高度")]
     public float CheckFallDistance;
     protected override void Start()
     {

@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class EnemySkillMove : EnemySkillBase
 {
+    [Header("移动")]
+    [Tooltip("移动超前力")]
     public float MoveForwardForce;
+    [Tooltip("移动力释放时间")]
     public float MoveTime;
+    [Tooltip("左右方向")]
     public bool RightDir;
+    [Tooltip("一直朝前标记")]
     public bool AlwaysRight;
+    [Tooltip("是否适用动画曲线")]
     public bool UsingAnimationCurve;
+    [Tooltip("使用animatiCurve的曲线")]
     public AnimationCurve AniCurve;
     private float m_fMovingTime;
     private Rigidbody2D m_rigid;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//扣玩家血节点
 public class EnemySkillPlayerReduceHP : EnemySkillBase
 {
     // Start is called before the first frame update

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//跟踪玩家
 public class EnemySkillTracingPlayer : EnemySkillBase
 {
+    [Header("跟踪玩家")]
+    [Tooltip("跟踪速度")]
     public float SpeedOfEnemy;
     // Start is called before the first frame update
     private PlayerControl1 m_player;

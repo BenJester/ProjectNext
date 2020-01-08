@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//变更rigidbody的属性。
+//此技能可以进行扩展，调用技能后，通过填写的属性，更改rigidbody的属性。
 public class EnemySkillChangeRigidbody : EnemySkillBase
 {
+    [Header("变更rigidbody的属性。")]
+    [Tooltip("类型")]
     public RigidbodyType2D bodyTyp;
-
+    [Tooltip("质量")]
     public float DynamicMass;
+    [Tooltip("重力")]
     public float DynamicGravity;
 
     private Rigidbody2D m_rigidbody;

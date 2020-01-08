@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemySkillBase : MonoBehaviour
 {
+    [Tooltip("技能名，相同类型可以为不同技能名，但是技能名必须唯一。")]
     public string NameOfSkill;
 
+    [Tooltip("如果是持续技能的话，只有调用SetSkillCasting(false)才会中断技能返回true。" +
+        "非持续性技能，释放完后立即返回结果。")]
     public bool ContinuousSkill;
 
     private EnemySkillManager m_skillMgr;
