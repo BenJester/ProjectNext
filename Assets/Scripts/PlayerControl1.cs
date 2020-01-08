@@ -1017,7 +1017,8 @@ public class PlayerControl1 : PlayerControl {
         
         if (cacheCursorTarget != null && ClickChangeDirectly == false)
         {
-            RaycastHit2D _rayCast = Physics2D.Raycast(transform.position, cacheCursorTarget.transform.position, shootDistance, TouchLayer);
+            Vector2 vecDir = (cacheCursorTarget.transform.position - transform.position).normalized;
+            RaycastHit2D _rayCast = Physics2D.Raycast(transform.position, vecDir, shootDistance, TouchLayer);
             if (_rayCast && _rayCast.collider.gameObject != cacheCursorTarget)
             {
                 cacheCursorTarget = null;
