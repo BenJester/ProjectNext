@@ -14,6 +14,7 @@ public class HeadBodySeparation : MonoBehaviour {
 
 	void Start () {
         audioSource = gameObject.AddComponent<AudioSource>();
+		audioSource.volume=0.5f;
         clip = Resources.Load<AudioClip>("Sounds/Hit_SlimeSplat1");
     }
 
