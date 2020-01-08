@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
+	
 	public bool active;
 	public List<Thing> enemyList;
 	public List<PhysicalButton> buttonList;
@@ -19,6 +20,16 @@ public class Door : MonoBehaviour
 
 	bool won;
 
+
+	[Space]
+	[Header("只有hasUI才可以有变化")]
+	public bool hasUI=false;
+	public SpriteRenderer uiSprite;
+	public Color uiCloseColor;
+	public Sprite closeImage;
+	public Color uiOpenColor;
+	public Sprite OpenImage;
+
 	void Awake()
 	{
 		origin = transform.position;
@@ -27,8 +38,6 @@ public class Door : MonoBehaviour
 	}
 	void Start()
 	{
-
-      
 
         if (lr != null)
         {
@@ -69,6 +78,12 @@ public class Door : MonoBehaviour
 
 	void Open()
 	{
+		
+		if(hasUI){
+			uiSprite.sprite = OpenImage;
+			uiSprite.color = uiOpenColor;
+		}
+
 		if (transform.position.y > origin.y + target.y)
 			return;
 		transform.Translate (0f, speed, 0f);
@@ -76,6 +91,10 @@ public class Door : MonoBehaviour
 
 	void Close()
 	{
+		if(hasUI){
+			uiSprite.sprite = closeImage;
+			uiSprite.color = uiCloseColor;
+		}
 
 		if (transform.position.y <= origin.y)
 			return;

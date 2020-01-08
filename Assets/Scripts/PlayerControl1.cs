@@ -199,6 +199,7 @@ public class PlayerControl1 : PlayerControl {
     public Dash dash;
 
     public LayerMask TouchLayer;
+    public LayerMask LayerForLockObject;
     public LayerMask BoxLayer;
     public LayerMask MovePlatformLayer;
 
@@ -280,6 +281,8 @@ public class PlayerControl1 : PlayerControl {
 
     private PlayerAnimationComponent m_aniCom;
     public PlayerBoosty PlayerBoostyAttr;
+
+    private EnemyDieSound m_enemySound;
     void Awake()
     {
         if (HasRepawnPoint)
@@ -333,6 +336,7 @@ public class PlayerControl1 : PlayerControl {
 
     void Start()
     {
+        m_enemySound = GetComponent<EnemyDieSound>();
         m_marker = marker.GetComponent<PlayerMarkerComponent>();
         if (controlState == ControlWay.isJoystick)
         {
@@ -861,16 +865,33 @@ public class PlayerControl1 : PlayerControl {
         }
     }
 
+    public LayerMask GetCurrentLayerMask()
+    {
+        if(ClickChangeDirectly == true)
+        {
+            return LayerForLockObject;
+        }
+        else
+        {
+            return TouchLayer;
+        }
+    }
+
     bool Hit(GameObject target)
     {
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
         float targetX = Mathf.Max(0f, targetBox.size.x / 2f - fourCornerScanMargin);
         float targetY = Mathf.Max(0f, targetBox.size.y / 2f - fourCornerScanMargin);
-        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (target.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (target.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (target.transform.position - transform.position).normalized, shootDistance, GetCurrentLayerMask());
+        //RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, targetY, 0f) - transform.position).normalized, shootDistance, GetCurrentLayerMask());
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position).normalized, shootDistance, GetCurrentLayerMask());
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position).normalized, shootDistance, GetCurrentLayerMask());
+        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, (target.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position).normalized, shootDistance, GetCurrentLayerMask());
         return (hit1.collider == targetBox || hit2.collider == targetBox || hit3.collider == targetBox || hit4.collider == targetBox);
 
     }
@@ -1004,22 +1025,35 @@ public class PlayerControl1 : PlayerControl {
                     Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     float distanceToCursor = Vector2.Distance(vecMouseWorldPos, (Vector2)thing.transform.position);
                     float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
-
-                    if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
+                    if (ClickChangeDirectly == false)
                     {
-                        if (Hit(thing.gameObject))
+                        if (!thing.dead && distanceToCursor < closestDistance && distanceToCursor < cursorSnapThreshold && thing.enabled == true && !thing.hasShield)
                         {
-                            closestDistance = distanceToCursor;
-                            //closestObjectToCursor = thing.gameObject;
-                            cacheCursorTarget = thing.gameObject;
-                        }
+                            if (Hit(thing.gameObject))
+                            {
+                                closestDistance = distanceToCursor;
+                                //closestObjectToCursor = thing.gameObject;
+                                cacheCursorTarget = thing.gameObject;
+                            }
 
+                        }
                     }
 
-                    if (!thing.dead && distanceToPlayer < closestPlayerDistance)
+                    if (ClickChangeDirectly == true)
                     {
-                        closestPlayerDistance = distanceToPlayer;
-                        closestObjectToPlayer = thing.gameObject;
+                        if(distanceToCursor < closestDistance)
+                        {
+                            closestDistance = distanceToCursor;
+                            cacheCursorTarget = thing.gameObject;
+                        }
+                    }
+                    else
+                    {
+                        if (!thing.dead && distanceToPlayer < closestPlayerDistance)
+                        {
+                            closestPlayerDistance = distanceToPlayer;
+                            closestObjectToPlayer = thing.gameObject;
+                        }
                     }
                 }
             }
@@ -1865,5 +1899,10 @@ public class PlayerControl1 : PlayerControl {
                 StartCoroutine(_playerThing.GetComponent<PlayerControl1>().DelayRestart());
             }
         }
+    }
+
+    public bool CanPlaySound()
+    {
+        return m_enemySound.CanPlaySound();
     }
 }
