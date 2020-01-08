@@ -10,6 +10,7 @@ public class EnemySkillTracingPlayer : EnemySkillBase
     public float SpeedOfEnemy;
     public Vector3 offset;
     public bool onlyOnce;
+    public float minDistance;
     // Start is called before the first frame update
     private PlayerControl1 m_player;
     private Rigidbody2D m_rigidbody;
@@ -31,7 +32,7 @@ public class EnemySkillTracingPlayer : EnemySkillBase
         {
             Vector2 vecDir = m_player.transform.position+offset - transform.position;
             m_rigidbody.MovePosition(new Vector2(transform.position.x, transform.position.y) + vecDir * SpeedOfEnemy * Time.fixedDeltaTime);
-            if(onlyOnce && vecDir.magnitude<1f)
+            if(onlyOnce && vecDir.magnitude<minDistance)
                 SetSkillCasting(false);
         }
     }
