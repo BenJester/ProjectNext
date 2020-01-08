@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//自翻转节点。如果是左就到右，如果是右就到左。
 public class EnemySkillFlipSelf : EnemySkillBase
 {
     // Start is called before the first frame update

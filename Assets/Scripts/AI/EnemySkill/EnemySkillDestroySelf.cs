@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//执行毁掉自己的节点
 public class EnemySkillDestroySelf : EnemySkillBase
 {
     // Start is called before the first frame update

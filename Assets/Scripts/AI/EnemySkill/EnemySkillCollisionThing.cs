@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//检测是否有类型为Thing物体碰撞此物体
 public class EnemySkillCollisionThing : EnemySkillBase
 {
+    [Header("检测是否有类型为Thing物体碰撞此物体")]
     private bool m_bResult;
     // Start is called before the first frame update
     protected override void Start()

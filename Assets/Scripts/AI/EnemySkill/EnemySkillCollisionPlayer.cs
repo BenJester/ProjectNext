@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//检测判断玩家是否碰撞此物体
 public class EnemySkillCollisionPlayer : EnemySkillBase
 {
+    [Header("检测判断玩家是否碰撞此物体")]
     private bool m_bResult;
     // Start is called before the first frame update
     private bool m_bChecking;
