@@ -199,7 +199,7 @@ public class PlayerControl1 : PlayerControl {
     public Dash dash;
 
     public LayerMask TouchLayer;
-    public LayerMask TouchLayerForClickChangeDirectly;
+    public LayerMask LayerForLockObject;
     public LayerMask BoxLayer;
     public LayerMask MovePlatformLayer;
 
@@ -869,7 +869,7 @@ public class PlayerControl1 : PlayerControl {
     {
         if(ClickChangeDirectly == true)
         {
-            return TouchLayerForClickChangeDirectly;
+            return LayerForLockObject;
         }
         else
         {
