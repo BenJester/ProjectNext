@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 4457684121254577975}
   - component: {fileID: 953385099149926818}
   - component: {fileID: 5887859343163684090}
+  - component: {fileID: 8864315074309803098}
   m_Layer: 9
   m_Name: player_newAnimation
   m_TagString: player
@@ -1331,6 +1332,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starwberryParticle: {fileID: 4671270236861642347, guid: 7bec99e64c4655b42a90c1b46b9cd5c0,
     type: 3}
+--- !u!114 &8864315074309803098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147906740149146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eaf133a9a9cd2b49afe27f34ee08b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CountsOfLimit: 6
+  TimeLimit: 0.5
+  Original: 0
 --- !u!1 &1193951111751896
 GameObject:
   m_ObjectHideFlags: 0

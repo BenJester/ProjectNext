@@ -54,7 +54,11 @@ public class HeadBodySeparation : MonoBehaviour {
 		Destroy (headPart, 2.5f);
 		Destroy (bodyPart, 2.5f);
 
-        audioSource.PlayOneShot(clip, 0.5f);
+		float ftime = Time.time;
+		if( PlayerControl1.Instance.CanPlaySound() )
+		{
+			audioSource.PlayOneShot(clip, 0.5f);
+		}
 
     }
 
