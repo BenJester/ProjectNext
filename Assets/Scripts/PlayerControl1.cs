@@ -280,6 +280,8 @@ public class PlayerControl1 : PlayerControl {
 
     private PlayerAnimationComponent m_aniCom;
     public PlayerBoosty PlayerBoostyAttr;
+
+    private EnemyDieSound m_enemySound;
     void Awake()
     {
         if (HasRepawnPoint)
@@ -333,6 +335,7 @@ public class PlayerControl1 : PlayerControl {
 
     void Start()
     {
+        m_enemySound = GetComponent<EnemyDieSound>();
         m_marker = marker.GetComponent<PlayerMarkerComponent>();
         if (controlState == ControlWay.isJoystick)
         {
@@ -1865,5 +1868,10 @@ public class PlayerControl1 : PlayerControl {
                 StartCoroutine(_playerThing.GetComponent<PlayerControl1>().DelayRestart());
             }
         }
+    }
+
+    public bool CanPlaySound()
+    {
+        return m_enemySound.CanPlaySound();
     }
 }
