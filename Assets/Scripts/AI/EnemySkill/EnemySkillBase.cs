@@ -43,7 +43,7 @@ public class EnemySkillBase : MonoBehaviour
 
     public virtual void EndSkill()
     {
-
+        SetSkillCasting(false);
     }
 
     public void Registe(EnemySkillBase _childSkill)
