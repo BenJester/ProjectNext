@@ -281,7 +281,7 @@ public class PlayerControl1 : PlayerControl {
 
     private PlayerAnimationComponent m_aniCom;
     public PlayerBoosty PlayerBoostyAttr;
-
+    public float DistanceOfPlayerAndThing;
     private EnemyDieSound m_enemySound;
     void Awake()
     {
@@ -1051,7 +1051,7 @@ public class PlayerControl1 : PlayerControl {
 
                     if (ClickChangeDirectly == true)
                     {
-                        if(distanceToCursor < closestDistance)
+                        if(distanceToCursor < closestDistance && distanceToPlayer <= DistanceOfPlayerAndThing)
                         {
                             closestDistance = distanceToCursor;
                             cacheCursorTarget = thing.gameObject;
