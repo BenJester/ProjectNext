@@ -1014,6 +1014,15 @@ public class PlayerControl1 : PlayerControl {
                 _resetClosestData();
             }
         }
+        
+        if (cacheCursorTarget != null && ClickChangeDirectly == false)
+        {
+            RaycastHit2D _rayCast = Physics2D.Raycast(transform.position, cacheCursorTarget.transform.position, shootDistance, TouchLayer);
+            if (_rayCast && _rayCast.collider.gameObject != cacheCursorTarget)
+            {
+                cacheCursorTarget = null;
+            }
+        }
 
         foreach (var thing in thingList) {
 
@@ -1120,7 +1129,7 @@ public class PlayerControl1 : PlayerControl {
             }
             TempObjectToCursor = cacheCursorTarget;
         }
-
+        //cacheCursorTarget = null;
         bool bAimingCancel = false;
         if (controlState != ControlWay.isKeyboard)
         {
