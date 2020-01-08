@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 95215393240900514}
   - component: {fileID: 114290735421415666}
   - component: {fileID: 114114998234883514}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Enemy_IronFoot
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -162,6 +162,8 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!114 &114591251041665198
@@ -258,3 +260,4 @@ MonoBehaviour:
   Head: {fileID: 21300000, guid: ac69fa991d6434341912b9f4672edae7, type: 3}
   Body: {fileID: 21300000, guid: 6b16bddcd63c198469c129989b129ca1, type: 3}
   PlayerLegs: {fileID: 0}
+  clip: {fileID: 0}

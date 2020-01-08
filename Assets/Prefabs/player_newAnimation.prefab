@@ -765,7 +765,7 @@ MonoBehaviour:
   canMove: 1
   playerRespawnPoint: {x: 0, y: 0, z: 0}
   bullet: {fileID: 1919370626718772, guid: d58e667d4654e4ef28b43f5c1e24f1c8, type: 3}
-  ClickChangeDirectly: 0
+  ClickChangeDirectly: 1
   toggleSwapTarget: 0
   toggleTarget: {fileID: 0}
   swappable: []
@@ -824,7 +824,10 @@ MonoBehaviour:
   dash: {fileID: 114591261722450940}
   TouchLayer:
     serializedVersion: 2
-    m_Bits: 71936
+    m_Bits: 72960
+  LayerForLockObject:
+    serializedVersion: 2
+    m_Bits: 5120
   BoxLayer:
     serializedVersion: 2
     m_Bits: 4096
