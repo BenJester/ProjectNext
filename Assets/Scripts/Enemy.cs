@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour{
 
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour{
     protected Color originalColor;
 
     private SpriteRenderer m_spRender;
+
+    private UnityAction<int> m_takeDamageAct;
 
     protected void Start () {
 		//maxHealth = 1;
@@ -82,10 +85,23 @@ public class Enemy : MonoBehaviour{
 		}
 	}
 
-	public void TakeDamage(int damage)
+    public void RegisteTakeDamage(UnityAction<int> _act)
+    {
+        m_takeDamageAct += _act;
+    }
+    public void RemoveTakeDamage(UnityAction<int> _act)
+    {
+        m_takeDamageAct -= _act;
+    }
+
+    public void TakeDamage(int damage)
 	{
 		health -= damage;
-		if (health <= 0)
+        if (m_takeDamageAct != null)
+        {
+            m_takeDamageAct.Invoke(damage);
+        }
+        if (health <= 0)
 			thing.Die ();
         StartCoroutine(OnHit());
 	}
