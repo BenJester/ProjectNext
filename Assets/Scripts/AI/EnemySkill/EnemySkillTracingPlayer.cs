@@ -33,13 +33,14 @@ public class EnemySkillTracingPlayer : EnemySkillBase
         if( IsSkillCasting() )
         {
             Vector2 vecDir = m_player.transform.position + offset - transform.position;
-            if(SmoothMovement == false)
+            if (onlyOnce && vecDir.magnitude < minDistance)
+                SetSkillCasting(false);
+            if (SmoothMovement == false)
             {
                 vecDir.Normalize();
             }
             m_rigidbody.MovePosition(new Vector2(transform.position.x, transform.position.y) + vecDir * SpeedOfEnemy * Time.fixedDeltaTime);
-            if(onlyOnce && vecDir.magnitude<minDistance)
-                SetSkillCasting(false);
+  
         }
     }
 }
