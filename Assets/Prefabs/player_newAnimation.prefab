@@ -858,6 +858,7 @@ MonoBehaviour:
   PlayerBoostyAttr:
     BoostyValue: 5000
     MaxBoostySpeed: 1000
+  DistanceOfPlayerAndThing: 1200
 --- !u!114 &114437363468322386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,7 +935,6 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 9d647e8ef03b7424eaba982af841347e, type: 3}
   isShadowDash: 1
   DashSpeed: 900
-  DashDuration: 0.2
   CoyoteDuration: 0
   pauseDuration: 0.1
   reducedTimeScale: 0.04

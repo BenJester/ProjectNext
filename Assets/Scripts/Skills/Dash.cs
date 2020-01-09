@@ -7,7 +7,6 @@ using Rewired;
 public class Dash : Skill {
 	public bool isShadowDash = false;
 	public float DashSpeed;
-	public float DashDuration;
     public float CoyoteDuration;
     public float pauseDuration;
 	public float reducedTimeScale;
