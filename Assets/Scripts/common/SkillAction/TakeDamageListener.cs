@@ -26,8 +26,6 @@ public class TakeDamageListener : MonoBehaviour
         if (m_enemy != null)
         {
             m_enemy.RemoveTakeDamage(_updateDamage);
-
-            //StartCoroutine(removeHealthBar());
         }
     }
     private void _updateDamage(int nDamage)
@@ -45,10 +43,5 @@ public class TakeDamageListener : MonoBehaviour
         {
             m_bossHealth.UpdateHealth((float)m_enemy.health / (float)m_enemy.maxHealth);
         }
-    }
-    IEnumerator removeHealthBar()
-    {
-        yield return new WaitForSeconds(1f);
-        m_bossHealth.OpenBossHealthBar(false);
     }
 }
