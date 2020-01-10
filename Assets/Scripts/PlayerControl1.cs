@@ -1051,7 +1051,7 @@ public class PlayerControl1 : PlayerControl {
 
                     if (ClickChangeDirectly == true)
                     {
-                        if(distanceToCursor < closestDistance && distanceToPlayer <= DistanceOfPlayerAndThing)
+                        if(distanceToCursor < closestDistance && distanceToPlayer <= DistanceOfPlayerAndThing && !thing.hasShield)
                         {
                             closestDistance = distanceToCursor;
                             cacheCursorTarget = thing.gameObject;

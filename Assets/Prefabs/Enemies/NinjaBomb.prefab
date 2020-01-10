@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1198199039115883}
   - component: {fileID: 7953261718923787071}
   - component: {fileID: -7409807688682254752}
+  - component: {fileID: 5230098481782784738}
   m_Layer: 8
   m_Name: NinjaBomb
   m_TagString: thing
@@ -248,3 +249,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e1c7f8011327c46bb2a14c7234bb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5230098481782784738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305787941185668345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c02c49a55ccf7824a8c8e7b87529abeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeToGenerateShadow: 0.05
+  DestroyTime: 0.2
+  PrefabShadow: {fileID: 305787941185668345, guid: ae3f0f9458b581b4796ba5c9cd3b4432,
+    type: 3}
