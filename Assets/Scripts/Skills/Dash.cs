@@ -217,7 +217,10 @@ public class Dash : Skill {
     {
         if(m_bDashCharging == true)
         {
-            m_bDashCharging = false;
+            if( m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_IdleDash)
+            {
+                m_bDashCharging = false;
+            }
         }
     }
 

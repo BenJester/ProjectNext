@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 6723198874721357504}
   - component: {fileID: 6723198874721357505}
   - component: {fileID: 7753589527028352113}
+  - component: {fileID: 4226042060326546985}
   m_Layer: 8
   m_Name: Enemy_Bee
   m_TagString: thing
@@ -291,7 +292,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6723198874721357508}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -234.5, y: -145.5, z: 0}
   m_LocalScale: {x: 0.044444438, y: 0.044444438, z: 1}
   m_Children:
@@ -315,7 +316,7 @@ Rigidbody2D:
   m_Mass: 500
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 200
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -514,8 +515,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfSkill: TracingPlayer
   ContinuousSkill: 1
-  SpeedOfEnemy: 0.7
-  offset: {x: 0, y: 200, z: 0}
+  SpeedOfEnemy: 150
+  offset: {x: 0, y: 300, z: 0}
   onlyOnce: 1
   minDistance: 60
   SmoothMovement: 0
@@ -547,7 +548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfSkill: CheckCircle
   ContinuousSkill: 0
-  CircleRadius: 200
+  CircleRadius: 400
   CheckMask:
     serializedVersion: 2
     m_Bits: 512
@@ -565,7 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfSkill: DashToPlayer
   ContinuousSkill: 1
-  SpeedOfEnemy: 2
+  SpeedOfEnemy: 400
   offset: {x: 0, y: 0, z: 0}
   onlyOnce: 1
   minDistance: 50
@@ -602,6 +603,26 @@ MonoBehaviour:
   CheckMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &4226042060326546985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6723198874721357508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4d7024a86c9c742a201b8e0ca52d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: CheckDown
+  ContinuousSkill: 0
+  CheckMask:
+    serializedVersion: 2
+    m_Bits: 512
+  CheckDistance: 200
+  AngleToWatch: -90
+  ChangeAngleWhenFlip: 1
 --- !u!1 &7487360945656590165
 GameObject:
   m_ObjectHideFlags: 0
