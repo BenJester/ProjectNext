@@ -12,6 +12,7 @@ public class EnemySkillCheckCollision : EnemySkillBase
     public float CheckDistance;
     [Tooltip("检测角度")]
     public float AngleToWatch;
+    public bool ChangeAngleWhenFlip;
     protected override void Start()
     {
         base.Start();
@@ -24,14 +25,22 @@ public class EnemySkillCheckCollision : EnemySkillBase
 
     private void OnDrawGizmos()
     {
-        Vector3 vecDir = Quaternion.AngleAxis(AngleToWatch, Vector3.forward) * transform.right;
+        Vector3 vecDir;
+        if (ChangeAngleWhenFlip && transform.rotation.y == -1)
+            vecDir = Quaternion.AngleAxis(-AngleToWatch, Vector3.forward) * transform.right;
+        else
+            vecDir = Quaternion.AngleAxis(AngleToWatch, Vector3.forward) * transform.right;
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + vecDir * CheckDistance);
     }
 
     public override bool IsConditionValid()
     {
-        Vector3 vecDir = Quaternion.AngleAxis(AngleToWatch, Vector3.forward) * transform.right;
+        Vector3 vecDir;
+        if (ChangeAngleWhenFlip && transform.rotation.y == -1)
+            vecDir = Quaternion.AngleAxis(-AngleToWatch, Vector3.forward) * transform.right;
+        else
+            vecDir = Quaternion.AngleAxis(AngleToWatch, Vector3.forward) * transform.right;
         RaycastHit2D[] lstHit = Physics2D.RaycastAll(transform.position, vecDir, CheckDistance, CheckMask);
         if( lstHit.Length > 0 )
         {
