@@ -33,7 +33,7 @@ public class Door : MonoBehaviour
 	void Awake()
 	{
 		origin = transform.position;
-        lr = GetComponent<LineRenderer>();
+        hasUIIndicator=false;
 		//buttonList = new List<PhysicalButton>();
 	}
 	void Start()

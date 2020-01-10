@@ -16,19 +16,26 @@ MonoBehaviour:
     behaviorName: Behavior
     behaviorDescription: 
     mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: "{\n\t\"EntryTask\":{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.EntryTask\",\n\t\t\"NodeData\":{\n\t\t\t\"Offset\":\"(264.9286,30)\"\n\t\t},\n\t\t\"ID\":0,\n\t\t\"Name\":\"Entry\",\n\t\t\"Instant\":true\n\t},\n\t\"RootTask\":{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Selector\",\n\t\t\"NodeData\":{\n\t\t\t\"Offset\":\"(0.35812974,131.743652)\"\n\t\t},\n\t\t\"ID\":1,\n\t\t\"Name\":\"Selector\",\n\t\t\"Instant\":true,\n\t\t\"AbortTypeabortType\":\"None\",\n\t\t\"Children\":[{\n\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Sequence\",\n\t\t\t\"NodeData\":{\n\t\t\t\t\"Offset\":\"(-161.6402,143.128)\"\n\t\t\t},\n\t\t\t\"ID\":2,\n\t\t\t\"Name\":\"Sequence\",\n\t\t\t\"Instant\":true,\n\t\t\t\"AbortTypeabortType\":\"LowerPriority\",\n\t\t\t\"Children\":[{\n\t\t\t\t\"Type\":\"BDCheckSkillValid\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(-138.359863,115.205505)\"\n\t\t\t\t},\n\t\t\t\t\"ID\":3,\n\t\t\t\t\"Name\":\"CheckSwap\",\n\t\t\t\t\"Instant\":true,\n\t\t\t\t\"StringNameOfSkill\":\"CheckSwap\"\n\t\t\t},{\n\t\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(104.973526,130.20549)\"\n\t\t\t\t},\n\t\t\t\t\"ID\":4,\n\t\t\t\t\"Name\":\"openshield\",\n\t\t\t\t\"Instant\":true,\n\t\t\t\t\"StringNameOfSkill\":\"openshield\"\n\t\t\t},{\n\t\t\t\t\"Type\":\"BDEnemyCastSkill\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(283.3069,121.872192)\"\n\t\t\t\t},\n\t\t\t\t\"ID\":5,\n\t\t\t\t\"Name\":\"ChangeSwap\",\n\t\t\t\t\"Instant\":true,\n\t\t\t\t\"StringNameOfSkill\":\"ChangeSwap\"\n\t\t\t},{\n\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.ReturnFailure\",\n\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\"Offset\":\"(434.615326,113.46167)\"\n\t\t\t\t},\n\t\t\t\t\"ID\":6,\n\t\t\t\t\"Name\":\"Return
-        Failure\",\n\t\t\t\t\"Instant\":true,\n\t\t\t\t\"Children\":[{\n\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.Tasks.Log\",\n\t\t\t\t\t\"NodeData\":{\n\t\t\t\t\t\t\"Offset\":\"(8.333435,131.666687)\"\n\t\t\t\t\t},\n\t\t\t\t\t\"ID\":7,\n\t\t\t\t\t\"Name\":\"Log\",\n\t\t\t\t\t\"Instant\":true,\n\t\t\t\t\t\"SharedStringtext\":{\n\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedString\",\n\t\t\t\t\t\t\"Name\":null\n\t\t\t\t\t},\n\t\t\t\t\t\"SharedBoollogError\":{\n\t\t\t\t\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedBool\",\n\t\t\t\t\t\t\"Name\":null,\n\t\t\t\t\t\t\"BooleanmValue\":false\n\t\t\t\t\t}\n\t\t\t\t}]\n\t\t\t}]\n\t\t},{\n\t\t\t\"Type\":\"BDOnlyRunningAction\",\n\t\t\t\"NodeData\":{\n\t\t\t\t\"Offset\":\"(204.641754,146.5896)\"\n\t\t\t},\n\t\t\t\"ID\":8,\n\t\t\t\"Name\":\"BD
-        Only Running Action\",\n\t\t\t\"Instant\":true\n\t\t}]\n\t},\n\t\"Variables\":[{\n\t\t\"Type\":\"BehaviorDesigner.Runtime.SharedTransform\",\n\t\t\"Name\":\"PlayerTransform\",\n\t\t\"IsShared\":true\n\t}]\n}"
+      types:
+      - BehaviorDesigner.Runtime.Tasks.EntryTask
+      - BehaviorDesigner.Runtime.Tasks.Selector
+      - BehaviorDesigner.Runtime.Tasks.Sequence
+      - BDCheckSkillValid
+      - BDEnemyCastSkill
+      - BDEnemyCastSkill
+      - BehaviorDesigner.Runtime.Tasks.ReturnFailure
+      - BehaviorDesigner.Runtime.Tasks.Log
+      - BDOnlyRunningAction
+      parentIndex: ffffffff0000000001000000020000000200000002000000020000000600000001000000
+      startIndex: 030000000d00000018000000230000002e00000039000000440000004e0000005f000000
+      variableStartIndex: 00000000
+      JSONSerialization: 
       fieldSerializationData:
         typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
+        fieldNameHash: f9be55564aaa52567707a1042944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f9012944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f9018690b4b22944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f9018690b4b22944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f90120383a162944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f90120383a162944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f90120383a162944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f9012944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f90151a40e3b4a6364919b4e6191a12eb9359aed0e8cebd80b8c8d6aa1712944782b951203e811c37978c4a37522ae07a096e44d14616fd219c3a5f3b63149269a1caac4f901
+        startIndex: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f00000050000000510000005200000053000000540000005500000056000000570000005800000058000000590000005a0000005a0000005b0000005c0000005d0000005e0000005f00000060000000610000006200000063000000640000006500000066000000
+        dataPosition: 000000002800000037000000380000003c0000004100000042000000430000004b0000004b0000004c0000004d0000005100000055000000590000006100000062000000630000006b0000006b0000006c0000006d0000007100000075000000790000007d0000008500000086000000870000008f0000008f000000900000009100000095000000990000009d000000a1000000aa000000ab000000ac000000b4000000b4000000b5000000b6000000ba000000be000000c7000000cb000000d5000000d6000000d7000000df000000df000000e0000000e1000000e5000000e9000000f3000000f70000000101000002010000030100000b0100000b0100000c0100000d01000011010000150100001f010000230100003101000032010000330100003b0100003b0100003c0100003d0100004101000045010000490100004c0100004d0100004e010000560100005601000057010000580100005c010000600100008501000085010000a8010000a8010000a9010000ad010000c3010000c4010000c5010000cd010000cd010000ce010000cf010000d3010000
         unityObjects: []
-        byteData: 
+        byteData: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d0100000000456e7472790100dc7684430000f041000000000000000000000100000053656c6563746f720100c85cb73e60be034300000000000000000000000000000200000053657175656e63650100e4a321c3c5200f43000000000000000000000200000003000000436865636b537761700100205c0ac33869e64200000000000000000000436865636b53776170040000006f70656e736869656c64010072f2bd429b340243000000000000000000006f70656e736869656c64050000004368616e676553776170010048a7834348df0343000000000000000000004368616e6765537761700600000052657475726e204661696c7572650100c34ed94360ece24200000000000000000000070000004c6f670100c0550541acaa0343000000000000000000004265686176696f7244657369676e65722e52756e74696d652e536861726564537472696e674265686176696f7244657369676e65722e52756e74696d652e536861726564426f6f6c00080000004244204f6e6c792052756e6e696e6720416374696f6e01004aa44c43f096124300000000000000000000
         byteDataArray: 
       Version: 1.6.3
