@@ -203,12 +203,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c37ecd3aa18fbb84e8582f6648340d6a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0fb8cd8a96a3ee843b43da5895dc34a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.47, y: 0.68}
+  m_Size: {x: 0.6, y: 0.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -230,8 +230,8 @@ MonoBehaviour:
   isPressed: 0
   mech: {fileID: 1201475198601683627}
   sr: {fileID: 0}
-  normalSpr: {fileID: 21300000, guid: c37ecd3aa18fbb84e8582f6648340d6a, type: 3}
-  clickSpr: {fileID: 21300000, guid: 802389784683b254da28e6e26c225f86, type: 3}
+  normalSpr: {fileID: 21300000, guid: 0fb8cd8a96a3ee843b43da5895dc34a5, type: 3}
+  clickSpr: {fileID: 21300000, guid: e7c7c304991fa3246859589ee899127c, type: 3}
   lr: {fileID: 6514921003248070221}
 --- !u!61 &6514921003248070220
 BoxCollider2D:
@@ -251,7 +251,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.6, y: 0.4}
-    newSize: {x: 1.47, y: 0.68}
+    newSize: {x: 0.6, y: 0.4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
