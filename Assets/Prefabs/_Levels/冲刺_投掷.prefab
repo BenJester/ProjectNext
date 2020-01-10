@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5386266596815204244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2700498690053686527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76dedadfc9f9ebb4f8b52dfcfad72947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  text: {fileID: 0}
+  textEng: {fileID: 0}
+  bulletTimeScale: 0.03
+  jump: "\u5F80\u53F3\u4E0A\u65B9\u8DF3\u8DC3"
+  holdRightClick: "\u6309\u4F4F\u53F3\u952E"
+  Release: "\u7784\u51C6\u6309\u94AE\uFF0C\u677E\u5F00\u53F3\u952E"
+  LeftClick: "\u5DE6\u952E\u4EA4\u6362"
+  jumpEng: Jump towards the right
+  holdRightClickEng: Hold right mouse button
+  ReleaseEng: Aim for the button and release
+  LeftClickEng: Left click to switch
+  state: 0
+  bulletTime: 1
 --- !u!1 &5386266596567325210
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +41,7 @@ GameObject:
   - component: {fileID: 5386266596567325207}
   - component: {fileID: 5386266596567325208}
   m_Layer: 8
-  m_Name: "3 \u6295\u63B7"
+  m_Name: "\u51B2\u523A_\u6295\u63B7"
   m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19392,32 +19418,6 @@ CompositeCollider2D:
       - {x: 26505, y: 652.5}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
---- !u!114 &5386266596815204244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2700498690053686527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76dedadfc9f9ebb4f8b52dfcfad72947, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 0
-  text: {fileID: 0}
-  textEng: {fileID: 0}
-  bulletTimeScale: 0.03
-  jump: "\u5F80\u53F3\u4E0A\u65B9\u8DF3\u8DC3"
-  holdRightClick: "\u6309\u4F4F\u53F3\u952E"
-  Release: "\u7784\u51C6\u6309\u94AE\uFF0C\u677E\u5F00\u53F3\u952E"
-  LeftClick: "\u5DE6\u952E\u4EA4\u6362"
-  jumpEng: Jump towards the right
-  holdRightClickEng: Hold right mouse button
-  ReleaseEng: Aim for the button and release
-  LeftClickEng: Left click to switch
-  state: 0
-  bulletTime: 1
 --- !u!1 &5386266597677925741
 GameObject:
   m_ObjectHideFlags: 0
