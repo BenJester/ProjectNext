@@ -276,6 +276,7 @@ GameObject:
   - component: {fileID: 6723198874721357511}
   - component: {fileID: 6723198874721357504}
   - component: {fileID: 6723198874721357505}
+  - component: {fileID: 7753589527028352113}
   m_Layer: 8
   m_Name: Enemy_Bee
   m_TagString: thing
@@ -517,6 +518,7 @@ MonoBehaviour:
   offset: {x: 0, y: 200, z: 0}
   onlyOnce: 1
   minDistance: 60
+  SmoothMovement: 0
 --- !u!114 &6723198874721357510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,6 +569,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   onlyOnce: 1
   minDistance: 50
+  SmoothMovement: 0
 --- !u!114 &6723198874721357505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +584,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfSkill: Attack
   ContinuousSkill: 0
+--- !u!114 &7753589527028352113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6723198874721357508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1bf39bd5e192c44910e81629c88c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NameOfSkill: CheckSight
+  ContinuousSkill: 0
+  CircleRadius: 400
+  CheckMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &7487360945656590165
 GameObject:
   m_ObjectHideFlags: 0
