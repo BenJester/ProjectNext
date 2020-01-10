@@ -1017,11 +1017,12 @@ public class PlayerControl1 : PlayerControl {
         
         if (cacheCursorTarget != null && ClickChangeDirectly == false)
         {
-            Vector2 vecDir = (cacheCursorTarget.transform.position - transform.position).normalized;
-            RaycastHit2D _rayCast = Physics2D.Raycast(transform.position, vecDir, shootDistance, TouchLayer);
-            if (_rayCast && _rayCast.collider.gameObject != cacheCursorTarget)
+            //Vector2 vecDir = (cacheCursorTarget.transform.position - transform.position).normalized;
+            //RaycastHit2D _rayCast = Physics2D.Raycast(transform.position, vecDir, shootDistance, TouchLayer);
+            if (Hit(cacheCursorTarget) == false)
             {
                 cacheCursorTarget = null;
+                closestDistance = Mathf.Infinity;
             }
         }
 
