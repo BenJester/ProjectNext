@@ -11,7 +11,8 @@ public class Bomb : MonoBehaviour
     private int m_nCountsExplode;
     private void Start()
     {
-        StartCoroutine(Init());
+        active = true;
+        //StartCoroutine(Init());
     }
 
     IEnumerator Init()
