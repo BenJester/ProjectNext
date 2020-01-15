@@ -30,6 +30,18 @@ public class EnemySkillCheckObjectInCircle : EnemySkillBase
         Collider2D[] lstHit = Physics2D.OverlapCircleAll(transform.position, CircleRadius, CheckMask);
         if (lstHit.Length > 0)
         {
+            EnemyAttribute enemyAttribute = GetComponent<EnemyAttribute>();
+            if (enemyAttribute)
+            {
+                GameObject h = lstHit[0].gameObject;
+                foreach (Collider2D c in lstHit)
+                    if (Vector2.Distance(transform.position, c.transform.position) < Vector2.Distance(transform.position, h.transform.position) && gameObject!=c.gameObject)
+                        h = c.gameObject;
+                if (gameObject != h)
+                    enemyAttribute.target = h;
+                else
+                    return false;
+            }
             return true;
         }
         return false;

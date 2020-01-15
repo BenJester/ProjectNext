@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAttribute : MonoBehaviour
 {
     public float sightDistance;
+    public GameObject target;
     // Start is called before the first frame update
     void Start()
     {

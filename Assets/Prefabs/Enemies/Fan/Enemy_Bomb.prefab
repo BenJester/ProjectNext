@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 8257774348556143671}
   - component: {fileID: 8257774348556143668}
   - component: {fileID: 8257774348556143670}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Enemy_Bomb
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightDistance: 900
+  target: {fileID: 0}
 --- !u!114 &8257774348556143674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +224,7 @@ MonoBehaviour:
   logTaskChanges: 0
   group: 0
   resetValuesOnRestart: 0
-  externalBehavior: {fileID: 11400000, guid: 85705034a548e084c8cc9cd6263a444a, type: 2}
+  externalBehavior: {fileID: 11400000, guid: 10be9e1a8b83eb247b4cb57ed9af66ad, type: 2}
   mBehaviorSource:
     behaviorName: Behavior
     behaviorDescription: 

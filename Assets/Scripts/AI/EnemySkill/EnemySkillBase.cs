@@ -18,6 +18,7 @@ public class EnemySkillBase : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        
         m_transPlayer = GlobalVariable.GetPlayer().transform;
         if (m_transPlayer == null)
         {
