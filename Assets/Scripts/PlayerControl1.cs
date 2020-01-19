@@ -459,7 +459,9 @@ public class PlayerControl1 : PlayerControl {
                     (Vector2)transform.position + leftWallCheckBottomRight,
                     TouchLayer
                 );
-        anim.SetFloat("SpeedY", rb.velocity.y);
+        //print(rb.velocity.y);
+        anim.SetFloat("SpeedY", rb.velocity.y/2);
+        anim.SetFloat("SpeedX", rb.velocity.x/2);
         //isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
         //          Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
         //          Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
