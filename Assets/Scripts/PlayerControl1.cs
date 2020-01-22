@@ -1508,17 +1508,18 @@ public class PlayerControl1 : PlayerControl {
             hp -= 1;
             return;
         }
-        StartCoroutine(DelayRestart());
+        //StartCoroutine(DelayRestart());
 
         active = false;
         GetComponent<BoxCollider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
-        foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
-        {
-            sr.enabled = false;
-        }
+        //spriteRenderer.enabled = false;
+        //spriteRenderer.enabled = false;
+        //foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
+        //{
+        //    sr.enabled = false;
+        //}
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        PlayerDieImmediately();
         //GetComponent<HeadBodySeparation>().PlayerDead(25000);
 
 
@@ -1559,7 +1560,7 @@ public class PlayerControl1 : PlayerControl {
     public override void Revive() {
         active = true;
         GetComponent<BoxCollider2D>().enabled = true;
-        GetComponent<SpriteRenderer>().enabled = true;
+        spriteRenderer.enabled = true;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         foreach (var sr in GetComponentsInChildren<SpriteRenderer>()) {
             sr.enabled = true;
@@ -1904,8 +1905,11 @@ public class PlayerControl1 : PlayerControl {
         if(_playerThing != null)
         {
             if (_playerThing.type == Ben.Type.player)
+
             {
-                _playerThing.Die();
+                anim.SetBool("isDead", true);
+                //_playerThing.Die();
+
                 StartCoroutine(_playerThing.GetComponent<PlayerControl1>().DelayRestart());
             }
         }
