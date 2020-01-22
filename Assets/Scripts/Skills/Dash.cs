@@ -57,7 +57,7 @@ public class Dash : Skill {
     private UnityAction m_uaDashStart;
     private UnityAction m_uaDashOver;
 
-    private PlayerAnimationComponent m_aniCom;
+    public PlayerAnimationComponent AniCom;
 
     private BulletTime m_bulletTime;
 
@@ -83,7 +83,7 @@ public class Dash : Skill {
 
         //Rewired------------------------------------------------------------
         rPlayer = ReInput.players.GetPlayer(0);
-        m_aniCom = GetComponent<PlayerAnimationComponent>();
+        AniCom = GetComponent<PlayerAnimationComponent>();
 
     }
 
@@ -103,7 +103,7 @@ public class Dash : Skill {
             {
                 if (currWaitTime == 0)
                 {
-                    m_aniCom.PlayerDashCharging();
+                    AniCom.PlayerDashCharging();
                     if(m_stateMgr.GetPlayerState() == PlayerStateDefine.PlayerState_Typ.playerState_Jumping)
                     {
                         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Dash);
@@ -311,7 +311,7 @@ public class Dash : Skill {
         {
             m_uaDashStart.Invoke();
         }
-        m_aniCom.PlayerDashStart();
+        AniCom.PlayerDashStart();
 
         //冲刺特效
         if (dashParticle != null)
@@ -343,7 +343,7 @@ public class Dash : Skill {
         {
             m_uaDashOver.Invoke();
         }
-        m_aniCom.PlayerDashStop();
+        AniCom.PlayerDashStop();
 
         yield return new WaitForSeconds(disableMovementTime - 0.05f);
         playerControl.canMove = true;

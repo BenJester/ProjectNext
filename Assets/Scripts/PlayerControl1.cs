@@ -166,10 +166,9 @@ public class PlayerControl1 : PlayerControl {
 
     public Vector3 originalScale;
 
-    private Animator anim;
     public Animator legAnim;
     public SpriteRenderer legsSpriteRenderer;
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     private int chargeCounter = 0;
 
@@ -278,8 +277,9 @@ public class PlayerControl1 : PlayerControl {
     Vector2 leftWallCheckTopLeft;
     Vector2 leftWallCheckBottomRight;
     public bool wallJump;
+    public Animator anim;
 
-    private PlayerAnimationComponent m_aniCom;
+    public PlayerAnimationComponent m_aniCom;
     public PlayerBoosty PlayerBoostyAttr;
     public float DistanceOfPlayerAndThing;
     private EnemyDieSound m_enemySound;
@@ -325,9 +325,7 @@ public class PlayerControl1 : PlayerControl {
 
         //PlayerBoostyAttr = new PlayerBoosty(rb);
         PlayerBoostyAttr.SetBoostyData(rb,player);
-        anim = GetComponent<Animator>();
         lr = GetComponent<LineRenderer>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         lr.enabled = false;
         box = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
@@ -342,7 +340,6 @@ public class PlayerControl1 : PlayerControl {
         {
             laserBulletAngle = true;
         }
-        m_aniCom = GetComponent<PlayerAnimationComponent>();
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
         m_vecMouseWorldPos = new Vector3();
         GameObject objLevelMgr = GameObject.FindGameObjectWithTag("LevelManager");

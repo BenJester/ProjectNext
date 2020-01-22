@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class PlayerAnimationScaler : MonoBehaviour {
 
-    private Rigidbody2D myRb;
+    public Rigidbody2D myRb;
     public float threshold;
     private bool touchGround;
     public bool isDoing = false;
 
     void Awake () {
-        myRb = GetComponent<Rigidbody2D> ();
     }
     // Start is called before the first frame update
     void Start () {
@@ -35,7 +34,7 @@ public class PlayerAnimationScaler : MonoBehaviour {
        
 
         if (!isDoing && Mathf.Abs (myRb.velocity.y) > threshold) {
-            transform.DOScale (new Vector3 (0.9f, 1.1f, 1), 0.15f);
+            transform.DOScale (new Vector3 (0.8f, 1.2f, 1), 0.15f);
             isDoing = true;
         } else if (isDoing && Mathf.Abs (myRb.velocity.y) <= threshold) {
             transform.DOScale (new Vector3 (1f, 1f, 1), 0.15f);
