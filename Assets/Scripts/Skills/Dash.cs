@@ -83,7 +83,6 @@ public class Dash : Skill {
 
         //Rewired------------------------------------------------------------
         rPlayer = ReInput.players.GetPlayer(0);
-        AniCom = GetComponent<PlayerAnimationComponent>();
 
     }
 
@@ -351,7 +350,7 @@ public class Dash : Skill {
 
         if (isShadowDash)
         {
-            player.GetComponent<SpriteRenderer>().color = Color.white;
+            playerControl.spriteRenderer.color = Color.white;
         }
         
         transform.rotation = Quaternion.Euler(0, 0, 0);

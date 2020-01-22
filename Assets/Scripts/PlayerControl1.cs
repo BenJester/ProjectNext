@@ -1519,7 +1519,7 @@ public class PlayerControl1 : PlayerControl {
             sr.enabled = false;
         }
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        GetComponent<HeadBodySeparation>().PlayerDead(25000);
+        //GetComponent<HeadBodySeparation>().PlayerDead(25000);
 
 
         //transform.localScale = Vector3.zero;
@@ -1665,9 +1665,9 @@ public class PlayerControl1 : PlayerControl {
             CameraShaker.Instance.ShakeOnce(40f, 5f, 0.1f, 0.1f);
         }
 
-        GetComponent<SpriteRenderer>().color = hitColor;
+        spriteRenderer.color = hitColor;
         yield return new WaitForSeconds(0.3f);
-        GetComponent<SpriteRenderer>().color = Color.white;
+        spriteRenderer.color = Color.white;
         invincible = false;
 
         //Rewired 手柄震动---------------------------------------------------
