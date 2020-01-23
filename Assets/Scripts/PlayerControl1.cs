@@ -1606,10 +1606,13 @@ public class PlayerControl1 : PlayerControl {
             {
                 if( m_stateMgr.GetPlayerState() != PlayerStateDefine.PlayerState_Typ.playerState_IdleDash)
                 {
-                    _logHeight();
-                    canJump = true;
-                    m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
-                    m_bJumpRelease = false;
+                    //if(rb.velocity.y == 0)
+                    {
+                        _logHeight();
+                        canJump = true;
+                        m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Idle);
+                        m_bJumpRelease = false;
+                    }
                 }
             }
             else
