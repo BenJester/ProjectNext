@@ -1506,6 +1506,7 @@ public class PlayerControl1 : PlayerControl {
         if (hp > 1)
         {
             hp -= 1;
+            anim.SetTrigger("IsHurt");
             return;
         }
         //StartCoroutine(DelayRestart());
