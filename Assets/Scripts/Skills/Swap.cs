@@ -63,13 +63,20 @@ public class Swap : Skill {
 
     public PostProcessVolume dashVolume;
     public float StayingTime;
-
+    public Animator SwapAnimator;
+    public SpriteRenderer SwapAnimatorSpr;
+    public string AnimationParamSwapTrig;
     private PlayerDoubleSwap m_doubleSwap;
     private bool m_bOriginalSwapDamageOn;
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
         m_bOriginalSwapDamageOn = swapDamageOn;
+        if( SwapAnimator != null )
+        {
+            SwapAnimatorSpr = SwapAnimator.GetComponent<SpriteRenderer>();
+            SwapAnimatorSpr.enabled = false;
+        }
     }
 
     public override void Do()
@@ -80,10 +87,15 @@ public class Swap : Skill {
         }
         m_doubleSwap.SetDoubleSwapObject(col.GetComponent<Thing>());
         StartCoroutine(DelayedSwap(waitTime));
+        if(SwapAnimator!=null)
+        {
+            SwapAnimator.SetTrigger(AnimationParamSwapTrig);
+            SwapAnimatorSpr.enabled = true;
+        }
 
        // playerControl.SetColShadow();
 
-	}
+    }
 
 
 	public void SetPowerParticle(GameObject powerParticle){

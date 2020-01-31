@@ -329,6 +329,7 @@ Transform:
   - {fileID: 7963260885293694310}
   - {fileID: 9103032037277743245}
   - {fileID: 2239482339724473316}
+  - {fileID: 5477368767937646897}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -738,6 +739,9 @@ MonoBehaviour:
   m_fSwapSpeed: 1
   dashVolume: {fileID: 0}
   StayingTime: 0
+  SwapAnimator: {fileID: 5477368767937646799}
+  SwapAnimatorSpr: {fileID: 0}
+  AnimationParamSwapTrig: SwapTrig
 --- !u!114 &2198637840435433259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7305,3 +7309,89 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1001 &8607717281355374966
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2235284972380755415}
+    m_Modifications:
+    - target: {fileID: 4284969010603471290, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_Name
+      value: Effect-Swap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144376547450777182, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: NameOfOverAnimation
+      value: cat_swap_effect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f19fbaed84f9f4c4195838f04bc817d9, type: 3}
+--- !u!4 &5477368767937646897 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8607717281355374966}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5477368767937646799 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4284969010603471289, guid: f19fbaed84f9f4c4195838f04bc817d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8607717281355374966}
+  m_PrefabAsset: {fileID: 0}
