@@ -742,6 +742,10 @@ MonoBehaviour:
   SwapAnimator: {fileID: 5477368767937646799}
   SwapAnimatorSpr: {fileID: 0}
   AnimationParamSwapTrig: SwapTrig
+  directionSwap: 1
+  startingPoint: {x: 0, y: 0, z: 0}
+  directionSwapThreshold: 20
+  swapSpeed: 700
 --- !u!114 &2198637840435433259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7316,11 +7320,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2235284972380755415}
     m_Modifications:
-    - target: {fileID: 4284969010603471290, guid: f19fbaed84f9f4c4195838f04bc817d9,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect-Swap
-      objectReference: {fileID: 0}
     - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7375,6 +7374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603471290, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_Name
+      value: Effect-Swap
       objectReference: {fileID: 0}
     - target: {fileID: 3144376547450777182, guid: f19fbaed84f9f4c4195838f04bc817d9,
         type: 3}

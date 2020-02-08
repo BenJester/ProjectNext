@@ -68,6 +68,12 @@ public class Swap : Skill {
     public string AnimationParamSwapTrig;
     private PlayerDoubleSwap m_doubleSwap;
     private bool m_bOriginalSwapDamageOn;
+
+    public bool directionSwap;
+    public Vector3 startingPoint;
+    public float directionSwapThreshold;
+    public float swapSpeed;
+
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -97,8 +103,13 @@ public class Swap : Skill {
 
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+            startingPoint = Input.mousePosition;
+    }
 
-	public void SetPowerParticle(GameObject powerParticle){
+    public void SetPowerParticle(GameObject powerParticle){
 		powerParticle.transform.position=col.transform.position;
 		powerParticle.transform.SetParent(col.transform);
 		Destroy(powerParticle,0.5f);
@@ -217,10 +228,13 @@ public class Swap : Skill {
         Vector2 MomentumPlayer = playerBody.velocity * _playerThing.MomentumMass;
         Vector2 MomentumSwapThing = thingBody.velocity * _swapThing.MomentumMass;
         //
-        m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
+        //m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
+        Vector3 diff = Input.mousePosition - startingPoint;
+        if (diff.magnitude > directionSwapThreshold)
+            thingBody.velocity = diff.normalized * swapSpeed;
         //
         //playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-        m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+        //m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
         Thing _thingInstance = thingBody.GetComponent<Thing>();
         if(_thingInstance != null && _thingInstance.IsSwapRotationByVelocity == true)
         {
@@ -315,7 +329,8 @@ public class Swap : Skill {
 
 	}
 	IEnumerator DelayedSwap (float waitTime) {
-		if (delay) {
+        
+        if (delay) {
             delaying = true;
 			Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
 			playerControl.targetTimeScale = Time.timeScale;
