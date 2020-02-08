@@ -73,7 +73,7 @@ public class Swap : Skill {
     public Vector3 startingPoint;
     public float directionSwapThreshold;
     public float swapSpeed;
-
+    public GameObject dashPointer;
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -107,6 +107,17 @@ public class Swap : Skill {
     {
         if (Input.GetMouseButtonDown(0))
             startingPoint = Input.mousePosition;
+        if (Input.GetMouseButton(0) && (Input.mousePosition - startingPoint).magnitude > directionSwapThreshold)
+        {
+            Vector2 dir = (Input.mousePosition - startingPoint).normalized;
+            dashPointer.SetActive(true);
+            dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
+            dashPointer.transform.localRotation = Quaternion.Euler(0, 0, - Dash.AngleBetween(Vector2.up, dir));
+        }
+        else
+        {
+            dashPointer.SetActive(false);
+        }
     }
 
     public void SetPowerParticle(GameObject powerParticle){
@@ -232,6 +243,8 @@ public class Swap : Skill {
         Vector3 diff = Input.mousePosition - startingPoint;
         if (diff.magnitude > directionSwapThreshold)
             thingBody.velocity = diff.normalized * swapSpeed;
+        else
+            thingBody.velocity = new Vector2(0f, playerBody.velocity.y);
         //
         //playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
         //m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
