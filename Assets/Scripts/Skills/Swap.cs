@@ -105,19 +105,23 @@ public class Swap : Skill {
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-            startingPoint = Input.mousePosition;
-        if (Input.GetMouseButton(0) && (Input.mousePosition - startingPoint).magnitude > directionSwapThreshold)
+        if (directionSwap)
         {
-            Vector2 dir = (Input.mousePosition - startingPoint).normalized;
-            dashPointer.SetActive(true);
-            dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
-            dashPointer.transform.localRotation = Quaternion.Euler(0, 0, - Dash.AngleBetween(Vector2.up, dir));
+            if (Input.GetMouseButtonDown(0))
+                startingPoint = Input.mousePosition;
+            if (Input.GetMouseButton(0) && (Input.mousePosition - startingPoint).magnitude > directionSwapThreshold)
+            {
+                Vector2 dir = (Input.mousePosition - startingPoint).normalized;
+                dashPointer.SetActive(true);
+                dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
+                dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
+            }
+            else if (Input.GetMouseButtonUp(0) || (Input.GetMouseButton(0) && (Input.mousePosition - startingPoint).magnitude < directionSwapThreshold))
+            {
+                dashPointer.SetActive(false);
+            }
         }
-        else
-        {
-            dashPointer.SetActive(false);
-        }
+        
     }
 
     public void SetPowerParticle(GameObject powerParticle){
@@ -239,7 +243,7 @@ public class Swap : Skill {
         Vector2 MomentumPlayer = playerBody.velocity * _playerThing.MomentumMass;
         Vector2 MomentumSwapThing = thingBody.velocity * _swapThing.MomentumMass;
         //
-        //m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
+        m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
         Vector3 diff = Input.mousePosition - startingPoint;
         if (diff.magnitude > directionSwapThreshold)
             thingBody.velocity = diff.normalized * swapSpeed;
