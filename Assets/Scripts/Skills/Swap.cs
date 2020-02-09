@@ -121,7 +121,10 @@ public class Swap : Skill {
                 dashPointer.SetActive(false);
             }
         }
-        
+        else
+        {
+
+        }
     }
 
     public void SetPowerParticle(GameObject powerParticle){
@@ -245,7 +248,7 @@ public class Swap : Skill {
         //
         m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
         Vector3 diff = Input.mousePosition - startingPoint;
-        if (diff.magnitude > directionSwapThreshold)
+        if (diff.magnitude > directionSwapThreshold && directionSwap)
             thingBody.velocity = diff.normalized * swapSpeed;
         else
             thingBody.velocity = new Vector2(0f, playerBody.velocity.y);
