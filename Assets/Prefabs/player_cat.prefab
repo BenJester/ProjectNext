@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 7210371627317860493}
   - component: {fileID: 7624918653877382549}
   - component: {fileID: 3848419152025582764}
+  - component: {fileID: 4868751929553179485}
   m_Layer: 9
   m_Name: player_cat
   m_TagString: player
@@ -875,7 +876,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2238334444430495565}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70fbcd47a442f324ebc7d288b7deb958, type: 3}
   m_Name: 
@@ -898,7 +899,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2238334444430495565}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51a80656a89e2c046a774a9d35474b44, type: 3}
   m_Name: 
@@ -908,7 +909,7 @@ MonoBehaviour:
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
-  maxCharge: 0
+  maxCharge: 2
   CoyoteDelay: 0.2
   CoyoteDuration: 0.15
 --- !u!114 &1302247502408092104
@@ -1209,6 +1210,29 @@ MonoBehaviour:
   currcd: 0
   dragThreshold: 30
   dashPointer: {fileID: 6935488170787811620}
+--- !u!114 &4868751929553179485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238334444430495565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0e4f09981763043885ed497fbe85b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  player: {fileID: 0}
+  playerBody: {fileID: 0}
+  playerControl: {fileID: 0}
+  clip: {fileID: 0}
+  range: 100
+  throwSpeed: 1000
+  pullSpeed: 2500
+  pullHeight: 50
+  snapThreshold: 30
+  target: {fileID: 0}
 --- !u!1 &2238354309570810209
 GameObject:
   m_ObjectHideFlags: 0
