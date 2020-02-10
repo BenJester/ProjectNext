@@ -51,7 +51,7 @@ public class Throw : Skill
         else
         {
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 dir = (mouseWorldPos - (Vector2)player.transform.position).normalized;
+            Vector2 dir = (mouseWorldPos - (Vector2)target.transform.position).normalized;
             target.gameObject.GetComponent<Rigidbody2D>().velocity = dir * throwSpeed;
             pulled = false;
             target.transform.parent = null;
