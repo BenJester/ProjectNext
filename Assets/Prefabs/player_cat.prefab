@@ -1234,6 +1234,7 @@ MonoBehaviour:
   pullHeight: 50
   snapThreshold: 30
   target: {fileID: 0}
+  dashPointer: {fileID: 6935488170787811620}
 --- !u!114 &1170674582096249582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,9 +1252,9 @@ MonoBehaviour:
   playerBody: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
-  cd: 0
-  speed: 0
-  duration: 0
+  cd: 0.5
+  speed: 1200
+  duration: 0.2
   curr: 0
 --- !u!1 &2238354309570810209
 GameObject:
