@@ -68,7 +68,7 @@ public class Swap : Skill {
     public string AnimationParamSwapTrig;
     private PlayerDoubleSwap m_doubleSwap;
     private bool m_bOriginalSwapDamageOn;
-
+    public bool momentumSwap;
     public bool directionSwap;
     public Vector3 startingPoint;
     public float directionSwapThreshold;
@@ -248,13 +248,20 @@ public class Swap : Skill {
         //
         m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
         Vector3 diff = Input.mousePosition - startingPoint;
-        if (diff.magnitude > directionSwapThreshold && directionSwap)
-            thingBody.velocity = diff.normalized * swapSpeed;
+        if (!momentumSwap)
+        {
+            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
+                thingBody.velocity = diff.normalized * swapSpeed;
+            else
+                thingBody.velocity = new Vector2(0f, playerBody.velocity.y);
+        }
         else
-            thingBody.velocity = new Vector2(0f, playerBody.velocity.y);
+        {
+            playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
+            m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+        }
         //
-        //playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-        //m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+
         Thing _thingInstance = thingBody.GetComponent<Thing>();
         if(_thingInstance != null && _thingInstance.IsSwapRotationByVelocity == true)
         {
@@ -272,6 +279,7 @@ public class Swap : Skill {
         StartCoroutine(StartCooldown());
 
         audioSource.PlayOneShot(clip, 0.8f);
+        startingPoint = Vector3.negativeInfinity;
     }
 
     private void SwapObject(Transform _trans, Vector3 vecDst)
