@@ -14,7 +14,7 @@ public class MeleeThrow : Skill
     public float pullHeight;
     public float snapThreshold;
     public Rigidbody2D target;
-
+    public GameObject dashPointer;
     private void Start()
     {
         swap = GetComponent<Swap>();
@@ -34,15 +34,30 @@ public class MeleeThrow : Skill
     void Update()
     {
        if(Input.GetMouseButton(1)){
-           Time.timeScale=0.1f;
+            Time.timeScale = 0.1f;
+            Time.fixedDeltaTime *= 0.1f;
        }
             
         if(Input.GetMouseButtonUp(1))
         {
-            Time.timeScale=1;
+            Time.timeScale = 1;
+            Time.fixedDeltaTime *= 10f;
             Do();
         }
-        
+        Check();
+        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - col.transform.position).normalized;
+        if (Input.GetMouseButton(1) && col != null)
+        {
+            dashPointer.SetActive(true);
+
+            dashPointer.transform.position = (Vector2)col.transform.position + dir * 70f;
+            dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
+
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            dashPointer.SetActive(false);
+        }
     }
 
     public override void Do()
