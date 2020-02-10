@@ -33,8 +33,16 @@ public class MeleeThrow : Skill
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+       if(Input.GetMouseButton(1)){
+           Time.timeScale=0.1f;
+       }
+            
+        if(Input.GetMouseButtonUp(1))
+        {
+            Time.timeScale=1;
             Do();
+        }
+        
     }
 
     public override void Do()
@@ -50,6 +58,7 @@ public class MeleeThrow : Skill
 
     IEnumerator DoPull(Rigidbody2D rb)
     {
+        
         Vector3 targetPos = playerControl.transform.position + new Vector3(0f, pullHeight, 0f);
         Vector3 diff = targetPos - rb.transform.position;
         rb.GetComponent<BoxCollider2D>().enabled = false;
@@ -71,7 +80,7 @@ public class MeleeThrow : Skill
         pulled = false;
         target.transform.parent = null;
         target.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        //yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.2f);
         target.GetComponent<BoxCollider2D>().enabled = true;
     }
 }
