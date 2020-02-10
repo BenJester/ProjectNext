@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 1600080611}
   - component: {fileID: 1600080612}
   - component: {fileID: 1600080622}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Enemy_Jump
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightDistance: 900
+  target: {fileID: 0}
 --- !u!114 &2444404852198788428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,8 +496,8 @@ MonoBehaviour:
         byteData: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
         byteDataArray: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
       Version: 1.6.3
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &1600080610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,6 +534,7 @@ MonoBehaviour:
     m_Bits: 256
   CheckDistance: 200
   AngleToWatch: 0
+  ChangeAngleWhenFlip: 0
 --- !u!114 &1600080612
 MonoBehaviour:
   m_ObjectHideFlags: 0

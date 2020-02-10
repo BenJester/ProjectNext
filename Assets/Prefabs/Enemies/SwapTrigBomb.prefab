@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 524570173449380667}
   - component: {fileID: 409691662763492367}
   - component: {fileID: 8003690268522188682}
-  m_Layer: 8
-  m_Name: bomb 1
+  m_Layer: 12
+  m_Name: SwapTrigBomb
   m_TagString: thing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,6 +159,8 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!251 &524570173449380667

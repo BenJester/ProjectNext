@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3081239163755633304}
   - component: {fileID: 7695635313579997311}
   - component: {fileID: 2317563903099717684}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 6723198874721357505}
   - component: {fileID: 7753589527028352113}
   - component: {fileID: 4226042060326546985}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Enemy_Bee
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightDistance: 900
+  target: {fileID: 0}
 --- !u!114 &3207772762105086600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,8 +500,8 @@ MonoBehaviour:
         byteData: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
         byteDataArray: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
       Version: 1.6.3
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!114 &6723198874721357509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7487360945656590166}
   - component: {fileID: 7487360945656590167}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -716,7 +717,7 @@ GameObject:
   - component: {fileID: 9080842734565465088}
   - component: {fileID: 9080842734565465094}
   - component: {fileID: 8999253424189390814}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: shield
   m_TagString: shield
   m_Icon: {fileID: 0}
