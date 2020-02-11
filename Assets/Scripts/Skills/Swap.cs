@@ -32,7 +32,8 @@ public class Swap : Skill {
     public float cooldown;
     bool cooldowned = true;
 
-    
+
+    float playerRadiusY;
 
     private Vector2 m_vecCacheDrawBoxPos;
     private Vector2 m_vecCacheDrawBoxSize;
@@ -74,6 +75,11 @@ public class Swap : Skill {
     public float directionSwapThreshold;
     public float swapSpeed;
     public GameObject dashPointer;
+
+    public bool overheadSnap;
+    public Rigidbody2D overheadRB;
+    public float overheadHeight;
+
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -180,7 +186,13 @@ public class Swap : Skill {
 		Vector3 posPlayer = player.transform.position;
 		Vector3 _posSwapThing = _readySwapCol.transform.position;
 
-        if(EnergyIndicator.instance != null)
+        if (overheadRB != null && overheadRB.GetComponent<Thing>() == _swapThing)
+        {
+            DropOverhead();
+
+        }
+
+        if (EnergyIndicator.instance != null)
         {
             EnergyIndicator.instance.CloseEnergyParticle();
         }
@@ -189,7 +201,7 @@ public class Swap : Skill {
         }
         BoxCollider2D objCol2d = _readySwapCol.GetComponent<BoxCollider2D>();
         //float playerRadiusY = player.GetComponent<BoxCollider2D> ().size.y / 2f;
-        float playerRadiusY = player.GetComponent<BoxCollider2D>().bounds.size.y / 2f;
+        playerRadiusY = player.GetComponent<BoxCollider2D>().bounds.size.y / 2f;
         //这里的size.y是原始大小，乘以scale的话只能是相对父亲的大小，但是父亲也缩放的话，就有问题了。所以这里改用bounds.size取世界尺寸
         //float heightDiff = (col.GetComponent<BoxCollider2D> ().size.y * col.transform.localScale.y - playerRadiusY * 2f) / 2f;
         float heightDiff = (_readySwapCol.GetComponent<BoxCollider2D>().bounds.size.y - playerRadiusY * 2f) / 2f;
@@ -209,8 +221,12 @@ public class Swap : Skill {
                 temp.x,
                 _readySwapCol.gameObject.transform.position.y + playerRadiusY + (_swapThing.GetUpperY() - _swapThing.GetLowerY()) / 2f, 
                 player.transform.position.z);
-			
-		}
+
+            if (overheadSnap)
+            {
+                HandleOverhead(_swapThing);
+            }
+        }
         else
         {
             _readySwapCol.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
@@ -280,6 +296,8 @@ public class Swap : Skill {
 
         audioSource.PlayOneShot(clip, 0.8f);
         startingPoint = Vector3.negativeInfinity;
+
+        HandleOverhead(_swapThing);
     }
 
     private void SwapObject(Transform _trans, Vector3 vecDst)
@@ -458,9 +476,36 @@ public class Swap : Skill {
         m_TransSwap.GetComponent<Rigidbody2D>().isKinematic = false;
         m_TransSwap.GetComponent<Rigidbody2D>().velocity = m_cachePlayerVelocity;
     }
+
     public void ResetSwapDamageOn()
     {
         swapDamageOn = m_bOriginalSwapDamageOn ;
     }
 
+    void HandleOverhead(Thing thing)
+    {
+        
+        if (thing.GetLeftX() < player.transform.position.x &&
+            thing.GetRightX() > player.transform.position.x &&
+            thing.GetLowerY() > player.transform.position.y &&
+            thing.GetLowerY() < player.transform.position.y + playerRadiusY + 30f)
+        {
+            Rigidbody2D rb = thing.GetComponent<Rigidbody2D>();
+            overheadRB = rb;
+            rb.transform.position = playerControl.transform.position + new Vector3(0f, overheadHeight, 0f);
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.transform.parent = playerControl.transform;
+        }
+            
+    }
+
+    public void DropOverhead()
+    {
+        if (overheadRB != null)
+        {
+            overheadRB.transform.parent = null;
+            overheadRB.bodyType = RigidbodyType2D.Dynamic;
+            overheadRB = null;
+        }
+    }
 }

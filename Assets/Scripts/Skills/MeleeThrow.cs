@@ -45,7 +45,9 @@ public class MeleeThrow : Skill
             Do();
         }
         Check();
-        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - col.transform.position).normalized;
+        Vector2 dir = Vector2.zero;
+        if (col != null)
+            dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - col.transform.position).normalized;
         if (Input.GetMouseButton(1) && col != null)
         {
             dashPointer.SetActive(true);
@@ -71,9 +73,18 @@ public class MeleeThrow : Skill
 
     }
 
-    IEnumerator DoPull(Rigidbody2D rb)
+    void KickFloor(Vector3 kickPos)
     {
         
+
+    }
+
+    IEnumerator DoPull(Rigidbody2D rb)
+    {
+        if (swap.overheadSnap && rb == swap.overheadRB)
+        {
+            swap.DropOverhead();
+        }
         Vector3 targetPos = playerControl.transform.position + new Vector3(0f, pullHeight, 0f);
         Vector3 diff = targetPos - rb.transform.position;
         rb.GetComponent<BoxCollider2D>().enabled = false;
