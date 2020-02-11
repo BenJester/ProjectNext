@@ -15,6 +15,7 @@ public class MeleeThrow : Skill
     public float snapThreshold;
     public Rigidbody2D target;
     public GameObject dashPointer;
+    public float kickFloorInputRadius;
     private void Start()
     {
         swap = GetComponent<Swap>();
@@ -75,8 +76,21 @@ public class MeleeThrow : Skill
 
     void KickFloor(Vector3 kickPos)
     {
-        
+        Vector2 dir = (kickPos - transform.position).normalized;
+        float angle = Angle(dir);
+        //if (0f < angle &&
+    }
 
+    public static float Angle(Vector2 p_vector2)
+    {
+        if (p_vector2.x < 0)
+        {
+            return 360 - (Mathf.Atan2(p_vector2.x, p_vector2.y) * Mathf.Rad2Deg * -1);
+        }
+        else
+        {
+            return Mathf.Atan2(p_vector2.x, p_vector2.y) * Mathf.Rad2Deg;
+        }
     }
 
     IEnumerator DoPull(Rigidbody2D rb)
