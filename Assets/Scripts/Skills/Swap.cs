@@ -488,7 +488,7 @@ public class Swap : Skill {
         if (thing.GetLeftX() < player.transform.position.x &&
             thing.GetRightX() > player.transform.position.x &&
             thing.GetLowerY() > player.transform.position.y &&
-            thing.GetLowerY() < player.transform.position.y + playerRadiusY + 30f)
+            thing.GetLowerY() < player.transform.position.y + playerRadiusY + 60f)
         {
             Rigidbody2D rb = thing.GetComponent<Rigidbody2D>();
             overheadRB = rb;
