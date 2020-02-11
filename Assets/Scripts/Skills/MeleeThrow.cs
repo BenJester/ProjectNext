@@ -87,8 +87,9 @@ public class MeleeThrow : Skill
         }
         Vector3 targetPos = playerControl.transform.position + new Vector3(0f, pullHeight, 0f);
         Vector3 diff = targetPos - rb.transform.position;
-        rb.GetComponent<BoxCollider2D>().enabled = false;
-
+        //rb.GetComponent<BoxCollider2D>().enabled = false;
+        int layer = rb.gameObject.layer;
+        rb.gameObject.layer = 18;
         while (diff.magnitude > snapThreshold)
         {
             Debug.Log(diff.magnitude);
@@ -106,7 +107,9 @@ public class MeleeThrow : Skill
         pulled = false;
         target.transform.parent = null;
         target.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        rb.gameObject.layer = layer;
         yield return new WaitForSeconds(0.2f);
-        target.GetComponent<BoxCollider2D>().enabled = true;
+        //
+        //target.GetComponent<BoxCollider2D>().enabled = true;
     }
 }
