@@ -16,6 +16,7 @@ namespace Ben
 public class Thing : MonoBehaviour {
 
     public GameObject dieParticle;
+    
 	public Type type;
 	public float lowerY;
 	public float upperY;
@@ -80,7 +81,7 @@ public class Thing : MonoBehaviour {
 		{
 			playerControl.thingList.Add (this);
 		}
-
+        body.gravityScale = 165f;
 	}
     public Quaternion GetOriginalQuat()
     {
