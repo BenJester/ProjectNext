@@ -24,7 +24,11 @@ public class Ti_Gun : TriggerItem_Base
         
     }
 
-    public override void HandleTriggerAction(){
+    public override void HandleKickTrigger(){
+        StartCoroutine(Shoot());
+    }
+
+     public override void HandleSwapTrigger(){
         StartCoroutine(Shoot());
     }
 

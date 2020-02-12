@@ -32,7 +32,11 @@ public class Ti_TimerBomb : TriggerItem_Base
         }
     }
 
-    public override void HandleTriggerAction(){
+    public override void HandleKickTrigger(){
+        if(!isTrigger) TriggerBomb();
+        
+    } 
+    public override void HandleSwapTrigger(){
         if(!isTrigger) TriggerBomb();
         
     } 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ti_Mine : TriggerItem_Base
 {
-    
+    //TODO: 未来可能可以做成会黏在墙壁上的
     public bool isTrigger = false;
 
     public float explosionRadius;
@@ -43,7 +43,13 @@ public class Ti_Mine : TriggerItem_Base
         }
     }
 
-    public override void HandleTriggerAction()
+    public override void HandleSwapTrigger()
+    {
+        if (!isTrigger) StartCoroutine(TriggerBomb());
+
+    }
+
+    public override void HandleKickTrigger()
     {
         if (!isTrigger) StartCoroutine(TriggerBomb());
 
