@@ -9,6 +9,8 @@ public class Ti_FlyKnife : TriggerItem_Base
     public float speed;
     Vector2 kickDir;
     Rigidbody2D my_rb;
+    private float setSpeedTime = 0.1f;
+    float setTimeTemp;
 
     void Start()
     {
@@ -18,14 +20,31 @@ public class Ti_FlyKnife : TriggerItem_Base
     // Update is called once per frame
     void Update()
     {
+
+
+    }
+
+
+    void FixedUpdate()
+    {
         if (isTrigger)
         {
-            transform.localRotation = Quaternion.Euler(0, 0, AngleBetween(Vector2.up, kickDir.normalized));
+            my_rb.constraints = RigidbodyConstraints2D.None;
             my_rb.velocity = kickDir * speed;
-        }
-        else
-        {
-            my_rb.velocity=Vector2.zero;
+            transform.localRotation = Quaternion.Euler(0, 0, AngleBetween(Vector2.up, kickDir.normalized));
+
+
+            //检测墙壁停止
+            RaycastHit2D hit2D = Physics2D.Raycast(transform.position, kickDir, 20, 1 << 8);
+            if (hit2D)
+            {
+                transform.position = (Vector2)transform.position + (Vector2)kickDir * 15;
+                my_rb.velocity = Vector2.zero;
+                my_rb.freezeRotation = true;
+                print("Hit");
+                //my_rb.bodyType=RigidbodyType2D.Static;
+                isTrigger = false;
+            }
         }
     }
 
@@ -44,15 +63,20 @@ public class Ti_FlyKnife : TriggerItem_Base
 
     public override void HandleKickTrigger()
     {
+        my_rb.bodyType = RigidbodyType2D.Kinematic;
         my_rb.freezeRotation = false;
         isTrigger = true;
         kickDir = my_rb.velocity.normalized;
+        print("Kick!!");
+
+        //防止误伤
+        setTimeTemp = Time.time + setSpeedTime;
 
     }
 
+
     public override void HandleSwapTrigger()
     {
-
     }
 
 
@@ -61,23 +85,17 @@ public class Ti_FlyKnife : TriggerItem_Base
 
     }
 
-    
 
 
-    
+
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (isTrigger)
         {
-            if (other.transform.CompareTag("floor"))
-            {
-                my_rb.velocity = Vector2.zero;
-                my_rb.freezeRotation = true;
-                Debug.Log("Stop");
-                isTrigger = false;
-            }
-            if (other.transform.CompareTag("player"))
+
+            if (other.transform.CompareTag("player") && setTimeTemp<Time.time)
             {
                 other.transform.GetComponent<PlayerControl1>().Die();
             }
@@ -86,8 +104,26 @@ public class Ti_FlyKnife : TriggerItem_Base
                 other.transform.GetComponent<Enemy>().TakeDamage(1);
             }
         }
+        else if (other.transform.CompareTag("floor"))
+        {
+            my_rb.velocity = Vector2.zero;
+            my_rb.freezeRotation = true;
+            //my_rb.constraints=RigidbodyConstraints2D.FreezePosition;
+
+        }
 
     }
+
+    private void OnTriggerStay2D(Collider2D other) {
+        if (other.transform.CompareTag("floor"))
+        {
+            my_rb.velocity = Vector2.zero;
+            my_rb.freezeRotation = true;
+            //my_rb.constraints=RigidbodyConstraints2D.FreezePosition;
+
+        }
+    }
+
 
 
 
