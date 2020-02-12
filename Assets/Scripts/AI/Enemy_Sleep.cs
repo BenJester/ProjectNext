@@ -10,10 +10,11 @@ public class Enemy_Sleep : MonoBehaviour
     Vector3 prevPos;
     public float wakeUpThreshold;
     bool wokeUp;
-
+    Animator animator;
     void Start()
     {
         prevPos = transform.position;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -38,8 +39,9 @@ public class Enemy_Sleep : MonoBehaviour
 
     IEnumerator Explode()
     {
-        
-        yield return new WaitForSeconds(explodeDelay);
+        yield return new WaitForSeconds(1.5f);
+        animator.Play("Attack");
+        yield return new WaitForSeconds(explodeDelay - 1.5f);
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explodeRadius);
         foreach (var col in cols)
         {
