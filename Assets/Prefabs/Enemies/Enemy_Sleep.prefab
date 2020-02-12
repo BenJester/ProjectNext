@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1320291902570952423}
   - component: {fileID: 1345764763777775309}
   - component: {fileID: 1370971111023751476}
-  - component: {fileID: 5032304313721852967}
+  - component: {fileID: 1193377024661847}
   m_Layer: 10
   m_Name: Enemy_Sleep
   m_TagString: thing
@@ -33,7 +33,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369823986698729403}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5222, y: 33120, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ForceUpdateInFixedUpdate: 0
---- !u!114 &5032304313721852967
+--- !u!114 &1193377024661847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,30 +339,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1369823986698729403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d442bf732f13f974499b02339eb82232, type: 3}
+  m_Script: {fileID: 11500000, guid: 4621b5f3e6ef9de4daac8f881eed9c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thing: {fileID: 0}
-  dropKillSpeed: 50
-  goal: {fileID: 0}
-  maxHealth: 1
-  health: 1
-  canShuaisi: 0
-  groundCheckBoxHeight: 60
-  floorLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  sightDistance: 800
-  walkSpeed: 200
-  hitboxWidth: 60
-  hitboxHeight: 100
-  hitboxOffset: 75
-  attackDelay: 0.6
-  attackPostDelay: 1.4
-  checkLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 1536
-  faceRight: 0
+  explodeDelay: 2
+  sleepDelay: 2
+  explodeRadius: 100
+  wakeUpThreshold: 5
