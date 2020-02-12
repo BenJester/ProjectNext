@@ -9,6 +9,7 @@ public class Skill : MonoBehaviour {
 	public GameObject player;
 	[HideInInspector]
 	public Rigidbody2D playerBody;
+    public BoxCollider2D box;
 	[HideInInspector]
 	public PlayerControl1 playerControl;
     protected float gravity;
@@ -19,6 +20,7 @@ public class Skill : MonoBehaviour {
 		player = GameObject.FindWithTag ("player");
 		playerControl = player.GetComponent<PlayerControl1> ();
 		playerBody = player.GetComponent<Rigidbody2D> ();
+        box = player.GetComponent<BoxCollider2D>();
         gravity = playerBody.gravityScale;
         audioSource = GetComponent<AudioSource>();
 	}

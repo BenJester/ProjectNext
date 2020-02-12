@@ -16,6 +16,7 @@ public class MeleeThrow : Skill
     public Rigidbody2D target;
     public GameObject dashPointer;
     public float kickFloorInputRadius;
+    public float kickFloorSpeed;
     private void Start()
     {
         swap = GetComponent<Swap>();
@@ -34,12 +35,13 @@ public class MeleeThrow : Skill
 
     void Update()
     {
-       if(Input.GetMouseButton(1)){
+        if (Input.GetMouseButton(1))
+        {
             Time.timeScale = 0.1f;
             Time.fixedDeltaTime *= 0.1f;
-       }
-            
-        if(Input.GetMouseButtonUp(1))
+        }
+
+        if (Input.GetMouseButtonUp(1))
         {
             Time.timeScale = 1;
             Time.fixedDeltaTime *= 10f;
@@ -61,24 +63,58 @@ public class MeleeThrow : Skill
         {
             dashPointer.SetActive(false);
         }
+        //Debug.Log(Angle(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position));
     }
 
     public override void Do()
     {
-        if (!active || !Check())
+        if (!active)
             return;
-        if (col != null)
+        if (col != null && Check())
         {
             StartCoroutine(DoPull(col.GetComponent<Rigidbody2D>()));
+        }
+        else
+        {
+            KickFloor(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
 
     }
 
+    //Swap 触发Trigger Instance
+    void TriggerInstanceEvent(Thing swapThing)
+    {
+        if (swapThing.GetComponent<TriggerItem_Base>() != null)
+        {
+            TriggerItem_Base tb = swapThing.GetComponent<TriggerItem_Base>();
+            tb.HandleTriggerAction();
+        }
+    }
+
     void KickFloor(Vector3 kickPos)
     {
+        if ((kickPos - transform.position).magnitude > kickFloorInputRadius || (kickPos - transform.position).magnitude < box.size.x / 2f)
+            return;
+
         Vector2 dir = (kickPos - transform.position).normalized;
         float angle = Angle(dir);
-        //if (0f < angle &&
+        Vector3 pos = transform.position;
+        float diffX = kickPos.x - pos.x;
+        float diffY = kickPos.y - pos.y;
+        float boxWidth = box.size.x / 2f;
+        float boxHeight = box.size.y / 2f;
+
+        if ((diffX < -boxWidth && playerControl.touchingWallLeft()) || (diffX > boxWidth && playerControl.touchingWallRight()))
+            DoKickFloor(dir);
+
+        else if ((diffY < -boxHeight && playerControl.touchingFloor()) || (diffY > boxHeight && playerControl.touchingWallUp()))
+            DoKickFloor(dir);
+        //Debug.Log(dir.x);
+    }
+
+    void DoKickFloor(Vector2 dir)
+    {
+        playerBody.velocity = -dir * kickFloorSpeed;
     }
 
     public static float Angle(Vector2 p_vector2)
@@ -90,14 +126,6 @@ public class MeleeThrow : Skill
         else
         {
             return Mathf.Atan2(p_vector2.x, p_vector2.y) * Mathf.Rad2Deg;
-        }
-    }
-
-    //Swap 触发Trigger Instance
-    void TriggerInstanceEvent(Thing swapThing){
-        if(swapThing.GetComponent<TriggerItem_Base>()!=null){
-            TriggerItem_Base tb = swapThing.GetComponent<TriggerItem_Base>();
-            tb.HandleTriggerAction();
         }
     }
 
@@ -130,11 +158,8 @@ public class MeleeThrow : Skill
         target.transform.parent = null;
         target.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         rb.gameObject.layer = layer;
-
-
         //触发
-        TriggerInstanceEvent(rb.GetComponent<Thing>());
-
+        TriggerInstanceEvent(rb.GetComponent<Thing>());
         yield return new WaitForSeconds(0.2f);
         //
         //target.GetComponent<BoxCollider2D>().enabled = true;

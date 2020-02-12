@@ -12,7 +12,7 @@ using Com.LuisPedroFonseca.ProCamera2D;
 
 public class PlayerControl1 : PlayerControl {
 
-   
+
 
     public static PlayerControl1 Instance { get; private set; }
     //Rewired------------------------------------------------------------
@@ -20,9 +20,9 @@ public class PlayerControl1 : PlayerControl {
 
     public enum ControlWay
     {
-        isKeyboard=0,
-        isJoystick=1,
-        isMobile=2,
+        isKeyboard = 0,
+        isJoystick = 1,
+        isMobile = 2,
     }
     public ControlWay controlState = ControlWay.isKeyboard;
 
@@ -270,7 +270,7 @@ public class PlayerControl1 : PlayerControl {
     private BulletTime m_bulletTime;
     private PlayerDoubleSwap m_doubleSwap;
 
-    float wallCheckBoxWidth = 10f;
+    float wallCheckBoxWidth = 50f;
     float wallCheckBoxIndent = 2f;
 
     Vector2 wallCheckTopLeft;
@@ -294,7 +294,7 @@ public class PlayerControl1 : PlayerControl {
     {
         if (HasRepawnPoint)
         {
-            if(CheckPointTotalManager.instance != null)
+            if (CheckPointTotalManager.instance != null)
             {
                 transform.position = CheckPointTotalManager.instance.GetPlayerPos();
             }
@@ -309,15 +309,15 @@ public class PlayerControl1 : PlayerControl {
         else { Destroy(gameObject); }
 
         //Rewired------------------------------------------------------------
-        if(ReInput.players != null)
+        if (ReInput.players != null)
         {
             player = ReInput.players.GetPlayer(playerId);
         }
-       
+
         //手柄死区
-        if(controlState==ControlWay.isJoystick)
+        if (controlState == ControlWay.isJoystick)
         {
-            if(player.controllers.Joysticks.Count > 0 )
+            if (player.controllers.Joysticks.Count > 0)
             {
                 player.controllers.Joysticks[0].calibrationMap.GetAxis(0).deadZone = 0.5f;
             }
@@ -331,7 +331,7 @@ public class PlayerControl1 : PlayerControl {
         rb = GetComponent<Rigidbody2D>();
 
         //PlayerBoostyAttr = new PlayerBoosty(rb);
-        PlayerBoostyAttr.SetBoostyData(rb,player);
+        PlayerBoostyAttr.SetBoostyData(rb, player);
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
         box = GetComponent<BoxCollider2D>();
@@ -528,8 +528,8 @@ public class PlayerControl1 : PlayerControl {
                     TouchLayer
                 );
         //print(rb.velocity.y);
-        anim.SetFloat("SpeedY", rb.velocity.y/2);
-        anim.SetFloat("SpeedX", rb.velocity.x/2);
+        anim.SetFloat("SpeedY", rb.velocity.y / 2);
+        anim.SetFloat("SpeedX", rb.velocity.x / 2);
         //isTouchingGround = Physics2D.Raycast (groundCheckPoint1.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
         //          Physics2D.Raycast (groundCheckPoint2.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
         //          Physics2D.Raycast (groundCheckPoint3.position, Vector3.down, 5f, (1 << 11) | (1 << 8) | (1 << 12)) || 
@@ -622,7 +622,7 @@ public class PlayerControl1 : PlayerControl {
             m_bJumpRelease = false;
 
             anim.SetBool("Moving", true);
-            if(legAnim != null)
+            if (legAnim != null)
             {
                 legAnim.SetBool("Moving", true);
             }
@@ -707,7 +707,7 @@ public class PlayerControl1 : PlayerControl {
         }
         if (h == 0.0f && dash.isDashing == false && isTouchingGround)
         {
-            rb.velocity = new Vector2(0, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+            //rb.velocity = new Vector2(0, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         }
 
 
@@ -721,7 +721,7 @@ public class PlayerControl1 : PlayerControl {
         {
             //Rewired------------------------------------------------------------
             //if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState==ControlWay.isKeyboard)))
-            if (player.GetAxisRaw("MoveHorizontal") == 0 )
+            if (player.GetAxisRaw("MoveHorizontal") == 0)
             {
                 if (m_bDashMove == true)
                 {
@@ -742,7 +742,7 @@ public class PlayerControl1 : PlayerControl {
                     }
                 }
             }
-            if ( (player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState == ControlWay.isKeyboard)))
+            if ((player.GetAxisRaw("MoveHorizontal") == 0 && !(controlState == ControlWay.isKeyboard)))
             {
                 if (m_bDashing == true)
                 {
@@ -758,7 +758,7 @@ public class PlayerControl1 : PlayerControl {
                 {
                     //Debug.Log(string.Format("Playercontrol velocity to zero {0}", m_stateMgr.GetPlayerState()));
                     float fCurVelocity = Mathf.Lerp(rb.velocity.x, 0, JumpVelocityLerp);
-                    rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
+                    //rb.velocity = new Vector2(fCurVelocity, rb.velocity.y);
                 }
             }
         }
@@ -767,7 +767,8 @@ public class PlayerControl1 : PlayerControl {
         {
             m_fHeight = transform.position.y;
         }
-
+        if (Input.GetKeyUp(KeyCode.A) && rb.velocity.x < 0f || Input.GetKeyUp(KeyCode.D) && rb.velocity.x > 0f)
+            rb.velocity = new Vector2(0f, rb.velocity.y);
         //跳跃代码
         //Rewired------------------------------------------------------------
         //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || player.GetButtonDown("Jump"))
