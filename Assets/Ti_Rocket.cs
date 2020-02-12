@@ -30,6 +30,8 @@ public class Ti_Rocket : TriggerItem_Base
             my_rb.constraints = RigidbodyConstraints2D.None;
             my_rb.velocity += kickDir * speed;
             transform.localRotation = Quaternion.Euler(0, 0, Dash.AngleBetween(Vector2.up, kickDir.normalized));
+        }else{
+            
         }
     }
 
