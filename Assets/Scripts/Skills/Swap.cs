@@ -531,6 +531,7 @@ public class Swap : Skill {
             overheadRB.bodyType = RigidbodyType2D.Dynamic;
             overheadRB = null;
             OnDrop?.Invoke();
+            playerControl.overhead.SwitchState(OverheadState.None);
         }
     }
 }

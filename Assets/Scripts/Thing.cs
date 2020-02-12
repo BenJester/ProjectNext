@@ -203,7 +203,8 @@ public class Thing : MonoBehaviour {
 			//print("die");
 		}
 
-
+        if (PlayerControl1.Instance.swap.overheadRB != null && PlayerControl1.Instance.swap.overheadRB.gameObject == gameObject)
+            PlayerControl1.Instance.swap.DropOverhead();
 		StartCoroutine (ScaleDown(0.2f));
 	}
 
