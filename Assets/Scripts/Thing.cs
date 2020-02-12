@@ -81,7 +81,8 @@ public class Thing : MonoBehaviour {
 		{
 			playerControl.thingList.Add (this);
 		}
-        body.gravityScale = 165f;
+        if (body.gravityScale != 0f)
+            body.gravityScale = 165f;
 	}
     public Quaternion GetOriginalQuat()
     {

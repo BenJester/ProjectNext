@@ -557,6 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  overhead: {fileID: 0}
   controlState: 0
   playerId: 0
   JumpVelocityLerp: 1
@@ -603,7 +604,7 @@ MonoBehaviour:
   homingBulletRotateSpeed: 1000
   hasShootDistance: 1
   countDistanceToPlayer: 1
-  shootDistance: 1200
+  shootDistance: 1500
   shootDistanceLight: {fileID: 2239482339835632238}
   minBulletSpeed: 300
   maxBulletSpeed: 2000
@@ -685,6 +686,7 @@ MonoBehaviour:
     BoostyValue: 5000
     MaxBoostySpeed: 1000
   DistanceOfPlayerAndThing: 1200
+  disableAirControl: 0
 --- !u!114 &2198510326049772165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,6 +715,7 @@ MonoBehaviour:
   active: 1
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 8300000, guid: aa3e2746321918f4aa8496329978ec26, type: 3}
   swapDamageOn: 0
@@ -769,6 +772,7 @@ MonoBehaviour:
   active: 1
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 8300000, guid: 9d647e8ef03b7424eaba982af841347e, type: 3}
   isShadowDash: 1
@@ -848,6 +852,7 @@ MonoBehaviour:
   active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   momentumMultiplier: 3
@@ -868,6 +873,7 @@ MonoBehaviour:
   active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   smashSpeed: 0
@@ -888,6 +894,7 @@ MonoBehaviour:
   active: 1
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   range: 150
@@ -911,6 +918,7 @@ MonoBehaviour:
   active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   maxCharge: 2
@@ -1229,6 +1237,7 @@ MonoBehaviour:
   active: 1
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   range: 100
@@ -1238,6 +1247,8 @@ MonoBehaviour:
   snapThreshold: 30
   target: {fileID: 0}
   dashPointer: {fileID: 6935488170787811620}
+  kickFloorInputRadius: 0
+  kickFloorSpeed: 0
 --- !u!114 &1170674582096249582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1253,6 +1264,7 @@ MonoBehaviour:
   active: 0
   player: {fileID: 0}
   playerBody: {fileID: 0}
+  box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   cd: 0.5

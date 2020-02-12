@@ -53,7 +53,7 @@ public class Enemy_IronFoot : Enemy_Base {
 	
     void HandleOverhead()
     {
-        if (PlayerControl1.Instance.swap.col.gameObject == gameObject)
+        if (PlayerControl1.Instance.swap.col.gameObject != null && PlayerControl1.Instance.swap.col.gameObject == gameObject)
             PlayerControl1.Instance.overhead.SwitchState(OverheadState.Ironfoot);
     }
 
