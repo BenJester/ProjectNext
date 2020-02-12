@@ -297,7 +297,24 @@ public class Swap : Skill {
         audioSource.PlayOneShot(clip, 0.8f);
         startingPoint = Vector3.negativeInfinity;
 
+
+        //在头上交换会举头顶
         HandleOverhead(_swapThing);
+
+        //会触发Trigger Instance
+        TriggerInstanceEvent(_swapThing);
+
+        
+    }
+
+
+
+    //Swap 触发Trigger Instance
+    void TriggerInstanceEvent(Thing swapThing){
+        if(swapThing.GetComponent<TriggerItem_Base>()!=null){
+            TriggerItem_Base tb = swapThing.GetComponent<TriggerItem_Base>();
+            tb.HandleTriggerAction();
+        }
     }
 
     private void SwapObject(Transform _trans, Vector3 vecDst)

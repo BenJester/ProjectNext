@@ -79,6 +79,14 @@ public class MeleeThrow : Skill
 
     }
 
+    //Swap 触发Trigger Instance
+    void TriggerInstanceEvent(Thing swapThing){
+        if(swapThing.GetComponent<TriggerItem_Base>()!=null){
+            TriggerItem_Base tb = swapThing.GetComponent<TriggerItem_Base>();
+            tb.HandleTriggerAction();
+        }
+    }
+
     IEnumerator DoPull(Rigidbody2D rb)
     {
         if (swap.overheadSnap && rb == swap.overheadRB)
@@ -108,6 +116,11 @@ public class MeleeThrow : Skill
         target.transform.parent = null;
         target.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         rb.gameObject.layer = layer;
+
+
+        //触发
+        TriggerInstanceEvent(rb.GetComponent<Thing>());
+
         yield return new WaitForSeconds(0.2f);
         //
         //target.GetComponent<BoxCollider2D>().enabled = true;
