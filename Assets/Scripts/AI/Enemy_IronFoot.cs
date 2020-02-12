@@ -53,12 +53,12 @@ public class Enemy_IronFoot : Enemy_Base {
 	
     void HandleOverhead()
     {
-
+        PlayerControl1.Instance.overhead.SwitchState(OverheadState.Ironfoot);
     }
 
     void HandleDrop()
     {
-
+        PlayerControl1.Instance.overhead.SwitchState(OverheadState.None);
     }
     // Update is called once per frame
     void Update ()
@@ -70,22 +70,29 @@ public class Enemy_IronFoot : Enemy_Base {
         m_bFalling = bNewFalling;
         isFalling=m_bFalling;
         _processFalling();
+        if (rb.velocity.y < 0f)
+        {
+            //originalGravity = playerBody.gravityScale;
+            //playerBody.gravityScale = 0;
+            rb.velocity = new Vector2(rb.velocity.x, -100f);
+            //switched = true;
+        }
     }
     private void _processFalling()
     {
         if( m_bFalling == true )
         {
             anim.CrossFade("Enemy_IronFoot", 0.01f);
-            rb.gravityScale = 0;
-            rb.drag = 0f;
-            rb.velocity = new Vector2(rb.velocity.x, -FallingSpeed);
+            //rb.gravityScale = 0;
+            //rb.drag = 0f;
+            //rb.velocity = new Vector2(rb.velocity.x, -FallingSpeed);
         }
         else
         {
             anim.CrossFade("Enemy_IronFoot_idle", 0.01f);
-            rb.isKinematic = false;
-            rb.gravityScale = 200;
-            rb.drag = 0f;
+            //rb.isKinematic = false;
+            //rb.gravityScale = 200;
+            //rb.drag = 0f;
         }
     }
  //   void Falling(bool isFall){

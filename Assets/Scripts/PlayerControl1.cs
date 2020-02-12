@@ -13,7 +13,7 @@ using Com.LuisPedroFonseca.ProCamera2D;
 public class PlayerControl1 : PlayerControl {
 
 
-
+    public Overhead overhead;
     public static PlayerControl1 Instance { get; private set; }
     //Rewired------------------------------------------------------------
 
@@ -379,6 +379,7 @@ public class PlayerControl1 : PlayerControl {
         m_bulletTime = GetComponent<BulletTime>();
 
         InitWallChecks();
+        overhead = GetComponent<Overhead>();
     }
 
     #region wallTouchChecks
