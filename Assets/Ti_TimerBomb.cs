@@ -33,7 +33,8 @@ public class Ti_TimerBomb : TriggerItem_Base
     }
 
     public override void HandleTriggerAction(){
-        TriggerBomb();
+        if(!isTrigger) TriggerBomb();
+        
     } 
 
     void TriggerBomb(){
@@ -47,7 +48,8 @@ public class Ti_TimerBomb : TriggerItem_Base
        
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(areaIndicator,transform.position,Quaternion.identity);
-        area.transform.localScale=new Vector3(explosionRadius,explosionRadius,1);
+        area.transform.parent=null;
+        area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius*2,explosionRadius*2);
         Destroy(area,0.1f);
         foreach (var col in cols)
         {
