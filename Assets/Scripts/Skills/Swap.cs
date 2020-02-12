@@ -319,7 +319,7 @@ public class Swap : Skill {
     void TriggerInstanceEvent(Thing swapThing){
         if(swapThing.GetComponent<TriggerItem_Base>()!=null){
             TriggerItem_Base tb = swapThing.GetComponent<TriggerItem_Base>();
-            tb.HandleTriggerAction();
+            tb.HandleSwapTrigger();
         }
     }
 
