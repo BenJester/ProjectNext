@@ -80,6 +80,12 @@ public class Swap : Skill {
     public Rigidbody2D overheadRB;
     public float overheadHeight;
 
+    public delegate void OverheadDelegate();
+    public event OverheadDelegate OnOverhead;
+
+    public delegate void DropDelegate();
+    public event OverheadDelegate OnDrop;
+
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -512,6 +518,7 @@ public class Swap : Skill {
             rb.transform.position = playerControl.transform.position + new Vector3(0f, overheadHeight, 0f);
             rb.bodyType = RigidbodyType2D.Kinematic;
             rb.transform.parent = playerControl.transform;
+            OnOverhead?.Invoke();
         }
             
     }
@@ -523,6 +530,7 @@ public class Swap : Skill {
             overheadRB.transform.parent = null;
             overheadRB.bodyType = RigidbodyType2D.Dynamic;
             overheadRB = null;
+            OnDrop?.Invoke();
         }
     }
 }

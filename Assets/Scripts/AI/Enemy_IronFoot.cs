@@ -47,10 +47,21 @@ public class Enemy_IronFoot : Enemy_Base {
 
         m_bFalling = !_isHit();
         _processFalling();
+        PlayerControl1.Instance.swap.OnOverhead += HandleOverhead;
+        PlayerControl1.Instance.swap.OnDrop += HandleDrop;
     }
 	
-	// Update is called once per frame
-	void Update ()
+    void HandleOverhead()
+    {
+
+    }
+
+    void HandleDrop()
+    {
+
+    }
+    // Update is called once per frame
+    void Update ()
     {
     }
     private void FixedUpdate()
