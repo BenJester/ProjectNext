@@ -161,23 +161,25 @@ public class MeleeThrow : Skill
         //rb.GetComponent<BoxCollider2D>().enabled = false;
         int layer = rb.gameObject.layer;
         rb.gameObject.layer = 18;
-        while (diff.magnitude > snapThreshold)
-        {
-            Debug.Log(diff.magnitude);
-            targetPos = playerControl.transform.position + new Vector3(0f, pullHeight, 0f);
-            diff = targetPos - rb.transform.position;
-            rb.velocity = diff.normalized * pullSpeed;
-            yield return new WaitForEndOfFrame();
-        }
-        rb.transform.position = playerControl.transform.position + new Vector3(0f, pullHeight, 0f);
-        rb.bodyType = RigidbodyType2D.Kinematic;
+        //while (diff.magnitude > snapThreshold)
+        //{
+        //    Debug.Log(diff.magnitude);
+        //    targetPos = playerControl.transform.position + new Vector3(0f, pullHeight, 0f);
+        //    diff = targetPos - rb.transform.position;
+        //    rb.velocity = diff.normalized * pullSpeed;
+        //    yield return new WaitForEndOfFrame();
+        //}
+        
+        //rb.transform.position = playerControl.transform.position + new Vector3(0f, pullHeight, 0f);
+        
         target = rb;
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)target.transform.position).normalized;
         target.gameObject.GetComponent<Rigidbody2D>().velocity = dir * throwSpeed;
         pulled = false;
         target.transform.parent = null;
-        target.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        
+        yield return new WaitForSeconds(0.15f);
         rb.gameObject.layer = layer;
         //触发
         TriggerInstanceEvent(rb.GetComponent<Thing>());

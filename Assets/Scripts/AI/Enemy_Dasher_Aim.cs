@@ -24,6 +24,7 @@ public class Enemy_Dasher_Aim :  Enemy {
     private int m_nHashAttackParam;
 
     private Enemy_FlipByPlayer m_flipEnemy;
+    bool overhead;
     public enum PlayerState {
 		idle = 0,
 		aim = 1,
@@ -101,6 +102,8 @@ public class Enemy_Dasher_Aim :  Enemy {
 
         animator.SetInteger(m_nHashChargingParam, 0);
         animator.SetInteger(m_nHashAttackParam, 0);
+        PlayerControl1.Instance.swap.OnOverhead += HandleOverhead;
+        PlayerControl1.Instance.swap.OnDrop += HandleDrop;
         //StartCoroutine (HandleShoot ());
         //transform.rotation = Quaternion.Euler (0, 0, AngleBetween (direction, Vector2.left));
     }
@@ -178,23 +181,34 @@ public class Enemy_Dasher_Aim :  Enemy {
         }
 	}
 
-	// IEnumerator HandleShoot () {
+    // IEnumerator HandleShoot () {
 
-	// 	while (true) {
-	// 		if (isInSight) {
+    // 	while (true) {
+    // 		if (isInSight) {
 
-	// 			yield return new WaitForSeconds (shootInterval - animationPreload);
-	// 			animator.CrossFade ("Enemy_Shooter_Shot", 0.001f);
-	// 			yield return new WaitForSeconds (animationPreload);
-	// 			//Shoot ();
-	// 		} else {
-	// 			yield return null;
-	// 		}
-	// 	}
+    // 			yield return new WaitForSeconds (shootInterval - animationPreload);
+    // 			animator.CrossFade ("Enemy_Shooter_Shot", 0.001f);
+    // 			yield return new WaitForSeconds (animationPreload);
+    // 			//Shoot ();
+    // 		} else {
+    // 			yield return null;
+    // 		}
+    // 	}
 
-	// }
-
-	void EnemyDash () {
+    // }
+    void HandleOverhead()
+    {
+        if (PlayerControl1.Instance.swap.col != null && PlayerControl1.Instance.swap.col.gameObject == gameObject)
+        {
+            PlayerControl1.Instance.overhead.SwitchState(OverheadState.Dash);
+            overhead = true;
+        }
+    }
+    void HandleDrop()
+    {
+        overhead = false;
+    }
+    void EnemyDash () {
 		if (thing.dead)
 			return;
 		
@@ -203,6 +217,10 @@ public class Enemy_Dasher_Aim :  Enemy {
 		
 		//transform.GetComponent<Rigidbody2D>().AddForce(transform.position+(Vector3)direction*dashSpeed);
 		transform.GetComponent<Rigidbody2D>().velocity = (Vector2) (direction * dashSpeed);
+        if (overhead)
+        {
+            PlayerControl1.Instance.rb.velocity = (direction * dashSpeed);
+        }
 		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, direction, 50, CheckMask);
 		RaycastHit2D hitNear;
 		if (hits.Length >= 2) {
