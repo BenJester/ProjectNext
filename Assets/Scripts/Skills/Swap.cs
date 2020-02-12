@@ -515,7 +515,8 @@ public class Swap : Skill {
         {
             Rigidbody2D rb = thing.GetComponent<Rigidbody2D>();
             overheadRB = rb;
-            rb.transform.position = playerControl.transform.position + new Vector3(0f, overheadHeight, 0f);
+            rb.transform.position = playerControl.transform.position + new Vector3(0f, rb.GetComponent<BoxCollider2D>().bounds.size.y / 2f - rb.GetComponent<BoxCollider2D>().offset.y + 30f, 0f);
+
             rb.bodyType = RigidbodyType2D.Kinematic;
             rb.transform.parent = playerControl.transform;
             OnOverhead?.Invoke();
@@ -531,6 +532,7 @@ public class Swap : Skill {
             overheadRB.bodyType = RigidbodyType2D.Dynamic;
             overheadRB = null;
             OnDrop?.Invoke();
+            playerControl.overhead.SwitchState(OverheadState.None);
         }
     }
 }
