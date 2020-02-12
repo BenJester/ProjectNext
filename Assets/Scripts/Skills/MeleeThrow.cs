@@ -17,6 +17,7 @@ public class MeleeThrow : Skill
     public GameObject dashPointer;
     public float kickFloorInputRadius;
     public float kickFloorSpeed;
+    Vector2 kickFloorDir;
     private void Start()
     {
         swap = GetComponent<Swap>();
@@ -30,7 +31,11 @@ public class MeleeThrow : Skill
             return true;
         }
         else
+        {
+            col = null;
             return false;
+        }
+           
     }
 
     void Update()
@@ -58,6 +63,13 @@ public class MeleeThrow : Skill
             dashPointer.transform.position = (Vector2)col.transform.position + dir * 70f;
             dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
 
+        }
+        else if (Input.GetMouseButton(1) && CanKickFloor(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+        {
+            dashPointer.SetActive(true);
+
+            dashPointer.transform.position = (Vector2)transform.position - kickFloorDir * 70f;
+            dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, -kickFloorDir));
         }
         else if (Input.GetMouseButtonUp(1))
         {
@@ -93,28 +105,37 @@ public class MeleeThrow : Skill
 
     void KickFloor(Vector3 kickPos)
     {
-        if ((kickPos - transform.position).magnitude > kickFloorInputRadius || (kickPos - transform.position).magnitude < box.size.x / 2f)
-            return;
+        
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (CanKickFloor(kickPos)) StartCoroutine(DoKickFloor(kickFloorDir));
+        }
+        
+        //Debug.Log(dir.x);
+    }
 
-        Vector2 dir = (kickPos - transform.position).normalized;
-        float angle = Angle(dir);
+    bool CanKickFloor(Vector3 kickPos)
+    {
+        if ((kickPos - transform.position).magnitude > kickFloorInputRadius || (kickPos - transform.position).magnitude < box.size.x / 2f)
+            return false;
+
+        kickFloorDir = (kickPos - transform.position).normalized;
         Vector3 pos = transform.position;
         float diffX = kickPos.x - pos.x;
         float diffY = kickPos.y - pos.y;
         float boxWidth = box.size.x / 2f;
         float boxHeight = box.size.y / 2f;
 
-        if ((diffX < -boxWidth && playerControl.touchingWallLeft()) || (diffX > boxWidth && playerControl.touchingWallRight()))
-            DoKickFloor(dir);
-
-        else if ((diffY < -boxHeight && playerControl.touchingFloor()) || (diffY > boxHeight && playerControl.touchingWallUp()))
-            DoKickFloor(dir);
-        //Debug.Log(dir.x);
+        return (diffX < -boxWidth && playerControl.touchingWallLeft()) || (diffX > boxWidth && playerControl.touchingWallRight())
+            || (diffY < -boxHeight && playerControl.touchingFloor()) || (diffY > boxHeight && playerControl.touchingWallUp());
     }
 
-    void DoKickFloor(Vector2 dir)
+    IEnumerator DoKickFloor(Vector2 dir)
     {
         playerBody.velocity = -dir * kickFloorSpeed;
+        playerControl.disableAirControl = true;
+        yield return new WaitForSeconds(0.15f);
+        playerControl.disableAirControl = false;
     }
 
     public static float Angle(Vector2 p_vector2)

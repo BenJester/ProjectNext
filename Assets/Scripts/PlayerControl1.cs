@@ -290,6 +290,9 @@ public class PlayerControl1 : PlayerControl {
     public PlayerBoosty PlayerBoostyAttr;
     public float DistanceOfPlayerAndThing;
     private EnemyDieSound m_enemySound;
+
+    public bool disableAirControl;
+
     void Awake()
     {
         if (HasRepawnPoint)
@@ -647,7 +650,7 @@ public class PlayerControl1 : PlayerControl {
         //    rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         //}
 
-        if (canJump == false)
+        if (canJump == false && !disableAirControl)
         {
 
             if (h > 0)
