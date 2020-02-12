@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum OverheadState
 {
-    None, Ironfoot
+    None, Ironfoot, Dash
 }
 
 public class Overhead : Skill

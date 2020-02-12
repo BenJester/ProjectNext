@@ -145,7 +145,7 @@ public class PlayerControl1 : PlayerControl {
     GameObject cursor;
     public GameObject cursorPrefab;
     bool locked;
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     [HideInInspector]
     public float startDeltaTime;
