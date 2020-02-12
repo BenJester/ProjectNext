@@ -228,9 +228,9 @@ public class Swap : Skill {
                 _readySwapCol.gameObject.transform.position.y + playerRadiusY + (_swapThing.GetUpperY() - _swapThing.GetLowerY()) / 2f, 
                 player.transform.position.z);
 
-            if (overheadSnap)
+            if (overheadSnap && overheadRB == null)
             {
-                HandleOverhead(_swapThing);
+                //HandleOverhead(_swapThing);
             }
         }
         else
@@ -507,12 +507,13 @@ public class Swap : Skill {
 
     void HandleOverhead(Thing thing)
     {
-        
+        if (overheadRB != null) return;
         if (thing.GetLeftX() < player.transform.position.x &&
             thing.GetRightX() > player.transform.position.x &&
             thing.GetLowerY() > player.transform.position.y &&
             thing.GetLowerY() < player.transform.position.y + playerRadiusY + 60f)
         {
+            
             Rigidbody2D rb = thing.GetComponent<Rigidbody2D>();
             overheadRB = rb;
             rb.transform.position = playerControl.transform.position + new Vector3(0f, rb.GetComponent<BoxCollider2D>().bounds.size.y / 2f - rb.GetComponent<BoxCollider2D>().offset.y + 30f, 0f);

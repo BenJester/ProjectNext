@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Sleep : MonoBehaviour
+public class Enemy_Sleep : Enemy
 {
     public float explodeDelay;
     public float sleepDelay;
@@ -13,6 +13,7 @@ public class Enemy_Sleep : MonoBehaviour
     Animator animator;
     void Start()
     {
+        base.Start();
         prevPos = transform.position;
         animator = GetComponent<Animator>();
     }

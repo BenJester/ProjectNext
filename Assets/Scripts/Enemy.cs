@@ -66,6 +66,7 @@ public class Enemy : MonoBehaviour{
                 Debug.Assert(false);
             }
         }
+        
         //player = PlayerControl1.Instance.transform;
     }
 	
