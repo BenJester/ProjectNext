@@ -18,8 +18,11 @@ public abstract class TriggerItem_Base : MonoBehaviour
        
     }
 
-    public virtual void HandleTriggerAction(){
-        
+    public virtual void HandleKickTrigger(){
+    }
+
+    public virtual void HandleSwapTrigger(){
+
     }
 
 
