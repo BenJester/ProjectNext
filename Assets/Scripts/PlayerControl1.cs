@@ -272,10 +272,17 @@ public class PlayerControl1 : PlayerControl {
 
     float wallCheckBoxWidth = 10f;
     float wallCheckBoxIndent = 2f;
+
     Vector2 wallCheckTopLeft;
     Vector2 wallCheckBottomRight;
     Vector2 leftWallCheckTopLeft;
     Vector2 leftWallCheckBottomRight;
+
+    Vector2 upWallCheckTopLeft;
+    Vector2 upWallCheckBottomRight;
+    Vector2 floorCheckTopLeft;
+    Vector2 floorCheckBottomRight;
+
     public bool wallJump;
     public Animator anim;
 
@@ -367,6 +374,13 @@ public class PlayerControl1 : PlayerControl {
         trajectoryEndColor = lr.endColor;
 
         m_bulletTime = GetComponent<BulletTime>();
+
+        InitWallChecks();
+    }
+
+    #region wallTouchChecks
+    void InitWallChecks()
+    {
         wallCheckTopLeft = new Vector2
                          (
                             (box.size.x / 2f - wallCheckBoxWidth / 2f),
@@ -387,7 +401,64 @@ public class PlayerControl1 : PlayerControl {
                                     -(box.size.x / 2f - wallCheckBoxWidth / 2f),
                                     -(box.size.y / 2f - wallCheckBoxIndent)
                                  );
+        upWallCheckTopLeft = new Vector2
+                         (
+                            -(box.size.x / 2f - wallCheckBoxIndent),
+                            box.size.y / 2f + wallCheckBoxWidth / 2f
+                         );
+        upWallCheckBottomRight = new Vector2
+                                 (
+                                    box.size.x / 2f - wallCheckBoxIndent,
+                                    box.size.y / 2f - wallCheckBoxWidth / 2f
+                                 );
+        floorCheckTopLeft = new Vector2
+                         (
+                            -(box.size.x / 2f - wallCheckBoxIndent),
+                            -(box.size.y / 2f - wallCheckBoxWidth / 2f)
+                         );
+        floorCheckBottomRight = new Vector2
+                                 (
+                                    box.size.x / 2f - wallCheckBoxIndent,
+                                    -(box.size.y / 2f + wallCheckBoxIndent)
+                                 );
     }
+    public bool touchingWallRight()
+    {
+        return Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + wallCheckTopLeft,
+                    (Vector2)transform.position + wallCheckBottomRight,
+                    TouchLayer
+                );
+    }
+    public bool touchingWallLeft()
+    {
+        return Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + leftWallCheckTopLeft,
+                    (Vector2)transform.position + leftWallCheckBottomRight,
+                    TouchLayer
+                );
+    }
+    public bool touchingWallUp()
+    {
+        return Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + upWallCheckTopLeft,
+                    (Vector2)transform.position + upWallCheckBottomRight,
+                    TouchLayer
+                );
+    }
+    public bool touchingFloor()
+    {
+        return Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + floorCheckTopLeft,
+                    (Vector2)transform.position + floorCheckBottomRight,
+                    TouchLayer
+                );
+    }
+    #endregion
 
     public void RegisteDieAction(UnityAction<PlayerControl1> _act)
     {
@@ -908,7 +979,7 @@ public class PlayerControl1 : PlayerControl {
         Vector3 vecHit3Pos = (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position);
         Vector3 vecHit4Pos = (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position);
         RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        //RaycastHit2D hit0 = Physics2D.Raycast(transform.position, new Vector2(0,0), shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        //awRaycastHit2D hit0 = Physics2D.Raycast(transform.position, new Vector2(0,0), shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
         RaycastHit2D hit1 = Physics2D.Raycast(transform.position, vecHit1Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
         RaycastHit2D hit2 = Physics2D.Raycast(transform.position, vecHit2Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
         RaycastHit2D hit3 = Physics2D.Raycast(transform.position, vecHit3Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
