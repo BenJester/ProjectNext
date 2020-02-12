@@ -28,6 +28,10 @@ public class Enemy : MonoBehaviour{
 
     private UnityAction<int> m_takeDamageAct;
 
+    bool justSawPlayer;
+    public float sightDistance;
+    
+
     protected void Start () {
 		//maxHealth = 1;
 		health = maxHealth;
@@ -62,6 +66,7 @@ public class Enemy : MonoBehaviour{
                 Debug.Assert(false);
             }
         }
+        //player = PlayerControl1.Instance.transform;
     }
 	
 	// Update is called once per frame
@@ -127,5 +132,23 @@ public class Enemy : MonoBehaviour{
         m_spRender.color = hitColor;
         yield return new WaitForSeconds(0.3f);
         m_spRender.color = originalColor;
+    }
+
+    public bool CheckPlayerInSight()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, (PlayerControl1.Instance.transform.position - transform.position).normalized, sightDistance, (1 << 10) | (1 << 8) | (1 << 9));
+        RaycastHit2D hitNear;
+        if (hits.Length >= 2)
+        {
+            hitNear = hits[1];
+            if (hitNear.collider.tag == "player")
+            {
+                justSawPlayer = true;
+                return true;
+            }
+
+            else return false;
+        }
+        else return false;
     }
 }

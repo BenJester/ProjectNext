@@ -22,8 +22,6 @@ public class Enemy_Ninja : Enemy
     Rigidbody2D body;
     BoxCollider2D playerBox;
 
-    public float sightDistance;
-
     //public GameObject bullet;
     public float bulletInstanceDistance;
     public float shootDelay;
@@ -79,23 +77,7 @@ public class Enemy_Ninja : Enemy
         m_throwBomb = GetComponent<EnemySkillThrowBomb>();
     }
 
-    public bool CheckPlayerInSight()
-    {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, (player.position - transform.position).normalized, sightDistance, (1 << 10) | (1 << 8) | (1 << 9));
-        RaycastHit2D hitNear;
-        if (hits.Length >= 2)
-        {
-            hitNear = hits[1];
-            if (hitNear.collider.tag == "player")
-            {
-                justSawPlayer = true;
-                return true;
-            }
-            
-            else return false;
-        }
-        else return false;
-    }
+    
 
     IEnumerator Enrage()
     {

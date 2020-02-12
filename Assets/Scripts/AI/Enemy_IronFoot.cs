@@ -59,8 +59,8 @@ public class Enemy_IronFoot : Enemy_Base {
 
     void HandleDrop()
     {
-        if (PlayerControl1.Instance.swap.col.gameObject == gameObject)
-            PlayerControl1.Instance.overhead.SwitchState(OverheadState.None);
+        //if (PlayerControl1.Instance.swap.col.gameObject == gameObject)
+            //PlayerControl1.Instance.overhead.SwitchState(OverheadState.None);
     }
     // Update is called once per frame
     void Update ()
