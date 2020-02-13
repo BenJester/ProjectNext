@@ -16,11 +16,12 @@ public class Ti_TimerBomb : TriggerItem_Base
     private float tempTimer;
 
     public GameObject areaIndicator;
-    
+    Thing thing;
     
     void Start()
     {
-        
+        thing = GetComponent<Thing>();
+        thing.OnDie += Explode;
     }
 
     void Update()
@@ -47,9 +48,9 @@ public class Ti_TimerBomb : TriggerItem_Base
         tempTimer = Time.time+triggerTime;
     }
     
-    void Explode()
+    public void Explode()
     {
-       
+        if (thing.dead) return;
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(areaIndicator,transform.position,Quaternion.identity);
         area.transform.parent=null;
@@ -66,7 +67,8 @@ public class Ti_TimerBomb : TriggerItem_Base
                 col.GetComponent<Enemy>().TakeDamage(damage);              
             }
         }
-        GetComponent<Thing>().Die(); 
+        if (!thing.dead)
+            thing.Die(); 
         
     }
 }

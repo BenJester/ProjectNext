@@ -10,7 +10,8 @@ namespace Ben
         player = 1,
         enemy = 2,
         box = 3,
-        hostage = 4
+        hostage = 4,
+        bomb = 5
     }
 }
 public class Thing : MonoBehaviour {
@@ -51,10 +52,14 @@ public class Thing : MonoBehaviour {
 
 	public float distanceToCursor = Mathf.Infinity;
     public float distanceToPlayer = Mathf.Infinity;
-
+    
     private SpriteRenderer m_spRender;
 
-	public virtual void Start () {
+    public delegate void OnDieDelegate();
+    public event OnDieDelegate OnDie;
+
+
+    public virtual void Start () {
         m_spRender = GetComponent<SpriteRenderer>();
         if(m_spRender == null)
         {
@@ -182,14 +187,14 @@ public class Thing : MonoBehaviour {
             PlayerControl1.Instance.Die();
             playerControl.hp = 0;
         }
-            
 
+        
 
         if (dead)
 			return;
 		dead = true;
-		
-		if (type == Type.enemy)
+        OnDie?.Invoke();
+        if (type == Type.enemy)
         {
             goal.enemyCount -= 1;
             hasShield = false;
