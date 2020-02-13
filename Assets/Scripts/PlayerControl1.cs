@@ -295,6 +295,7 @@ public class PlayerControl1 : PlayerControl {
 
     void Awake()
     {
+        overhead = GetComponent<Overhead>();
         if (HasRepawnPoint)
         {
             if (CheckPointTotalManager.instance != null)
@@ -379,7 +380,7 @@ public class PlayerControl1 : PlayerControl {
         m_bulletTime = GetComponent<BulletTime>();
 
         InitWallChecks();
-        overhead = GetComponent<Overhead>();
+        
     }
 
     #region wallTouchChecks
