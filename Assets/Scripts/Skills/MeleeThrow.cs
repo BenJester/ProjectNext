@@ -152,6 +152,7 @@ public class MeleeThrow : Skill
 
     IEnumerator DoPull(Rigidbody2D rb)
     {
+        if (rb.GetComponent<Thing>().hasShield) yield break;
         if (swap.overheadSnap && rb == swap.overheadRB)
         {
             swap.DropOverhead();
