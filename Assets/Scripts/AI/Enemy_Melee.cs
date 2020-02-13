@@ -68,8 +68,8 @@ public class Enemy_Melee : Enemy
             yield return new WaitForEndOfFrame();
         }
         busy = false;
-        if (CheckRange())
-            StartCoroutine(Attack());
+        //if (CheckRange())
+        StartCoroutine(Attack());
         
         
     }

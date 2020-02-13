@@ -49,8 +49,12 @@ public class Enemy_IronFoot : Enemy_Base {
         _processFalling();
         PlayerControl1.Instance.swap.OnOverhead += HandleOverhead;
         PlayerControl1.Instance.swap.OnDrop += HandleDrop;
+        GetComponent<Thing>().OnDie += OnDie;
     }
-	
+	void OnDie()
+    {
+        PlayerControl1.Instance.swap.OnOverhead -= HandleOverhead;
+    }
     void HandleOverhead()
     {
         if (PlayerControl1.Instance.swap.col != null && gameObject != null && PlayerControl1.Instance.swap.col.gameObject == gameObject)
