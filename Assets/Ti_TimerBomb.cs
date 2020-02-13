@@ -9,10 +9,10 @@ public class Ti_TimerBomb : TriggerItem_Base
 
     [Header("炸弹被点燃后爆炸的时间")]
 
-    public float triggerTime=3;
+    public float triggerTime = 3;
     
     public float explosionRadius;
-    public int damage =1;
+    public int damage = 1;
     private float tempTimer;
 
     public GameObject areaIndicator;
@@ -26,9 +26,9 @@ public class Ti_TimerBomb : TriggerItem_Base
 
     void Update()
     {
-         if(isTrigger && tempTimer<=Time.time){
+         if(isTrigger && tempTimer <= Time.time){
             Explode();
-            isTrigger=false;
+            isTrigger = false;
             Destroy(gameObject);
         }
     }
@@ -44,8 +44,8 @@ public class Ti_TimerBomb : TriggerItem_Base
 
     void TriggerBomb(){
         isTrigger=true;
-        GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 0.2f);
-        tempTimer = Time.time+triggerTime;
+        GetComponent<SpriteRenderer>().color = Color.red;
+        tempTimer = Time.time + triggerTime;
     }
     
     public void Explode()
@@ -55,7 +55,7 @@ public class Ti_TimerBomb : TriggerItem_Base
         GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
         area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2,explosionRadius * 2);
-        Destroy(area,0.1f);
+        Destroy(area, 0.1f);
         foreach (var col in cols)
         {
             if (col.CompareTag("player"))
