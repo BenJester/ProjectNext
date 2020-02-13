@@ -16,12 +16,13 @@ public class Enemy_Melee : Enemy
     public LayerMask hitLayer;
     public bool faceRight;
     Animator animator;
-
+    Vector3 prevPos;
     void Start()
     {
         base.Start();
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        prevPos = transform.position;
     }
 
     // Update is called once per frame
@@ -29,6 +30,7 @@ public class Enemy_Melee : Enemy
     {
         if (!CheckPlayerInSight() || thing.dead) return;
         StartCoroutine(Walk());
+        prevPos = transform.position;
     }
 
     bool CheckRange()
@@ -54,19 +56,23 @@ public class Enemy_Melee : Enemy
     {
         if (busy) yield break;
         busy = true;
-        animator.Play("Walk");
+        if (prevPos != transform.position)
+            animator.Play("Walk");
+        else
+            animator.Play("Idle");
         // && Mathf.Abs(transform.position.x - PlayerControl1.Instance.transform.position.x) > 5f
         while (!CheckRange() && CheckPlayerInSight() && Mathf.Abs(transform.position.x - PlayerControl1.Instance.transform.position.x) > 5f)
         {
             body.velocity = new Vector2(PlayerControl1.Instance.transform.position.x < transform.position.x ? -walkSpeed : walkSpeed, body.velocity.y);
             faceRight = PlayerControl1.Instance.transform.position.x < transform.position.x ? false : true;
-            GetComponent<SpriteRenderer>().flipX = faceRight;
+            GetComponent<SpriteRenderer>().flipX = !faceRight;
             //if (!grounded) break;
             yield return new WaitForEndOfFrame();
         }
         busy = false;
-
-        StartCoroutine(Attack());
+        if (CheckRange())
+            StartCoroutine(Attack());
+        
         
     }
     IEnumerator Attack()
