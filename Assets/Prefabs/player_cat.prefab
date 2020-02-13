@@ -750,7 +750,7 @@ MonoBehaviour:
   SwapAnimator: {fileID: 5477368767937646799}
   SwapAnimatorSpr: {fileID: 0}
   AnimationParamSwapTrig: SwapTrig
-  momentumSwap: 1
+  momentumSwap: 0
   directionSwap: 0
   startingPoint: {x: 0, y: 0, z: 0}
   directionSwapThreshold: 30
@@ -923,7 +923,7 @@ MonoBehaviour:
   box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 0}
-  maxCharge: 2
+  maxCharge: 0
   CoyoteDelay: 0.2
   CoyoteDuration: 0.15
 --- !u!114 &1302247502408092104
@@ -1258,7 +1258,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2238334444430495565}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbc55693b358a0345992964244160449, type: 3}
   m_Name: 
@@ -2377,7 +2377,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6935488170787811620}
   m_LocalRotation: {x: 0, y: 0, z: -0.33789504, w: 0.9411838}
-  m_LocalPosition: {x: -6592.477, y: -1662.4313, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2235284972380755415}

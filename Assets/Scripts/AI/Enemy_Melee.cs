@@ -56,10 +56,8 @@ public class Enemy_Melee : Enemy
     {
         if (busy) yield break;
         busy = true;
-        if (prevPos != transform.position)
-            animator.Play("Walk");
-        else
-            animator.Play("Idle");
+        animator.Play("Walk");
+
         // && Mathf.Abs(transform.position.x - PlayerControl1.Instance.transform.position.x) > 5f
         while (!CheckRange() && CheckPlayerInSight() && Mathf.Abs(transform.position.x - PlayerControl1.Instance.transform.position.x) > 5f)
         {
