@@ -233,7 +233,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e38e1e0186b080049a637bae735bc12a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8018868, g: 0.5017228, b: 0.35933605, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -511,7 +511,8 @@ MonoBehaviour:
   sleepDelay: 2.2
   explodeRadius: 175
   wakeUpThreshold: 5
-  areaIndicator: {fileID: 0}
+  areaIndicator: {fileID: 3207476323175709750, guid: 2fb66dd8c2fdd504192aba969e916944,
+    type: 3}
 --- !u!1 &2446892743484777120
 GameObject:
   m_ObjectHideFlags: 0
