@@ -60,7 +60,7 @@ public class Enemy_Sleep : Enemy
         wokeUp = true;
         yield return new WaitForSeconds(1.5f);
         animator.Play("Attack");
-        area.GetComponent<SpriteRenderer>().color = Color.red;
+        area.GetComponent<SpriteRenderer>().color = new Color(1f,0f,0f,0.2f);
         yield return new WaitForSeconds(explodeDelay - 1.5f);
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explodeRadius);
         foreach (var col in cols)
