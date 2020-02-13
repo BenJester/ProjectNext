@@ -245,7 +245,7 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	}
 
 	public bool CheckPlayerInSight () {
-		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, (player.position - transform.position).normalized, distance, (1 << 10) | (1 << 8) | (1 << 9));
+		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, (player.position - transform.position).normalized, distance, (1 << 10) | (1 << 8) | (1 << 9) | (1 << 12));
 		RaycastHit2D hitNear;
 		if (hits.Length >= 2) {
 			hitNear = hits[1];
