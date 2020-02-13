@@ -11,6 +11,7 @@ public class Ti_Rocket : TriggerItem_Base
     public float speed;
     public float explosionRadius;
 
+
     public GameObject explosionAreaIndicator;
     Vector2 kickDir;
     Rigidbody2D my_rb;
@@ -39,10 +40,12 @@ public class Ti_Rocket : TriggerItem_Base
                 Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 34.5f);
                 foreach (var col in cols)
                 {
-                    if ((col.CompareTag("player") || col.CompareTag("floor") || (col.CompareTag("thing"))) && col != GetComponent<Collider2D>())
+                    if (col.CompareTag("floor") || ((col.CompareTag("enemy"))) && col != GetComponent<Collider2D>())
                     {
                         StartCoroutine(Explode());
                     }
+
+                    
 
                 }
 
