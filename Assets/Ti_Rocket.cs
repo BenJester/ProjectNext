@@ -10,6 +10,7 @@ public class Ti_Rocket : TriggerItem_Base
     public bool isTrigger = false;
     public float speed;
     public float explosionRadius;
+    
     public GameObject explosionAreaIndicator;
     Vector2 kickDir;
     Rigidbody2D my_rb;
@@ -30,6 +31,21 @@ public class Ti_Rocket : TriggerItem_Base
             my_rb.constraints = RigidbodyConstraints2D.None;
             my_rb.velocity += kickDir * speed;
             transform.localRotation = Quaternion.Euler(0, 0, Dash.AngleBetween(Vector2.up, kickDir.normalized));
+
+
+
+         
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 34.5f);
+            foreach (var col in cols)
+            {
+                if ((col.CompareTag("player") || col.CompareTag("floor")|| (col.CompareTag("thing")))&& col!=GetComponent<Collider2D>())
+                {
+                    StartCoroutine(Explode());
+                }
+                
+            }
+        
+
         }else{
             
         }
@@ -50,25 +66,7 @@ public class Ti_Rocket : TriggerItem_Base
 
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (isTrigger)
-        {
-
-            if (other.transform.CompareTag("player") && setTimeTemp < Time.time)
-            {
-                StartCoroutine(Explode());
-            }
-            if (other.transform.CompareTag("thing") && other.transform.GetComponent<Enemy>())
-            {
-                StartCoroutine(Explode());
-            }
-            if (other.transform.CompareTag("floor"))
-            {
-                StartCoroutine(Explode());
-            }
-        }
-    }
+   
 
 
    

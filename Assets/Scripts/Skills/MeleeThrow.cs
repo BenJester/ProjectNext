@@ -179,10 +179,14 @@ public class MeleeThrow : Skill
         pulled = false;
         target.transform.parent = null;
         
-        yield return new WaitForSeconds(0.15f);
-        rb.gameObject.layer = layer;
+
         //触发
         TriggerInstanceEvent(rb.GetComponent<Thing>());
+
+
+        yield return new WaitForSeconds(0.15f);
+        rb.gameObject.layer = layer;
+        
         yield return new WaitForSeconds(0.2f);
         //
         //target.GetComponent<BoxCollider2D>().enabled = true;
