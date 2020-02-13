@@ -17,7 +17,7 @@ public class Ti_TimerBomb : TriggerItem_Base
 
     public GameObject areaIndicator;
     Thing thing;
-    
+    bool triggered;
     void Start()
     {
         thing = GetComponent<Thing>();
@@ -44,17 +44,17 @@ public class Ti_TimerBomb : TriggerItem_Base
 
     void TriggerBomb(){
         isTrigger=true;
-        GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 0.2f);
         tempTimer = Time.time+triggerTime;
     }
     
     public void Explode()
     {
-        if (thing.dead) return;
+        if (triggered) return;
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
-        GameObject area = Instantiate(areaIndicator,transform.position,Quaternion.identity);
-        area.transform.parent=null;
-        area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius*2,explosionRadius*2);
+        GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
+        area.transform.parent = null;
+        area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2,explosionRadius * 2);
         Destroy(area,0.1f);
         foreach (var col in cols)
         {
@@ -67,6 +67,7 @@ public class Ti_TimerBomb : TriggerItem_Base
                 col.GetComponent<Enemy>().TakeDamage(damage);              
             }
         }
+        triggered = true;
         if (!thing.dead)
             thing.Die(); 
         
