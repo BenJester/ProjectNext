@@ -10,7 +10,7 @@ public class Ti_Rocket : TriggerItem_Base
     public bool isTrigger = false;
     public float speed;
     public float explosionRadius;
-    
+
     public GameObject explosionAreaIndicator;
     Vector2 kickDir;
     Rigidbody2D my_rb;
@@ -34,20 +34,26 @@ public class Ti_Rocket : TriggerItem_Base
 
 
 
-         
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 34.5f);
-            foreach (var col in cols)
+            if (setTimeTemp<Time.time)
             {
-                if ((col.CompareTag("player") || col.CompareTag("floor")|| (col.CompareTag("thing")))&& col!=GetComponent<Collider2D>())
+                Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 34.5f);
+                foreach (var col in cols)
                 {
-                    StartCoroutine(Explode());
-                }
-                
-            }
-        
+                    if ((col.CompareTag("player") || col.CompareTag("floor") || (col.CompareTag("thing"))) && col != GetComponent<Collider2D>())
+                    {
+                        StartCoroutine(Explode());
+                    }
 
-        }else{
-            
+                }
+
+            }
+
+
+
+        }
+        else
+        {
+
         }
     }
 
@@ -56,7 +62,7 @@ public class Ti_Rocket : TriggerItem_Base
     {
         kickDir = my_rb.velocity.normalized;
         isTrigger = true;
-        my_rb.velocity/=10;
+        my_rb.velocity /= 3;
         //防止误伤
         setTimeTemp = Time.time + setSpeedTime;
 
@@ -66,15 +72,15 @@ public class Ti_Rocket : TriggerItem_Base
 
     }
 
-   
 
 
-   
+
+
 
     IEnumerator Explode()
     {
-        isTrigger=false;
-        my_rb.velocity=Vector2.zero;
+        isTrigger = false;
+        my_rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.2f);
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(explosionAreaIndicator, transform.position, Quaternion.identity);
@@ -96,4 +102,4 @@ public class Ti_Rocket : TriggerItem_Base
         Destroy(gameObject);
     }
 
-    }
+}
