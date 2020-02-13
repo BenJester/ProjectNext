@@ -104,10 +104,14 @@ public class Enemy_Dasher_Aim :  Enemy {
         animator.SetInteger(m_nHashAttackParam, 0);
         PlayerControl1.Instance.swap.OnOverhead += HandleOverhead;
         PlayerControl1.Instance.swap.OnDrop += HandleDrop;
+        thing.OnDie += OnDie;
         //StartCoroutine (HandleShoot ());
         //transform.rotation = Quaternion.Euler (0, 0, AngleBetween (direction, Vector2.left));
     }
-
+    void OnDie()
+    {
+        PlayerControl1.Instance.swap.OnOverhead -= HandleOverhead;
+    }
 	// Update is called once per frame
 	void Update () {
 		if (thing.dead) {
