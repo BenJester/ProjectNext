@@ -11,7 +11,9 @@ public class Enemy_Sleep : Enemy
     public float wakeUpThreshold;
     bool wokeUp;
     Animator animator;
-    
+
+    public GameObject areaIndicator;
+
     void Start()
     {
         base.Start();
@@ -22,6 +24,7 @@ public class Enemy_Sleep : Enemy
 
     public void WakeUp()
     {
+        if(wokeUp) return;
         StartCoroutine(Explode());
     }
 
@@ -29,7 +32,7 @@ public class Enemy_Sleep : Enemy
     {
         //if (prevPos != transform.position && (prevPos - transform.position).magnitude < wakeUpThreshold && !wokeUp)
         //{
-            
+
         //    StartCoroutine(Explode());
         //}
         //else if (wokeUp && prevPos == transform.position)
@@ -48,10 +51,16 @@ public class Enemy_Sleep : Enemy
 
     IEnumerator Explode()
     {
+        GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
+        area.transform.parent = null;
+        area.GetComponent<SpriteRenderer>().size = new Vector2(explodeRadius * 2, explodeRadius * 2);
+        area.transform.parent = transform;
+
         animator.Play("Idle");
         wokeUp = true;
         yield return new WaitForSeconds(1.5f);
         animator.Play("Attack");
+        area.GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(explodeDelay - 1.5f);
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explodeRadius);
         foreach (var col in cols)
@@ -66,6 +75,7 @@ public class Enemy_Sleep : Enemy
                 PlayerControl1.Instance.Die();
             }
         }
+        Destroy(area);
         StartCoroutine(Sleep());
     }
 }
