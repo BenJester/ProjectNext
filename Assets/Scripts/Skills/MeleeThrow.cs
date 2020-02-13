@@ -160,7 +160,7 @@ public class MeleeThrow : Skill
         Vector3 diff = targetPos - rb.transform.position;
         //rb.GetComponent<BoxCollider2D>().enabled = false;
         int layer = rb.gameObject.layer;
-        rb.gameObject.layer = 18;
+        rb.gameObject.layer = 19;
         //while (diff.magnitude > snapThreshold)
         //{
         //    Debug.Log(diff.magnitude);
