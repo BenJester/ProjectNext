@@ -7,7 +7,11 @@ public class DestroyNotify : MonoBehaviour
 {
     private UnityAction m_acNotify;
     // Start is called before the first frame update
-    private void OnDestroy()
+    private void Start()
+    {
+        GetComponent<Thing>().OnDie += OnDes;
+    }
+    private void OnDes()
     {
         if(m_acNotify != null)
         {

@@ -95,6 +95,7 @@ public class Enemy_Melee : Enemy
                         (Vector2)transform.position + new Vector2(hitboxWidth / 2f - hitboxOffset, -hitboxHeight / 2f),
                         hitLayer
                     );
+        if (thing.dead) yield break;
         foreach (var col in cols)
         {
             if (col.CompareTag("thing") && col.gameObject != gameObject)

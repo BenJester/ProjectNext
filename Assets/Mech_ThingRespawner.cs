@@ -11,7 +11,7 @@ public class Mech_ThingRespawner : MonoBehaviour {
     public Image coolDownSlider;
     private float nowEnergy;
     private GameObject respawnedThingInstance;
-    public bool hasRespawn=false;
+    public bool hasRespawn = false;
 
     void Update () {
 
