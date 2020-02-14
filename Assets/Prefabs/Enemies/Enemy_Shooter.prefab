@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 114490880879902160}
   - component: {fileID: 114689964775714754}
   - component: {fileID: 95003229084356330}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Enemy_Shooter
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -161,6 +161,8 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!251 &251577397304911870
@@ -204,6 +206,7 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
+  sightDistance: 0
   faceRight: 0
   bullet: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
   bulletSpeed: 400
@@ -224,6 +227,7 @@ MonoBehaviour:
   Head: {fileID: 21300000, guid: aa5cbcd9825458744a473858a5d70376, type: 3}
   Body: {fileID: 21300000, guid: 0711ea0dc2f712e4ba8f9d8d268dd1fd, type: 3}
   PlayerLegs: {fileID: 0}
+  clip: {fileID: 0}
 --- !u!95 &95003229084356330
 Animator:
   serializedVersion: 3
