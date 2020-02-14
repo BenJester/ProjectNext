@@ -10,6 +10,7 @@ public class Enemy_Melee : Enemy
     public float hitboxOffset;
     public float attackDelay;
     public float attackPostDelay;
+    public float idleDur;
     bool busy;
     Rigidbody2D body;
     public LayerMask checkLayer;
@@ -51,10 +52,16 @@ public class Enemy_Melee : Enemy
                     checkLayer
                 );
     }
-
+    IEnumerator Idle()
+    {
+        busy = true;
+        animator.Play("Idle");
+        yield return new WaitForSeconds(idleDur);
+        busy = false;
+    }
     IEnumerator Walk()
     {
-        if (busy) yield break;
+            
         busy = true;
         animator.Play("Walk");
 
@@ -68,14 +75,16 @@ public class Enemy_Melee : Enemy
             yield return new WaitForEndOfFrame();
         }
         busy = false;
-        //if (CheckRange())
-        StartCoroutine(Attack());
-        
-        
+        if (CheckRange())
+            StartCoroutine(Attack());
+        else
+            StartCoroutine(Idle());
+
     }
     IEnumerator Attack()
     {
         if (busy) yield break;
+        if (!CheckRange()) yield break;
         busy = true;
         animator.StopPlayback();
         animator.Play("Attack");
