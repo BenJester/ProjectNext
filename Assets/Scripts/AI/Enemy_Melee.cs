@@ -54,6 +54,7 @@ public class Enemy_Melee : Enemy
     }
     IEnumerator Idle()
     {
+        if (busy) yield break;
         busy = true;
         animator.Play("Idle");
         yield return new WaitForSeconds(idleDur);
@@ -61,7 +62,7 @@ public class Enemy_Melee : Enemy
     }
     IEnumerator Walk()
     {
-            
+        if (busy) yield break;
         busy = true;
         animator.Play("Walk");
 
