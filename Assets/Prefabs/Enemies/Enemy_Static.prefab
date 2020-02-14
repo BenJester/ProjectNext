@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 251992742197475452}
   - component: {fileID: 114944914264379252}
   - component: {fileID: 114071807613749678}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Enemy_Static
   m_TagString: thing
   m_Icon: {fileID: 0}
@@ -158,8 +158,11 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
 --- !u!114 &114591251041665198
@@ -175,15 +178,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thing: {fileID: 0}
-  dropKillSpeed: 600
+  dropKillSpeed: 99999
   goal: {fileID: 0}
   maxHealth: 1
   health: 0
-  canShuaisi: 1
+  canShuaisi: 0
   groundCheckBoxHeight: 30
   floorLayer:
     serializedVersion: 2
     m_Bits: 256
+  sightDistance: 0
 --- !u!251 &251992742197475452
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -235,3 +239,4 @@ MonoBehaviour:
   Head: {fileID: 21300000, guid: 1f1244d0593ec5b458e97fbb95611088, type: 3}
   Body: {fileID: 21300000, guid: 6935687610b502043be63edf3b63d58a, type: 3}
   PlayerLegs: {fileID: 0}
+  clip: {fileID: 0}
