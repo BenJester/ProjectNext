@@ -63,9 +63,11 @@ public class Enemy_Shooter_Aim : Enemy {
 
 				yield return new WaitForSeconds (shootInterval - animationPreload);
 				animator.CrossFade ("Enemy_Shooter_Shot", 0.001f);
-				yield return new WaitForSeconds (animationPreload);
+                exclamation.SetActive(true);
+                yield return new WaitForSeconds (animationPreload);
 				Shoot ();
-			} else {
+                exclamation.SetActive(false);
+            } else {
 				yield return null;
 			}
 		}
