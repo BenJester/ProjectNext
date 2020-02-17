@@ -69,7 +69,8 @@ public class Enemy_Melee : Enemy
         // && Mathf.Abs(transform.position.x - PlayerControl1.Instance.transform.position.x) > 5f
         while (!CheckRange() && CheckPlayerInSight() && Mathf.Abs(transform.position.x - PlayerControl1.Instance.transform.position.x) > 5f)
         {
-            body.velocity = new Vector2(PlayerControl1.Instance.transform.position.x < transform.position.x ? -walkSpeed : walkSpeed, body.velocity.y);
+            if (body.velocity.y == 0f)
+                body.velocity = new Vector2(PlayerControl1.Instance.transform.position.x < transform.position.x ? -walkSpeed : walkSpeed, body.velocity.y);
             faceRight = PlayerControl1.Instance.transform.position.x < transform.position.x ? false : true;
             GetComponent<SpriteRenderer>().flipX = !faceRight;
             //if (!grounded) break;
