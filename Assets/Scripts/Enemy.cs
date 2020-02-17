@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour{
 
-	// Use this for initialization
+    // Use this for initialization
+    public GameObject target;
 	[HideInInspector]
 	public Thing thing;
 	public float dropKillSpeed=50f;
@@ -30,9 +31,14 @@ public class Enemy : MonoBehaviour{
 
     bool justSawPlayer;
     public float sightDistance;
-    
+
+    protected GameObject exclamation;
 
     protected void Start () {
+        if (target == null) target = PlayerControl1.Instance.gameObject;
+        exclamation = Instantiate(Resources.Load<GameObject>("exclamation"), Vector3.zero, Quaternion.identity, transform);
+        exclamation.transform.localPosition = new Vector3(-40f, 40f, 0f);
+        exclamation.SetActive(false);
 		//maxHealth = 1;
 		health = maxHealth;
 		thing = GetComponent<Thing> ();
