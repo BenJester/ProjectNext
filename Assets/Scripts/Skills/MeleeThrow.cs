@@ -18,9 +18,11 @@ public class MeleeThrow : Skill
     public float kickFloorInputRadius;
     public float kickFloorSpeed;
     Vector2 kickFloorDir;
+    LineRenderer lr;
     private void Start()
     {
         swap = GetComponent<Swap>();
+        lr = GetComponent<LineRenderer>();
     }
 
     public override bool Check()
@@ -62,6 +64,8 @@ public class MeleeThrow : Skill
 
             dashPointer.transform.position = (Vector2)col.transform.position + dir * 70f;
             dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
+            lr.enabled = true;
+            lr.SetPositions(PlotTrajectory(col.transform.position, dir * throwSpeed, 0.05f, 24));
 
         }
         else if (Input.GetMouseButton(1) && CanKickFloor(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
@@ -74,6 +78,7 @@ public class MeleeThrow : Skill
         else if (Input.GetMouseButtonUp(1))
         {
             dashPointer.SetActive(false);
+            lr.enabled = false;
         }
         //Debug.Log(Angle(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position));
     }
@@ -192,5 +197,27 @@ public class MeleeThrow : Skill
         yield return new WaitForSeconds(0.2f);
         //
         //target.GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    public Vector3 PlotTrajectoryAtTime(Vector3 start, Vector3 startVelocity, float time)
+    {
+        return start + startVelocity * time + Physics.gravity * playerBody.gravityScale * time * time * 0.5f;
+    }
+
+    public Vector3[] PlotTrajectory(Vector3 start, Vector3 startVelocity, float fTimeStep, int stepCounts)
+    {
+        float maxTime = fTimeStep * stepCounts;
+        Vector3[] results = new Vector3[stepCounts];
+        Vector3 prev = start;
+        for (int i = 1; ; i++)
+        {
+            float t = fTimeStep * i;
+            if (t >= maxTime) break;
+            Vector3 pos = PlotTrajectoryAtTime(start, startVelocity, t);
+            if (Physics.Linecast(prev, pos)) break;
+            prev = pos;
+            results[i - 1] = pos;
+        }
+        return results;
     }
 }
