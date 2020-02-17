@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 4868751929553179485}
   - component: {fileID: 1170674582096249582}
   - component: {fileID: 2086779669361711969}
+  - component: {fileID: 763395707}
   m_Layer: 9
   m_Name: player_cat
   m_TagString: player
@@ -756,7 +757,7 @@ MonoBehaviour:
   directionSwapThreshold: 30
   swapSpeed: 900
   dashPointer: {fileID: 6935488170787811620}
-  overheadSnap: 1
+  overheadSnap: 0
   overheadRB: {fileID: 0}
   overheadHeight: 70
 --- !u!114 &2198637840435433259
@@ -1292,6 +1293,25 @@ MonoBehaviour:
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   state: 0
+--- !u!114 &763395707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238334444430495565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd94b6779f24215478d2d60ee1909177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  player: {fileID: 0}
+  playerBody: {fileID: 0}
+  box: {fileID: 0}
+  playerControl: {fileID: 0}
+  clip: {fileID: 0}
+  wallJumpSpeed: 500
 --- !u!1 &2238354309570810209
 GameObject:
   m_ObjectHideFlags: 0
