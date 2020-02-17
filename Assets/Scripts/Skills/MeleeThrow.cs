@@ -116,6 +116,7 @@ public class MeleeThrow : Skill
 
     bool CanKickFloor(Vector3 kickPos)
     {
+        return false;
         if ((kickPos - transform.position).magnitude > kickFloorInputRadius || (kickPos - transform.position).magnitude < box.size.x / 2f)
             return false;
 
