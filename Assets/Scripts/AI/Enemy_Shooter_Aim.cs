@@ -61,7 +61,7 @@ public class Enemy_Shooter_Aim : Enemy {
 		while (true) {
 			if (isInSight) {
 
-				yield return new WaitForSeconds (shootInterval - animationPreload);
+				yield return new WaitForSecondsRealtime ((shootInterval - animationPreload)/Time.timeScale);
 				animator.CrossFade ("Enemy_Shooter_Shot", 0.001f);
                 exclamation.SetActive(true);
                 yield return new WaitForSeconds (animationPreload);
