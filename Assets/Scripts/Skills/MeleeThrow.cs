@@ -7,6 +7,7 @@ public class MeleeThrow : Skill
 
     public float range;
     public float throwSpeed;
+    public float reactForceSpeed;
     Collider2D col;
     Swap swap;
     bool pulled;
@@ -15,6 +16,8 @@ public class MeleeThrow : Skill
     public float snapThreshold;
     public Rigidbody2D target;
     public GameObject dashPointer;
+    public SpriteRenderer rangeIndicator;
+
     public float kickFloorInputRadius;
     public float kickFloorSpeed;
     Vector2 kickFloorDir;
@@ -44,20 +47,30 @@ public class MeleeThrow : Skill
     {
         if (Input.GetMouseButton(1))
         {
-            Time.timeScale = 0.1f;
-            Time.fixedDeltaTime *= 0.1f;
+            Time.timeScale = 0.03f;
+            Time.fixedDeltaTime *= 0.03f;
         }
 
         if (Input.GetMouseButtonUp(1))
         {
             Time.timeScale = 1;
-            Time.fixedDeltaTime *= 10f;
+            Time.fixedDeltaTime /= 0.03f;
             Do();
         }
         Check();
         Vector2 dir = Vector2.zero;
         if (col != null)
             dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - col.transform.position).normalized;
+        if (Input.GetMouseButton(1))
+        {
+            rangeIndicator.enabled = true;
+            rangeIndicator.size = new Vector2(range * 2f - 15f, range * 2f - 15f);
+        }
+        else
+        {
+            rangeIndicator.enabled = false;
+            //rangeIndicator.size = new Vector2(range, range);
+        }
         if (Input.GetMouseButton(1) && col != null)
         {
             dashPointer.SetActive(true);
@@ -190,7 +203,7 @@ public class MeleeThrow : Skill
         //触发
         TriggerInstanceEvent(rb.GetComponent<Thing>());
 
-
+        playerBody.velocity = -dir * reactForceSpeed;
         yield return new WaitForSeconds(0.15f);
         rb.gameObject.layer = layer;
         
