@@ -517,7 +517,7 @@ public class PlayerControl1 : PlayerControl {
         return bRes;
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
                 (
@@ -651,7 +651,12 @@ public class PlayerControl1 : PlayerControl {
         //{
         //    rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         //}
-
+        if (disableAirControl && !isTouchingGround)
+        {
+            h = 0;
+            Debug.Log("no");
+        }
+            
         if (canJump == false && !disableAirControl)
         {
 
@@ -1324,7 +1329,7 @@ public class PlayerControl1 : PlayerControl {
         pointer.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    void FixedUpdate() {
+    void Update() {
         if (m_bJumpingWindow == true)
         {
 

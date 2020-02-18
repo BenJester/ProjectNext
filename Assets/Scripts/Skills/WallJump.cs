@@ -18,20 +18,23 @@ public class WallJump : Skill
         {
             if (playerControl.touchingWallLeft() && !playerControl.isTouchingGround)
             {
-                playerBody.velocity = new Vector2(wallJumpSpeed, wallJumpSpeed);
-                StartCoroutine(DisableAirControl());
+                StartCoroutine(DisableAirControl(true));
+                
+                Debug.Log("``");
             }
             else if (playerControl.touchingWallRight() && !playerControl.isTouchingGround)
             {
-                playerBody.velocity = new Vector2(-wallJumpSpeed, wallJumpSpeed);
-                StartCoroutine(DisableAirControl());
+                StartCoroutine(DisableAirControl(false));
+                
             }
         }
     }
-    IEnumerator DisableAirControl()
+    IEnumerator DisableAirControl(bool right)
     {
         playerControl.disableAirControl = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForEndOfFrame();
+        playerBody.velocity = new Vector2(right ? wallJumpSpeed : -wallJumpSpeed, wallJumpSpeed);
+        yield return new WaitForSeconds(0.14f);
         playerControl.disableAirControl = false;
     }
 }

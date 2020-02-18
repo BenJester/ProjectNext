@@ -7,6 +7,7 @@ public class MeleeThrow : Skill
 
     public float range;
     public float throwSpeed;
+    public float reactForceSpeed;
     Collider2D col;
     Swap swap;
     bool pulled;
@@ -190,7 +191,7 @@ public class MeleeThrow : Skill
         //触发
         TriggerInstanceEvent(rb.GetComponent<Thing>());
 
-
+        playerBody.velocity = -dir * reactForceSpeed;
         yield return new WaitForSeconds(0.15f);
         rb.gameObject.layer = layer;
         
