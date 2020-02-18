@@ -16,6 +16,8 @@ public class MeleeThrow : Skill
     public float snapThreshold;
     public Rigidbody2D target;
     public GameObject dashPointer;
+    public SpriteRenderer rangeIndicator;
+
     public float kickFloorInputRadius;
     public float kickFloorSpeed;
     Vector2 kickFloorDir;
@@ -59,6 +61,16 @@ public class MeleeThrow : Skill
         Vector2 dir = Vector2.zero;
         if (col != null)
             dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - col.transform.position).normalized;
+        if (Input.GetMouseButton(1))
+        {
+            rangeIndicator.enabled = true;
+            rangeIndicator.size = new Vector2(range * 2f - 15f, range * 2f - 15f);
+        }
+        else
+        {
+            rangeIndicator.enabled = false;
+            //rangeIndicator.size = new Vector2(range, range);
+        }
         if (Input.GetMouseButton(1) && col != null)
         {
             dashPointer.SetActive(true);
