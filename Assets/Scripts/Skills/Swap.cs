@@ -507,7 +507,7 @@ public class Swap : Skill {
 
     void HandleOverhead(Thing thing)
     {
-        if (overheadRB != null) return;
+        if (overheadRB != null || !overheadSnap) return;
         if (thing.GetLeftX() < player.transform.position.x &&
             thing.GetRightX() > player.transform.position.x &&
             thing.GetLowerY() > player.transform.position.y &&
