@@ -517,7 +517,7 @@ public class PlayerControl1 : PlayerControl {
         return bRes;
     }
 
-    void FixedUpdate() {
+    void Update() {
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
                 (
@@ -1329,7 +1329,7 @@ public class PlayerControl1 : PlayerControl {
         pointer.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (m_bJumpingWindow == true)
         {
 
