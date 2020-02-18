@@ -15,7 +15,9 @@ public class Ti_Gun : TriggerItem_Base
 
     void Start()
     {
-      
+      if(!isRight){
+        GetComponent<SpriteRenderer>().flipX=true;
+      }
     }
 
     // Update is called once per frame
