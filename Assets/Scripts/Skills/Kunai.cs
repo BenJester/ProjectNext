@@ -121,7 +121,7 @@ public class Kunai : MonoBehaviour
         transform.position = Vector3.zero;
     }
 
-    public void OnCollisionStay2D(Collision2D col)
+    public void OnCollisionEnter2D(Collision2D col)
     {
         if (triggered) return;
         if (col.collider.CompareTag("thing") && !col.collider.GetComponent<Thing>().hasShield && !col.collider.CompareTag("player"))
@@ -129,13 +129,15 @@ public class Kunai : MonoBehaviour
             target = col.collider;
             rb.velocity = Vector2.zero;
             transform.parent = target.transform;
+            triggered = true;
         }
-        else if (col.collider.CompareTag("floor"))
+        else if (col.collider.CompareTag("floor") || col.collider.GetComponent<Thing>().hasShield)
         {
             target = box;
             rb.velocity = Vector2.zero;
             //rb.bodyType = RigidbodyType2D.Kinematic;
+            triggered = true;
         }
-        triggered = true;
+        
     }
 }
