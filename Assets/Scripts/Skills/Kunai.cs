@@ -13,6 +13,9 @@ public class Kunai : MonoBehaviour
     BoxCollider2D box;
     public Collider2D target;
     PlayerControl1 player;
+    public bool swapDamageOn;
+    public int swapDamage;
+    public float scanBoxHeight;
 
     void Awake()
     {
@@ -51,6 +54,7 @@ public class Kunai : MonoBehaviour
         if (target == null) return;
         player.rb.velocity = Vector2.zero;
         player.rb.gravityScale = 0f;
+        ScanEnemies(target);
         if (target == box)
         {
             player.transform.position = transform.position;
@@ -131,6 +135,7 @@ public class Kunai : MonoBehaviour
             rb.velocity = Vector2.zero;
             transform.parent = target.transform;
             triggered = true;
+            
         }
         else if (col.collider.CompareTag("floor") || col.collider.GetComponent<Thing>().hasShield)
         {
@@ -138,7 +143,40 @@ public class Kunai : MonoBehaviour
             rb.velocity = Vector2.zero;
             //rb.bodyType = RigidbodyType2D.Kinematic;
             triggered = true;
+            
         }
-        
+    }
+
+    void ScanEnemies(Collider2D _swapCol)
+    {
+        if (!swapDamageOn)
+            return;
+
+        Vector2 midPoint = (player.transform.position + _swapCol.transform.position) / 2f;
+        Vector2 size = new Vector2(Vector2.Distance(player.transform.position, _swapCol.transform.position), scanBoxHeight);
+        float angle = Vector2.SignedAngle(Vector2.right, (Vector2)player.transform.position - (Vector2)target.transform.position);
+
+        GameObject temp = new GameObject();
+        GameObject scan = Instantiate(temp, midPoint, Quaternion.Euler(0f, 0f, Vector2.SignedAngle(Vector2.right, (Vector2)player.transform.position - (Vector2)target.transform.position)));
+        scan.transform.position = midPoint;
+        BoxCollider2D scanBox = scan.AddComponent<BoxCollider2D>();
+        scanBox.isTrigger = true;
+        scanBox.size = size;
+        Collider2D[] cols = new Collider2D[32];
+        int count = Physics2D.OverlapCollider(scanBox, new ContactFilter2D(), cols);
+        for (int i = 0; i < count; i++)
+        {
+            if (cols[i] == _swapCol)
+                continue;
+            Enemy enemy = cols[i].GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(swapDamage);
+            }
+        }
+
+
+        Destroy(temp);
+        Destroy(scan);
     }
 }
