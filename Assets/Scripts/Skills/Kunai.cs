@@ -17,6 +17,8 @@ public class Kunai : MonoBehaviour
     public int swapDamage;
     public float scanBoxHeight;
 
+    public float dashSpeed;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -49,6 +51,28 @@ public class Kunai : MonoBehaviour
         this.dir = dir;
     }
 
+    IEnumerator Dash(Vector3 pos)
+    {
+        player.box.isTrigger = true;
+        player.disableAirControl = true;
+        player.rb.bodyType = RigidbodyType2D.Kinematic;
+        
+        player.rb.gravityScale = 0f;
+        //yield return new WaitForSeconds(Vector3.Distance(pos, player.transform.position) / dashSpeed);
+        while (Vector3.Distance(player.transform.position, transform.position) > 50f)
+        {
+            player.rb.velocity = (transform.position - player.transform.position).normalized * dashSpeed;
+            yield return new WaitForEndOfFrame();
+        }
+        player.box.isTrigger = false;
+        player.disableAirControl = false;
+        player.rb.velocity = Vector2.zero;
+        
+        player.rb.bodyType = RigidbodyType2D.Dynamic;
+        player.rb.gravityScale = 0f;
+        Reset();
+    }
+
     public void Swap()
     {
         if (target == null) return;
@@ -57,9 +81,9 @@ public class Kunai : MonoBehaviour
         ScanEnemies(target);
         if (target == box)
         {
-            player.transform.position = transform.position;
-            Reset();
+            //player.transform.position = transform.position;
             
+            StartCoroutine(Dash(target.transform.position));
             return;
         }
         

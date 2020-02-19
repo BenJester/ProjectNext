@@ -62,7 +62,7 @@ public class PlayerControl1 : PlayerControl {
     public Transform groundCheckPoint5;
     public PhysicsMaterial2D slipperyMat;
     public PhysicsMaterial2D roughMat;
-    BoxCollider2D box;
+    public BoxCollider2D box;
     public float groundCheckRadius;
 
     public int waitTime;
