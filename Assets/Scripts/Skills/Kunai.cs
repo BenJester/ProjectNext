@@ -19,7 +19,7 @@ public class Kunai : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
         
-        Time.fixedDeltaTime = 0.003f;
+        //Time.fixedDeltaTime = 0.003f;
     }
     private void Start()
     {
@@ -50,6 +50,7 @@ public class Kunai : MonoBehaviour
     {
         if (target == null) return;
         player.rb.velocity = Vector2.zero;
+        player.rb.gravityScale = 0f;
         if (target == box)
         {
             player.transform.position = transform.position;

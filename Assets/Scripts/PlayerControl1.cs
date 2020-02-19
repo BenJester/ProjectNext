@@ -1330,6 +1330,7 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void FixedUpdate() {
+        if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
         if (m_bJumpingWindow == true)
         {
 
