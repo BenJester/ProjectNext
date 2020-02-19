@@ -17,22 +17,12 @@ public class Ti_Pickup_Health : TriggerItem_Base
     }
 
     public override void HandleKickTrigger(){
-        for (int i = 0; i < count; i++)
-        {
-            GameObject Object= Instantiate(instance,transform.position,Quaternion.identity);
-            Object.transform.parent=null;
-        }
-        Destroy(gameObject);
+        
 
     }
 
     public override void HandleSwapTrigger(){
-        for (int i = 0; i < count; i++)
-        {
-            GameObject Object= Instantiate(instance,transform.position,Quaternion.identity);
-            Object.transform.parent=null;
-        }
-        Destroy(gameObject);
+        
     }
 
 }
