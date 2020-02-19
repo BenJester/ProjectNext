@@ -654,7 +654,6 @@ public class PlayerControl1 : PlayerControl {
         if (disableAirControl && !isTouchingGround)
         {
             h = 0;
-            Debug.Log("no");
         }
             
         if (canJump == false && !disableAirControl)

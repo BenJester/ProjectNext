@@ -20,7 +20,6 @@ public class WallJump : Skill
             {
                 StartCoroutine(DisableAirControl(true));
                 
-                Debug.Log("``");
             }
             else if (playerControl.touchingWallRight() && !playerControl.isTouchingGround)
             {

@@ -34,7 +34,6 @@ public class Kunai : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Time.fixedDeltaTime);
     }
 
     public void HandleInput(Vector2 dir)
