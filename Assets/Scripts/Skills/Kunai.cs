@@ -18,6 +18,7 @@ public class Kunai : MonoBehaviour
     public float scanBoxHeight;
 
     public float dashSpeed;
+    public Kunai other;
 
     void Awake()
     {
@@ -53,17 +54,19 @@ public class Kunai : MonoBehaviour
 
     IEnumerator Dash(Vector3 pos)
     {
+        other.StopAllCoroutines();
         player.box.isTrigger = true;
         player.disableAirControl = true;
         player.rb.bodyType = RigidbodyType2D.Kinematic;
         
         player.rb.gravityScale = 0f;
         //yield return new WaitForSeconds(Vector3.Distance(pos, player.transform.position) / dashSpeed);
-        while (Vector3.Distance(player.transform.position, transform.position) > 50f)
+        while (Vector3.Distance(player.transform.position, transform.position) > 65f)
         {
             player.rb.velocity = (transform.position - player.transform.position).normalized * dashSpeed;
             yield return new WaitForEndOfFrame();
         }
+        player.transform.position = transform.position;
         player.box.isTrigger = false;
         player.disableAirControl = false;
         player.rb.velocity = Vector2.zero;
