@@ -126,10 +126,19 @@ public class Kunai : MonoBehaviour
             _readySwapCol.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
             player.transform.position = new Vector3(_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
         }
-        
+
+        TriggerInstanceEvent(_swapThing);
+
         Reset();
     }
-
+    void TriggerInstanceEvent(Thing swapThing)
+    {
+        if (swapThing.GetComponent<TriggerItem_Base>() != null)
+        {
+            TriggerItem_Base tb = swapThing.GetComponent<TriggerItem_Base>();
+            tb.HandleSwapTrigger();
+        }
+    }
     private void FixedUpdate()
     {
         //RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir, 20, 1 << 8);
