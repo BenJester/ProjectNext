@@ -27,6 +27,8 @@ public class Ti_FlyKnife : TriggerItem_Base
 
     void FixedUpdate()
     {
+        if (my_rb.velocity != Vector2.zero)
+        { my_rb.bodyType = RigidbodyType2D.Dynamic; }
         if (isTrigger)
         {
             //my_rb.constraints = RigidbodyConstraints2D.None;
@@ -66,6 +68,7 @@ public class Ti_FlyKnife : TriggerItem_Base
         //my_rb.bodyType = RigidbodyType2D.Kinematic;
         //my_rb.freezeRotation = false;
         //isTrigger = true;
+        
         kickDir = my_rb.velocity.normalized;
         //print("Kick!!");
 
@@ -91,6 +94,7 @@ public class Ti_FlyKnife : TriggerItem_Base
         if (col.collider.CompareTag("floor") || (col.collider.gameObject.layer == 12))
         {
             my_rb.velocity = Vector2.zero;
+            my_rb.bodyType = RigidbodyType2D.Kinematic;
         }
     }
 

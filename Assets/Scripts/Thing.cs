@@ -11,7 +11,8 @@ namespace Ben
         enemy = 2,
         box = 3,
         hostage = 4,
-        bomb = 5
+        bomb = 5,
+        invincible = 6
     }
 }
 public class Thing : MonoBehaviour {

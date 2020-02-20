@@ -39,7 +39,7 @@ public class EnemyBullet : Bullet {
 	public void OnTriggerEnter2D(Collider2D col) {
 
 		if (col.CompareTag ("thing")) {
-			if (col.GetComponent<Thing> ().type != Type.box)
+			if (col.GetComponent<Thing> ().type != Type.box && col.GetComponent<Thing>().type != Type.invincible)
 				col.GetComponent<Thing> ().Die ();
 			Deactivate ();
 				
