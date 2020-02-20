@@ -131,6 +131,7 @@ public class Kunai : MonoBehaviour
 
         Reset();
     }
+
     void TriggerInstanceEvent(Thing swapThing)
     {
         if (swapThing.GetComponent<TriggerItem_Base>() != null)
@@ -139,6 +140,7 @@ public class Kunai : MonoBehaviour
             tb.HandleSwapTrigger();
         }
     }
+
     private void FixedUpdate()
     {
         //RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir, 20, 1 << 8);
