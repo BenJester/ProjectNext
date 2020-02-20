@@ -655,8 +655,10 @@ public class PlayerControl1 : PlayerControl {
         {
             h = 0;
         }
-            
-        if (canJump == false && !disableAirControl)
+        //
+        rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        //
+        if (true == false && canJump == false && !disableAirControl)
         {
 
             if (h > 0)
@@ -988,19 +990,19 @@ public class PlayerControl1 : PlayerControl {
         Vector3 vecHit2Pos = (closestObjectToCursor.transform.position + new Vector3(targetX, -targetY, 0f) - transform.position);
         Vector3 vecHit3Pos = (closestObjectToCursor.transform.position + new Vector3(-targetX, targetY, 0f) - transform.position);
         Vector3 vecHit4Pos = (closestObjectToCursor.transform.position + new Vector3(-targetX, -targetY, 0f) - transform.position);
-        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit0 = Physics2D.Raycast(transform.position, (closestObjectToCursor.transform.position - transform.position).normalized, shootDistance, LayerForLockObject );
         //awRaycastHit2D hit0 = Physics2D.Raycast(transform.position, new Vector2(0,0), shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, vecHit1Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, vecHit2Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, vecHit3Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
-        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, vecHit4Pos, shootDistance, 1 << 10 | 1 << 12 | 1 << 8);
+        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, vecHit1Pos, shootDistance, LayerForLockObject);
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position, vecHit2Pos, shootDistance, LayerForLockObject);
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position, vecHit3Pos, shootDistance, LayerForLockObject);
+        RaycastHit2D hit4 = Physics2D.Raycast(transform.position, vecHit4Pos, shootDistance, LayerForLockObject);
 
 
         //如果放到list的话每次update，add和遍历lst会带来比较明显的性能损耗。所以这里就用单纯的比较来判断了。
         float fDistance = Mathf.Infinity;
         Vector3 vecPoint = new Vector3();
         bool bDrawLine = false;
-        if (hit1.collider == targetBox && hit0.distance < fDistance)
+        if (hit0.collider == targetBox && hit0.distance < fDistance)
         {
             fDistance = hit0.distance;
             vecPoint = hit0.point;

@@ -29,22 +29,22 @@ public class Ti_FlyKnife : TriggerItem_Base
     {
         if (isTrigger)
         {
-            my_rb.constraints = RigidbodyConstraints2D.None;
-            my_rb.velocity = kickDir * speed;
+            //my_rb.constraints = RigidbodyConstraints2D.None;
+            
             transform.localRotation = Quaternion.Euler(0, 0, AngleBetween(Vector2.up, kickDir.normalized));
 
 
             //检测墙壁停止
-            RaycastHit2D hit2D = Physics2D.Raycast(transform.position, kickDir, 20, 1 << 8);
-            if (hit2D)
-            {
-                transform.position = (Vector2)transform.position + (Vector2)kickDir * 15;
-                my_rb.velocity = Vector2.zero;
-                my_rb.freezeRotation = true;
-                print("Hit");
-                //my_rb.bodyType=RigidbodyType2D.Static;
-                isTrigger = false;
-            }
+            //RaycastHit2D hit2D = Physics2D.Raycast(transform.position, kickDir, 20, 1 << 8);
+            //if (hit2D)
+            //{
+            //    transform.position = (Vector2)transform.position + (Vector2)kickDir * 15;
+            //    my_rb.velocity = Vector2.zero;
+            //    my_rb.freezeRotation = true;
+            //    print("Hit");
+            //    //my_rb.bodyType=RigidbodyType2D.Static;
+            //    isTrigger = false;
+            //}
         }
     }
 
@@ -63,15 +63,15 @@ public class Ti_FlyKnife : TriggerItem_Base
 
     public override void HandleKickTrigger()
     {
-        my_rb.bodyType = RigidbodyType2D.Kinematic;
-        my_rb.freezeRotation = false;
-        isTrigger = true;
+        //my_rb.bodyType = RigidbodyType2D.Kinematic;
+        //my_rb.freezeRotation = false;
+        //isTrigger = true;
         kickDir = my_rb.velocity.normalized;
-        print("Kick!!");
+        //print("Kick!!");
 
         //防止误伤
         setTimeTemp = Time.time + setSpeedTime;
-
+        my_rb.velocity = kickDir * speed;
     }
 
 
@@ -86,42 +86,48 @@ public class Ti_FlyKnife : TriggerItem_Base
     }
 
 
-
+    public void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.CompareTag("floor") || (col.collider.gameObject.layer == 12))
+        {
+            my_rb.velocity = Vector2.zero;
+        }
+    }
 
 
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (isTrigger)
-        {
+        //if (isTrigger)
+        //{
 
-            if (other.transform.CompareTag("player") && setTimeTemp<Time.time)
-            {
-                other.transform.GetComponent<PlayerControl1>().Die();
-            }
-            if (other.transform.CompareTag("thing") && other.transform.GetComponent<Enemy>())
-            {
-                other.transform.GetComponent<Enemy>().TakeDamage(1);
-            }
-        }
-        else if (other.transform.CompareTag("floor"))
-        {
-            my_rb.velocity = Vector2.zero;
-            my_rb.freezeRotation = true;
-            //my_rb.constraints=RigidbodyConstraints2D.FreezePosition;
+        //    if (other.transform.CompareTag("player") && setTimeTemp<Time.time)
+        //    {
+        //        other.transform.GetComponent<PlayerControl1>().Die();
+        //    }
+        //    if (other.transform.CompareTag("thing") && other.transform.GetComponent<Enemy>())
+        //    {
+        //        other.transform.GetComponent<Enemy>().TakeDamage(1);
+        //    }
+        //}
+        //else if (other.transform.CompareTag("floor"))
+        //{
+        //    my_rb.velocity = Vector2.zero;
+        //    my_rb.freezeRotation = true;
+        //    //my_rb.constraints=RigidbodyConstraints2D.FreezePosition;
 
-        }
+        //}
 
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (other.transform.CompareTag("floor"))
-        {
-            my_rb.velocity = Vector2.zero;
-            my_rb.freezeRotation = true;
-            //my_rb.constraints=RigidbodyConstraints2D.FreezePosition;
+        //if (other.transform.CompareTag("floor"))
+        //{
+        //    my_rb.velocity = Vector2.zero;
+        //    my_rb.freezeRotation = true;
+        //    //my_rb.constraints=RigidbodyConstraints2D.FreezePosition;
 
-        }
+        //}
     }
 
 

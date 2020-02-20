@@ -215,7 +215,6 @@ public class Kunai : MonoBehaviour
         else if (col.collider.CompareTag("metal"))
         {
             Reset();
-            Debug.Log("reset");
         }
     }
 
