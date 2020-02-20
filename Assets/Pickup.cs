@@ -51,8 +51,9 @@ public class Pickup : TriggerItem_Base
     /// </summary>
     void OnDestroy()
     {
-        GameObject Object=Instantiate(triggerEffect,transform.position,Quaternion.identity);
-        Object.transform.parent=null;
+        GameObject ObjectSmoke=Instantiate(triggerEffect,transform.position,Quaternion.identity);
+        Destroy(ObjectSmoke,1f);
+        ObjectSmoke.transform.parent=null;
     }
 
     
