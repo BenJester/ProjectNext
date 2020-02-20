@@ -9,7 +9,8 @@ public class Box : MonoBehaviour {
 	Rigidbody2D body;
 	Thing _boxThing;
 	Vector2 prevVelocity;
-
+    public int damage;
+    public bool useDamage;
     public Color spikeColor;
 
 	void Start () {
@@ -34,7 +35,14 @@ public class Box : MonoBehaviour {
                 }
                 else
                 {
-                    colThing.Die();
+                    if (useDamage && colThing.GetComponent<Enemy>() != null)
+                    {
+                        colThing.hasShield = false;
+                        colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                    }
+                    else
+                        colThing.Die();
+
                 }
 			}
             else

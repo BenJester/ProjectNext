@@ -215,6 +215,7 @@ public class Kunai : MonoBehaviour
         else if (col.collider.CompareTag("metal"))
         {
             Reset();
+            Debug.Log("reset");
         }
     }
 
@@ -240,7 +241,7 @@ public class Kunai : MonoBehaviour
             if (cols[i] == _swapCol)
                 continue;
             Enemy enemy = cols[i].GetComponent<Enemy>();
-            if (enemy != null)
+            if (enemy != null && enemy.canBeDamagedByKunaiDash)
             {
                 enemy.TakeDamage(swapDamage);
             }

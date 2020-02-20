@@ -103,8 +103,10 @@ MonoBehaviour:
   swapDamageOn: 1
   swapDamage: 1
   scanBoxHeight: 50
+  noThrow: 0
   dashSpeed: 2800
   other: {fileID: 0}
+  buffered: 0
 --- !u!61 &6906929853913893418
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -195,7 +197,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:

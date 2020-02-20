@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Enemy : MonoBehaviour{
 
     // Use this for initialization
+    public bool canBeDamagedByKunaiDash = true;
     public GameObject target;
 	[HideInInspector]
 	public Thing thing;
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour{
     public float sightDistance;
 
     protected GameObject exclamation;
+    
 
     protected void Start () {
         if (target == null) target = PlayerControl1.Instance.gameObject;
@@ -125,7 +127,7 @@ public class Enemy : MonoBehaviour{
     IEnumerator SelfDestroy()
     {
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     IEnumerator OnHit()
