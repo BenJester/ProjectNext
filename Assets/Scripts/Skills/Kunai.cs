@@ -7,8 +7,6 @@ public class Kunai : MonoBehaviour
     public bool triggered;
     public float speed;
     public Vector2 dir;
-    public bool canShoot;
-    public bool canSwap;
     Rigidbody2D rb;
     BoxCollider2D box;
     public Collider2D target;
@@ -19,21 +17,36 @@ public class Kunai : MonoBehaviour
 
     public float dashSpeed;
     public Kunai other;
+    LineRenderer lr;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
-        
+        lr = GetComponent<LineRenderer>();
         //Time.fixedDeltaTime = 0.003f;
     }
     private void Start()
     {
         player = PlayerControl1.Instance;
     }
-    // Update is called once per frame
+    
     void Update()
     {
+        if (triggered)
+        {
+            lr.enabled = true;
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, player.transform.position);
+        }
+        else
+        {
+            Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position).normalized * 1500f;
+            //lr.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            lr.SetPosition(1, player.transform.position + (Vector3) dir);
+            lr.SetPosition(0, player.transform.position);
+        }
+            
     }
 
     public void HandleInput(Vector2 dir)
@@ -174,13 +187,17 @@ public class Kunai : MonoBehaviour
             triggered = true;
             
         }
-        else if (col.collider.CompareTag("floor") || col.collider.GetComponent<Thing>().hasShield)
+        else if (col.collider.CompareTag("floor") || (col.collider.CompareTag("thing") && col.collider.GetComponent<Thing>().hasShield))
         {
             target = box;
             rb.velocity = Vector2.zero;
             //rb.bodyType = RigidbodyType2D.Kinematic;
             triggered = true;
             
+        }
+        else if (col.collider.CompareTag("metal"))
+        {
+            Reset();
         }
     }
 
