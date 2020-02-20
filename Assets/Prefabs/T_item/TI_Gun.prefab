@@ -97,7 +97,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 800
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 150
@@ -194,6 +194,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRight: 1
-  bullet: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
+  bullet: {fileID: 5827292906236501389, guid: c06f9fe0aa1e6ae47a78dd73b7f07e8d, type: 3}
   bulletSpeed: 800
-  bulletInstanceDistance: 50
+  bulletInstanceDistance: 120
