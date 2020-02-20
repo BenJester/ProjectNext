@@ -18,6 +18,7 @@ public class Kunai : MonoBehaviour
     public float dashSpeed;
     public Kunai other;
     LineRenderer lr;
+    public bool buffered;
 
     void Awake()
     {
@@ -25,6 +26,7 @@ public class Kunai : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
         lr = GetComponent<LineRenderer>();
         //Time.fixedDeltaTime = 0.003f;
+        transform.position = Vector3.zero;
     }
     private void Start()
     {
@@ -33,6 +35,8 @@ public class Kunai : MonoBehaviour
     
     void Update()
     {
+        if (Vector3.Distance(transform.position, player.transform.position) > 3000f)
+            Reset();
         if (triggered)
         {
             lr.enabled = true;
@@ -54,8 +58,10 @@ public class Kunai : MonoBehaviour
     {
         if (target != null)
             Swap();
-        else
+        else if (transform.position == Vector3.zero)
             Shoot(dir);
+        else
+            buffered = true;
     }
 
     public void Shoot(Vector2 dir)
@@ -181,6 +187,7 @@ public class Kunai : MonoBehaviour
         target = null;
         triggered = false;
         transform.position = Vector3.zero;
+        buffered = false;
     }
 
     public void OnCollisionEnter2D(Collision2D col)
@@ -192,7 +199,8 @@ public class Kunai : MonoBehaviour
             rb.velocity = Vector2.zero;
             transform.parent = target.transform;
             triggered = true;
-            
+            if (buffered)
+                Swap();
         }
         else if (col.collider.CompareTag("floor") || (col.collider.CompareTag("thing") && col.collider.GetComponent<Thing>().hasShield))
         {
@@ -200,7 +208,9 @@ public class Kunai : MonoBehaviour
             rb.velocity = Vector2.zero;
             //rb.bodyType = RigidbodyType2D.Kinematic;
             triggered = true;
-            
+            if (buffered)
+                Swap();
+
         }
         else if (col.collider.CompareTag("metal"))
         {
