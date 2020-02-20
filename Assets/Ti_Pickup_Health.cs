@@ -38,6 +38,7 @@ public class Ti_Pickup_Health : TriggerItem_Base
     {
         GameObject Object=Instantiate(triggerEffect,transform.position,Quaternion.identity);
         Object.transform.parent=null;
+        Destroy(Object,1f);
     }
 
 }
