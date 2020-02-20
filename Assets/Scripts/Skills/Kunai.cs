@@ -41,10 +41,11 @@ public class Kunai : MonoBehaviour
         }
         else
         {
+            lr.enabled = false;
             Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position).normalized * 1500f;
             //lr.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            lr.SetPosition(1, player.transform.position + (Vector3) dir);
-            lr.SetPosition(0, player.transform.position);
+            //lr.SetPosition(1, player.transform.position + (Vector3) dir);
+            //lr.SetPosition(0, player.transform.position);
         }
             
     }
