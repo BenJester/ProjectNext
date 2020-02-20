@@ -96,7 +96,7 @@ public class ThrowStuff : MonoBehaviour
                 if (leftSwapped)
                 {
                     leftSwap.GetComponent<Thing>().Die();
-                    Throw(RightClick, ref leftSwap);
+                    Throw(LeftClick, ref leftSwap);
                     leftSwapped = false;
                 }
                 else
