@@ -50,13 +50,13 @@ public class MeleeThrow : Skill
         if (Input.GetMouseButton(1))
         {
             Time.timeScale = 0.03f;
-            //Time.fixedDeltaTime *= 0.03f;
+            Time.fixedDeltaTime *= 0.03f;
         }
 
         if (Input.GetMouseButtonUp(1))
         {
             Time.timeScale = 1;
-            //Time.fixedDeltaTime /= 0.03f;
+            Time.fixedDeltaTime /= 0.03f;
             Do();
         }
         Check();
