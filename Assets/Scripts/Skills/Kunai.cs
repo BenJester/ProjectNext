@@ -14,7 +14,7 @@ public class Kunai : MonoBehaviour
     public bool swapDamageOn;
     public int swapDamage;
     public float scanBoxHeight;
-
+    public bool noThrow;
     public float dashSpeed;
     public Kunai other;
     LineRenderer lr;
@@ -60,6 +60,12 @@ public class Kunai : MonoBehaviour
 
     public void Shoot(Vector2 dir)
     {
+        if (noThrow)
+        {
+            transform.position = player.transform.position;
+            target = box;
+            return;
+        }
         transform.position = player.transform.position;
         rb.velocity = dir.normalized * speed;
         this.dir = dir;
