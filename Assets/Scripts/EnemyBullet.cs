@@ -40,7 +40,13 @@ public class EnemyBullet : Bullet {
 
 		if (col.CompareTag ("thing")) {
 			if (col.GetComponent<Thing> ().type != Type.box && col.GetComponent<Thing>().type != Type.invincible)
-				col.GetComponent<Thing> ().Die ();
+            {
+                if (col.GetComponent<Enemy>() != null)
+                {
+                    col.GetComponent<Enemy>().TakeDamage(1);
+                }
+            }
+				
 			Deactivate ();
 				
 
