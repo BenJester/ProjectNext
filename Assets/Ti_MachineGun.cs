@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_MachineGun : TriggerItem_Base
+public class Ti_MachineGun : Ti_GunType
 {
     // Start is called before the first frame update
 
@@ -17,8 +17,11 @@ public class Ti_MachineGun : TriggerItem_Base
     public float bulletInstanceDistance = 50f;
 
 
+
+
     void Start()
     {
+        base.Start();
         if (!isRight)
         {
             GetComponent<SpriteRenderer>().flipX = true;
@@ -50,14 +53,20 @@ public class Ti_MachineGun : TriggerItem_Base
         yield return new WaitForSeconds(0.1f);
         while (i < times)
         {
-            GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
-            Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
-            bulletBody.velocity = direction * bulletSpeed;
-            yield return new WaitForSeconds(intervals);
-            transform.Translate(new Vector3(-direction.normalized.x*recoil,0,0));
+            if (ammoNow > 0)
+            {
+                GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
+                Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+                bulletBody.velocity = direction * bulletSpeed;
+                yield return new WaitForSeconds(intervals);
+                transform.Translate(new Vector3(-direction.normalized.x * recoil, 0, 0));
+                
+                ammoNow -= 1;
+                SetAmmo();
+            }
             i++;
         }
-        
+
 
         //  
 
