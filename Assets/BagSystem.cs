@@ -1,17 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BagSystem : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool isCollect = false;
+    public Image itemImage;
     public float collectRadius;
     public GameObject bagFirstThing;
     public GameObject indicator;
     void Start()
     {
-
+        itemImage.sprite=null;
     }
 
     // Update is called once per frame
@@ -56,6 +58,7 @@ public class BagSystem : MonoBehaviour
             {
                 bagFirstThing = item.gameObject;
                 bagFirstThing.transform.position = (Vector2)transform.position + Vector2.up * 100000;
+                itemImage.sprite = item.GetComponent<SpriteRenderer>().sprite;
                 isCollect = true;
                 return;
             }
@@ -67,6 +70,7 @@ public class BagSystem : MonoBehaviour
         if (bagFirstThing != null && isCollect)
         {
             bagFirstThing.transform.position = (Vector2)transform.position + Vector2.up * 50;
+            itemImage.sprite=null;
             isCollect = false;
         }
     }
