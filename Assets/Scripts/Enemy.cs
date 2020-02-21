@@ -34,15 +34,23 @@ public class Enemy : MonoBehaviour{
     public float sightDistance;
 
     protected GameObject exclamation;
-    
-
+    public delegate void LoseHPDelegate(int lossHP);
+    public event LoseHPDelegate OnLoseHP;
+    protected GameObject hpText;
+    private void Awake()
+    {
+        
+    }
     protected void Start () {
         if (target == null) target = PlayerControl1.Instance.gameObject;
         exclamation = Instantiate(Resources.Load<GameObject>("exclamation"), Vector3.zero, Quaternion.identity, transform);
         exclamation.transform.localPosition = new Vector3(-40f, 40f, 0f);
         exclamation.SetActive(false);
-		//maxHealth = 1;
-		health = maxHealth;
+        hpText = Instantiate(Resources.Load<GameObject>("HPCanvas"), Vector3.zero, Quaternion.identity, transform);
+        hpText.transform.localPosition = new Vector3(0f, 50f, 0f);
+        hpText.GetComponent<HPText>().enemy = this;
+        //maxHealth = 1;
+        health = maxHealth;
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.enemyCount += 1;
@@ -111,6 +119,7 @@ public class Enemy : MonoBehaviour{
     public void TakeDamage(int damage)
 	{
 		health -= damage;
+        OnLoseHP?.Invoke(damage);
         if (m_takeDamageAct != null)
         {
             m_takeDamageAct.Invoke(damage);
