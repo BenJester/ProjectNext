@@ -37,12 +37,16 @@ public class Enemy : MonoBehaviour{
     public delegate void LoseHPDelegate(int lossHP);
     public event LoseHPDelegate OnLoseHP;
     protected GameObject hpText;
+    AudioClip hitClip;
+
     private void Awake()
     {
-        
+
     }
     protected void Start () {
         if (target == null) target = PlayerControl1.Instance.gameObject;
+        hitClip = Resources.Load<AudioClip>("Sounds/Toy_PopGun_Shot");
+
         exclamation = Instantiate(Resources.Load<GameObject>("exclamation"), Vector3.zero, Quaternion.identity, transform);
         exclamation.transform.localPosition = new Vector3(-40f, 40f, 0f);
         exclamation.SetActive(false);
@@ -126,6 +130,11 @@ public class Enemy : MonoBehaviour{
         }
         if (health <= 0)
 			thing.Die ();
+        else
+        {
+            if (GetComponent<AudioSource>() != null)
+                GetComponent<AudioSource>().PlayOneShot(hitClip);
+        }
         StartCoroutine(OnHit());
 	}
 
@@ -141,14 +150,21 @@ public class Enemy : MonoBehaviour{
 
     IEnumerator OnHit()
     {
-        Color hitColor = new Color(1f, 0.15f, 0f);
+        Color hitColor = new Color(1f, 1f, 0f);
         if(CameraShaker.Instance != null)
         {
             CameraShaker.Instance.ShakeOnce(35f, 4f, 0.1f, 0.1f);
         }
 
+        Vector3 scale = transform.localScale;
+        transform.localScale = scale * 0.9f;
+        yield return new WaitForSeconds(0.05f);
+        transform.localScale = scale * 0.78f;
+        yield return new WaitForSeconds(0.05f);
+        transform.localScale = scale * 0.9f;
+        yield return new WaitForSeconds(0.05f);
         m_spRender.color = hitColor;
-        yield return new WaitForSeconds(0.3f);
+        transform.localScale = scale;
         m_spRender.color = originalColor;
     }
 

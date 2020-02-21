@@ -1592,7 +1592,7 @@ public class PlayerControl1 : PlayerControl {
         if (invincible) return;
         StartCoroutine(BloodEffect());
         StartCoroutine(OnHit());
-        audioSource.PlayOneShot(hitClip, 0.3f);
+        audioSource.PlayOneShot(hitClip, 0.05f);
         if (hp > 1)
         {
             hp -= 1;
@@ -1761,7 +1761,7 @@ public class PlayerControl1 : PlayerControl {
         }
 
         spriteRenderer.color = hitColor;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
         spriteRenderer.color = Color.white;
         invincible = false;
 

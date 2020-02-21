@@ -23,7 +23,7 @@ public class Enemy_Fly_Boss : MonoBehaviour
         {
             int rand = Random.Range(0, danmakuList.Count);
             danmakuList[rand].Shoot();
-            danmakuInterval = atkInterval * Mathf.Clamp(((GetComponent<Enemy>().health - 50f) / ((float) GetComponent<Enemy>().maxHealth - 50f)), 0.4f, 1f);
+            danmakuInterval = atkInterval * Mathf.Clamp(((GetComponent<Enemy>().health - 75f) / ((float) GetComponent<Enemy>().maxHealth - 75f)), 0.5f, 1f);
             yield return new WaitForSeconds(danmakuInterval);
         }
         
