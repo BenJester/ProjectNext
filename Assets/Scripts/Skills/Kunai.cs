@@ -19,7 +19,7 @@ public class Kunai : MonoBehaviour
     public Kunai other;
     LineRenderer lr;
     public bool buffered;
-
+    public bool ready;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,6 +36,8 @@ public class Kunai : MonoBehaviour
     void Update()
     {
         if (Vector3.Distance(transform.position, player.transform.position) > 3000f)
+            Reset();
+        if (target == null && !ready && rb.velocity.magnitude < speed - 200f)
             Reset();
         if (triggered)
         {
@@ -58,7 +60,7 @@ public class Kunai : MonoBehaviour
     {
         if (target != null)
             Swap();
-        else if (transform.position == Vector3.zero)
+        else if (ready)
             Shoot(dir);
         else
             buffered = true;
@@ -66,6 +68,7 @@ public class Kunai : MonoBehaviour
 
     public void Shoot(Vector2 dir)
     {
+        ready = false;
         if (noThrow)
         {
             transform.position = player.transform.position;
@@ -188,6 +191,7 @@ public class Kunai : MonoBehaviour
         triggered = false;
         transform.position = Vector3.zero;
         buffered = false;
+        ready = true;
     }
 
     public void OnCollisionEnter2D(Collision2D col)
