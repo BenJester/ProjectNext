@@ -53,9 +53,10 @@ public class Enemy_Fly : Enemy
         if (currDashCD > 0) yield break;
         busy = true;
         exclamation.SetActive(true);
+        Vector2 dir = (target.transform.position - transform.position).normalized;
         yield return new WaitForSeconds(dashPreload);
         exclamation.SetActive(false);
-        Vector2 dir = (target.transform.position - transform.position).normalized;
+        
         float timer = 0f;
         while (timer < dashDuration)
         {
