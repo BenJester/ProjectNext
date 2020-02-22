@@ -15,6 +15,7 @@ public class Ti_Rocket : TriggerItem_Base
     public GameObject explosionAreaIndicator;
     Vector2 kickDir;
     Rigidbody2D my_rb;
+    public int damage;
 
     private float setSpeedTime = 0.1f;
     float setTimeTemp;
@@ -98,7 +99,7 @@ public class Ti_Rocket : TriggerItem_Base
             }
             if (col.CompareTag("thing") && col.GetComponent<Enemy>())
             {
-                col.GetComponent<Enemy>().TakeDamage(1);
+                col.GetComponent<Enemy>().TakeDamage(damage);
             }
         }
         GetComponent<Thing>().Die();

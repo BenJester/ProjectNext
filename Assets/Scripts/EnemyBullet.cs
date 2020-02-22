@@ -7,6 +7,8 @@ public class EnemyBullet : Bullet {
 //	public bool active;
 //	SpriteRenderer sr;
 //	Collider2D collider;
+
+public int damage;
 	PlayerControl pc;
     public bool floorCollide = true;
     //	GameObject player;
@@ -43,7 +45,7 @@ public class EnemyBullet : Bullet {
             {
                 if (col.GetComponent<Enemy>() != null)
                 {
-                    col.GetComponent<Enemy>().TakeDamage(1);
+                    col.GetComponent<Enemy>().TakeDamage(damage);
                 }
             }
 				
