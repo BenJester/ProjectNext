@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour{
     public float groundCheckBoxHeight = 60f;
     public LayerMask floorLayer = 8;
     protected Color originalColor;
-
+    protected Vector3 originalScale;
     private SpriteRenderer m_spRender;
 
     private UnityAction<int> m_takeDamageAct;
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour{
     protected void Start () {
         if (target == null) target = PlayerControl1.Instance.gameObject;
         hitClip = Resources.Load<AudioClip>("Sounds/Toy_PopGun_Shot");
-
+        originalScale = transform.localScale;
         exclamation = Instantiate(Resources.Load<GameObject>("exclamation"), Vector3.zero, Quaternion.identity, transform);
         exclamation.transform.localPosition = new Vector3(-40f, 40f, 0f);
         exclamation.SetActive(false);
@@ -164,7 +164,7 @@ public class Enemy : MonoBehaviour{
         transform.localScale = scale * 0.9f;
         yield return new WaitForSeconds(0.05f);
         m_spRender.color = hitColor;
-        transform.localScale = scale;
+        transform.localScale = originalScale;
         m_spRender.color = originalColor;
     }
 
