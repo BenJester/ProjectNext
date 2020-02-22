@@ -38,7 +38,7 @@ public class BagSystem : MonoBehaviour
         {
             if (items[index] == null)
             {
-                StartCoroutine(StartCollection());
+                Collect();
             }
             else
             {
