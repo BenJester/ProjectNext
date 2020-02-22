@@ -16,7 +16,17 @@ public class Enemy_Fly_Boss : MonoBehaviour
         StartCoroutine(Attack());
         StartCoroutine(Power());
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            atkInterval = 2.5f;
+            enemy.maxHealth = 300;
+            enemy.health = 300;
+            PlayerControl1.Instance.maxhp = 5;
+            PlayerControl1.Instance.hp = 5;
+        }
+    }
     IEnumerator Attack()
     {
         while (enemy.health > 0)

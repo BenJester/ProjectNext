@@ -647,7 +647,7 @@ MonoBehaviour:
   HasRepawnPoint: 1
   maxhp: 5
   hp: 5
-  speed: 400
+  speed: 580
   JumpingHorizontalUpMaxSpeed: 250
   JumpingHorizontalUpForce: 40000
   JumpingHorizontalDownMaxSpeed: 250
@@ -664,6 +664,7 @@ MonoBehaviour:
   groundCheckPoint5: {fileID: 2235296283841953177}
   slipperyMat: {fileID: 6200000, guid: 55e753de05c02462eaae2b6a311903f2, type: 2}
   roughMat: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
+  box: {fileID: 0}
   groundCheckRadius: 5
   waitTime: 5
   currWaitTime: 0
@@ -733,10 +734,10 @@ MonoBehaviour:
   dash: {fileID: 2198637840435433259}
   TouchLayer:
     serializedVersion: 2
-    m_Bits: 72960
+    m_Bits: 1121536
   LayerForLockObject:
     serializedVersion: 2
-    m_Bits: 5120
+    m_Bits: 1053696
   BoxLayer:
     serializedVersion: 2
     m_Bits: 4096

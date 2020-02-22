@@ -5,6 +5,12 @@ using UnityEngine;
 public class DanmakuBuff : MonoBehaviour
 {
     public bool isHeart;
+    AudioClip hitClip;
+    AudioSource source;
+    private void Start()
+    {
+        hitClip = Resources.Load<AudioClip>("Sounds/Toy_PopGun_Shot");
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,6 +30,7 @@ public class DanmakuBuff : MonoBehaviour
                 other.GetComponent<ThrowKunai>().kunai1.swapDamage += 1;
                 other.GetComponent<ThrowKunai>().kunai2.swapDamage += 1;
             }
+            PlayerControl1.Instance.GetComponent<AudioSource>().PlayOneShot(hitClip);
             Destroy(gameObject);
         }
         if (other.transform.CompareTag("floor"))
