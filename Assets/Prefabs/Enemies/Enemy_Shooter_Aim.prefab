@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 95309753182010976}
   - component: {fileID: 120648656255488736}
   - component: {fileID: 114376148912449892}
+  - component: {fileID: 256392328349989712}
   m_Layer: 10
   m_Name: Enemy_Shooter_Aim
   m_TagString: thing
@@ -328,6 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 977489776b71a8949889550fdb29ee4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeDamagedByKunaiDash: 1
+  target: {fileID: 0}
   thing: {fileID: 0}
   dropKillSpeed: 0
   goal: {fileID: 0}
@@ -349,3 +352,29 @@ MonoBehaviour:
   player: {fileID: 0}
   isInSight: 0
   lr: {fileID: 0}
+--- !u!114 &256392328349989712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453072108919176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df01d2d18728d04685e68e67621f769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropHurtSpeed: 800
+  canHurt: 1
+  isEnemy: 1
+  grounded: 0
+  groundCheckBoxHeight: 30
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 1280
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1026
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 513
