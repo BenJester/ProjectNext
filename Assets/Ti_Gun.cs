@@ -16,16 +16,13 @@ public class Ti_Gun : Ti_GunType
     void Start()
     {
         base.Start();
-        if (!isRight)
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //SetDirection();
     }
 
     public override void HandleKickTrigger()
@@ -38,6 +35,22 @@ public class Ti_Gun : Ti_GunType
         StartCoroutine(Shoot());
     }
 
+
+
+    //这个是修改枪械的代码
+    void SetDirection(){
+        if(canRotate && GetComponent<Rigidbody2D>().velocity.x!=0){
+            if(GetComponent<Rigidbody2D>().velocity.x>0) isRight =true;
+            else isRight=false;
+        }
+        if (!isRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+
+        }else {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+    }
     IEnumerator Shoot()
     {
 

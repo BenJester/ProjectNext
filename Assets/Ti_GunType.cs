@@ -9,6 +9,8 @@ public class Ti_GunType : TriggerItem_Base
     public Text ammoText;
     public int ammoMax;
     public int ammoNow;
+    
+    public bool canRotate = true;
     protected void Start()
     {
         ammoNow=ammoMax;
