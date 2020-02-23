@@ -118,6 +118,8 @@ public class Enemy_Melee : Enemy
             {
                 if (col.CompareTag("thing") && col.gameObject != gameObject)
                 {
+                    col.GetComponent<Thing>().TriggerMethod?.Invoke();
+
                     if (col.GetComponent<Enemy>() != null)
                         col.GetComponent<Enemy>().TakeDamage(1);
 
