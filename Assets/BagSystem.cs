@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BagSystem : MonoBehaviour
 {
@@ -18,10 +19,12 @@ public class BagSystem : MonoBehaviour
     public LayerMask colletLayer;
     public Image border;
     public Sprite empty;
+    public bool mouseSetPosition = true;
+    public bool RotateThing = false;
     void Start()
     {
         playerControl = PlayerControl1.Instance;
-        for (int i = 0; i < itemImages.Count; i ++)
+        for (int i = 0; i < itemImages.Count; i++)
         {
             if (items[i] != null)
                 itemImages[i].sprite = items[i].GetComponent<SpriteRenderer>().sprite;
@@ -50,7 +53,7 @@ public class BagSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             index = 0;
-            
+
 
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -66,24 +69,25 @@ public class BagSystem : MonoBehaviour
 
 
 
-    IEnumerator StartCollection(){
+    IEnumerator StartCollection()
+    {
         GameObject area = Instantiate(indicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
         area.GetComponent<SpriteRenderer>().size = new Vector2(collectRadius * 2, collectRadius * 2);
         area.transform.parent = transform;
         yield return new WaitForSeconds(0.1f);
-        area.GetComponent<SpriteRenderer>().color=Color.green;
-        Destroy(area,0.1f);
+        area.GetComponent<SpriteRenderer>().color = Color.green;
+        Destroy(area, 0.1f);
         Collect();
     }
-        
 
-    
+
+
     public void Collect()
     {
         if (items[index] != null) return;
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, collectRadius, colletLayer);
-       
+
 
         foreach (var item in cols)
         {
@@ -103,6 +107,7 @@ public class BagSystem : MonoBehaviour
 
     IEnumerator DoThrow(Rigidbody2D rb)
     {
+        Vector2 dir ;
         if (rb.GetComponent<Thing>().hasShield) yield break;
 
         int layer = rb.gameObject.layer;
@@ -110,19 +115,29 @@ public class BagSystem : MonoBehaviour
 
         items[index] = null;
         itemImages[index].sprite = empty;
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = (mouseWorldPos - (Vector2)playerControl.transform.position).normalized;
+
+
+        if (mouseSetPosition)
+        {
+            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            dir= (mouseWorldPos - (Vector2)playerControl.transform.position).normalized;
+        }else{
+            dir = Vector2.up;
+        }
         
-        
+
+
         //TODO: 旋转
-        
-        rb.transform.localRotation = Quaternion.Euler(0, 0, AngleBetween(Vector2.up, dir.normalized));
 
+        //rb.transform.localRotation = Quaternion.Euler(0, 0, AngleBetween(Vector2.up, dir.normalized));
 
-        rb.transform.position = playerControl.transform.position + (Vector3) dir * throwOffset;
-
+        if(RotateThing){
+            rb.transform.rotation = Quaternion.identity;
+            rb.DORotate(360f,1f);
+        }
+        rb.transform.position = playerControl.transform.position + (Vector3)dir * throwOffset;
         rb.gameObject.GetComponent<Rigidbody2D>().velocity = dir * throwSpeed;
-        
+
 
         yield return new WaitForSeconds(0.15f);
         rb.gameObject.layer = layer;
