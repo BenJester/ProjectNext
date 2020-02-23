@@ -396,6 +396,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dieParticle: {fileID: 0}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3810432768369898531}
+        m_MethodName: HandleKickTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   type: 3
   lowerY: 0
   upperY: 0
@@ -447,6 +461,8 @@ MonoBehaviour:
   ammoText: {fileID: 819415012}
   ammoMax: 5
   ammoNow: 0
+  canRotate: 1
+  timePreFire: 0
   isRight: 1
   bullet: {fileID: 5827292906236501389, guid: c06f9fe0aa1e6ae47a78dd73b7f07e8d, type: 3}
   bulletSpeed: 800

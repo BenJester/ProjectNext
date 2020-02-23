@@ -18,7 +18,7 @@ namespace Ben
 public class Thing : MonoBehaviour {
 
     public GameObject dieParticle;
-    
+    public UnityEvent TriggerMethod;
 	public Type type;
 	public float lowerY;
 	public float upperY;
