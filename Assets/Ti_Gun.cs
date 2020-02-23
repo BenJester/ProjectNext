@@ -6,7 +6,7 @@ public class Ti_Gun : Ti_GunType
 {
     // Start is called before the first frame update
 
-
+    public float timePreFire;
     public bool isRight = true;
     Vector2 direction;
     public GameObject bullet;
@@ -15,6 +15,13 @@ public class Ti_Gun : Ti_GunType
 
     void Start()
     {
+        if (!isRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+
+        }else {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
         base.Start();
         
     }
@@ -43,20 +50,14 @@ public class Ti_Gun : Ti_GunType
             if(GetComponent<Rigidbody2D>().velocity.x>0) isRight =true;
             else isRight=false;
         }
-        if (!isRight)
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-
-        }else {
-            GetComponent<SpriteRenderer>().flipX = false;
-        }
+        
     }
     IEnumerator Shoot()
     {
 
         if (ammoNow > 0)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(timePreFire);
             //Dir
             if (isRight) direction = transform.right;
             else direction = -transform.right;
