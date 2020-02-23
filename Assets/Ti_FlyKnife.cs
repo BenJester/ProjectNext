@@ -75,7 +75,11 @@ public class Ti_FlyKnife : TriggerItem_Base
     {
         if (col.collider.CompareTag("floor") || (col.collider.gameObject.layer == 12))
         {
-            my_rb.velocity = Vector2.zero;
+            if(my_rb.velocity.magnitude>100f){
+                my_rb.velocity = -my_rb.velocity;
+            //my_rb.velocity = Vector2.zero;
+            }
+            
 
         }
     }
