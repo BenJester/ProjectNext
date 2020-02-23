@@ -275,7 +275,7 @@ public class Swap : Skill {
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
                 thingBody.velocity = diff.normalized * swapSpeed;
             else
-                thingBody.velocity = new Vector2(0f, playerBody.velocity.y);
+                thingBody.velocity = new Vector2(0f, 250);
         }
         else
         {

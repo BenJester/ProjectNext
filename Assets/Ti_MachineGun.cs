@@ -6,7 +6,7 @@ public class Ti_MachineGun : Ti_GunType
 {
     // Start is called before the first frame update
 
-
+    public bool floatGun=false;
     public bool isRight = true;
     Vector2 direction;
     public GameObject bullet;
@@ -46,11 +46,15 @@ public class Ti_MachineGun : Ti_GunType
 
     IEnumerator Shoot()
     {
+
+        if(floatGun){
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        }
         //Dir
         if (isRight) direction = transform.right;
         else direction = -transform.right;
         int i = 0;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0f);
         while (i < times)
         {
             if (ammoNow > 0)
@@ -65,6 +69,10 @@ public class Ti_MachineGun : Ti_GunType
                 SetAmmo();
             }
             i++;
+        }
+
+        if(floatGun){
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
 
 
