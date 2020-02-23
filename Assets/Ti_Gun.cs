@@ -12,18 +12,20 @@ public class Ti_Gun : Ti_GunType
     public GameObject bullet;
     public float bulletSpeed;
     public float bulletInstanceDistance = 50f;
-
+    public float triggerDelay;
+    Color originalColor;
     void Start()
     {
+        originalColor = GetComponent<SpriteRenderer>().color;
         if (!isRight)
         {
             GetComponent<SpriteRenderer>().flipX = true;
 
-        }else {
+        } else {
             GetComponent<SpriteRenderer>().flipX = false;
         }
         base.Start();
-        
+
     }
 
     // Update is called once per frame
@@ -42,7 +44,21 @@ public class Ti_Gun : Ti_GunType
         StartCoroutine(Shoot());
     }
 
+    public void Trigger()
+    {
+        StartCoroutine(DoTrigger());
+    }
 
+    IEnumerator DoTrigger()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        
+        sr.color = Color.red;
+
+        yield return new WaitForSeconds(triggerDelay);
+        sr.color = originalColor;
+        StartCoroutine(Shoot());
+    }
 
     //这个是修改枪械的代码
     void SetDirection(){

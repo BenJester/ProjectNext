@@ -400,7 +400,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3810432768369898531}
-        m_MethodName: HandleKickTrigger
+        m_MethodName: Trigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -467,3 +467,4 @@ MonoBehaviour:
   bullet: {fileID: 5827292906236501389, guid: c06f9fe0aa1e6ae47a78dd73b7f07e8d, type: 3}
   bulletSpeed: 800
   bulletInstanceDistance: 80
+  triggerDelay: 0.3
