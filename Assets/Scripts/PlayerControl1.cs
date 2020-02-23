@@ -89,6 +89,8 @@ public class PlayerControl1 : PlayerControl {
     public GameObject toggleTarget;
     public List<GameObject> swappable;
     public int index;
+    
+    [Header("进入子弹时间的延迟")]
     public float DelaySwitchTime;
     [Header("激光枪射击，以角度计算锁定目标")]
     public bool laserBulletAngle = false;
@@ -1204,7 +1206,7 @@ public class PlayerControl1 : PlayerControl {
         if( TempObjectToCursor == cacheCursorTarget )
         {
             m_fTickWaitCursorTime += ( Time.deltaTime / Time.timeScale);
-            if(m_fTickWaitCursorTime >= GetWaitCursorTime() && !Input.GetMouseButton(1) && !Input.GetMouseButton(0))
+            if(m_fTickWaitCursorTime >= GetWaitCursorTime())
             {
                 closestObjectToCursor = cacheCursorTarget;
             }
@@ -1213,7 +1215,7 @@ public class PlayerControl1 : PlayerControl {
         {
             //Debug.Log(string.Format("cacheCursorTarget[{0}]", cacheCursorTarget));
             m_fTickWaitCursorTime = 0.0f;
-            if(TempObjectToCursor == null && cacheCursorTarget != null && !Input.GetMouseButton(1) && !Input.GetMouseButton(0))
+            if(TempObjectToCursor == null && cacheCursorTarget != null)
             {
                 closestObjectToCursor = cacheCursorTarget;
             }
