@@ -225,10 +225,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
   TriggerMethod:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7376209320153618812}
+        m_MethodName: Trigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   type: 3
   lowerY: 0
   upperY: 0
@@ -286,3 +298,4 @@ MonoBehaviour:
   explosionAreaIndicator: {fileID: 3207476323175709750, guid: 28925a799ab85564ea3d22a82350c7ca,
     type: 3}
   damage: 4
+  triggerDelay: 0.4

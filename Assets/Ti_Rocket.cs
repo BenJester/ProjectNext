@@ -17,7 +17,7 @@ public class Ti_Rocket : TriggerItem_Base
     Vector2 kickDir;
     Rigidbody2D my_rb;
     public int damage;
-
+    public float triggerDelay;
     private float setSpeedTime = 0.1f;
     float setTimeTemp;
 
@@ -37,10 +37,10 @@ public class Ti_Rocket : TriggerItem_Base
             speed+=accSpeed;
             if (setTimeTemp<Time.time)
             {
-                Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 34.5f);
+                Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 50f);
                 foreach (var col in cols)
                 {
-                    if (col.CompareTag("floor") || ((col.CompareTag("enemy"))) && col != GetComponent<Collider2D>())
+                    if (col.CompareTag("floor") || (col.gameObject.layer == 10 && col != GetComponent<Collider2D>()))
                     {
                         StartCoroutine(Explode());
                     }
@@ -80,9 +80,16 @@ public class Ti_Rocket : TriggerItem_Base
         
     }
 
+    public void Trigger()
+    {
+        StartCoroutine(DoTrigger());
+    }
 
-
-
+    IEnumerator DoTrigger()
+    {
+        yield return new WaitForSeconds(triggerDelay);
+        HandleSwapTrigger();
+    }
 
 
     IEnumerator Explode()
@@ -105,6 +112,8 @@ public class Ti_Rocket : TriggerItem_Base
             {
                 col.GetComponent<Enemy>().TakeDamage(damage);
             }
+            if (col.CompareTag("thing"))
+                col.GetComponent<Thing>().TriggerMethod?.Invoke();
         }
         GetComponent<Thing>().Die();
         Destroy(gameObject);
