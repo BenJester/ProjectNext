@@ -10,7 +10,7 @@ public class Ti_TimerBomb : TriggerItem_Base
     [Header("炸弹被点燃后爆炸的时间")]
 
     public float triggerTime = 3;
-    
+    public float triggerDelay;
     public float explosionRadius;
     public int damage = 1;
     private float tempTimer;
@@ -29,7 +29,7 @@ public class Ti_TimerBomb : TriggerItem_Base
          if(isTrigger && tempTimer <= Time.time){
             Explode();
             isTrigger = false;
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
@@ -48,13 +48,17 @@ public class Ti_TimerBomb : TriggerItem_Base
         tempTimer = Time.time + triggerTime;
     }
     
-    public void Explode()
+
+    IEnumerator DoExplode()
     {
-        if (triggered) return;
+        GetComponent<SpriteRenderer>().color = Color.red;
+
+        yield return new WaitForSeconds(triggerDelay);
+        
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
-        area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2,explosionRadius * 2);
+        area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2, explosionRadius * 2);
         Destroy(area, 0.1f);
         foreach (var col in cols)
         {
@@ -64,12 +68,20 @@ public class Ti_TimerBomb : TriggerItem_Base
             }
             if (col.CompareTag("thing") && col.GetComponent<Enemy>())
             {
-                col.GetComponent<Enemy>().TakeDamage(damage);              
+                col.GetComponent<Enemy>().TakeDamage(damage);
             }
+            if (col.CompareTag("thing") && col.GetComponent<Thing>().TriggerMethod != null)
+                col.GetComponent<Thing>().TriggerMethod.Invoke();
         }
-        triggered = true;
-        if (!thing.dead)
-            thing.Die(); 
         
+        if (!thing.dead)
+            thing.Die();
+    }
+
+    public void Explode()
+    {
+        if (triggered) return;
+        triggered = true;
+        StartCoroutine(DoExplode());
     }
 }

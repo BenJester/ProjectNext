@@ -48,11 +48,12 @@ public int damage;
                     col.GetComponent<Enemy>().TakeDamage(damage);
                 }
             }
-				
-			Deactivate ();
-				
+            col.GetComponent<Thing>().TriggerMethod?.Invoke();
 
-		} else if (col.CompareTag ("player")) {
+            Deactivate();
+
+
+        } else if (col.CompareTag ("player")) {
 			
 			pc.Die ();
 			Deactivate ();
