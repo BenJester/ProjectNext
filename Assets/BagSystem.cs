@@ -112,6 +112,13 @@ public class BagSystem : MonoBehaviour
         itemImages[index].sprite = empty;
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorldPos - (Vector2)playerControl.transform.position).normalized;
+        
+        
+        //TODO: 旋转
+        
+        rb.transform.localRotation = Quaternion.Euler(0, 0, AngleBetween(Vector2.up, dir.normalized));
+
+
         rb.transform.position = playerControl.transform.position + (Vector3) dir * throwOffset;
 
         rb.gameObject.GetComponent<Rigidbody2D>().velocity = dir * throwSpeed;
@@ -130,5 +137,18 @@ public class BagSystem : MonoBehaviour
     //        isCollect = false;
     //    }
     //}
+
+    public static float AngleBetween(Vector2 vectorA, Vector2 vectorB)
+    {
+        float angle = Vector2.Angle(vectorA, vectorB);
+        Vector3 cross = Vector3.Cross(vectorA, vectorB);
+
+        if (cross.z > 0)
+        {
+            angle = 360 - angle;
+        }
+
+        return angle;
+    }
 
 }
