@@ -16,7 +16,7 @@ namespace Ben
     }
 }
 public class Thing : MonoBehaviour {
-
+    public GameObject SpawnObjOnDie;
     public GameObject dieParticle;
     public UnityEvent TriggerMethod;
 	public Type type;
@@ -189,7 +189,12 @@ public class Thing : MonoBehaviour {
             playerControl.hp = 0;
         }
 
-        
+        if (SpawnObjOnDie != null)
+        {
+            GameObject obj = Instantiate(SpawnObjOnDie, transform.position, Quaternion.identity);
+            if (obj.CompareTag("thing"))
+                obj.GetComponent<Thing>().TriggerMethod?.Invoke();
+        }
 
         if (dead)
 			return;
