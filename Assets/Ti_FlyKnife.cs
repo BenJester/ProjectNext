@@ -11,9 +11,12 @@ public class Ti_FlyKnife : TriggerItem_Base
     Rigidbody2D my_rb;
     private float setSpeedTime = 0.1f;
     float setTimeTemp;
+    public float triggerDelay;
+    Color originalColor;
 
     void Start()
     {
+        originalColor = GetComponent<SpriteRenderer>().color;
         my_rb = GetComponent<Rigidbody2D>();
     }
 
@@ -63,7 +66,22 @@ public class Ti_FlyKnife : TriggerItem_Base
         my_rb.velocity = transform.right*speed;
 
     }
+    
+    public void Trigger()
+    {
+        StartCoroutine(DoTrigger());
+    }
 
+    IEnumerator DoTrigger()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        sr.color = Color.red;
+
+        yield return new WaitForSeconds(triggerDelay);
+        sr.color = originalColor;
+        HandleSwapTrigger();
+    }
 
     void Fly()
     {
@@ -77,9 +95,12 @@ public class Ti_FlyKnife : TriggerItem_Base
         {
             if(my_rb.velocity.magnitude>100f){
                 my_rb.velocity = -my_rb.velocity;
-            //my_rb.velocity = Vector2.zero;
+                if (col.gameObject.CompareTag("thing"))
+                    col.gameObject.GetComponent<Thing>().TriggerMethod?.Invoke();
+
+                //my_rb.velocity = Vector2.zero;
             }
-            
+
 
         }
     }

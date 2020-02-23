@@ -20,6 +20,8 @@ public class Enemy_Melee : Enemy
     public bool faceRight;
     Animator animator;
     Vector3 prevPos;
+    List<Collider2D> hitList;
+
     void Start()
     {
         base.Start();
@@ -96,6 +98,7 @@ public class Enemy_Melee : Enemy
         Collider2D[] cols = null;
         float currTime = 0f;
         body.velocity = new Vector2(faceRight ? dashSpeed : -dashSpeed, body.velocity.y);
+        hitList = new List<Collider2D>();
         while (currTime < dashDur)
         {
             
@@ -116,8 +119,12 @@ public class Enemy_Melee : Enemy
             if (thing.dead) yield break;
             foreach (var col in cols)
             {
+                if (hitList.Contains(col)) continue;
+                hitList.Add(col);
                 if (col.CompareTag("thing") && col.gameObject != gameObject)
                 {
+                    col.GetComponent<Thing>().TriggerMethod?.Invoke();
+
                     if (col.GetComponent<Enemy>() != null)
                         col.GetComponent<Enemy>().TakeDamage(1);
 
