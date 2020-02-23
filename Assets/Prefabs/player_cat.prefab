@@ -478,7 +478,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 1
   lowerY: 0
   upperY: 0
@@ -678,7 +682,7 @@ MonoBehaviour:
   toggleTarget: {fileID: 0}
   swappable: []
   index: 0
-  DelaySwitchTime: 0.2
+  DelaySwitchTime: 0.05
   laserBulletAngle: 0
   aimAngle: 0
   laserBullet: 1

@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFly: 0
+  damage: 4
 --- !u!1 &4183720033934475588
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
   TriggerMethod:
     m_PersistentCalls:

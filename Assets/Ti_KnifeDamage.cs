@@ -6,7 +6,7 @@ public class Ti_KnifeDamage : MonoBehaviour
 {
     private Rigidbody2D my_Rb;
     public bool isFly;
-
+    public int damage;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
@@ -27,7 +27,7 @@ public class Ti_KnifeDamage : MonoBehaviour
         }
         if (other.transform.CompareTag("thing") && other.transform.GetComponent<Enemy>() && isFly)
         {
-            other.transform.GetComponent<Enemy>().TakeDamage(1);
+            other.transform.GetComponent<Enemy>().TakeDamage(damage);
         }
     }
 }
