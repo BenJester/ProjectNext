@@ -9,9 +9,10 @@ public class Ti_Rocket : TriggerItem_Base
 
     public bool isTrigger = false;
     public float speed;
+    public float accSpeed;
     public float explosionRadius;
 
-
+    public GameObject triggerParticle;
     public GameObject explosionAreaIndicator;
     Vector2 kickDir;
     Rigidbody2D my_rb;
@@ -30,12 +31,10 @@ public class Ti_Rocket : TriggerItem_Base
     {
         if (isTrigger)
         {
-            my_rb.constraints = RigidbodyConstraints2D.None;
-            my_rb.velocity += kickDir * speed;
-            transform.localRotation = Quaternion.Euler(0, 0, Dash.AngleBetween(Vector2.up, kickDir.normalized));
+            my_rb.constraints=RigidbodyConstraints2D.FreezeRotation;
+            my_rb.velocity = transform.up*speed;
 
-
-
+            speed+=accSpeed;
             if (setTimeTemp<Time.time)
             {
                 Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 34.5f);
@@ -73,7 +72,12 @@ public class Ti_Rocket : TriggerItem_Base
     }
     public override void HandleSwapTrigger()
     {
-
+        
+        isTrigger = true;
+        GameObject temp =Instantiate(triggerParticle,transform.position,transform.rotation);
+        temp.transform.localScale*=0.7f;
+        Destroy(temp,1f);
+        
     }
 
 
@@ -85,7 +89,7 @@ public class Ti_Rocket : TriggerItem_Base
     {
         isTrigger = false;
         my_rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(explosionAreaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
