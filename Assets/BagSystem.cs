@@ -36,14 +36,16 @@ public class BagSystem : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(1))
         {
-            if (items[index] == null)
-            {
-                Collect();
-            }
-            else
-            {
-                Throw();
-            }
+            Throw();
+            Collect();
+            //if (items[index] == null)
+            //{
+            //    Collect();
+            //}
+            //else
+            //{
+            //    Throw();
+            //}
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

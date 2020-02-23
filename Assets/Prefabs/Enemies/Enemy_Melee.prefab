@@ -342,12 +342,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d442bf732f13f974499b02339eb82232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeDamagedByKunaiDash: 1
   target: {fileID: 0}
   thing: {fileID: 0}
   dropKillSpeed: 50
   goal: {fileID: 0}
-  maxHealth: 1
-  health: 1
+  maxHealth: 3
+  health: 3
   canShuaisi: 0
   groundCheckBoxHeight: 60
   floorLayer:
@@ -358,9 +359,11 @@ MonoBehaviour:
   hitboxWidth: 100
   hitboxHeight: 90
   hitboxOffset: 50
-  attackDelay: 0.4
+  attackDelay: 0.55
   attackPostDelay: 0.4
   idleDur: 1
+  dashDur: 0.17
+  dashSpeed: 900
   checkLayer:
     serializedVersion: 2
     m_Bits: 512

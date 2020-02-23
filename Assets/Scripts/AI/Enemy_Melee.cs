@@ -11,6 +11,8 @@ public class Enemy_Melee : Enemy
     public float attackDelay;
     public float attackPostDelay;
     public float idleDur;
+    public float dashDur;
+    public float dashSpeed;
     bool busy;
     Rigidbody2D body;
     public LayerMask checkLayer;
@@ -92,36 +94,45 @@ public class Enemy_Melee : Enemy
         animator.Play("Attack");
         yield return new WaitForSeconds(attackDelay);
         Collider2D[] cols = null;
-        if (faceRight)
-            cols = Physics2D.OverlapAreaAll
-                    (
-                        (Vector2)transform.position + new Vector2(-hitboxWidth / 2f + hitboxOffset, hitboxHeight / 2f),
-                        (Vector2)transform.position + new Vector2(hitboxWidth / 2f + hitboxOffset, -hitboxHeight / 2f),
-                        hitLayer
-                    );
-        else
-            cols = Physics2D.OverlapAreaAll
-                    (
-                        (Vector2)transform.position + new Vector2(-hitboxWidth / 2f - hitboxOffset, hitboxHeight / 2f),
-                        (Vector2)transform.position + new Vector2(hitboxWidth / 2f - hitboxOffset, -hitboxHeight / 2f),
-                        hitLayer
-                    );
-        if (thing.dead) yield break;
-        foreach (var col in cols)
+        float currTime = 0f;
+        body.velocity = new Vector2(faceRight ? dashSpeed : -dashSpeed, body.velocity.y);
+        while (currTime < dashDur)
         {
-            if (col.CompareTag("thing") && col.gameObject != gameObject)
+            
+            if (faceRight)
+                cols = Physics2D.OverlapAreaAll
+                        (
+                            (Vector2)transform.position + new Vector2(-hitboxWidth / 2f + hitboxOffset, hitboxHeight / 2f),
+                            (Vector2)transform.position + new Vector2(hitboxWidth / 2f + hitboxOffset, -hitboxHeight / 2f),
+                            hitLayer
+                        );
+            else
+                cols = Physics2D.OverlapAreaAll
+                        (
+                            (Vector2)transform.position + new Vector2(-hitboxWidth / 2f - hitboxOffset, hitboxHeight / 2f),
+                            (Vector2)transform.position + new Vector2(hitboxWidth / 2f - hitboxOffset, -hitboxHeight / 2f),
+                            hitLayer
+                        );
+            if (thing.dead) yield break;
+            foreach (var col in cols)
             {
-                if (col.GetComponent<Thing>().type != Ben.Type.box)
-                    col.GetComponent<Thing>().Die();
+                if (col.CompareTag("thing") && col.gameObject != gameObject)
+                {
+                    if (col.GetComponent<Enemy>() != null)
+                        col.GetComponent<Enemy>().TakeDamage(1);
 
 
+                }
+                else if (col.CompareTag("player"))
+                {
+
+                    PlayerControl1.Instance.Die();
+                }
             }
-            else if (col.CompareTag("player"))
-            {
-
-                PlayerControl1.Instance.Die();
-            }
+            currTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
+        body.velocity = new Vector2(0f, body.velocity.y);
         yield return new WaitForSeconds(attackPostDelay);
         busy = false;
     }
