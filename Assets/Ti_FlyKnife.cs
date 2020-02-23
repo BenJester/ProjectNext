@@ -27,27 +27,7 @@ public class Ti_FlyKnife : TriggerItem_Base
 
     void FixedUpdate()
     {
-        if (my_rb.velocity != Vector2.zero)
-        { my_rb.bodyType = RigidbodyType2D.Dynamic; }
-        if (isTrigger)
-        {
-            //my_rb.constraints = RigidbodyConstraints2D.None;
-            
-            transform.localRotation = Quaternion.Euler(0, 0, AngleBetween(Vector2.up, kickDir.normalized));
-
-
-            //检测墙壁停止
-            //RaycastHit2D hit2D = Physics2D.Raycast(transform.position, kickDir, 20, 1 << 8);
-            //if (hit2D)
-            //{
-            //    transform.position = (Vector2)transform.position + (Vector2)kickDir * 15;
-            //    my_rb.velocity = Vector2.zero;
-            //    my_rb.freezeRotation = true;
-            //    print("Hit");
-            //    //my_rb.bodyType=RigidbodyType2D.Static;
-            //    isTrigger = false;
-            //}
-        }
+        
     }
 
     public static float AngleBetween(Vector2 vectorA, Vector2 vectorB)
@@ -65,21 +45,23 @@ public class Ti_FlyKnife : TriggerItem_Base
 
     public override void HandleKickTrigger()
     {
-        //my_rb.bodyType = RigidbodyType2D.Kinematic;
-        //my_rb.freezeRotation = false;
-        //isTrigger = true;
+        // //my_rb.bodyType = RigidbodyType2D.Kinematic;
+        // //my_rb.freezeRotation = false;
+        // //isTrigger = true;
         
-        kickDir = my_rb.velocity.normalized;
-        //print("Kick!!");
+        // kickDir = my_rb.velocity.normalized;
+        // //print("Kick!!");
 
-        //防止误伤
-        setTimeTemp = Time.time + setSpeedTime;
-        my_rb.velocity = kickDir * speed;
+        // //防止误伤
+        // setTimeTemp = Time.time + setSpeedTime;
+        // my_rb.velocity = kickDir * speed;
     }
 
 
     public override void HandleSwapTrigger()
     {
+        my_rb.velocity = transform.right*speed;
+
     }
 
 
@@ -94,7 +76,7 @@ public class Ti_FlyKnife : TriggerItem_Base
         if (col.collider.CompareTag("floor") || (col.collider.gameObject.layer == 12))
         {
             my_rb.velocity = Vector2.zero;
-            my_rb.bodyType = RigidbodyType2D.Kinematic;
+
         }
     }
 

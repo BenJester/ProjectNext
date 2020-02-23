@@ -356,7 +356,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!61 &6474108430286600819
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -447,10 +447,12 @@ MonoBehaviour:
   ammoText: {fileID: 2053994268}
   ammoMax: 30
   ammoNow: 0
+  canRotate: 1
+  floatGun: 1
   isRight: 1
   bullet: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
-  times: 7
-  intervals: 0.1
-  recoil: 15
+  times: 10
+  intervals: 0.5
+  recoil: 5
   bulletSpeed: 1000
   bulletInstanceDistance: 50
