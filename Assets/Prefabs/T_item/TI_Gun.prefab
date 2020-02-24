@@ -114,7 +114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.5}
+  m_AnchoredPosition: {x: -2, y: 2.5}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1028273263
@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
   TriggerMethod:
     m_PersistentCalls:
@@ -459,9 +460,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoText: {fileID: 819415012}
-  ammoMax: 5
-  ammoNow: 0
-  canRotate: 1
+  ammoMax: 3
+  ammoNow: 3
+  canRotate: 0
   timePreFire: 0
   isRight: 1
   bullet: {fileID: 5827292906236501389, guid: c06f9fe0aa1e6ae47a78dd73b7f07e8d, type: 3}

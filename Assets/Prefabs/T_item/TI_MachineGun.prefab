@@ -356,7 +356,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &6474108430286600819
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -395,7 +395,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 3
   lowerY: 0
   upperY: 0
@@ -447,8 +451,8 @@ MonoBehaviour:
   ammoText: {fileID: 2053994268}
   ammoMax: 30
   ammoNow: 0
-  canRotate: 1
-  floatGun: 1
+  canRotate: 0
+  floatGun: 0
   isRight: 1
   bullet: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
   times: 10
