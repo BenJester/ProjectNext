@@ -20,7 +20,7 @@ public class AirJump : Skill
         {
             charge = maxCharge;
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
         {
             Do();
         }
@@ -29,7 +29,7 @@ public class AirJump : Skill
 
     public override bool Check()
     {
-        return !playerControl.canJump && charge > 0;
+        return !playerControl.isTouchingGround && charge > 0;
     }
 
     public override void Do()
