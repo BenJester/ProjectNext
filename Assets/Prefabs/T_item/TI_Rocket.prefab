@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1550551852}
   - component: {fileID: 1550551853}
   - component: {fileID: 4525717568242664264}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 100
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
   m_Interpolate: 0
@@ -327,7 +327,7 @@ MonoBehaviour:
   explosionAreaIndicator: {fileID: 3207476323175709750, guid: 28925a799ab85564ea3d22a82350c7ca,
     type: 3}
   damage: 4
-  triggerDelay: 0.4
+  triggerDelay: 0.1
   explodeDelay: 1
 --- !u!1 &8145818586298885556
 GameObject:
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 5422414117311113223}
   - component: {fileID: 4037968108795604306}
   - component: {fileID: 4956409988595324453}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
