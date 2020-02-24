@@ -133,7 +133,7 @@ public class BagSystem : MonoBehaviour
 
         if(RotateThing){
             rb.transform.rotation = Quaternion.identity;
-            rb.DORotate(360f,1f);
+            rb.DORotate(720f,2f);
         }
         rb.transform.position = playerControl.transform.position + (Vector3)dir * throwOffset;
         rb.gameObject.GetComponent<Rigidbody2D>().velocity = dir * throwSpeed;
