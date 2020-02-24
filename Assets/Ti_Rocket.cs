@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class Ti_Rocket : TriggerItem_Base
 {
-    // Start is called before the first frame update
-
-
     public bool isTrigger = false;
     public float speed;
     public float accSpeed;
     public float explosionRadius;
-
+    public BoxCollider2D triggerBox;
     public GameObject triggerParticle;
     public GameObject explosionAreaIndicator;
     Vector2 kickDir;
@@ -19,6 +16,7 @@ public class Ti_Rocket : TriggerItem_Base
     public int damage;
     public float triggerDelay;
     private float setSpeedTime = 0.1f;
+    public float explodeDelay;
     float setTimeTemp;
 
     void Start()
@@ -35,21 +33,21 @@ public class Ti_Rocket : TriggerItem_Base
             my_rb.velocity = transform.up*speed;
 
             speed+=accSpeed;
-            if (setTimeTemp<Time.time)
-            {
-                Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 50f);
-                foreach (var col in cols)
-                {
-                    if (col.CompareTag("floor") || (col.gameObject.layer == 10 && col != GetComponent<Collider2D>()))
-                    {
-                        StartCoroutine(Explode());
-                    }
+            //if (setTimeTemp<Time.time)
+            //{
+            //    Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 50f);
+            //    foreach (var col in cols)
+            //    {
+            //        if (col.CompareTag("floor") || (col.gameObject.layer == 10 && col != GetComponent<Collider2D>()))
+            //        {
+            //            StartCoroutine(Explode());
+            //        }
 
                     
 
-                }
+            //    }
 
-            }
+            //}
 
 
 
@@ -89,14 +87,16 @@ public class Ti_Rocket : TriggerItem_Base
     {
         yield return new WaitForSeconds(triggerDelay);
         HandleSwapTrigger();
+        GetComponent<SpriteRenderer>().color = Color.red;
     }
 
 
-    IEnumerator Explode()
+
+    public IEnumerator Explode()
     {
-        isTrigger = false;
-        my_rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(0.1f);
+        //isTrigger = false;
+        //my_rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(explodeDelay);
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(explosionAreaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
@@ -116,7 +116,6 @@ public class Ti_Rocket : TriggerItem_Base
                 col.GetComponent<Thing>().TriggerMethod?.Invoke();
         }
         GetComponent<Thing>().Die();
-        Destroy(gameObject);
     }
 
 }
