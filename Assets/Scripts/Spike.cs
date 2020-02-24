@@ -57,7 +57,7 @@ public class Spike : MonoBehaviour {
             }
             if (colThing.type == Type.player)
             {
-                colThing.GetComponent<PlayerControl1>().PlayerDieImmediately();
+                colThing.GetComponent<PlayerControl1>().Die();
                 //StartCoroutine(colThing.GetComponent<PlayerControl1>().DelayRestart());
             }
             if (colThing.type == Type.box)
