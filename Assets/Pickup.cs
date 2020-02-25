@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Pickup : TriggerItem_Base
+public class Pickup : MonoBehaviour,TriggerItem_Base
 {
     // Start is called before the first frame update
     public string pickupName;
@@ -25,7 +25,7 @@ public class Pickup : TriggerItem_Base
         
     }
 
-    public override void HandleKickTrigger(){
+    public  void HandleKickTrigger(){
         GameObject Object=Instantiate(triggerEffect,transform.position,Quaternion.identity);
         Object.transform.parent=null;
         for (int i = 0; i < count; i++)
@@ -37,7 +37,7 @@ public class Pickup : TriggerItem_Base
 
     }
 
-    public override void HandleSwapTrigger(){
+    public  void HandleSwapTrigger(){
         for (int i = 0; i < count; i++)
         {
             GameObject Object= Instantiate(instance,transform.position,Quaternion.identity);

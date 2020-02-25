@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_Gun : Ti_GunType
+public class Ti_Gun : Ti_GunType,TriggerItem_Base
 {
     // Start is called before the first frame update
 
@@ -14,8 +14,10 @@ public class Ti_Gun : Ti_GunType
     public float bulletInstanceDistance = 50f;
     public float triggerDelay;
     Color originalColor;
+    Rigidbody2D rb;
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         originalColor = GetComponent<SpriteRenderer>().color;
         if (!isRight)
         {
@@ -34,13 +36,16 @@ public class Ti_Gun : Ti_GunType
         //SetDirection();
     }
 
-    public override void HandleKickTrigger()
+    public void HandleKickTrigger()
     {
         StartCoroutine(Shoot());
     }
 
-    public override void HandleSwapTrigger()
+    public void HandleSwapTrigger()
     {
+
+        transform.SetParent(null);
+        rb.bodyType=RigidbodyType2D.Dynamic;
         StartCoroutine(Shoot());
     }
 
@@ -68,7 +73,7 @@ public class Ti_Gun : Ti_GunType
         }
         
     }
-    IEnumerator Shoot()
+    public IEnumerator Shoot()
     {
 
         if (ammoNow > 0)

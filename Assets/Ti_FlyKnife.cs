@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_FlyKnife : TriggerItem_Base
+public class Ti_FlyKnife : MonoBehaviour,TriggerItem_Base
 {
     // Start is called before the first frame update
     public bool isTrigger = false;
@@ -46,7 +46,7 @@ public class Ti_FlyKnife : TriggerItem_Base
         return angle;
     }
 
-    public override void HandleKickTrigger()
+    public  void HandleKickTrigger()
     {
         // //my_rb.bodyType = RigidbodyType2D.Kinematic;
         // //my_rb.freezeRotation = false;
@@ -61,7 +61,7 @@ public class Ti_FlyKnife : TriggerItem_Base
     }
 
 
-    public override void HandleSwapTrigger()
+    public  void HandleSwapTrigger()
     {
         my_rb.velocity = transform.right*speed;
 

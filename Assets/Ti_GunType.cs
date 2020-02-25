@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Ti_GunType : TriggerItem_Base
+public class Ti_GunType:MonoBehaviour
 {
     // Start is called before the first frame update
     public Text ammoText;

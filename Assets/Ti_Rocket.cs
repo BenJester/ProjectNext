@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_Rocket : TriggerItem_Base
+public class Ti_Rocket : MonoBehaviour,TriggerItem_Base
 {
     public bool isTrigger = false;
     public float speed;
@@ -59,7 +59,7 @@ public class Ti_Rocket : TriggerItem_Base
     }
 
 
-    public override void HandleKickTrigger()
+    public void HandleKickTrigger()
     {
         kickDir = my_rb.velocity.normalized;
         isTrigger = true;
@@ -68,7 +68,7 @@ public class Ti_Rocket : TriggerItem_Base
         setTimeTemp = Time.time + setSpeedTime;
 
     }
-    public override void HandleSwapTrigger()
+    public void HandleSwapTrigger()
     {
         
         isTrigger = true;

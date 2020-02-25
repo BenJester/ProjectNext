@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_MachineGun : Ti_GunType
+public class Ti_MachineGun : Ti_GunType,TriggerItem_Base
 {
     // Start is called before the first frame update
 
@@ -34,12 +34,12 @@ public class Ti_MachineGun : Ti_GunType
 
     }
 
-    public override void HandleKickTrigger()
+    public void HandleKickTrigger()
     {
         StartCoroutine(Shoot());
     }
 
-    public override void HandleSwapTrigger()
+    public void HandleSwapTrigger()
     {
         StartCoroutine(Shoot());
     }

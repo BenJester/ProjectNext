@@ -1,0 +1,78 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Com.LuisPedroFonseca.ProCamera2D;
+
+public class Ti_Missel : MonoBehaviour, TriggerItem_Base
+{
+    // Start is called before the first frame update
+
+    public bool isTrigger = false;
+    public Transform target;
+
+    public float speedAcc = 1f;
+    public float startSpeed = 0;
+    public float rotateSpeed = 200f;
+    public float explosionRadius;
+    public GameObject explosionAreaIndicator;
+    public int damage;
+
+    Rigidbody2D rb;
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (isTrigger)
+        {
+            Vector2 direction = (Vector2)target.position - rb.position;
+            direction.Normalize();
+            float rotateAmount = Vector3.Cross(direction, transform.up).z;
+            rb.angularVelocity = -rotateAmount * rotateSpeed;
+            rb.velocity = transform.up * startSpeed;
+            startSpeed += speedAcc;
+        }
+
+
+    }
+
+    public void HandleKickTrigger()
+    {
+
+    }
+
+    public void HandleSwapTrigger()
+    {
+
+    }
+
+    public IEnumerator Explode()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        ProCamera2DShake.Instance.Shake(0);
+
+        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+        GameObject area = Instantiate(explosionAreaIndicator, transform.position, Quaternion.identity);
+        area.transform.parent = null;
+        area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2, explosionRadius * 2);
+        Destroy(area, 0.1f);
+        foreach (var col in cols)
+        {
+            if (col.CompareTag("player"))
+            {
+                col.GetComponent<PlayerControl1>().Die();
+            }
+            if (col.CompareTag("thing") && col.GetComponent<Enemy>())
+            {
+                col.GetComponent<Enemy>().TakeDamage(damage);
+            }
+            if (col.CompareTag("thing"))
+                col.GetComponent<Thing>().TriggerMethod?.Invoke();
+        }
+        GetComponent<Thing>().Die();
+    }
+}

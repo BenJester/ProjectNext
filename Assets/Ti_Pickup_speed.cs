@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_Pickup_speed : TriggerItem_Base
+public class Ti_Pickup_speed : MonoBehaviour,TriggerItem_Base
 {
     // Start is called before the first frame update
     public int maxspeedup=100;
@@ -18,7 +18,7 @@ public class Ti_Pickup_speed : TriggerItem_Base
         
     }
 
-    public override void HandleKickTrigger(){
+    public  void HandleKickTrigger(){
         
         PlayerControl1.Instance.speed+=maxspeedup;
     
@@ -26,7 +26,7 @@ public class Ti_Pickup_speed : TriggerItem_Base
 
     }
 
-    public override void HandleSwapTrigger(){
+    public  void HandleSwapTrigger(){
        PlayerControl1.Instance.speed+=maxspeedup;
     
         Destroy(gameObject);

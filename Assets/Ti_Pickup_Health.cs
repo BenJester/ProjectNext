@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_Pickup_Health : TriggerItem_Base
+public class Ti_Pickup_Health : MonoBehaviour, TriggerItem_Base
 {
     // Start is called before the first frame update
     public int maxhpUp=1;
@@ -19,7 +19,7 @@ public class Ti_Pickup_Health : TriggerItem_Base
         
     }
 
-    public override void HandleKickTrigger(){
+    public  void HandleKickTrigger(){
         
         PlayerControl1.Instance.maxhp+=maxhpUp;
         PlayerControl1.Instance.hp+=hpRecover;
@@ -27,7 +27,7 @@ public class Ti_Pickup_Health : TriggerItem_Base
 
     }
 
-    public override void HandleSwapTrigger(){
+    public  void HandleSwapTrigger(){
         PlayerControl1.Instance.maxhp+=maxhpUp;
         PlayerControl1.Instance.hp+=hpRecover;
         Destroy(gameObject);

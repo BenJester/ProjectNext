@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ti_TimerBomb : TriggerItem_Base
+public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
 {
     [Header("炸弹被点燃")]
     public bool isTrigger = false;
@@ -33,11 +33,11 @@ public class Ti_TimerBomb : TriggerItem_Base
         }
     }
 
-    public override void HandleKickTrigger(){
+    public  void HandleKickTrigger(){
         if(!isTrigger) TriggerBomb();
         
     } 
-    public override void HandleSwapTrigger(){
+    public  void HandleSwapTrigger(){
         if(!isTrigger) TriggerBomb();
         
     } 
