@@ -11,6 +11,7 @@ public class Mech_BulletShooter : Mech_base
     public GameObject bulletToShoot;
     public float coolDown = 1f;
     public float bulletSpeed = 20f;
+    public Transform spawnPoint;
 
     [HideInInspector]
     public Enemy enemyInstance;
@@ -33,7 +34,7 @@ public class Mech_BulletShooter : Mech_base
     }
 
     void Shoot(){
-        GameObject bullet =  Instantiate(bulletToShoot,(Vector2)transform.position+Vector2.right*10,Quaternion.identity) as GameObject;
+        GameObject bullet =  Instantiate(bulletToShoot, spawnPoint.position, Quaternion.identity) as GameObject;
         if (bullet.GetComponent<Enemy>() != null)
         {
             enemyInstance = bullet.GetComponent<Enemy>();

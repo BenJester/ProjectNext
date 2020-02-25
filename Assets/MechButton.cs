@@ -45,7 +45,7 @@ public class MechButton : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if((!isPressed && collision.tag == "thing") || (!isPressed && collision.tag =="player"))
+        if((!isPressed && collision.tag == "thing") || (!isPressed && collision.tag =="player") || (!isPressed && collision.tag == "metal"))
         {
             isPressed = true;
             sr.sprite = clickSpr;
@@ -53,6 +53,7 @@ public class MechButton : MonoBehaviour
             if (cd <= 0)
             {
                 mech.DoOnce();
+                Debug.Log("~~");
                 if (onlyOnce)
                     Destroy(gameObject);
                 cd = 1;
