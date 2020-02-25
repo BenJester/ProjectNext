@@ -16,7 +16,7 @@ public class SwapPuzzleManager : MonoBehaviour
 
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
-        roomList = GetComponentsInChildren<SwapPuzzleRoom>();
+        //roomList = GetComponentsInChildren<SwapPuzzleRoom>();
         
     }
 

@@ -7,6 +7,8 @@ public class SwapPuzzlePlayerPosSet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SwapPuzzleManager.Instance.roomList = GetComponentsInChildren<SwapPuzzleRoom>();
+
         PlayerControl1.Instance.transform.position = SwapPuzzleManager.Instance.roomList[SwapPuzzleManager.Instance.currIndex].transform.position;
     }
 
