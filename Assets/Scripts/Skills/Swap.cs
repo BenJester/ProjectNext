@@ -310,8 +310,8 @@ public class Swap : Skill {
         //会触发Trigger Instance
         //TriggerInstanceEvent(_swapThing);
 
-        playerBody.velocity = Vector2.zero;
-        playerBody.gravityScale = 0f;
+        // playerBody.velocity = Vector2.zero;
+        // playerBody.gravityScale = 0f;
     }
 
 

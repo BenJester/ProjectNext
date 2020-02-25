@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangedDispearThing : Thing {
+public class ChangedDispearThing : Thing,TriggerItem_Base {
     private Vector2 originPos;
 
     public override void Start () {
@@ -14,8 +14,15 @@ public class ChangedDispearThing : Thing {
     public override void Update () {
         base.Update();
         if (originPos != (Vector2) transform.position) {
-            Die();
+            Destroy(gameObject);
         }
     }
 
+    public void HandleKickTrigger(){
+
+    }
+
+    public void HandleSwapTrigger(){
+        
+    }
 }

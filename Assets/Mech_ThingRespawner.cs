@@ -15,16 +15,20 @@ public class Mech_ThingRespawner : MonoBehaviour {
 
     void Update () {
 
+
+        _spawnObjectDestroy();
+        
         if (!hasRespawn) {
             nowEnergy += Time.deltaTime;
             
             if (nowEnergy >= respawnColdDown) {
                 respawnedThingInstance = Instantiate (respawnThing, transform.position, Quaternion.identity) as GameObject;
-                DestroyNotify _notify = respawnedThingInstance.gameObject.GetComponent<DestroyNotify>();
-                if(_notify != null)
-                {
-                    _notify.RegisteNotifyTarget(_spawnObjectDestroy);
-                }
+                
+                // DestroyNotify _notify = respawnedThingInstance.gameObject.GetComponent<DestroyNotify>();
+                // if(_notify != null)
+                // {
+                //     _notify.RegisteNotifyTarget(_spawnObjectDestroy);
+                // }
                 hasRespawn = true;
                 nowEnergy = 0;
             }
@@ -36,7 +40,7 @@ public class Mech_ThingRespawner : MonoBehaviour {
 
     private void _spawnObjectDestroy()
     {
-        if (respawnedThingInstance != null && respawnedThingInstance.GetComponent<Thing>().dead)
+        if (respawnedThingInstance == null)
         {
             hasRespawn = false;
         }
