@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 702026922568768715}
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 43, y: 333, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -142,7 +142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a80efedd03417394680723fcf3e2d3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 3
   lowerY: 0
   upperY: 0
@@ -156,5 +160,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
+  MomentumMass: 0
+  IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity

@@ -6,8 +6,7 @@ public class Mech_BulletShooter : Mech_base
 {
     // Start is called before the first frame update
 
-
-
+    public SpriteRenderer spriteR;
     public GameObject bulletToShoot;
     public float coolDown = 1f;
     public float bulletSpeed = 20f;
@@ -21,6 +20,7 @@ public class Mech_BulletShooter : Mech_base
     void Start()
     {
         timeTemp = Time.time;
+        spriteR.sprite=bulletToShoot.GetComponent<SpriteRenderer>().sprite;
     }
 
     // Update is called once per frame
