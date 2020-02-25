@@ -12,7 +12,7 @@ public class SwapPuzzleRoom : MonoBehaviour
         if (enemyList.Count == 0) return;
         foreach (var enemy in enemyList)
         {
-            if (!enemy.GetComponent<Thing>().dead)
+            if (enemy != null && !enemy.GetComponent<Thing>().dead)
                 return;
         }
         StartCoroutine(SwapPuzzleManager.Instance.Teleport());
