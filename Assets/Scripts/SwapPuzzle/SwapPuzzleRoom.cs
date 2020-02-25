@@ -12,6 +12,8 @@ public class SwapPuzzleRoom : MonoBehaviour
         if (enemyList.Count == 0) return;
         foreach (var enemy in enemyList)
         {
+            if (enemy == null)
+                return;
             if (enemy != null && !enemy.GetComponent<Thing>().dead)
                 return;
         }
