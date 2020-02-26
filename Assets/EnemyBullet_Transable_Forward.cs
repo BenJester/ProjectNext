@@ -31,6 +31,7 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour
 		if (col.CompareTag ("thing")) {
 			if (col.GetComponent<Thing> ().type != Type.box)
 				col.GetComponent<Thing> ().Die ();
+            col.GetComponent<Thing>().TriggerMethod?.Invoke();
 			Deactivate ();
 				
 

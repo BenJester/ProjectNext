@@ -247,7 +247,7 @@ public class Swap : Skill {
         }
         else
         {
-            _readySwapCol.gameObject.transform.position = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);
+            _readySwapCol.gameObject.transform.position = new Vector3(posPlayer.x, (posPlayer.y + heightDiff + 5f), posPlayer.z);
             player.transform.position = new Vector3(_posSwapThing.x, _posSwapThing.y - heightDiff, _posSwapThing.z);
             #region 交换效果1
             //Vector3 vecDstObj = new Vector3(posPlayer.x, _playerThing.GetLowerY() + playerRadiusY + heightDiff, posPlayer.z);

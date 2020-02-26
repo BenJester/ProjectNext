@@ -80,6 +80,8 @@ public class Thing : MonoBehaviour {
 		if (goalObject != null)
 			goal = goalObject.GetComponent<Goal>();
 
+        if (hasShield && GetComponentInChildren<Shield>() == null)
+            Instantiate(Resources.Load<GameObject>("shield"), transform.position, Quaternion.identity, transform);
 
         //HandleRewind();
 
