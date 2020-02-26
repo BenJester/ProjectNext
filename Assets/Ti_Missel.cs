@@ -6,7 +6,7 @@ using Com.LuisPedroFonseca.ProCamera2D;
 public class Ti_Missel : MonoBehaviour, TriggerItem_Base
 {
     // Start is called before the first frame update
-
+    public bool isAddVelocity=false;
     public bool isTrigger = false;
     public Transform target;
 
@@ -32,8 +32,14 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
             direction.Normalize();
             float rotateAmount = Vector3.Cross(direction, transform.up).z;
             rb.angularVelocity = -rotateAmount * rotateSpeed;
-            rb.velocity = transform.up * startSpeed;
-            startSpeed += speedAcc;
+            if(isAddVelocity){
+                rb.velocity += (Vector2)transform.up * speedAcc;
+            }else{
+                rb.velocity = (Vector2)transform.up * startSpeed;
+                startSpeed += speedAcc;
+            }
+            
+            
         }
 
 
