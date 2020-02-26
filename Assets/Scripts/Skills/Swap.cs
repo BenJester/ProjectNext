@@ -137,6 +137,7 @@ public class Swap : Skill {
         {
 
         }
+        Debug.Log(HandleEightDirInput());
     }
 
     public void SetPowerParticle(GameObject powerParticle){
@@ -280,7 +281,7 @@ public class Swap : Skill {
         else
         {
             playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-            m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+            m_cachePlayerVelocity = thingBody.velocity = (HandleEightDirInput() * 600f);
         }
         //
 
@@ -314,7 +315,61 @@ public class Swap : Skill {
         // playerBody.gravityScale = 0f;
     }
 
+    Vector2 HandleEightDirInput()
+    {
+        float h = (Input.GetKey(KeyCode.A) ? -1f : 0f) + (Input.GetKey(KeyCode.D) ? 1f : 0f);
+        float v = Input.GetKey(KeyCode.W) ? 1f : 0f;
+        return new Vector2(h, v).normalized;
+    }
 
+    Vector2 TruncateDirection(Vector2 v)
+    {
+
+        int truncatedAngle = ((int)(Angle(v) / 45f)) * 45;
+        Vector2 res = Vector2.zero;
+        switch (truncatedAngle)
+        {
+            case 0:
+                res = new Vector2(0f, 1f) * v.magnitude;
+                break;
+            case 45:
+                res = new Vector2(1f, 1f).normalized * v.magnitude;
+                break;
+            case 90:
+                res = new Vector2(1f, 0f).normalized * v.magnitude;
+                break;
+            case 135:
+                res = new Vector2(1f, -1f).normalized * v.magnitude;
+                break;
+            case 180:
+                res = new Vector2(0f, -1f).normalized * v.magnitude;
+                break;
+            case 225:
+                res = new Vector2(-1f, -1f).normalized * v.magnitude;
+                break;
+            case 270:
+                res = new Vector2(-1f, 0f).normalized * v.magnitude;
+                break;
+            case 315:
+                res = new Vector2(-1f, 1f).normalized * v.magnitude;
+                break;
+            default:
+                break;
+        }
+        return res;
+    }
+
+    public static float Angle(Vector2 p_vector2)
+    {
+        if (p_vector2.x < 0)
+        {
+            return 360 - (Mathf.Atan2(p_vector2.x, p_vector2.y) * Mathf.Rad2Deg * -1);
+        }
+        else
+        {
+            return Mathf.Atan2(p_vector2.x, p_vector2.y) * Mathf.Rad2Deg;
+        }
+    }
 
     //Swap 触发Trigger Instance
     void TriggerInstanceEvent(Thing swapThing){
