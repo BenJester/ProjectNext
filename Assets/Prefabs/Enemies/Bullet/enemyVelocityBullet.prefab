@@ -131,7 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 3
   lowerY: 0
   upperY: 0
@@ -187,4 +191,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9ca21647dc5184ba6b8cb105ff3f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorCollide: 0
+  floorCollide: 1

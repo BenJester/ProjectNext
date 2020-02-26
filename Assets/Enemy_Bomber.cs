@@ -185,7 +185,7 @@ public class Enemy_Bomber : Enemy, TriggerItem_Base
         GameObject bombTemp = Instantiate(bomb,(Vector2)transform.position+Vector2.up*20,Quaternion.identity);
         bombTemp.GetComponent<Rigidbody2D>().velocity = direction.normalized*throwSpeed;
         Ti_TimerBomb bombTi =  bombTemp.GetComponent<Ti_TimerBomb>();
-        bombTi.triggerTime=bombTriggerTime;
+        bombTi.triggerDelay=bombTriggerTime;
         bombTi.isTrigger=true;
 
     }
