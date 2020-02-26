@@ -133,9 +133,20 @@ public class Swap : Skill {
                 dashPointer.SetActive(false);
             }
         }
-        else
+        else if (momentumSwap)
         {
 
+            if (Input.GetMouseButton(0))
+            {
+                Vector2 dir = HandleEightDirInput();
+                dashPointer.SetActive(true);
+                dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
+                dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                dashPointer.SetActive(false);
+            }
         }
         Debug.Log(HandleEightDirInput());
     }
@@ -318,7 +329,7 @@ public class Swap : Skill {
     Vector2 HandleEightDirInput()
     {
         float h = (Input.GetKey(KeyCode.A) ? -1f : 0f) + (Input.GetKey(KeyCode.D) ? 1f : 0f);
-        float v = Input.GetKey(KeyCode.W) ? 1f : 0f;
+        float v = (Input.GetKey(KeyCode.S) ? -1f : 0f) + (Input.GetKey(KeyCode.W) ? 1f : 0f);
         return new Vector2(h, v).normalized;
     }
 
