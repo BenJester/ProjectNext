@@ -1763,7 +1763,7 @@ public class PlayerControl1 : PlayerControl {
         }
 
         spriteRenderer.color = hitColor;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         spriteRenderer.color = Color.white;
         invincible = false;
 
