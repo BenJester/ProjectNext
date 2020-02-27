@@ -28,8 +28,13 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col) {
 
+
+        
 		if (col.CompareTag ("thing")) {
-			if (col.GetComponent<Thing> ().type != Type.box)
+            if(col.GetComponent<Thing>().type==Type.enemy){
+                col.GetComponent<Enemy>().TakeDamage(2);
+            }
+			else if (col.GetComponent<Thing> ().type != Type.box)
 				col.GetComponent<Thing> ().Die ();
             col.GetComponent<Thing>().TriggerMethod?.Invoke();
 			Deactivate ();
