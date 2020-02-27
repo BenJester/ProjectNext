@@ -10,6 +10,7 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
     public bool isTrigger = false;
     public Transform target;
 
+    public float explosionDelay;
     public float speedAcc = 1f;
     public float startSpeed = 0;
     public float maxSpeed;
@@ -60,7 +61,8 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
 
     public IEnumerator Explode()
     {
-        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.black;
+        yield return new WaitForSeconds(explosionDelay);
 
         ProCamera2DShake.Instance.Shake(0);
 
