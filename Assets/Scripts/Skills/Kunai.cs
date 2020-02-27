@@ -82,7 +82,7 @@ public class Kunai : MonoBehaviour
 
     IEnumerator Dash(Vector3 pos)
     {
-        other.StopAllCoroutines();
+        //other.StopAllCoroutines();
         player.box.isTrigger = true;
         player.disableAirControl = true;
         player.rb.bodyType = RigidbodyType2D.Kinematic;
