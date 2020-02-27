@@ -86,6 +86,10 @@ public class Swap : Skill {
     public delegate void DropDelegate();
     public event OverheadDelegate OnDrop;
 
+    public float inputCancelDelay;
+    public Vector2 keyboardDir;
+
+
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -135,10 +139,11 @@ public class Swap : Skill {
         }
         else if (momentumSwap)
         {
-
+            HandleEightDirInput();
+            Debug.Log(keyboardDir);
             if (Input.GetMouseButton(0))
             {
-                Vector2 dir = HandleEightDirInput();
+                Vector2 dir = keyboardDir.normalized;
                 dashPointer.SetActive(true);
                 dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
                 dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
@@ -291,7 +296,7 @@ public class Swap : Skill {
         else
         {
             playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-            m_cachePlayerVelocity = thingBody.velocity = (HandleEightDirInput() * 600f);
+            m_cachePlayerVelocity = thingBody.velocity = keyboardDir.normalized * 600f;
         }
         //
 
@@ -325,11 +330,50 @@ public class Swap : Skill {
         // playerBody.gravityScale = 0f;
     }
 
-    Vector2 HandleEightDirInput()
+    void HandleEightDirInput()
     {
         float h = (Input.GetKey(KeyCode.A) ? -1f : 0f) + (Input.GetKey(KeyCode.D) ? 1f : 0f);
         float v = (Input.GetKey(KeyCode.S) ? -1f : 0f) + (Input.GetKey(KeyCode.W) ? 1f : 0f);
-        return new Vector2(h, v).normalized;
+        if (Input.GetKeyDown(KeyCode.A))
+            keyboardDir.x = -1f;
+        if (Input.GetKeyDown(KeyCode.D))
+            keyboardDir.x = 1f;
+        if (Input.GetKeyDown(KeyCode.W))
+            keyboardDir.y = 1f;
+        if (Input.GetKeyDown(KeyCode.S))
+            keyboardDir.y = -1f;
+        if (Input.GetKeyUp(KeyCode.A))
+            StartCoroutine(DelayedCancel(true));
+        if (Input.GetKeyUp(KeyCode.D))
+            StartCoroutine(DelayedCancel(true));
+        if (Input.GetKeyUp(KeyCode.W))
+            StartCoroutine(DelayedCancel(false));
+        if (Input.GetKeyUp(KeyCode.S))
+            StartCoroutine(DelayedCancel(false));
+        //return new Vector2(h, v).normalized;
+
+    }
+
+    IEnumerator DelayedCancel(bool x)
+    {
+        
+        yield return new WaitForSecondsRealtime(inputCancelDelay);
+        if (x)
+        {
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                keyboardDir = new Vector2(0f, keyboardDir.y);
+            }
+        }
+            
+        else
+        {
+            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
+            {
+                keyboardDir = new Vector2(keyboardDir.x, 0f);
+            }
+        }
+            
     }
 
     Vector2 TruncateDirection(Vector2 v)
