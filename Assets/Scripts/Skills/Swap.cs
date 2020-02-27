@@ -128,6 +128,7 @@ public class Swap : Skill {
             if (Input.GetMouseButton(0) && (Input.mousePosition - startingPoint).magnitude > directionSwapThreshold)
             {
                 Vector2 dir = (Input.mousePosition - startingPoint).normalized;
+                //Vector2 dir = (playerBody.velocity).normalized;
                 dashPointer.SetActive(true);
                 dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
                 dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
@@ -140,10 +141,12 @@ public class Swap : Skill {
         else if (momentumSwap)
         {
             HandleEightDirInput();
-            Debug.Log(keyboardDir);
+            //Debug.Log(keyboardDir);
             if (Input.GetMouseButton(0))
             {
-                Vector2 dir = keyboardDir.normalized;
+                //Vector2 dir = keyboardDir.normalized;
+                Vector2 dir = (playerBody.velocity).normalized;
+
                 dashPointer.SetActive(true);
                 dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
                 dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
@@ -296,7 +299,8 @@ public class Swap : Skill {
         else
         {
             playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-            m_cachePlayerVelocity = thingBody.velocity = keyboardDir.normalized * 600f;
+            //m_cachePlayerVelocity = thingBody.velocity = keyboardDir.normalized * 600f;
+            m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
         }
         //
 
