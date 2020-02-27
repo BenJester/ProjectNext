@@ -148,7 +148,6 @@ public class Swap : Skill {
                 dashPointer.SetActive(false);
             }
         }
-        Debug.Log(HandleEightDirInput());
     }
 
     public void SetPowerParticle(GameObject powerParticle){
