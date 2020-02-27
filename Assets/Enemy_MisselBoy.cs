@@ -191,12 +191,13 @@ public class Enemy_MisselBoy : Enemy, TriggerItem_Base
         if (thing.dead)
             return;
 
-        direction = PlayerControl1.Instance.transform.position - transform.position;
-        GameObject bombTemp = Instantiate(missel,(Vector2)transform.position+Vector2.up*20,Quaternion.identity);
-        bombTemp.GetComponent<Rigidbody2D>().velocity = Vector2.up.normalized*throwSpeed;
-        Ti_Missel bombTi =  bombTemp.GetComponent<Ti_Missel>();
-        bombTi.target=player;
-        bombTi.isTrigger=true;
+        direction = (PlayerControl1.Instance.transform.position - transform.position).normalized;
+        GameObject bombTemp = Instantiate(missel, (Vector2)transform.position + direction * 100, Quaternion.identity);
+        bombTemp.GetComponent<Rigidbody2D>().velocity = direction * throwSpeed;
+        Ti_Missel bombTi = bombTemp.GetComponent<Ti_Missel>();
+        bombTi.target = player;
+        bombTi.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, direction));
+        bombTi.isTrigger = true;
 
     }
     public bool CheckPlayerInPlainSight()

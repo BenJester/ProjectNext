@@ -12,6 +12,7 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
 
     public float speedAcc = 1f;
     public float startSpeed = 0;
+    public float maxSpeed;
     public float rotateSpeed = 200f;
     public float explosionRadius;
     public GameObject explosionAreaIndicator;
@@ -34,9 +35,11 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
             rb.angularVelocity = -rotateAmount * rotateSpeed;
             if(isAddVelocity){
                 rb.velocity += (Vector2)transform.up * speedAcc;
-            }else{
+                rb.velocity = Mathf.Clamp(rb.velocity.magnitude, 0f, maxSpeed) * rb.velocity.normalized;
+            }
+            else{
                 rb.velocity = (Vector2)transform.up * startSpeed;
-                startSpeed += speedAcc;
+                startSpeed = Mathf.Clamp(0f, startSpeed + speedAcc, maxSpeed);
             }
             
             
