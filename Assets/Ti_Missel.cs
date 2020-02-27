@@ -19,6 +19,7 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
     public GameObject explosionAreaIndicator;
     public int damage;
 
+    public GameObject explisionParticle;
     Rigidbody2D rb;
     void Start()
     {
@@ -66,7 +67,13 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
 
         ProCamera2DShake.Instance.Shake(0);
 
+
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+        GameObject smoke = Instantiate(explisionParticle,transform.position,Quaternion.identity);
+        smoke.transform.parent=null;
+        smoke.transform.localScale*=1.5f;
+        Destroy(smoke,1f);
+
         GameObject area = Instantiate(explosionAreaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
         area.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2, explosionRadius * 2);
