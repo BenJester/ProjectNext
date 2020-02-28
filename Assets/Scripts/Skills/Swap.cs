@@ -89,6 +89,7 @@ public class Swap : Skill {
     public float inputCancelDelay;
     public Vector2 keyboardDir;
     public bool canceled;
+    public bool triggerItemEvent;
 
     private void Start()
     {
@@ -336,7 +337,8 @@ public class Swap : Skill {
         HandleOverhead(_swapThing);
 
         //会触发Trigger Instance
-        //TriggerInstanceEvent(_swapThing);
+        if (triggerItemEvent)
+            TriggerInstanceEvent(_swapThing);
 
         // playerBody.velocity = Vector2.zero;
         // playerBody.gravityScale = 0f;

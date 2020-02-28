@@ -922,8 +922,9 @@ public class PlayerControl1 : PlayerControl {
         {
             m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
         }
-            
 
+        if (swap.canceled)
+            closestObjectToCursor = null;
     }
 
     public void DashRequestByPlayer()
@@ -1270,12 +1271,20 @@ public class PlayerControl1 : PlayerControl {
         if (closestObjectToCursor != null && _canUsingAim() == true) {
             //marker.transform.position = new Vector3(closestObjectToCursor.transform.position.x, closestObjectToCursor.transform.position.y, -1f);
             m_marker.UpdateTarget(closestObjectToCursor.transform);
+            if (swap.canceled)
+            {
+                CancelMarker(bAimingCancel);
+                return;
+            }
+
+            
             FourCornerHit();
             if (locked)
             {
                 lockedOnObjectLine.SetPosition(0, transform.position);
                 lockedOnObjectLine.SetPosition(1, swap.col.transform.position);
             }
+
             //m_bulletTime.ActiveBulletTime(true,BulletTime.BulletTimePriority.BulletTimePriority_Low);
         } else {
             CancelMarker(bAimingCancel);
