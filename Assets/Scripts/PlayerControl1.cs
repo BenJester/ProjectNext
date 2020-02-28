@@ -659,6 +659,7 @@ public class PlayerControl1 : PlayerControl {
         }
         //
         rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        
         //
         if (true == false && canJump == false && !disableAirControl)
         {
@@ -914,6 +915,8 @@ public class PlayerControl1 : PlayerControl {
         HandleShootSlowBullet();
 
         HandleToggleSwapTarget();
+
+        if (Input.GetKey(KeyCode.LeftShift)) rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
     }
     public void DashRequestByPlayer()
     {
