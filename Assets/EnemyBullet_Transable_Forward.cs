@@ -28,7 +28,8 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
     public void HandleSwapTrigger()
     {
         transform.GetComponent<Rigidbody2D>().velocity *= 2;
-        transform.DOScale(new Vector3(1.5f, 1.5f, 1),0.2f);
+        GetComponent<SpriteRenderer>().color = Color.red;
+        transform.DOScale(new Vector3(2f, 2f, 1),0.5f);
     }
 
     public void HandleKickTrigger()
@@ -62,7 +63,8 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
         }
         else if (col.CompareTag("floor") && floorCollide)
         {
-            Deactivate();
+
+            StartCoroutine(DelayDeavtive());
         }
 
     }
@@ -75,5 +77,10 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
         GetComponent<Collider2D>().enabled = false;
         GetComponent<TrailRenderer>().enabled = false;
         //rb.velocity = Vector2.zero;
+    }
+
+    IEnumerator DelayDeavtive(){
+        yield return new WaitForSeconds(0.2f);
+        Deactivate();
     }
 }
