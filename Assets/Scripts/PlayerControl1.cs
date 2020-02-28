@@ -932,7 +932,8 @@ public class PlayerControl1 : PlayerControl {
             m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
             CancelMarker(true);
             toggleTarget = null;
-            swap.canceled = true;
+            if (player.GetButton("Switch"))
+                swap.canceled = true;
         }
 
         if (player.GetButtonUp("Switch"))
