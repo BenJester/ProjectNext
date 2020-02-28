@@ -150,7 +150,7 @@ public class Swap : Skill {
         {
             HandleEightDirInput();
             //Debug.Log(keyboardDir);
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && !canceled)
             {
                 Vector2 dir = keyboardDir.normalized;
                 //Vector2 dir = (playerBody.velocity).normalized;
