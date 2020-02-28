@@ -119,7 +119,7 @@ public class Swap : Skill {
        // playerControl.SetColShadow();
 
     }
-    IEnumerator delayedRecoverCancel()
+    public IEnumerator delayedRecoverCancel()
     {
         yield return new WaitForSecondsRealtime(0.1f);
         canceled = false;
@@ -151,7 +151,7 @@ public class Swap : Skill {
         {
             HandleEightDirInput();
             //Debug.Log(keyboardDir);
-            if ((Input.GetMouseButton(0) || playerControl.player.GetAxisRaw("AimHorizontal") != 0) && !canceled)
+            if ((Input.GetMouseButton(0) || playerControl.player.GetAxisRaw("AimHorizontal") != 0 || playerControl.player.GetButton("Switch")) && !canceled)
             {
                 Vector2 dir = keyboardDir.normalized;
                 //Vector2 dir = (playerBody.velocity).normalized;
@@ -538,14 +538,12 @@ public class Swap : Skill {
             playerControl.targetDeltaTime = reducedTimeScale;
             realWaitTime = waitTime * Time.timeScale;
             curr = 0f;
-            Debug.Log("1");
             while (curr < realWaitTime)
             {
                 if (Input.GetMouseButtonUp(1))
                     break;
                 curr += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
-                Debug.Log("2");
             }
             Time.fixedDeltaTime = playerControl.startDeltaTime;
             playerControl.targetDeltaTime = playerControl.startDeltaTime;
@@ -553,7 +551,6 @@ public class Swap : Skill {
             Time.timeScale = 1f;
 			playerControl.targetTimeScale = 1f;
 		}
-        Debug.Log("3");
         delaying = false;
 		DoSwap ();
 	}

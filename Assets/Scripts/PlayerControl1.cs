@@ -851,7 +851,8 @@ public class PlayerControl1 : PlayerControl {
         {
             DashRequestByPlayer();
         }
-
+        if (player.GetButtonUp("Switch"))
+            Debug.Log("swi");
         // 左键子弹时间结束
 
         //处理按下的指示器
@@ -925,6 +926,18 @@ public class PlayerControl1 : PlayerControl {
 
         if (swap.canceled)
             closestObjectToCursor = null;
+
+        if (player.GetButtonUp("CancelLock"))
+        {
+            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+            CancelMarker(true);
+            toggleTarget = null;
+            if (player.GetButton("Switch"))
+                swap.canceled = true;
+        }
+
+        if (player.GetButtonUp("Switch"))
+            StartCoroutine(swap.delayedRecoverCancel());
     }
 
     public void DashRequestByPlayer()
@@ -1526,7 +1539,12 @@ public class PlayerControl1 : PlayerControl {
             HandleLaserChange();
             return;
         }
-
+        if (toggleSwapTarget)
+        {
+            if (!toggleTarget) return;
+            swap.Do();
+            return;
+        }
         if (lockLaserBullet)
         {
             HandleLockLaser();
@@ -1538,12 +1556,7 @@ public class PlayerControl1 : PlayerControl {
             return;
         }
 
-        if (toggleSwapTarget)
-        {
-            if (!toggleTarget) return;
-            swap.Do();
-            return;
-        }
+        
 
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -1891,6 +1904,15 @@ public class PlayerControl1 : PlayerControl {
         }
     }
 
+    bool justToggled;
+    bool toggleMode;
+
+    IEnumerator cancelToggled()
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
+        justToggled = false;
+    }
+
     //键盘切换锁定敌人
     void HandleToggleSwapTarget()
     {
@@ -1912,45 +1934,64 @@ public class PlayerControl1 : PlayerControl {
             }
         }
         // 根据x坐标排序
-        swappable.Sort((emp1, emp2) => emp1.transform.position.x.CompareTo(emp2.transform.position.x));
-
         if (swappable.Count == 0) return;
+        swappable.Sort((emp1, emp2) =>
+                       Vector3.Distance(emp1.transform.position, transform.position)
+            .CompareTo(Vector3.Distance(emp2.transform.position, transform.position)));
+        GameObject closestSwappable = swappable[0];
+        swappable.Sort((emp1, emp2) => emp1.transform.position.x.CompareTo(emp2.transform.position.x));
+        
 
-        if (!toggleTarget)
+        if (!toggleMode || !toggleTarget || !swappable.Contains(toggleTarget))
         {
-            toggleTarget = swappable[0];
+            toggleTarget = closestSwappable;
+            toggleMode = false;
         }
+            
 
-        if (!swappable.Contains(toggleTarget))
-        {
-            index = 0;
-            toggleTarget = swappable[0];
-            for (int i = 0; i < swappable.Count; i++)
-            {
-                if (swappable[i].transform.position.x > toggleTarget.transform.position.x)
-                    break;
-                toggleTarget = swappable[i];
-                index = i;
-            }
-        }
-        else
-        {
-            index = swappable.IndexOf(toggleTarget);
-        }
 
-        //if (Input.GetKeyUp(KeyCode.E)||player.GetButtonDown("LockLeft"))
+        //if (!toggleTarget)
         //{
-        //    if (index == swappable.Count - 1) index = -1;
-        //    toggleTarget = swappable[index + 1];
-        //    index += 1;
+        //    //toggleTarget = swappable[0];
+        //    toggleTarget = closestSwappable;
         //}
 
-        //if (Input.GetKeyUp(KeyCode.Q) || player.GetButtonDown("LockRight"))
+        //if (!swappable.Contains(toggleTarget))
         //{
-        //    if (index == 0) index = swappable.Count;
-        //    toggleTarget = swappable[index - 1];
-        //    index -= 1;
+        //    index = 0;
+        //    toggleTarget = swappable[0];
+        //    for (int i = 0; i < swappable.Count; i++)
+        //    {
+        //        if (swappable[i].transform.position.x > toggleTarget.transform.position.x)
+        //            break;
+        //        toggleTarget = swappable[i];
+        //        index = i;
+        //    }
         //}
+        //else
+        //{
+        //    index = swappable.IndexOf(toggleTarget);
+        //}
+        index = swappable.IndexOf(toggleTarget);
+        if (Input.GetKeyUp(KeyCode.E) || (player.GetAxisRaw("AimHorizontal") > 0.1f && !justToggled))
+        {
+            if (index == swappable.Count - 1) index = -1;
+            toggleTarget = swappable[index + 1];
+            index += 1;
+            justToggled = true;
+            StartCoroutine(cancelToggled());
+            toggleMode = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Q) || player.GetAxisRaw("AimHorizontal") < -0.1f && !justToggled)
+        {
+            if (index == 0) index = swappable.Count;
+            toggleTarget = swappable[index - 1];
+            index -= 1;
+            justToggled = true;
+            StartCoroutine(cancelToggled());
+            toggleMode = true;
+        }
 
         //marker.transform.position = new Vector3(toggleTarget.transform.position.x, toggleTarget.transform.position.y, -1f);
         m_marker.UpdateTarget(toggleTarget.transform);
