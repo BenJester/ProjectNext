@@ -827,10 +827,11 @@ public class PlayerControl1 : PlayerControl {
 
         // 左键子弹时间
         //Rewired------------------------------------------------------------
-        if ( (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true && currWaitTime >= waitTime )
-            || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)
+        if ( ((player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true && currWaitTime >= waitTime )
+            || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)) && !swap.canceled
             )
         {
+            
             m_bulletTime.SetCustomizeTime(Mathf.Min(Time.timeScale, dash.reducedTimeScale), dash.reducedTimeScale * startDeltaTime);
             m_bulletTime.DelayActive(DelaySwitchTime);
             //Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
@@ -917,7 +918,14 @@ public class PlayerControl1 : PlayerControl {
         HandleToggleSwapTarget();
 
         if (Input.GetKey(KeyCode.LeftShift)) rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        if (Input.GetMouseButtonUp(1))
+        {
+            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+        }
+            
+
     }
+
     public void DashRequestByPlayer()
     {
         dash.RequestDash();

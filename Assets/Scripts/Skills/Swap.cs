@@ -88,7 +88,7 @@ public class Swap : Skill {
 
     public float inputCancelDelay;
     public Vector2 keyboardDir;
-
+    public bool canceled;
 
     private void Start()
     {
@@ -103,7 +103,7 @@ public class Swap : Skill {
 
     public override void Do()
 	{
-        if (!active || !col || col.GetComponent<Thing>().dead /*|| !cooldowned*/)
+        if (!active || !col || col.GetComponent<Thing>().dead /*|| !cooldowned*/ || canceled)
         {
             return;
         }
@@ -118,9 +118,17 @@ public class Swap : Skill {
        // playerControl.SetColShadow();
 
     }
-
+    IEnumerator delayedRecoverCancel()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        canceled = false;
+    }
     private void Update()
     {
+        if (Input.GetMouseButtonUp(1))
+            canceled = true;
+        if (Input.GetMouseButtonUp(0))
+            StartCoroutine(delayedRecoverCancel());
         if (directionSwap)
         {
             if (Input.GetMouseButtonDown(0))
@@ -521,12 +529,14 @@ public class Swap : Skill {
             playerControl.targetDeltaTime = reducedTimeScale;
             realWaitTime = waitTime * Time.timeScale;
             curr = 0f;
+            Debug.Log("1");
             while (curr < realWaitTime)
             {
                 if (Input.GetMouseButtonUp(1))
                     break;
                 curr += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
+                Debug.Log("2");
             }
             Time.fixedDeltaTime = playerControl.startDeltaTime;
             playerControl.targetDeltaTime = playerControl.startDeltaTime;
@@ -534,6 +544,7 @@ public class Swap : Skill {
             Time.timeScale = 1f;
 			playerControl.targetTimeScale = 1f;
 		}
+        Debug.Log("3");
         delaying = false;
 		DoSwap ();
 	}
