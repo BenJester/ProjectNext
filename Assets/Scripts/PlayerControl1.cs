@@ -1942,7 +1942,7 @@ public class PlayerControl1 : PlayerControl {
         swappable.Sort((emp1, emp2) => emp1.transform.position.x.CompareTo(emp2.transform.position.x));
         
 
-        if (!toggleMode || !toggleTarget || !swappable.Contains(toggleTarget))
+        if ((!toggleMode || !toggleTarget || !swappable.Contains(toggleTarget)) && !player.GetButton("Switch"))
         {
             toggleTarget = closestSwappable;
             toggleMode = false;
