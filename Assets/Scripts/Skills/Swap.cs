@@ -144,8 +144,8 @@ public class Swap : Skill {
             //Debug.Log(keyboardDir);
             if (Input.GetMouseButton(0))
             {
-                //Vector2 dir = keyboardDir.normalized;
-                Vector2 dir = (playerBody.velocity).normalized;
+                Vector2 dir = keyboardDir.normalized;
+                //Vector2 dir = (playerBody.velocity).normalized;
 
                 dashPointer.SetActive(true);
                 dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
@@ -299,8 +299,8 @@ public class Swap : Skill {
         else
         {
             playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
-            //m_cachePlayerVelocity = thingBody.velocity = keyboardDir.normalized * 600f;
-            m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+            m_cachePlayerVelocity = thingBody.velocity = keyboardDir.normalized * 600f;
+            //m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
         }
         //
 

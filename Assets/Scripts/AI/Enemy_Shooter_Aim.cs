@@ -9,7 +9,6 @@ public class Enemy_Shooter_Aim : Enemy {
     [Space]
     [Header("静态敌人————会主动瞄准玩家进行射击")]
 
-	public int shootTimes=1;
     public bool aimNoCollider=false;
 	public float distance;
 	public GameObject bullet;
@@ -61,12 +60,12 @@ public class Enemy_Shooter_Aim : Enemy {
 		while (true) {
 			if (isInSight) {
 
-				yield return new WaitForSecondsRealtime ((shootInterval - animationPreload)/Time.timeScale);
 				animator.CrossFade ("Enemy_Shooter_Shot", 0.001f);
                 exclamation.SetActive(true);
                 yield return new WaitForSeconds (animationPreload);
 				Shoot ();
                 exclamation.SetActive(false);
+				yield return new WaitForSecondsRealtime ((shootInterval - animationPreload)/Time.timeScale);
             } else {
 				yield return null;
 			}
