@@ -151,7 +151,7 @@ public class Swap : Skill {
         {
             HandleEightDirInput();
             //Debug.Log(keyboardDir);
-            if (Input.GetMouseButton(0) && !canceled)
+            if ((Input.GetMouseButton(0) || playerControl.player.GetAxisRaw("AimHorizontal") != 0) && !canceled)
             {
                 Vector2 dir = keyboardDir.normalized;
                 //Vector2 dir = (playerBody.velocity).normalized;
@@ -160,7 +160,7 @@ public class Swap : Skill {
                 dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
                 dashPointer.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
             }
-            else if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(0) || playerControl.player.GetAxisRaw("AimHorizontal") == 0)
             {
                 dashPointer.SetActive(false);
             }
@@ -348,6 +348,7 @@ public class Swap : Skill {
     {
         float h = (Input.GetKey(KeyCode.A) ? -1f : 0f) + (Input.GetKey(KeyCode.D) ? 1f : 0f);
         float v = (Input.GetKey(KeyCode.S) ? -1f : 0f) + (Input.GetKey(KeyCode.W) ? 1f : 0f);
+
         if (Input.GetKeyDown(KeyCode.A))
             keyboardDir.x = -1f;
         if (Input.GetKeyDown(KeyCode.D))
@@ -356,6 +357,7 @@ public class Swap : Skill {
             keyboardDir.y = 1f;
         if (Input.GetKeyDown(KeyCode.S))
             keyboardDir.y = -1f;
+        
         if (Input.GetKeyUp(KeyCode.A))
             StartCoroutine(DelayedCancel(true));
         if (Input.GetKeyUp(KeyCode.D))
@@ -364,6 +366,11 @@ public class Swap : Skill {
             StartCoroutine(DelayedCancel(false));
         if (Input.GetKeyUp(KeyCode.S))
             StartCoroutine(DelayedCancel(false));
+
+        if (playerControl.controlState == PlayerControl1.ControlWay.isJoystick)
+        {
+            keyboardDir = new Vector2(playerControl.player.GetAxisRaw("MoveHorizontal"), playerControl.player.GetAxisRaw("MoveVertical"));
+        }
         //return new Vector2(h, v).normalized;
 
     }
