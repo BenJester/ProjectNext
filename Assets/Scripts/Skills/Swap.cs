@@ -677,45 +677,56 @@ public class Swap : Skill {
     {
         Smoke();
         Collider2D target = col;
-        //other.StopAllCoroutines();
-        playerControl.box.isTrigger = true;
+
+        playerControl.box.enabled = false;
         playerControl.disableAirControl = true;
-        playerControl.rb.bodyType = RigidbodyType2D.Kinematic;
+
         Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
 
         Vector3 prevPos = transform.position;
         Vector3 prevColPos = target.transform.position;
-        //target.transform.position = prevPos;
-        //target.transform.position = Vector3.zero + Vector3.up * 1000f;
-        target.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        target.GetComponent<BoxCollider2D>().isTrigger = true;
-        target.GetComponent<Rigidbody2D>().gravityScale = 0f;
+
+        Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
+        BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
+
+        float targetGravity = targetRb.gravityScale;
+        bool targetIsTrigger = targetBox.isTrigger;
+
+        targetBox.isTrigger = true;
+        targetRb.gravityScale = 0f;
         audioSource.PlayOneShot(clip, 0.8f);
         playerControl.rb.gravityScale = 0f;
-        //yield return new WaitForSeconds(Vector3.Distance(pos, player.transform.position) / dashSpeed);
+
         while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
         {
             playerControl.rb.velocity = (prevColPos - player.transform.position).normalized * dashSpeed;
-            target.GetComponent<Rigidbody2D>().velocity = -(prevColPos - player.transform.position).normalized * dashSpeed;
+            if (targetRb != null)
+                targetRb.velocity = -(prevColPos - player.transform.position).normalized * dashSpeed;
             yield return new WaitForEndOfFrame();
             ShadowPool.instance.GetFromPool();
         }
         playerControl.transform.position = prevColPos;
-        playerControl.box.isTrigger = false;
+        
         playerControl.disableAirControl = false;
         playerControl.rb.velocity = Vector2.zero;
         Smoke();
-        playerControl.rb.bodyType = RigidbodyType2D.Dynamic;
-        target.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        target.GetComponent<BoxCollider2D>().isTrigger = false;
-        Vector3 diff = Input.mousePosition - startingPoint;
 
-        if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
-            target.GetComponent<Rigidbody2D>().velocity = dir.normalized * swapSpeed;
-        else
-            target.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        if (targetRb != null)
+        {
+            targetBox.isTrigger = targetIsTrigger;
+            Vector3 diff = Input.mousePosition - startingPoint;
+
+            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
+                targetRb.velocity = dir.normalized * swapSpeed;
+            else
+                targetRb.velocity = Vector3.zero;
+            targetRb.gravityScale = targetGravity;
+            target.transform.position = prevPos;
+        }
+            
+
+
         playerControl.rb.gravityScale = 165f;
-        target.GetComponent<Rigidbody2D>().gravityScale = 165f;
-        target.transform.position = prevPos;
+        playerControl.box.enabled = true;
     }
 }
