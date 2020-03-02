@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Ben;
 public class MovableElasticThing : MonoBehaviour {
     // Start is called before the first frame update
 
@@ -12,9 +12,7 @@ public class MovableElasticThing : MonoBehaviour {
 
     private LineRenderer lr;
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
+    
     void Awake()
     {
         rb =GetComponent<Rigidbody2D>();
@@ -37,4 +35,28 @@ public class MovableElasticThing : MonoBehaviour {
             Debug.Log(string.Format("{0}", vec.normalized));
         }
     }
+
+  
+    public void OnTriggerEnter2D(Collider2D col) {
+
+		if (col.CompareTag ("thing")) {
+			if (col.GetComponent<Thing> ().type != Type.box && col.GetComponent<Thing>().type != Type.invincible)
+            {
+                if (col.GetComponent<Enemy>() != null)
+                {
+                    col.GetComponent<Enemy>().TakeDamage(2);
+                }
+            }
+            col.GetComponent<Thing>().TriggerMethod?.Invoke();
+
+            //Deactivate();
+
+
+        } else if (col.CompareTag ("player")) {
+			
+			PlayerControl1.Instance.Die ();
+			//Deactivate ();
+		}
+		
+	}
 }
