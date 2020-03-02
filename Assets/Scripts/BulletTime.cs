@@ -72,6 +72,8 @@ public class BulletTime : MonoBehaviour {
             {
                 Time.timeScale = m_fTimeScale;
                 Time.fixedDeltaTime = m_fFixedDeltaTime;
+                
+
             }
             else
             {

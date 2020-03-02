@@ -22,6 +22,7 @@ public class PlayerMarkerComponent : MonoBehaviour
         if (m_lastTrans != _curTrans)
         {
             m_lastTrans = _curTrans;
+            m_animator.speed /= Time.timeScale;
             m_animator.CrossFade("Focus", 0.001f);
         }
         transform.position = new Vector3(_curTrans.transform.position.x, _curTrans.transform.position.y, -1f);

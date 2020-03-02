@@ -73,6 +73,7 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
     {
 
         //active = false;
+        Destroy(gameObject);
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
         GetComponent<TrailRenderer>().enabled = false;
@@ -80,7 +81,7 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
     }
 
     IEnumerator DelayDeavtive(){
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         Deactivate();
     }
 }
