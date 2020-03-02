@@ -506,6 +506,7 @@ public class Swap : Skill {
 		if (!smokeOn)
 			return;
 		Vector3 pos = player.transform.position;
+        if (col == null) return;
 		Vector3 thingPos = col.transform.position;
 		GameObject par1 = Instantiate (smokeParticle, player.transform.position + smokeOffset, Quaternion.identity);
 		GameObject par2 = Instantiate (smokeParticle, thingPos + smokeOffset, Quaternion.identity);
