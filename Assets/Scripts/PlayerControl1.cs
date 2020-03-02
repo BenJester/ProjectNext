@@ -1233,16 +1233,18 @@ public class PlayerControl1 : PlayerControl {
             m_fTickWaitCursorTime += ( Time.deltaTime / Time.timeScale);
             if(m_fTickWaitCursorTime >= GetWaitCursorTime() )
             {
-                closestObjectToCursor = cacheCursorTarget;
+                if (!(swap.directionSwap && Input.GetMouseButton(0)))
+                    closestObjectToCursor = cacheCursorTarget;
             }
         }
         else
         {
             //Debug.Log(string.Format("cacheCursorTarget[{0}]", cacheCursorTarget));
             m_fTickWaitCursorTime = 0.0f;
-            if(TempObjectToCursor == null && cacheCursorTarget != null )
+            if (TempObjectToCursor == null && cacheCursorTarget != null )
             {
-                closestObjectToCursor = cacheCursorTarget;
+                if (!(swap.directionSwap && Input.GetMouseButton(0)))
+                    closestObjectToCursor = cacheCursorTarget;
             }
             TempObjectToCursor = cacheCursorTarget;
         }

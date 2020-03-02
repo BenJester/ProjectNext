@@ -136,7 +136,8 @@ public class Swap : Skill {
                 startingPoint = Input.mousePosition;
             if (Input.GetMouseButton(0) && (Input.mousePosition - startingPoint).magnitude > directionSwapThreshold)
             {
-                Vector2 dir = (Input.mousePosition - startingPoint).normalized;
+                //Vector2 dir = (Input.mousePosition - startingPoint).normalized;
+                Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
                 //Vector2 dir = (playerBody.velocity).normalized;
                 dashPointer.SetActive(true);
                 dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
@@ -176,7 +177,7 @@ public class Swap : Skill {
 	public void DoSwap ()
     {
         StartCoroutine (SwapDamageEffect ());
-
+        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         //屏幕震动	
         if (ProCamera2DShake.Instance != null)
         {
@@ -301,15 +302,16 @@ public class Swap : Skill {
         if (!momentumSwap)
         {
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
-                thingBody.velocity = diff.normalized * swapSpeed;
+                thingBody.velocity = dir.normalized * swapSpeed;
             else
                 thingBody.velocity = new Vector2(0f, 250);
         }
         else
         {
+            
             playerBody.velocity = new Vector2(playerBody.velocity.x, Mathf.Max(playerBody.velocity.y, 0f));
             m_cachePlayerVelocity = thingBody.velocity = keyboardDir.normalized * 600f;
-            //m_cachePlayerVelocity = thingBody.velocity = MomentumPlayer / _swapThing.MomentumMass;
+            
         }
         //
 
