@@ -672,9 +672,12 @@ public class Swap : Skill {
     }
 
     public float dashSpeed;
+    bool busy;
 
     IEnumerator DoDash()
     {
+        if (busy) yield break;
+        busy = true;
         Smoke();
         Collider2D target = col;
 
@@ -720,5 +723,6 @@ public class Swap : Skill {
         }
 
         playerControl.box.enabled = true;
+        busy = false;
     }
 }
