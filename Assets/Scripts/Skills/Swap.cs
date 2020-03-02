@@ -682,6 +682,7 @@ public class Swap : Skill {
         playerControl.disableAirControl = true;
 
         Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        Vector3 diff = Input.mousePosition - startingPoint;
 
         Vector3 prevPos = transform.position;
         Vector3 prevColPos = target.transform.position;
@@ -689,13 +690,10 @@ public class Swap : Skill {
         Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
 
-        float targetGravity = targetRb.gravityScale;
         bool targetIsTrigger = targetBox.isTrigger;
 
         targetBox.isTrigger = true;
-        targetRb.gravityScale = 0f;
         audioSource.PlayOneShot(clip, 0.8f);
-        playerControl.rb.gravityScale = 0f;
 
         while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
         {
@@ -708,25 +706,19 @@ public class Swap : Skill {
         playerControl.transform.position = prevColPos;
         
         playerControl.disableAirControl = false;
-        playerControl.rb.velocity = Vector2.zero;
+        playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
 
         if (targetRb != null)
         {
             targetBox.isTrigger = targetIsTrigger;
-            Vector3 diff = Input.mousePosition - startingPoint;
-
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
                 targetRb.velocity = dir.normalized * swapSpeed;
             else
                 targetRb.velocity = Vector3.zero;
-            targetRb.gravityScale = targetGravity;
             target.transform.position = prevPos;
         }
-            
 
-
-        playerControl.rb.gravityScale = 165f;
         playerControl.box.enabled = true;
     }
 }
