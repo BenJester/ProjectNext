@@ -11,15 +11,17 @@ public class EnemyBullet : Bullet {
 public int damage;
 	PlayerControl pc;
     public bool floorCollide = true;
+    float startSpeed;
     //	GameObject player;
     void Start () {
 		base.Start();
 //		player = GameObject.FindWithTag ("player");
 		pc = player.GetComponent<PlayerControl> ();
-//		sr = GetComponent<SpriteRenderer> ();
-//		collider = GetComponent<Collider2D> ();
+        //		sr = GetComponent<SpriteRenderer> ();
+        //		collider = GetComponent<Collider2D> ();
+        startSpeed = body.velocity.magnitude;
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -61,6 +63,9 @@ public int damage;
 		else if (col.CompareTag ("floor") && floorCollide) {
 			Deactivate ();
 		}
-
-	}
+        else if (col.CompareTag("metalShield") && floorCollide)
+        {
+            body.velocity = -body.velocity.normalized * startSpeed * 2f;
+        }
+    }
 }
