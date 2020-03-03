@@ -726,9 +726,11 @@ public class Swap : Skill {
             else
                 targetRb.velocity = Vector3.zero;
             target.transform.position = prevPos;
+
+            if (target.GetComponent<Enemy>() != null)
+                target.GetComponent<Enemy>().faceRight = !playerFaceRight;
         }
-        if (target.GetComponent<Enemy>() != null)
-            target.GetComponent<Enemy>().faceRight = !playerFaceRight;
+        
         playerControl.box.enabled = true;
         busy = false;
     }
