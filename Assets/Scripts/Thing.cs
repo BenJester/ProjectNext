@@ -19,6 +19,7 @@ public class Thing : MonoBehaviour {
     public GameObject SpawnObjOnDie;
     public GameObject dieParticle;
     public UnityEvent TriggerMethod;
+    public UnityEvent swapTriggerMethod;
 	public Type type;
 	public float lowerY;
 	public float upperY;

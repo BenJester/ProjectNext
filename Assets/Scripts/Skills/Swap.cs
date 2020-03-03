@@ -730,6 +730,7 @@ public class Swap : Skill {
             targetBox.enabled = true;
             if (target.GetComponent<Enemy>() != null)
                 target.GetComponent<Enemy>().faceRight = !playerFaceRight;
+            targetThing.swapTriggerMethod?.Invoke();
         }
         
         playerControl.box.enabled = true;

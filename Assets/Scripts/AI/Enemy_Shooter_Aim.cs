@@ -73,7 +73,7 @@ public class Enemy_Shooter_Aim : Enemy {
 
 	}
 
-	void Shoot () {
+	public void Shoot () {
 		if (thing.dead)
 			return;
 		GameObject newBullet = Instantiate (bullet, transform.position + bulletInstanceDistance * (Vector3) direction, Quaternion.identity);
