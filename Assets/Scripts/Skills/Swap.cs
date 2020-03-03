@@ -732,7 +732,7 @@ public class Swap : Skill {
                 target.GetComponent<Enemy>().faceRight = !playerFaceRight;
             targetThing.swapTriggerMethod?.Invoke();
         }
-        
+        playerControl.spriteRenderer.flipX = playerFaceRight;
         playerControl.box.enabled = true;
         busy = false;
     }
