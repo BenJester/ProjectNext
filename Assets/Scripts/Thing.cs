@@ -39,6 +39,7 @@ public class Thing : MonoBehaviour {
 	public float force = 25000f;
 
     public bool faceRight;
+    public bool swapping;
 
     public float MomentumMass;
 

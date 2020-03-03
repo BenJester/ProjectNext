@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour{
     private SpriteRenderer m_spRender;
     public bool faceRight;
     private UnityAction<int> m_takeDamageAct;
-
     bool justSawPlayer;
     public float sightDistance;
 

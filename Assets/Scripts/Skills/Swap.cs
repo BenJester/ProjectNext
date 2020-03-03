@@ -696,14 +696,15 @@ public class Swap : Skill {
 
         Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
+        Thing targetThing = target.GetComponent<Thing>();
 
         bool targetIsTrigger = targetBox.isTrigger;
 
-        targetBox.isTrigger = true;
+        targetBox.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
         float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
-
+        targetThing.swapping = true;
         while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
         {
             playerControl.rb.velocity = (prevColPos - player.transform.position).normalized * speed;
@@ -717,16 +718,16 @@ public class Swap : Skill {
         playerControl.disableAirControl = false;
         playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
-
+        targetThing.swapping = false;
         if (targetRb != null)
         {
-            targetBox.isTrigger = targetIsTrigger;
+            //targetBox.isTrigger = targetIsTrigger;
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
                 targetRb.velocity = dir.normalized * swapSpeed;
             else
                 targetRb.velocity = Vector3.zero;
             target.transform.position = prevPos;
-
+            targetBox.enabled = true;
             if (target.GetComponent<Enemy>() != null)
                 target.GetComponent<Enemy>().faceRight = !playerFaceRight;
         }

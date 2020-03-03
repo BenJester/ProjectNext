@@ -30,7 +30,7 @@ public class ShooterEnemy : Enemy {
 	void Shoot() {
 		if (thing.dead)
 			return;
-		GameObject newBullet = Instantiate (bullet, faceRight ? (transform.position + 40f * Vector3.right) : (transform.position + 30f * Vector3.left), Quaternion.identity);
+		GameObject newBullet = Instantiate (bullet, faceRight ? (transform.position + 60f * Vector3.right) : (transform.position + 60f * Vector3.left), Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
 		bulletBody.velocity = new Vector2(faceRight ? bulletSpeed : -bulletSpeed, 0f);
 
