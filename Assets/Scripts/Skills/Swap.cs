@@ -673,6 +673,8 @@ public class Swap : Skill {
     }
 
     public float dashSpeed;
+    public float dashDur;
+
     bool busy;
 
     IEnumerator DoDash()
@@ -699,11 +701,13 @@ public class Swap : Skill {
         targetBox.isTrigger = true;
         audioSource.PlayOneShot(clip, 0.8f);
 
+        float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
+
         while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
         {
-            playerControl.rb.velocity = (prevColPos - player.transform.position).normalized * dashSpeed;
+            playerControl.rb.velocity = (prevColPos - player.transform.position).normalized * speed;
             if (targetRb != null)
-                targetRb.velocity = -(prevColPos - player.transform.position).normalized * dashSpeed;
+                targetRb.velocity = -(prevColPos - player.transform.position).normalized * speed;
             yield return new WaitForEndOfFrame();
             ShadowPool.instance.GetFromPool();
         }
@@ -722,7 +726,8 @@ public class Swap : Skill {
                 targetRb.velocity = Vector3.zero;
             target.transform.position = prevPos;
         }
-
+        if (target.GetComponent<Enemy>() != null)
+            target.GetComponent<Enemy>().faceRight = !playerControl.spriteRenderer.flipX;
         playerControl.box.enabled = true;
         busy = false;
     }

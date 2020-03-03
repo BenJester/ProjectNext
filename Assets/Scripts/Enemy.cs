@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour{
     protected Color originalColor;
     protected Vector3 originalScale;
     private SpriteRenderer m_spRender;
-
+    public bool faceRight;
     private UnityAction<int> m_takeDamageAct;
 
     bool justSawPlayer;

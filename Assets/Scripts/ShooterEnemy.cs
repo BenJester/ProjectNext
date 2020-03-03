@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShooterEnemy : Enemy {
 
 	// Use this for initialization
-	public bool faceRight;
+	
 	public GameObject bullet;
 	public float bulletSpeed;
 	public float shootInterval = 1f;
@@ -36,7 +36,12 @@ public class ShooterEnemy : Enemy {
 
 	}
 
-	IEnumerator HandleShoot() {
+    private void Update()
+    {
+        GetComponent<SpriteRenderer>().flipX = faceRight;
+    }
+
+    IEnumerator HandleShoot() {
 		while (true) {
 			yield return new WaitForSeconds (shootInterval-animationPreload);
 			animator.CrossFade("Enemy_Shooter_Shot",0.001f);

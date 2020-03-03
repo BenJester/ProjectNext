@@ -38,6 +38,8 @@ public class Thing : MonoBehaviour {
 	public bool isDivedeDead=false;
 	public float force = 25000f;
 
+    public bool faceRight;
+
     public float MomentumMass;
 
     private UnityAction m_swapAction;
