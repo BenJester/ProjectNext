@@ -686,6 +686,7 @@ public class Swap : Skill {
 
         playerControl.box.enabled = false;
         playerControl.disableAirControl = true;
+        bool playerFaceRight = playerControl.spriteRenderer.flipX;
 
         Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         Vector3 diff = Input.mousePosition - startingPoint;
@@ -727,7 +728,7 @@ public class Swap : Skill {
             target.transform.position = prevPos;
         }
         if (target.GetComponent<Enemy>() != null)
-            target.GetComponent<Enemy>().faceRight = !playerControl.spriteRenderer.flipX;
+            target.GetComponent<Enemy>().faceRight = !playerFaceRight;
         playerControl.box.enabled = true;
         busy = false;
     }
