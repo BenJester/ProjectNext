@@ -63,6 +63,8 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
     public IEnumerator Explode()
     {
         GetComponent<SpriteRenderer>().color = Color.black;
+        rb.velocity = Vector2.zero;
+        isTrigger = false;
         yield return new WaitForSeconds(explosionDelay);
 
         ProCamera2DShake.Instance.Shake(0);
