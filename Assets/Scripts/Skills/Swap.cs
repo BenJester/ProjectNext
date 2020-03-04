@@ -688,7 +688,7 @@ public class Swap : Skill {
         Sprite playerSprite = playerControl.spriteRenderer.sprite;
         Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
         target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
-        playerControl.spriteRenderer.enabled = false;
+        playerControl.spriteRenderer.sprite = pokerSprite;
 
         playerControl.box.enabled = false;
         playerControl.disableAirControl = true;
@@ -710,21 +710,23 @@ public class Swap : Skill {
         targetBox.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
-        float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
+        //float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
         targetThing.swapping = true;
-        target.transform.position = prevPos;
-        player.transform.position = prevPos;
+        //target.transform.position = prevPos;
+        //player.transform.position = prevPos;
+        playerControl.spriteRenderer.GetComponent<Animator>().enabled = false;
         while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
         {
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            playerControl.spriteRenderer.sprite = pokerSprite;
+            playerControl.rb.velocity = (prevColPos - prevPos).normalized * dashSpeed;
             if (targetRb != null)
-                targetRb.velocity = (prevColPos - prevPos).normalized * speed;
+                targetRb.velocity = -(prevColPos - prevPos).normalized * dashSpeed;
             yield return new WaitForEndOfFrame();
             //ShadowPool.instance.GetFromPool();
 
         }
+        playerControl.spriteRenderer.GetComponent<Animator>().enabled = true;
         playerControl.transform.position = prevColPos;
-        playerControl.spriteRenderer.enabled = true;
         playerControl.disableAirControl = false;
         playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
