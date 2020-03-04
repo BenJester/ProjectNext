@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour{
     protected GameObject exclamation;
     public delegate void LoseHPDelegate(int lossHP);
     public event LoseHPDelegate OnLoseHP;
-    protected GameObject hpText;
+    public GameObject hpText;
     AudioClip hitClip;
 
     private void Awake()

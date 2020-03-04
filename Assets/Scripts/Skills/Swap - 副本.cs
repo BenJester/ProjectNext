@@ -4,7 +4,7 @@ using UnityEngine;
 using EZCameraShake;
 using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine.Rendering.PostProcessing;
-public class Swap : Skill {
+public class Swap1 : Skill {
 
     public bool swapDamageOn;
 	public int swapDamage;
@@ -676,7 +676,6 @@ public class Swap : Skill {
     public float dashDur;
 
     bool busy;
-    public Sprite pokerSprite;
 
     IEnumerator DoDash()
     {
@@ -684,11 +683,6 @@ public class Swap : Skill {
         busy = true;
         Smoke();
         Collider2D target = col;
-
-        Sprite playerSprite = playerControl.spriteRenderer.sprite;
-        Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
-        target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
-        playerControl.spriteRenderer.enabled = false;
 
         playerControl.box.enabled = false;
         playerControl.disableAirControl = true;
@@ -703,37 +697,36 @@ public class Swap : Skill {
         Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
         Thing targetThing = target.GetComponent<Thing>();
-        if (target.GetComponent<Enemy>() != null)
-            target.GetComponent<Enemy>().hpText.SetActive(false);
+        playerControl.spriteRenderer.enabled = false;
         bool targetIsTrigger = targetBox.isTrigger;
-
+        target.GetComponent<SpriteRenderer>().enabled = false;
         targetBox.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
         float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
         targetThing.swapping = true;
-        target.transform.position = prevPos;
-        player.transform.position = prevPos;
-        while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
-        {
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
-            if (targetRb != null)
-                targetRb.velocity = (prevColPos - prevPos).normalized * speed;
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
+        float curr = 0f;
         playerControl.transform.position = prevColPos;
+        while (curr < 0.3f)//Vector3.Distance(player.transform.position, prevColPos) > 65f)
+        {
+            playerControl.rb.velocity = Vector3.zero;// (prevColPos - player.transform.position).normalized * speed;
+            if (targetRb != null)
+                targetRb.velocity = Vector3.zero;//-(prevColPos - player.transform.position).normalized * speed;
+            yield return new WaitForEndOfFrame();
+            curr += Time.deltaTime;
+            //ShadowPool.instance.GetFromPool();
+        }
+        
         playerControl.spriteRenderer.enabled = true;
         playerControl.disableAirControl = false;
+        
+
         playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
         targetThing.swapping = false;
-        playerControl.spriteRenderer.sprite = playerSprite;
-        
         if (targetRb != null)
         {
-            target.GetComponent<SpriteRenderer>().sprite = targetSprite;
+            target.GetComponent<SpriteRenderer>().enabled = true;
             //targetBox.isTrigger = targetIsTrigger;
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
                 targetRb.velocity = dir.normalized * swapSpeed;
@@ -742,11 +735,7 @@ public class Swap : Skill {
             target.transform.position = prevPos;
             targetBox.enabled = true;
             if (target.GetComponent<Enemy>() != null)
-            {
                 target.GetComponent<Enemy>().faceRight = !playerFaceRight;
-                target.GetComponent<Enemy>().hpText.SetActive(true);
-            }
-                
             targetThing.swapTriggerMethod?.Invoke();
         }
         playerControl.spriteRenderer.flipX = playerFaceRight;
