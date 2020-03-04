@@ -23,6 +23,12 @@ public class Enemy_Shield : MonoBehaviour
     {
         if (enemy != null)
         {
+            if (thing.dead)
+            {
+                box.enabled = false;
+                return;
+            }
+                
             transform.localPosition = new Vector3(enemy.faceRight ? offsetX : -offsetX, transform.localPosition.y, transform.localPosition.z);
             sr.flipX = enemy.faceRight;
             if (thing.swapping)
