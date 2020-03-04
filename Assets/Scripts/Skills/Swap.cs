@@ -697,30 +697,36 @@ public class Swap : Skill {
         Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
         Thing targetThing = target.GetComponent<Thing>();
-
+        playerControl.spriteRenderer.enabled = false;
         bool targetIsTrigger = targetBox.isTrigger;
-
+        target.GetComponent<SpriteRenderer>().enabled = false;
         targetBox.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
         float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
         targetThing.swapping = true;
-        while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
-        {
-            playerControl.rb.velocity = (prevColPos - player.transform.position).normalized * speed;
-            if (targetRb != null)
-                targetRb.velocity = -(prevColPos - player.transform.position).normalized * speed;
-            yield return new WaitForEndOfFrame();
-            ShadowPool.instance.GetFromPool();
-        }
+        float curr = 0f;
         playerControl.transform.position = prevColPos;
+        while (curr < 0.25f)//Vector3.Distance(player.transform.position, prevColPos) > 65f)
+        {
+            playerControl.rb.velocity = Vector3.zero;// (prevColPos - player.transform.position).normalized * speed;
+            if (targetRb != null)
+                targetRb.velocity = Vector3.zero;//-(prevColPos - player.transform.position).normalized * speed;
+            yield return new WaitForEndOfFrame();
+            curr += Time.deltaTime;
+            //ShadowPool.instance.GetFromPool();
+        }
         
+        playerControl.spriteRenderer.enabled = true;
         playerControl.disableAirControl = false;
+        
+
         playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
         targetThing.swapping = false;
         if (targetRb != null)
         {
+            target.GetComponent<SpriteRenderer>().enabled = true;
             //targetBox.isTrigger = targetIsTrigger;
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
                 targetRb.velocity = dir.normalized * swapSpeed;
