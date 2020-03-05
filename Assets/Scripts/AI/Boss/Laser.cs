@@ -8,7 +8,7 @@ public class Laser : MonoBehaviour
     int damage = 1;
     public SpriteRenderer sr;
     public bool damageOn;
-    void Start()
+    void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
 
@@ -26,10 +26,7 @@ public class Laser : MonoBehaviour
         {
             col.GetComponent<PlayerControl1>().Die();
         }
-        if (col.CompareTag("thing") && col.GetComponent<Enemy>())
-        {
-            col.GetComponent<Enemy>().TakeDamage(damage);
-        }
+
         if (col.CompareTag("thing") && col.GetComponent<Thing>().TriggerMethod != null)
             col.GetComponent<Thing>().TriggerMethod.Invoke();
     }
