@@ -9,9 +9,10 @@ public class MissileBossAttack : StateMachineBehaviour
     public int stage1LaserNum;
     public int stage2LaserNum;
     public int stage3LaserNum;
-    public GameObject laser1;
-    public GameObject laser2;
-    public GameObject laser3;
+    public LaserRotation laser1;
+    public LaserRotation laser2;
+    public LaserRotation laser3;
+    public LaserRotation currLaser;
     public float laserRotateSpeed;
     public float laserPreload;
     public float laserDur;
@@ -31,7 +32,7 @@ public class MissileBossAttack : StateMachineBehaviour
         float timer = 0f;
         while (timer < laserDur)
         {
-
+            currLaser
         }
         yield break;
     }
@@ -39,7 +40,18 @@ public class MissileBossAttack : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rb = animator.GetComponent<Rigidbody2D>();
-
+        if (animator.GetInteger("Stage") == 1)
+        {
+            currLaser = laser1;
+        }
+        else if (animator.GetInteger("Stage") == 2)
+        {
+            currLaser = laser2;
+        }
+        else if(animator.GetInteger("Stage") == 3)
+        {
+            currLaser = laser3;
+        }
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
