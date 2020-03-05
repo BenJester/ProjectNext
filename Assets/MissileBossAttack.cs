@@ -23,7 +23,7 @@ public class MissileBossAttack : StateMachineBehaviour
     public float throwSpeed;
     Animator animator;
     MissileBoss boss;
-    
+    LaserRotation actualLaser;
     IEnumerator Rise()
     {
         Debug.Log("rise0");
@@ -89,6 +89,7 @@ public class MissileBossAttack : StateMachineBehaviour
 
     IEnumerator Laser()
     {
+        actualLaser = currLaser;
         currLaser.Warning();
         yield return new WaitForSeconds(laserWarningTime);
         currLaser.Damage();
@@ -121,7 +122,7 @@ public class MissileBossAttack : StateMachineBehaviour
         else if(animator.GetInteger("Stage") == 3)
         {
             currLaser = boss.laser3;
-            times = 1;
+            times = 3;
         }
         PlayerControl1.Instance.StartCoroutine(Rise());
     }
@@ -133,7 +134,6 @@ public class MissileBossAttack : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
     }
 
 }

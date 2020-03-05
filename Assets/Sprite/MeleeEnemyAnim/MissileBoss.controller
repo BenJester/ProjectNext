@@ -115,7 +115,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Stage 3 Attack
-  m_Speed: 0.01
+  m_Speed: 0.008
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6444671944329807525}
@@ -135,6 +135,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &-4819357579621928104
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: Stage
+    m_EventTreshold: 3
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 3400948055612332764}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1102 &-3871285339334991621
 AnimatorState:
   serializedVersion: 5
@@ -294,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26705375c8b95eb488c2dd606d445e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riseSpeed: 250
+  riseSpeed: 350
   currLaser: {fileID: 0}
   laserWarningTime: 2
   laserRotateSpeed: 1
@@ -373,15 +398,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26705375c8b95eb488c2dd606d445e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riseSpeed: 300
+  riseSpeed: 400
   currLaser: {fileID: 0}
   laserWarningTime: 2
   laserRotateSpeed: 1
   laserPreload: 1
   laserDur: 10
   laserPostload: 2
-  times: 1
-  interval: 1
+  times: 3
+  interval: 0.7
   throwSpeed: 20
 --- !u!1102 &4882802664595818293
 AnimatorState:
@@ -391,10 +416,11 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Stage 1 Attack
-  m_Speed: 0.01
+  m_Speed: 0.009
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7881708589748413460}
+  - {fileID: 7696257438753864050}
   m_StateMachineBehaviours:
   - {fileID: 8205370910380428468}
   m_Position: {x: 50, y: 50, z: 0}
@@ -419,10 +445,11 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Stage 2 Attack
-  m_Speed: 0.01
+  m_Speed: 0.009
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2570385611420683882}
+  - {fileID: -4819357579621928104}
   m_StateMachineBehaviours:
   - {fileID: 2565018852923724616}
   m_Position: {x: 50, y: 50, z: 0}
@@ -459,7 +486,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -477,6 +504,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPreload: 1
+--- !u!1101 &7696257438753864050
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: Stage
+    m_EventTreshold: 2
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -3871285339334991621}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.0817942
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!114 &8052711469303285293
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -502,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26705375c8b95eb488c2dd606d445e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riseSpeed: 200
+  riseSpeed: 300
   currLaser: {fileID: 0}
   laserWarningTime: 2
   laserRotateSpeed: 1

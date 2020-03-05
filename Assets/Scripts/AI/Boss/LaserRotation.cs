@@ -9,6 +9,8 @@ public class LaserRotation : MonoBehaviour
     public List<Laser> lasers;
     public Color warningColor;
     public Color damageColor;
+    public Animator bossAnimator;
+    public int stage;
 
     void Start()
     {
@@ -44,5 +46,8 @@ public class LaserRotation : MonoBehaviour
     void Update()
     {
         transform.Rotate(Vector3.forward * rotationSpeed);
+        int bossStage = bossAnimator.GetInteger("Stage");
+        if (bossStage != stage)
+            Close();
     }
 }
