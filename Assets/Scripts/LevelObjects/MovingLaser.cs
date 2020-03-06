@@ -6,6 +6,9 @@ using UnityEngine;
 public class MovingLaser : MonoBehaviour
 {
     public bool active = true;
+
+
+   
     public Vector2 dir;
     public float shootDistance;
     public Transform moveTarget;
@@ -19,6 +22,15 @@ public class MovingLaser : MonoBehaviour
     LineRenderer lr;
     public LayerMask hitLayer;
     Rigidbody2D rb;
+
+
+
+    [Space]
+    [Header("开关切换的参数")]
+    public bool isIntervalsLaser=false;
+    public float interval;
+
+
     void Start()
     {
         lr = GetComponent<LineRenderer>();
@@ -26,6 +38,8 @@ public class MovingLaser : MonoBehaviour
         start = moveStart.position;
         finish = moveTarget.position;
         currTarget = finish;
+
+        if(isIntervalsLaser) StartCoroutine(IntervalLaser());
     }
 
     // Update is called once per frame
@@ -68,6 +82,13 @@ public class MovingLaser : MonoBehaviour
         {
             transform.position = currTarget;
             currTarget = currTarget == start ? finish : start;
+        }
+    }
+
+    IEnumerator IntervalLaser(){
+        while(true){
+            active = !active;
+            yield return new WaitForSeconds(interval);
         }
     }
 }
