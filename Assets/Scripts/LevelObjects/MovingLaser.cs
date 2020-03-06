@@ -9,7 +9,7 @@ public class MovingLaser : MonoBehaviour
 
 
    
-    public Vector2 dir;
+     Vector2 dir;
     public float shootDistance;
     public Transform moveTarget;
     public Transform moveStart;
@@ -38,6 +38,8 @@ public class MovingLaser : MonoBehaviour
         start = moveStart.position;
         finish = moveTarget.position;
         currTarget = finish;
+
+        dir = transform.up;
 
         if(isIntervalsLaser) StartCoroutine(IntervalLaser());
     }
