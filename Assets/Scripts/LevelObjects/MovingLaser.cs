@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MovingLaser : MonoBehaviour
 {
+    public bool active = true;
     public Vector2 dir;
     public float shootDistance;
     public Transform moveTarget;
@@ -36,6 +37,13 @@ public class MovingLaser : MonoBehaviour
 
     void HandleRay()
     {
+        if (!active)
+        {
+            lr.enabled = false;
+            return;
+        }
+        
+        lr.enabled = true;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, shootDistance, hitLayer);
         lr.SetPosition(1, hit.point);
         lr.SetPosition(0, transform.position);
