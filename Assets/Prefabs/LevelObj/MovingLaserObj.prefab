@@ -103,7 +103,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6b16bddcd63c198469c129989b129ca1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.95132554, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e55997a75efda40a497ac2350fc2f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dir: {x: 0, y: -1}
+  active: 1
   shootDistance: 2000
   moveTarget: {fileID: 6593611171619408990}
   moveStart: {fileID: 360219926308586500}
@@ -168,6 +168,8 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 5888
+  isIntervalsLaser: 0
+  interval: 0
 --- !u!120 &6593611172611441158
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -301,7 +303,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6b16bddcd63c198469c129989b129ca1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -404,7 +406,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6b16bddcd63c198469c129989b129ca1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.95132554, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

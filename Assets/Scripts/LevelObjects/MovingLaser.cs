@@ -22,6 +22,7 @@ public class MovingLaser : MonoBehaviour
     LineRenderer lr;
     public LayerMask hitLayer;
     Rigidbody2D rb;
+    SpriteRenderer sr;
 
 
 
@@ -29,12 +30,14 @@ public class MovingLaser : MonoBehaviour
     [Header("开关切换的参数")]
     public bool isIntervalsLaser=false;
     public float interval;
+    public float offset;
 
 
     void Start()
     {
         lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         start = moveStart.position;
         finish = moveTarget.position;
         currTarget = finish;
@@ -47,10 +50,16 @@ public class MovingLaser : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        HandleColor();
         HandleRay();
         HandleMovement();
     }
 
+
+    void HandleColor(){
+        if(active) sr.color = Color.red;
+        else sr.color = Color.yellow; 
+    }
     void HandleRay()
     {
         if (!active)
@@ -88,6 +97,7 @@ public class MovingLaser : MonoBehaviour
     }
 
     IEnumerator IntervalLaser(){
+        yield return new WaitForSeconds(offset);
         while(true){
             active = !active;
             yield return new WaitForSeconds(interval);
