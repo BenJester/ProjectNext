@@ -91,6 +91,8 @@ public class Enemy_Shooter_Aim : Enemy {
 		bulletBody.velocity = direction * bulletSpeed;
 		newBullet.transform.localScale*=1.5f;
 
+
+		//GetComponent<Thing>().SetShield(true);
 	}
 
 	public static float AngleBetween (Vector2 vectorA, Vector2 vectorB) {

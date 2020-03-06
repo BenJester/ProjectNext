@@ -271,4 +271,10 @@ public class Thing : MonoBehaviour {
     {
         m_acDestroy += ac;
     }
+
+    public void SetShield(bool has){
+        hasShield = has;
+        if (hasShield && GetComponentInChildren<Shield>() == null)
+            Instantiate(Resources.Load<GameObject>("shield"), transform.position, Quaternion.identity, transform);
+    }
 }
