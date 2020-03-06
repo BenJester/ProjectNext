@@ -29,7 +29,7 @@ public class MovingLaser : MonoBehaviour
     [Header("开关切换的参数")]
     public bool isIntervalsLaser=false;
     public float interval;
-
+    
 
     void Start()
     {
