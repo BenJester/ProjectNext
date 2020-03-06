@@ -7,7 +7,8 @@ public class Enemy_Shooter_Aim : Enemy {
     // Use this for initialization
 
     [Space]
-    [Header("静态敌人————会主动瞄准玩家进行射击")]
+	[Header("关闭地话平常就不会发子弹")]
+	public bool canShoot = true;
 
     public bool aimNoCollider=false;
 	public float distance;
@@ -57,7 +58,7 @@ public class Enemy_Shooter_Aim : Enemy {
 
 	IEnumerator HandleShoot () {
 
-		while (true) {
+		while (canShoot) {
 			if (isInSight) {
 
 				animator.CrossFade ("Enemy_Shooter_Shot", 0.001f);
@@ -79,6 +80,16 @@ public class Enemy_Shooter_Aim : Enemy {
 		GameObject newBullet = Instantiate (bullet, transform.position + bulletInstanceDistance * (Vector3) direction, Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
 		bulletBody.velocity = direction * bulletSpeed;
+
+	}
+
+	public void PowerShoot () {
+		if (thing.dead)
+			return;
+		GameObject newBullet = Instantiate (bullet, transform.position + bulletInstanceDistance * (Vector3) direction, Quaternion.identity);
+		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
+		bulletBody.velocity = direction * bulletSpeed;
+		newBullet.transform.localScale*=1.5f;
 
 	}
 
