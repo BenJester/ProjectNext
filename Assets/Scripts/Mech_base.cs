@@ -13,7 +13,7 @@ public class Mech_base : MonoBehaviour
     }
     public MechType type;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         
     }

@@ -19,8 +19,10 @@ public class Mech_BulletShooter : Mech_base
 
     void Start()
     {
+        base.Start();
         timeTemp = Time.time;
-        spriteR.sprite=bulletToShoot.GetComponent<SpriteRenderer>().sprite;
+        if(spriteR!=null) spriteR.sprite=bulletToShoot.GetComponent<SpriteRenderer>().sprite;
+        if (spawnPoint == null) spawnPoint = transform;
     }
 
     // Update is called once per frame
