@@ -200,6 +200,7 @@ public class PlayerControl1 : PlayerControl {
     public Dash dash;
 
     public LayerMask TouchLayer;
+    public LayerMask ScanObjectLayer;
     public LayerMask LayerForLockObject;
     public LayerMask BoxLayer;
     public LayerMask MovePlatformLayer;
@@ -549,8 +550,8 @@ public class PlayerControl1 : PlayerControl {
         RaycastHit2D _ray5 = Physics2D.Raycast(groundCheckPoint5.position, Vector3.down, 5f, TouchLayer);
 
 
-        isTouchingGround = (_ray1 | _ray2 | _ray3 | _ray4 | _ray5) || (wallJump ? isTouchingGround : false);
-
+        //isTouchingGround = (_ray1 | _ray2 | _ray3 | _ray4 | _ray5) || (wallJump ? isTouchingGround : false);
+        isTouchingGround = touchingFloor();
         if (isTouchingGround == true && !wallJump)
         {
             isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
@@ -982,7 +983,7 @@ public class PlayerControl1 : PlayerControl {
         }
         else
         {
-            return TouchLayer;
+            return ScanObjectLayer;
         }
     }
 

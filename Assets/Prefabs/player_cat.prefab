@@ -483,6 +483,9 @@ MonoBehaviour:
   TriggerMethod:
     m_PersistentCalls:
       m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 1
   lowerY: 0
   upperY: 0
@@ -496,10 +499,15 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 10
   IsSwapRotationByVelocity: 0
   distanceToCursor: 0
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!120 &2213982000770385547
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -738,6 +746,9 @@ MonoBehaviour:
   dash: {fileID: 2198637840435433259}
   TouchLayer:
     serializedVersion: 2
+    m_Bits: 5840128
+  ScanObjectLayer:
+    serializedVersion: 2
     m_Bits: 1645824
   LayerForLockObject:
     serializedVersion: 2
@@ -848,6 +859,13 @@ MonoBehaviour:
   overheadHeight: 70
   inputCancelDelay: 0.28
   keyboardDir: {x: 0, y: 0}
+  canceled: 0
+  triggerItemEvent: 0
+  dashSpeed: 0
+  dashDur: 0
+  pokerSprite: {fileID: 0}
+  pokerTransitionDur: 0
+  turnPokerSprite: {fileID: 0}
 --- !u!114 &2198637840435433259
 MonoBehaviour:
   m_ObjectHideFlags: 0

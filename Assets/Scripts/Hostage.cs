@@ -8,6 +8,8 @@ public class Hostage : MonoBehaviour {
 	public float dropKillSpeed;
 	Goal goal;
     public float speed;
+    public float jumpSpeed;
+
     Rigidbody2D rb;
 
 	void Start () {
@@ -24,12 +26,29 @@ public class Hostage : MonoBehaviour {
 			thing.Die();
 		}
 	}
+
+    bool detectObstacle()
+    {
+
+        return false;
+    }
+
+    void Jump()
+    {
+        if (thing.touchingFloor())
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (speed != 0f)
         {
             rb.velocity = new Vector2(speed, rb.velocity.y);
         }
+        if (thing.touchingWallRight())
+            Jump();
     }
     void OnCollisionEnter2D (Collision2D col) {
 
