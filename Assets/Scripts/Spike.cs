@@ -5,7 +5,7 @@ using Ben;
 //嗨，spike是要求又boxcollider2d处理trigger为true的，如果你把boxcollider2d删除，请确认，添加上的collider.istrigger = true
 [RequireComponent(typeof(CompositeCollider2D))]
 public class Spike : MonoBehaviour {
-
+    public bool destroyBox = false;
 	// Use this for initialization
 	void Start () {
         CompositeCollider2D _composite = GetComponent<CompositeCollider2D>();
@@ -64,6 +64,11 @@ public class Spike : MonoBehaviour {
             if (colThing.type == Type.box)
             {
                 collision.GetComponent<Box>().GetSpike();
+                if (destroyBox)
+                {
+                    colThing.Die();
+                }
+                    
             }
         }
     }
