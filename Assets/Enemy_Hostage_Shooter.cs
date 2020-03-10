@@ -65,10 +65,12 @@ public class Enemy_Hostage_Shooter : Enemy
 
     IEnumerator HandleShoot()
     {
+       
 
         while (canShoot)
         {
-            if (isInSight)
+            if (thing.dead) yield return null;
+            if (isInSight && !thing.dead)
             {
 
                 animator.CrossFade("Enemy_Shooter_Shot", 0.001f);
