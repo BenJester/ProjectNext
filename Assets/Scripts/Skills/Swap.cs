@@ -86,6 +86,9 @@ public class Swap : Skill {
     public delegate void DropDelegate();
     public event OverheadDelegate OnDrop;
 
+    public delegate void SwapDelegate();
+    public event SwapDelegate OnSwap;
+
     public float inputCancelDelay;
     public Vector2 keyboardDir;
     public bool canceled;
@@ -1053,6 +1056,9 @@ public class Swap : Skill {
     {
         if (busy) yield break;
         busy = true;
+
+        OnSwap?.Invoke();
+
         Smoke();
         Collider2D target = col;
 
