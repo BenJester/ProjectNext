@@ -18,6 +18,8 @@ public class Door_Lion : MonoBehaviour {
     public float speed;
 
     bool won;
+    public bool doesNotCloseOnceOpened = false;
+    bool opened;
 
     void Awake () {
         origin = transform.position;
@@ -34,11 +36,13 @@ public class Door_Lion : MonoBehaviour {
             active = true;
             //anim.SetBool("Active", true);
             Open ();
-
+            opened = true;
         } else {
 
             active = false;
             //anim.SetBool("Active", false);
+            if (opened && doesNotCloseOnceOpened)
+                return;
             Close ();
 
         }
