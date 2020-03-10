@@ -51,7 +51,8 @@ public class Spike : MonoBehaviour {
         if (collision.gameObject.CompareTag("thing") || collision.gameObject.CompareTag("player"))
         {
             Thing colThing = collision.gameObject.GetComponent<Thing>();
-            if (colThing.type == Type.enemy)
+
+            if (colThing.GetComponent<Enemy>() != null)
             {
                 colThing.GetComponent<Enemy>().TakeDamage(1);
             }
