@@ -7,6 +7,7 @@ public class Medicine : MonoBehaviour
 {
     // Start is called before the first frame update
     bool isChecking = false;
+    public bool canAttack=false;
     Rigidbody2D rb;
     LineRenderer lr;
     public float radius;
@@ -38,20 +39,25 @@ public class Medicine : MonoBehaviour
     
     void Update()
     {
+        if (canAttack) {
+            if (!isChecking)
+            {
+                lr.startColor = Color.yellow;
+                lr.endColor = Color.yellow;
+                lr.startWidth = 5;
+                lr.enabled = false;
 
-        if (!isChecking) {
-            lr.startColor = Color.yellow;
-            lr.endColor = Color.yellow;
-            lr.startWidth = 5;
-            lr.enabled = false;
+                Check();
 
-            Check();
-            
-        } 
-        else {
-            lr.SetPosition(0, transform.position);
-            lr.SetPosition(1, enemyTarget.transform.position);
+            }
+            else
+            {
+                lr.SetPosition(0, transform.position);
+                lr.SetPosition(1, enemyTarget.transform.position);
+            }
         }
+
+        
 
         if (CheckPlayer())
         {
