@@ -9,7 +9,7 @@ public class Hostage : MonoBehaviour {
 	Goal goal;
     public float speed;
     public float jumpSpeed;
-
+    Transform player;
     Rigidbody2D rb;
 
 	void Start () {
@@ -17,6 +17,7 @@ public class Hostage : MonoBehaviour {
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.hostageList.Add (GetComponent<Thing> ());
         rb = GetComponent<Rigidbody2D>();
+        player = PlayerControl1.Instance.transform;
 	}
 
 	// Update is called once per frame

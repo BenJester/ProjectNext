@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1244263522533787654}
   - component: {fileID: 1244263522533787648}
   - component: {fileID: 1414943926798445528}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: shield
   m_TagString: shield
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameOfState: ShieldPlayAnimation
   ParamAnimation: ShieldAnimationPlay
-  bTest: 0
+  ActiveSelf: 0
 --- !u!95 &1414943926798445528
 Animator:
   serializedVersion: 3
