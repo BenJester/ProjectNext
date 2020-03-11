@@ -1066,8 +1066,8 @@ public class Swap : Skill {
         Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
         //target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
         //playerControl.spriteRenderer.sprite = pokerSprite;
-
-        playerControl.box.enabled = false;
+        player.layer = 18;
+        //playerControl.box.enabled = false;
         playerControl.disableAirControl = true;
         bool playerFaceRight = playerControl.spriteRenderer.flipX;
 
@@ -1171,6 +1171,7 @@ public class Swap : Skill {
         playerControl.disableAirControl = false;
         playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
+        player.layer = 9;
         targetThing.swapping = false;
         playerControl.spriteRenderer.sprite = playerSprite;
         player.transform.localScale = playerScale;

@@ -155,7 +155,7 @@ public class Mech_TimingLaser : MonoBehaviour
 
     void LaserShoot()
     {
-
+        direction = (player.position - transform.position).normalized;
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, (1 << 8) | (1 << 9) | (1 << 22)| (1 << 12) | (1 << 18));
         RaycastHit2D hitNear;
         if (hits.Length >= 1)
