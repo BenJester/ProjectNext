@@ -49,7 +49,10 @@ public class Ti_Missel : MonoBehaviour, TriggerItem_Base
 
 
     }
-
+    public void Trigger()
+    {
+        isTrigger = true;
+    }
     public void HandleKickTrigger()
     {
 

@@ -172,6 +172,7 @@ public class Enemy_Sentry : Enemy
         {
             hitNear = hits[1];
             if (hitNear.collider.tag == "player") hitNear.collider.GetComponent<PlayerControl>().Die();
+            if (hitNear.collider.tag == "thing") hitNear.collider.GetComponent<Thing>().TriggerMethod?.Invoke();
         }
 
     }
