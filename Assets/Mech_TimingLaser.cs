@@ -19,7 +19,7 @@ public class Mech_TimingLaser : MonoBehaviour
     public PlayerState state;
     //public Text countDownText;
     public float aimTime = 0.5f;
-    float shootTime = 0.1f;
+    float shootTime = 0f;
     float countDown;
     LineRenderer lr;
     public enum PlayerState
@@ -94,12 +94,14 @@ public class Mech_TimingLaser : MonoBehaviour
                 break;
 
             case PlayerState.shoot:
-                
-                LaserShoot();
-                lr.startWidth = 15;
-                lr.endWidth = 15;
-                lr.startColor = Color.red;
-                lr.endColor = Color.red;
+                if(stateActiveFrames[(int)PlayerState.shoot] == 0){
+                    LaserShoot();
+                    lr.startWidth = 15;
+                    lr.endWidth = 15;
+                    lr.startColor = Color.red;
+                    lr.endColor = Color.red;
+                }
+               
                 break;
 
             case PlayerState.dead:
@@ -154,7 +156,7 @@ public class Mech_TimingLaser : MonoBehaviour
     void LaserShoot()
     {
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, (1 << 8) | (1 << 9) | (1<<22)| (1 << 12));
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, (1 << 8) | (1 << 9) | (1 << 22)| (1 << 12) | (1 << 18));
         RaycastHit2D hitNear;
         if (hits.Length >= 1)
         {
@@ -182,10 +184,7 @@ public class Mech_TimingLaser : MonoBehaviour
         else return false;
     }
 
-    private void OnDrawGizmos()
-    {
-        if (player != null) Gizmos.DrawLine(transform.position, (player.position - transform.position).normalized * distance + transform.position);
-    }
+    
 
     public static float AngleBetween(Vector2 vectorA, Vector2 vectorB)
     {
