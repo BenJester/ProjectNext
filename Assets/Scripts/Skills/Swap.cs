@@ -1061,9 +1061,12 @@ public class Swap : Skill {
 
         Smoke();
         Collider2D target = col;
-
+        Sprite targetSprite = null;
         Sprite playerSprite = playerControl.spriteRenderer.sprite;
-        Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
+        if (target.GetComponent<SpriteRenderer>() != null)
+            targetSprite = target.GetComponent<SpriteRenderer>().sprite;
+        else
+            targetSprite = target.GetComponent<Thing>().sr.sprite;
         //target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
         //playerControl.spriteRenderer.sprite = pokerSprite;
         player.layer = 18;
@@ -1097,6 +1100,8 @@ public class Swap : Skill {
         Vector3 playerScale = transform.localScale;
         Vector3 targetScale = target.transform.localScale;
         SpriteRenderer targetSr = target.GetComponent<SpriteRenderer>();
+        if (targetSr == null)
+            targetSr = target.GetComponent<Thing>().sr;
         float playerGravity = playerControl.rb.gravityScale;
         float targetGravity = targetRb.gravityScale;
         playerControl.rb.gravityScale = 0f;
@@ -1180,7 +1185,7 @@ public class Swap : Skill {
         targetRb.gravityScale = targetGravity;
         if (targetRb != null)
         {
-            target.GetComponent<SpriteRenderer>().sprite = targetSprite;
+            targetSr.sprite = targetSprite;
             //targetBox.isTrigger = targetIsTrigger;
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
                 targetRb.velocity = dir.normalized * swapSpeed;

@@ -16,6 +16,7 @@ namespace Ben
     }
 }
 public class Thing : MonoBehaviour {
+    public SpriteRenderer sr;
     public GameObject SpawnObjOnDie;
     public GameObject dieParticle;
     public UnityEvent TriggerMethod;
