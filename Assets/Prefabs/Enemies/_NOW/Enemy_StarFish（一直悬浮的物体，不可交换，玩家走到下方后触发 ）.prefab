@@ -25,8 +25,9 @@ GameObject:
   - component: {fileID: 326709819}
   - component: {fileID: 326709820}
   - component: {fileID: 326709821}
-  m_Layer: 8
-  m_Name: Enemy_StarFish
+  m_Layer: 10
+  m_Name: "Enemy_StarFish\uFF08\u4E00\u76F4\u60AC\u6D6E\u7684\u7269\u4F53\uFF0C\u4E0D\u53EF\u4EA4\u6362\uFF0C\u73A9\u5BB6\u8D70\u5230\u4E0B\u65B9\u540E\u89E6\u53D1
+    \uFF09"
   m_TagString: thing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,8 +108,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
     type: 3}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 2
   lowerY: 0
   upperY: 0
@@ -122,10 +130,15 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 0
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!251 &6007764596947709370
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -174,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightDistance: 900
+  target: {fileID: 0}
 --- !u!114 &2444404852198788428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9730cd70569844de186bc2f24961cddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeDamagedByKunaiDash: 1
+  target: {fileID: 0}
   thing: {fileID: 0}
   dropKillSpeed: 50
   goal: {fileID: 0}
@@ -196,6 +212,9 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
+  faceRight: 0
+  sightDistance: 0
+  hpText: {fileID: 0}
 --- !u!114 &-7175264519000090635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,8 +265,8 @@ MonoBehaviour:
         byteData: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
         byteDataArray: 4265686176696f7244657369676e65722e52756e74696d652e5368617265645472616e73666f726d506c617965725472616e73666f726d01
       Version: 1.6.3
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &326709815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,9 +283,10 @@ MonoBehaviour:
   ContinuousSkill: 0
   CheckMask:
     serializedVersion: 2
-    m_Bits: 512
-  CheckDistance: 200
+    m_Bits: 1536
+  CheckDistance: 1000
   AngleToWatch: 270
+  ChangeAngleWhenFlip: 0
 --- !u!114 &326709816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5849561205911676006}
   - component: {fileID: 2155795887013925757}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Starfish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +451,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 59a63e74997d52542b0b1a14dd8575a1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -452,6 +472,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244263522533787652, guid: 6f527f7815769d14f9f3e8b856149f4d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
@@ -511,12 +536,27 @@ PrefabInstance:
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1244263522533787655, guid: 6f527f7815769d14f9f3e8b856149f4d,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244263522533787649, guid: 6f527f7815769d14f9f3e8b856149f4d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244263522533787649, guid: 6f527f7815769d14f9f3e8b856149f4d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244263522533787649, guid: 6f527f7815769d14f9f3e8b856149f4d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f527f7815769d14f9f3e8b856149f4d, type: 3}

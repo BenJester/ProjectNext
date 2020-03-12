@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 95309753182010976}
   - component: {fileID: 120648656255488736}
   - component: {fileID: 114376148912449892}
-  m_Layer: 8
-  m_Name: Enemy_Shooter_Aim_NoCollider
+  m_Layer: 10
+  m_Name: "Enemy_Shooter_Aim_NoCollider (\u654C\u4EBA\u53EF\u4EE5\u7A7F\u5899\u7784\u51C6\u5E76\u53D1\u5C04\u7A7F\u5899\u5B50\u5F39)"
   m_TagString: thing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 83.33333, y: 83.33333}
+    oldSize: {x: 71.42857, y: 71.42857}
     newSize: {x: 29, y: 73}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -147,8 +147,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
     type: 3}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 2
   lowerY: 0
   upperY: 0
@@ -162,10 +169,15 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 0
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!251 &251814708756946330
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -328,6 +340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 977489776b71a8949889550fdb29ee4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeDamagedByKunaiDash: 1
+  target: {fileID: 0}
   thing: {fileID: 0}
   dropKillSpeed: 0
   goal: {fileID: 0}
@@ -338,9 +352,13 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
+  faceRight: 0
+  sightDistance: 0
+  hpText: {fileID: 0}
+  canShoot: 1
   aimNoCollider: 1
   distance: 1000
-  bullet: {fileID: 1249693321910232, guid: eb79afcf1153ea447abbcd50009df9d4, type: 3}
+  bullet: {fileID: 1249693321910232, guid: debeb5c7e2f7c8946bec9abd971d5af1, type: 3}
   bulletSpeed: 300
   shootInterval: 1
   animationPreload: 0.1

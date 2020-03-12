@@ -10,6 +10,7 @@ public class ExplosionComponent : MonoBehaviour
     private CircleCollider2D m_collider;
     private bool m_bRunning;
     private float m_fCurrentTime;
+    public int damage = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +50,7 @@ public class ExplosionComponent : MonoBehaviour
                 Thing colThing = collision.gameObject.GetComponent<Thing>();
                 if (colThing.type == Ben.Type.enemy)
                 {
-                    colThing.Die();
+                    colThing.GetComponent<Enemy>().TakeDamage(damage);
                 }
             }
         }
