@@ -69,6 +69,8 @@ public class Enemy : MonoBehaviour{
                                     -(box.size.y / 2f + groundCheckBoxHeight / 2f)
                                  );
         m_spRender = GetComponent<SpriteRenderer>();
+        if (m_spRender == null)
+            m_spRender = thing.sr;
         if(m_spRender != null)
         {
             originalColor = m_spRender.color;
@@ -104,6 +106,7 @@ public class Enemy : MonoBehaviour{
     }
 
 	void OnCollisionEnter2D (Collision2D col) {
+        thing = GetComponent<Thing>();
         if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && grounded) {
 			thing.collider.enabled = false;
 			thing.Die ();
