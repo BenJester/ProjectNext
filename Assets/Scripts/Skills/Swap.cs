@@ -93,7 +93,7 @@ public class Swap : Skill {
     public Vector2 keyboardDir;
     public bool canceled;
     public bool triggerItemEvent;
-
+    BulletTime bulletTime;
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -103,6 +103,7 @@ public class Swap : Skill {
             SwapAnimatorSpr = SwapAnimator.GetComponent<SpriteRenderer>();
             SwapAnimatorSpr.enabled = false;
         }
+        bulletTime = GetComponent<BulletTime>();
     }
 
     public override void Do()
@@ -122,6 +123,7 @@ public class Swap : Skill {
        // playerControl.SetColShadow();
 
     }
+    
     public IEnumerator delayedRecoverCancel()
     {
         yield return new WaitForSecondsRealtime(0.1f);
@@ -129,6 +131,7 @@ public class Swap : Skill {
     }
     private void Update()
     {
+        Debug.Log(Time.timeScale);
         if (Input.GetMouseButtonUp(1))
             canceled = true;
         if (Input.GetMouseButtonUp(0))
@@ -960,7 +963,6 @@ public class Swap : Skill {
         while (curr < pokerTransitionDur)
         {
             curr += Time.deltaTime;
-            
             playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
@@ -1052,6 +1054,7 @@ public class Swap : Skill {
         playerControl.box.enabled = true;
         busy = false;
     }
+    public float dashReducedTimeScale;
     IEnumerator PokerDash()
     {
         if (busy) yield break;
@@ -1060,6 +1063,11 @@ public class Swap : Skill {
         OnSwap?.Invoke();
 
         Smoke();
+        float timer = Time.realtimeSinceStartup;
+
+        bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
+
+
         Collider2D target = col;
         Sprite targetSprite = null;
         Sprite playerSprite = playerControl.spriteRenderer.sprite;
@@ -1204,5 +1212,6 @@ public class Swap : Skill {
         playerControl.spriteRenderer.flipX = playerFaceRight;
         playerControl.box.enabled = true;
         busy = false;
+        bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
     }
 }
