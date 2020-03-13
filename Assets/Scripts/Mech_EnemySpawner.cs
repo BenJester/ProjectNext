@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Mech_EnemySpawner : MonoBehaviour
 {
-    public Thing thing;
+    public List<Thing> thingList;
+    public List<Transform> posList;
+    public int count;
+    public int maxNum;
     public float cooldown;
 
     public Thing currThing;
     bool spawning;
-
+    bool finished;
     private void Update()
     {
-        if (!spawning && (currThing == null || currThing.dead))
+        if (!spawning && !finished && (currThing == null || currThing.dead))
         {
             spawning = true;
             StartCoroutine(DoSpawn());
@@ -28,7 +31,9 @@ public class Mech_EnemySpawner : MonoBehaviour
 
     void Spawn()
     {
-        currThing = Instantiate(thing.gameObject, transform.position, Quaternion.identity).GetComponent<Thing>();
-
+        currThing = Instantiate(thingList[Random.Range(0, thingList.Count)].gameObject, posList[Random.Range(0, posList.Count)].position, Quaternion.identity).GetComponent<Thing>();
+        count += 1;
+        if (count >= maxNum)
+            finished = true;
     }
 }
