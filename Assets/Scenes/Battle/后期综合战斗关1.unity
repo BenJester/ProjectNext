@@ -1088,6 +1088,56 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 4253500554552236379}
+    - {fileID: 883674132}
+    ActiveGameObject: {fileID: 4253500554552236379}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 4253500554552236379}
+    ActiveGameObject: {fileID: 4253500554552236379}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 883674132}
+    - {fileID: 4253500554552236379}
+    ActiveGameObject: {fileID: 883674132}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 883674132}
+    ActiveGameObject: {fileID: 883674132}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 470974559}
     ActiveGameObject: {fileID: 470974559}
     GUIDsList: []
@@ -1294,54 +1344,6 @@ MonoBehaviour:
     list:
     - {fileID: 1642557818}
     ActiveGameObject: {fileID: 1642557818}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 398875991}
-    ActiveGameObject: {fileID: 398875991}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 883674132}
-    ActiveGameObject: {fileID: 883674132}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1093368770}
-    ActiveGameObject: {fileID: 1093368770}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 883674132}
-    ActiveGameObject: {fileID: 883674132}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -8592,18 +8594,12 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1093368768}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093368770}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1093368770 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1453072108919176, guid: 23e956c32471be341a6c365c496ec7b9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1093368768}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1096235461
 GameObject:
   m_ObjectHideFlags: 0
@@ -111722,7 +111718,12 @@ PrefabInstance:
     - target: {fileID: 422071681053893387, guid: 9c2184608460d9642a62c29e01802f2e,
         type: 3}
       propertyPath: maxNum
-      value: 5
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 422071681053893387, guid: 9c2184608460d9642a62c29e01802f2e,
+        type: 3}
+      propertyPath: cooldown
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8618617871972811376, guid: 9c2184608460d9642a62c29e01802f2e,
         type: 3}
@@ -116722,7 +116723,12 @@ PrefabInstance:
     - target: {fileID: 422071681053893387, guid: 9c2184608460d9642a62c29e01802f2e,
         type: 3}
       propertyPath: maxNum
-      value: 5
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 422071681053893387, guid: 9c2184608460d9642a62c29e01802f2e,
+        type: 3}
+      propertyPath: cooldown
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8618617871972811376, guid: 9c2184608460d9642a62c29e01802f2e,
         type: 3}
