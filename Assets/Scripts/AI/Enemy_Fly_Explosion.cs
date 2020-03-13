@@ -66,6 +66,7 @@ public class Enemy_Fly_Explosion : Enemy
         if (!dashing || triggered) yield break;
         triggered = true;
         thing.sr.color = Color.red;
+        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(explodePreload);
         GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
@@ -102,10 +103,10 @@ public class Enemy_Fly_Explosion : Enemy
         if (currDashCD > 0) yield break;
         busy = true;
         exclamation.SetActive(true);
-        Vector2 dir = (target.transform.position - transform.position).normalized;
+        
         yield return new WaitForSeconds(dashPreload);
         exclamation.SetActive(false);
-
+        Vector2 dir = (target.transform.position - transform.position).normalized;
         float timer = 0f;
         dashing = true;
         rb.velocity = dir * dashSpeed;
