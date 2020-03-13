@@ -82,7 +82,7 @@ public class BulletTime : MonoBehaviour {
             }
             targetTimeScale = 0.1f;
 			targetDeltaTime = startDeltaTime * 0.1f;
-			bulletTimePostEffect.enabled=true;
+			//bulletTimePostEffect.enabled=true;
 		} else {
 			targetTimeScale = 1f;
 			targetDeltaTime = startDeltaTime;

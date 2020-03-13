@@ -13,6 +13,9 @@ public class Mech_EnemySpawner : MonoBehaviour
     public Thing currThing;
     bool spawning;
     bool finished;
+
+    public GameObject SpawnHint;
+
     private void Update()
     {
         if (!spawning && !finished && (currThing == null || currThing.dead))
