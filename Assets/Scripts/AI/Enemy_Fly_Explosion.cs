@@ -112,7 +112,8 @@ public class Enemy_Fly_Explosion : Enemy
         rb.velocity = dir * dashSpeed;
         while (timer < dashDuration)
         {
-            
+            if (rb.velocity == Vector2.zero && !triggered)
+                rb.velocity = dir * dashSpeed;
             timer += Time.deltaTime;
             yield return new WaitForEndOfFrame();
 
