@@ -148,8 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sr: {fileID: 0}
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
     type: 3}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
   type: 2
   lowerY: 0
   upperY: 0
@@ -163,10 +171,15 @@ MonoBehaviour:
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 0
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!251 &190567372363393588
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -354,12 +367,14 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
+  faceRight: 0
   sightDistance: 800
+  hpText: {fileID: 0}
   walkSpeed: 300
   hitboxWidth: 100
   hitboxHeight: 90
   hitboxOffset: 50
-  attackDelay: 0.55
+  attackDelay: 0.2
   attackPostDelay: 0.4
   idleDur: 1
   dashDur: 0.17

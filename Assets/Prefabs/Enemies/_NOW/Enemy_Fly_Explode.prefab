@@ -460,18 +460,18 @@ MonoBehaviour:
   sightDistance: 600
   hpText: {fileID: 0}
   speed: 280
-  dashPreload: 0.8
-  dashSpeed: 1000
+  dashPreload: 0.65
+  dashSpeed: 1050
   dashDuration: 5
   hitboxWidth: 0
   explosionRadius: 300
   triggerLayer:
     serializedVersion: 2
     m_Bits: 4265728
-  explodePreload: 0.5
+  explodePreload: 0.08
   damage: 1
   dashThreshold: 600
-  dashCD: 3
+  dashCD: 1
   areaIndicator: {fileID: 3207476323175709750, guid: 28925a799ab85564ea3d22a82350c7ca,
     type: 3}
 --- !u!1 &7923336474765651983
