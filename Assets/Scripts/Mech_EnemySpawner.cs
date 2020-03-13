@@ -15,6 +15,7 @@ public class Mech_EnemySpawner : MonoBehaviour
     bool finished;
 
     public GameObject SpawnHint;
+    Vector3 nextPos;
 
     private void Update()
     {
@@ -27,14 +28,19 @@ public class Mech_EnemySpawner : MonoBehaviour
     
     IEnumerator DoSpawn()
     {
+        SpawnHint.SetActive(true);
+        
+        nextPos = posList[Random.Range(0, posList.Count)].position;
+        SpawnHint.transform.position = nextPos;
         yield return new WaitForSeconds(cooldown);
         Spawn();
+        SpawnHint.SetActive(false);
         spawning = false;
     }
 
     void Spawn()
     {
-        currThing = Instantiate(thingList[Random.Range(0, thingList.Count)].gameObject, posList[Random.Range(0, posList.Count)].position, Quaternion.identity).GetComponent<Thing>();
+        currThing = Instantiate(thingList[Random.Range(0, thingList.Count)].gameObject, nextPos, Quaternion.identity).GetComponent<Thing>();
         count += 1;
         if (count >= maxNum)
             finished = true;
