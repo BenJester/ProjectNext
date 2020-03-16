@@ -39,9 +39,11 @@ public class Ti_JumpingBox : MonoBehaviour
 
     IEnumerator SpeedUp() {
         
-        PlayerControl1.Instance.speed = 1200;
+        PlayerControl1.Instance.speed = 1000;
+        //PlayerControl1.Instance.jumpSpeed = 1000;
         yield return new WaitForSeconds(1f);
         PlayerControl1.Instance.speed = 500;
+        //PlayerControl1.Instance.jumpSpeed = 650;
     }
 
     IEnumerator SetObj() {
