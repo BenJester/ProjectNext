@@ -15,7 +15,7 @@ public class InvertGravity : Skill
         {
             thing.body.gravityScale *= -1;
         }
-        playerControl.rb.gravityScale *= -1;
+        //playerControl.rb.gravityScale *= -1;
     }
     // Update is called once per frame
     void Update()
