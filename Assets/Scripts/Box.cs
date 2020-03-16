@@ -25,10 +25,82 @@ public class Box : MonoBehaviour {
     IEnumerator Late()
     {
         yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
         prevVelocity = body.velocity;
     }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("thing"))
+        {
+            Thing colThing = col.gameObject.GetComponent<Thing>();
+            //这里逻辑有点奇怪
+            //if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
+            if (body.gravityScale > 0)
+            {
+                if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed)//&& _boxThing.GetLowerY() >= colThing.GetUpperY())
+                {
+                    if (colThing.GetLowerY() > _boxThing.GetLowerY())
+                    {
+                        //碰撞物在箱子上面。就不处理。
+                    }
+                    else
+                    {
+                        if (useDamage && colThing.GetComponent<Enemy>() != null)
+                        {
+                            colThing.hasShield = false;
+                            colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                        }
+                        else
+                            colThing.Die();
 
-	void OnCollisionEnter2D(Collision2D col) {
+                    }
+                }
+                else
+                {
+                    //Debug.Assert(false);
+                }
+                if (body != null)
+                {
+                    //body.velocity = prevVelocity;
+                }
+            }
+            else
+            {
+                if (colThing.type == Type.enemy && prevVelocity.y > killDropSpeed)
+                {
+                    if (colThing.GetUpperY() < _boxThing.GetUpperY())
+                    {
+                        //碰撞物在箱子上面。就不处理。
+                    }
+                    else
+                    {
+                        if (useDamage && colThing.GetComponent<Enemy>() != null)
+                        {
+                            colThing.hasShield = false;
+                            colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                        }
+                        else
+                            colThing.Die();
+
+                    }
+                }
+                else
+                {
+                    //Debug.Assert(false);
+                }
+                if (body != null)
+                {
+                    //body.velocity = prevVelocity;
+                }
+            }
+
+        }
+    }
+    void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.CompareTag("thing")) {
 			Thing colThing = col.gameObject.GetComponent<Thing> ();
             //这里逻辑有点奇怪
@@ -59,7 +131,7 @@ public class Box : MonoBehaviour {
                 }
                 if (body != null)
                 {
-                    body.velocity = prevVelocity;
+                    //body.velocity = prevVelocity;
                 }
             }
             else
@@ -88,7 +160,7 @@ public class Box : MonoBehaviour {
                 }
                 if (body != null)
                 {
-                    body.velocity = prevVelocity;
+                    //body.velocity = prevVelocity;
                 }
             }
             
