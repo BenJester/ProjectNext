@@ -77,6 +77,7 @@ public class Thing : MonoBehaviour {
     Vector2 floorCheckTopLeft;
     Vector2 floorCheckBottomRight;
     public LayerMask TouchLayer;
+    public float gravity;
     #region wallTouchChecks
     void InitWallChecks()
     {
@@ -175,10 +176,11 @@ public class Thing : MonoBehaviour {
 		playerControl = player.GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
-        
 
+        
         body = GetComponent<Rigidbody2D> ();
-		GameObject goalObject = GameObject.FindWithTag ("goal");
+        
+        GameObject goalObject = GameObject.FindWithTag ("goal");
 		if (goalObject != null)
 			goal = goalObject.GetComponent<Goal>();
 
@@ -193,6 +195,7 @@ public class Thing : MonoBehaviour {
 		}
         if (body.gravityScale != 0f)
             body.gravityScale = 165f;
+        gravity = body.gravityScale;
         InitWallChecks();
     }
     public Quaternion GetOriginalQuat()

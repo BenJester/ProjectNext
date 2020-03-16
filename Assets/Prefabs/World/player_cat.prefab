@@ -509,6 +509,7 @@ MonoBehaviour:
   TouchLayer:
     serializedVersion: 2
     m_Bits: 0
+  gravity: 0
 --- !u!120 &2213982000770385547
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -865,7 +866,7 @@ MonoBehaviour:
   dashSpeed: 0
   dashDur: 0
   pokerSprite: {fileID: 0}
-  pokerTransitionDur: 0.04
+  pokerTransitionDur: 0.025
   turnPokerSprite: {fileID: 0}
   dashReducedTimeScale: 0
 --- !u!114 &2198637840435433259

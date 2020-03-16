@@ -131,7 +131,6 @@ public class Swap : Skill {
     }
     private void Update()
     {
-        Debug.Log(Time.timeScale);
         if (Input.GetMouseButtonUp(1))
             canceled = true;
         if (Input.GetMouseButtonUp(0))
