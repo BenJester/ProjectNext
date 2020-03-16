@@ -12,10 +12,11 @@ public class PlayerSwapSpeedUp : MonoBehaviour
     public float nowSpeed;
     public float levelDownCoolDown;
     float levelDowntemp;
+    float initialSpeed;
 
     void Start()
     {
-        
+        initialSpeed = PlayerControl1.Instance.speed;
     }
 
     // Update is called once per frame
@@ -30,7 +31,7 @@ public class PlayerSwapSpeedUp : MonoBehaviour
         levelDowntemp = Time.time;
         level += 1;
         level = Mathf.Clamp(level, 0, maxLevel);
-        nowSpeed = 550 + level * levelupSpeed;
+        nowSpeed = initialSpeed + level * levelupSpeed;
         PlayerControl1.Instance.speed = nowSpeed;
 
         GameObject part =  Instantiate(levelupParticle, PlayerControl1.Instance.transform.position, Quaternion.identity);
@@ -39,7 +40,7 @@ public class PlayerSwapSpeedUp : MonoBehaviour
     public void LevelDown() {
         level -= 1;
         level = Mathf.Clamp(level, 0, maxLevel);
-        nowSpeed = 550 + level * levelupSpeed;
+        nowSpeed = initialSpeed + level * levelupSpeed;
         PlayerControl1.Instance.speed = nowSpeed;
         levelDowntemp = Time.time;
 
