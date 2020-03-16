@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
   TriggerMethod:
@@ -864,8 +865,9 @@ MonoBehaviour:
   dashSpeed: 0
   dashDur: 0
   pokerSprite: {fileID: 0}
-  pokerTransitionDur: 0
+  pokerTransitionDur: 0.04
   turnPokerSprite: {fileID: 0}
+  dashReducedTimeScale: 0
 --- !u!114 &2198637840435433259
 MonoBehaviour:
   m_ObjectHideFlags: 0
