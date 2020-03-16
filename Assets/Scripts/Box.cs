@@ -18,18 +18,24 @@ public class Box : MonoBehaviour {
 		_boxThing = GetComponent<Thing> ();	
 	}
 	
-	void Update () {
-		prevVelocity = body.velocity;
+	void FixedUpdate () {
+        StartCoroutine(Late());
 	}
 
-	void OnCollisionStay2D(Collision2D col) {
+    IEnumerator Late()
+    {
+        yield return new WaitForFixedUpdate();
+        prevVelocity = body.velocity;
+    }
+
+	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.CompareTag("thing")) {
 			Thing colThing = col.gameObject.GetComponent<Thing> ();
             //这里逻辑有点奇怪
             //if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
             if (body.gravityScale > 0)
             {
-                if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() >= colThing.GetUpperY())
+                if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed )//&& _boxThing.GetLowerY() >= colThing.GetUpperY())
                 {
                     if (colThing.GetLowerY() > _boxThing.GetLowerY())
                     {

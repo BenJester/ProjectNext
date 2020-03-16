@@ -1189,7 +1189,7 @@ public class Swap : Skill {
         player.transform.localScale = playerScale;
         target.transform.localScale = targetScale;
         playerControl.rb.gravityScale = playerGravity;
-        targetRb.gravityScale = targetGravity * -1;
+        targetRb.gravityScale = targetGravity;
         if (targetRb != null)
         {
             targetSr.sprite = targetSprite;
