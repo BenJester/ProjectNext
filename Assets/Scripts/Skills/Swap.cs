@@ -1202,7 +1202,7 @@ public class Swap : Skill {
             targetBox.enabled = true;
             if (target.GetComponent<Enemy>() != null)
             {
-                target.GetComponent<Enemy>().faceRight = !playerFaceRight;
+                //target.GetComponent<Enemy>().faceRight = !playerFaceRight;
                 target.GetComponent<Enemy>().hpText.SetActive(true);
             }
 

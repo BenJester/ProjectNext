@@ -34,6 +34,7 @@ public class Thing : MonoBehaviour {
 	Goal goal;
 	public bool dead = false;
     public bool hasShield = false;
+    public bool isKey;
     public GameObject shield;
 	GameObject player;
 	[Header("死亡动画，需要有HeadBodySeparation脚本")]
@@ -186,7 +187,8 @@ public class Thing : MonoBehaviour {
 
         if (hasShield && GetComponentInChildren<Shield>() == null)
             Instantiate(Resources.Load<GameObject>("shield"), transform.position, Quaternion.identity, transform);
-
+        if (isKey)
+            Instantiate(Resources.Load<GameObject>("key"), new Vector3(transform.position.x - 70f, GetUpperY() + 60f, transform.position.z) , Quaternion.identity, transform);
         //HandleRewind();
 
         if (type != Type.player) 

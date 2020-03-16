@@ -853,7 +853,7 @@ public class PlayerControl1 : PlayerControl {
             DashRequestByPlayer();
         }
         if (player.GetButtonUp("Switch"))
-            Debug.Log("swi");
+
         // 左键子弹时间结束
 
         //处理按下的指示器
