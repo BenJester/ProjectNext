@@ -89,7 +89,9 @@ public class Enemy_Shooter_Aim : Enemy {
 		GameObject newBullet = Instantiate (bullet, transform.position + bulletInstanceDistance * (Vector3) direction, Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
 		bulletBody.velocity = direction * bulletSpeed;
-		newBullet.transform.localScale*=1.5f;
+        newBullet.GetComponent<EnemyBullet>().damage = 2;
+
+        newBullet.transform.localScale*=1.5f;
 
 
 		//GetComponent<Thing>().SetShield(true);

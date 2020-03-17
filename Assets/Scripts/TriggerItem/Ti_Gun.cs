@@ -91,6 +91,9 @@ public class Ti_Gun : Ti_GunType,TriggerItem_Base
             SetAmmo();
 
         }
+        else {
+            Destroy(gameObject);
+        }
 
 
 
