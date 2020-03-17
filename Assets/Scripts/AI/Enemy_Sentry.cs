@@ -12,20 +12,25 @@ public class Enemy_Sentry : Enemy
     public PlayerState state;
     //public Text countDownText;
     public float aimTime = 0.5f;
+    public float lockTime;
     float shootTime = 0.1f;
     float countDown;
+    public GameObject smoke;
+    AudioSource asr;
+    float distanceBetweenTarget;
     public enum PlayerState
     {
         idle = 0,
         aim = 1,
         shoot = 2,
         dead = 3,
+        locking = 4,
 
     }
 
     //Extra
-    [System.NonSerialized] public float[] stateActiveFrames = new float[4] { 0, 0, 0, 0 };
-    [System.NonSerialized] public float[] stateInactiveFrames = new float[4] { 0, 0, 0, 0 };
+    [System.NonSerialized] public float[] stateActiveFrames = new float[5] { 0, 0, 0, 0,0 };
+    [System.NonSerialized] public float[] stateInactiveFrames = new float[5] { 0, 0, 0, 0,0 };
 
     //预计状态所对应的帧数
     public int[] stateActiveTimeCounts;
@@ -36,6 +41,7 @@ public class Enemy_Sentry : Enemy
 
     public float distance = 1000;
     private Vector2 direction;
+    public AudioClip[] chargeAndBurst;
 
     private Animator animator;
     public Transform player;
@@ -46,6 +52,7 @@ public class Enemy_Sentry : Enemy
     {
         animator = GetComponent<Animator>();
         lr = GetComponent<LineRenderer>();
+        asr = GetComponent<AudioSource>();
     }
     void Start()
     {
@@ -83,6 +90,13 @@ public class Enemy_Sentry : Enemy
                     lr.startWidth = 5;
                     lr.endWidth = 5;
                     lr.enabled = true;
+                    asr.Pause();
+                }
+                if (aimTime - stateActiveFrames[(int)PlayerState.aim] < 1.602) {
+                    if (!asr.isPlaying) {
+                        asr.clip = chargeAndBurst[0];
+                        asr.Play();
+                    }
                 }
 
 
@@ -99,14 +113,25 @@ public class Enemy_Sentry : Enemy
                 direction = (player.position - transform.position).normalized;
                 break;
 
+            case PlayerState.locking:
+                if (stateActiveFrames[(int)PlayerState.locking] == 0) direction = (player.position - transform.position).normalized;
+                lr.startColor = Color.green;
+                lr.endColor = Color.green;
+                break;
             case PlayerState.shoot:
-                lr.SetPosition(0, transform.position);
-                lr.SetPosition(1, (Vector3)direction * distance + transform.position);
-                lr.startWidth = 15;
-                lr.endWidth = 15;
-                lr.startColor = Color.red;
-                lr.endColor = Color.red;
-                LaserShoot();
+                if (stateActiveFrames[(int)PlayerState.shoot] == 0) {
+                    lr.SetPosition(0, transform.position);
+                    lr.SetPosition(1, (Vector3)direction * distance + transform.position);
+                    lr.startWidth = 15;
+                    lr.endWidth = 15;
+                    lr.startColor = Color.red;
+                    lr.endColor = Color.red;
+                    LaserShoot();
+                    asr.clip = chargeAndBurst[1];
+                    asr.Play();
+
+                }
+                    
                 break;
 
             case PlayerState.dead:
@@ -144,10 +169,17 @@ public class Enemy_Sentry : Enemy
         {
             if (stateActiveFrames[(int)PlayerState.aim] > aimTime)
             {
-                state = PlayerState.shoot;
+                state = PlayerState.locking;
             }
-            else if (!CheckPlayer()) {
-                state = PlayerState.idle;
+            //else if (!CheckPlayer()) {
+            //    state = PlayerState.idle;
+            //}
+        }
+        else if (state == PlayerState.locking)
+        {
+            if (stateActiveFrames[(int)PlayerState.locking] > lockTime)
+            {
+                state = PlayerState.shoot;
             }
         }
         else if (state == PlayerState.shoot)
@@ -166,14 +198,40 @@ public class Enemy_Sentry : Enemy
         
         if (thing.dead)
             return;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, (1 << 10) | (1 << 8) | (1 << 9));
-        RaycastHit2D hitNear;
-        if (hits.Length >= 2)
+       
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, (1 << 8) | (1 << 9) |(1<<10) |(1 << 22) | (1 << 12) | (1 << 18));
+        foreach (var item in hits)
         {
-            hitNear = hits[1];
-            if (hitNear.collider.tag == "player") hitNear.collider.GetComponent<PlayerControl>().Die();
-            if (hitNear.collider.tag == "thing") hitNear.collider.GetComponent<Thing>().TriggerMethod?.Invoke();
+            if (item.collider.gameObject != gameObject) {
+                if (item.collider.tag == "player") item.collider.GetComponent<PlayerControl>().Die();
+                if (item.collider.tag == "thing") item.collider.GetComponent<Thing>().TriggerMethod?.Invoke();
+                if (item.collider.tag == "thing" && item.collider.GetComponent<Thing>().type == Ben.Type.enemy)
+                {
+                    item.collider.GetComponent<Enemy>().TakeDamage(4);
+                }
+
+                GameObject part = Instantiate(smoke, item.point, Quaternion.identity);
+                Destroy(part, 1f);
+            }
+
         }
+
+        //RaycastHit2D hitNear;
+        //if (hits.Length >= 2)
+        //{
+        //    hitNear = hits[1];
+        //    distanceBetweenTarget = Vector2.Distance(transform.position, hitNear.point);
+        //    lr.SetPosition(1, (Vector3)direction * distanceBetweenTarget + transform.position);
+        //    GameObject part = Instantiate(smoke, hitNear.point, Quaternion.identity);
+        //    Destroy(part, 1f);
+
+        //    if (hitNear.collider.tag == "player") hitNear.collider.GetComponent<PlayerControl>().Die();
+        //    if (hitNear.collider.tag == "thing") hitNear.collider.GetComponent<Thing>().TriggerMethod?.Invoke();
+        //    if (hitNear.collider.tag == "thing" && hitNear.collider.GetComponent<Thing>().type == Ben.Type.enemy)
+        //    {
+        //        hitNear.collider.GetComponent<Enemy>().TakeDamage(4);
+        //    }
+        //}
 
     }
 

@@ -273,7 +273,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7315043830394034134}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -324,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
     type: 3}
@@ -342,7 +343,8 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
-  hasShield: 0
+  hasShield: 1
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
@@ -355,6 +357,7 @@ MonoBehaviour:
   TouchLayer:
     serializedVersion: 2
     m_Bits: 0
+  gravity: 0
 --- !u!251 &7421386140908534636
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -534,6 +537,8 @@ MonoBehaviour:
   hpText: {fileID: 0}
   state: 0
   aimTime: 2
+  lockTime: 0.35
+  smoke: {fileID: 1447157706495034, guid: 108ad1cecb0e29e46ab8ff7a79084a6a, type: 3}
   stateActiveTimeCounts: 
   distance: 1000
   player: {fileID: 0}
