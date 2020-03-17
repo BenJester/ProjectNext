@@ -31,7 +31,8 @@ public class Enemy : MonoBehaviour{
     private UnityAction<int> m_takeDamageAct;
     bool justSawPlayer;
     public float sightDistance;
-
+    public bool invincible;
+    public float invincibleDurAfterHit;
     protected GameObject exclamation;
     public delegate void LoseHPDelegate(int lossHP);
     public event LoseHPDelegate OnLoseHP;
@@ -121,9 +122,17 @@ public class Enemy : MonoBehaviour{
     {
         m_takeDamageAct -= _act;
     }
-
+    IEnumerator CancelInvincible()
+    {
+        invincible = true;
+        yield return new WaitForSeconds(invincibleDurAfterHit);
+        invincible = false;
+    }
     public void TakeDamage(int damage)
 	{
+        if (invincible) return;
+        if (invincibleDurAfterHit > 0f)
+            StartCoroutine(CancelInvincible());
 		health -= damage;
         OnLoseHP?.Invoke(damage);
         if (m_takeDamageAct != null)

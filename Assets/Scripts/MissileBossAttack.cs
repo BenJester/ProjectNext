@@ -12,6 +12,7 @@ public class MissileBossAttack : StateMachineBehaviour
     public float laserPreload;
     public float laserDur;
     public float laserPostload;
+    public bool throwMissile = true;
     Rigidbody2D rb;
     Thing thing;
 
@@ -74,6 +75,8 @@ public class MissileBossAttack : StateMachineBehaviour
 
     void ThrowMissel()
     {
+        if (!throwMissile)
+            return;
         if (thing.dead)
             return;
 

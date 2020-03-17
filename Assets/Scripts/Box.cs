@@ -51,8 +51,10 @@ public class Box : MonoBehaviour {
                     {
                         if (useDamage && colThing.GetComponent<Enemy>() != null)
                         {
-                            colThing.hasShield = false;
-                            colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                            //colThing.hasShield = false;
+                            //colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                            colThing.GetComponent<Enemy>().TakeDamage(damage);
+                            body.velocity = new Vector2(400f, 500f);
                         }
                         else
                             colThing.Die();
@@ -80,8 +82,10 @@ public class Box : MonoBehaviour {
                     {
                         if (useDamage && colThing.GetComponent<Enemy>() != null)
                         {
-                            colThing.hasShield = false;
-                            colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                            //colThing.hasShield = false;
+                            //colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                            colThing.GetComponent<Enemy>().TakeDamage(damage);
+                            body.velocity = new Vector2(400f, 500f);
                         }
                         else
                             colThing.Die();
@@ -117,8 +121,8 @@ public class Box : MonoBehaviour {
                     {
                         if (useDamage && colThing.GetComponent<Enemy>() != null)
                         {
-                            colThing.hasShield = false;
-                            colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                            //colThing.hasShield = false;
+                            //colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
                         }
                         else
                             colThing.Die();

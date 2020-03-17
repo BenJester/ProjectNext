@@ -5,6 +5,7 @@ using UnityEngine;
 public class InvertGravity : Skill
 {
     // Start is called before the first frame update
+    bool odd;
     void Start()
     {
         playerControl.swap.OnSwap += HandleSwap;
