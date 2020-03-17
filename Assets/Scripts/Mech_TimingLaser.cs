@@ -163,11 +163,15 @@ public class Mech_TimingLaser : MonoBehaviour
             hitNear = hits[0];
             distanceBetweenTarget = Vector2.Distance(transform.position, hitNear.point);
             lr.SetPosition(1, (Vector3)direction * distanceBetweenTarget + transform.position);
-            GameObject part =  Instantiate(smoke, hitNear.point, Quaternion.identity);
+            GameObject part = Instantiate(smoke, hitNear.point, Quaternion.identity);
             Destroy(part, 1f);
 
             if (hitNear.collider.tag == "player") hitNear.collider.GetComponent<PlayerControl>().Die();
             if (hitNear.collider.tag == "thing") hitNear.collider.GetComponent<Thing>().TriggerMethod?.Invoke();
+            if (hitNear.collider.tag == "thing" && hitNear.collider.GetComponent<Thing>().type == Ben.Type.enemy)
+            {
+                hitNear.collider.GetComponent<Enemy>().TakeDamage(4);
+            }
         }
     }
 

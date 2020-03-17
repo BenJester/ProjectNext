@@ -16,6 +16,7 @@ public class PlayerSwapSpeedUp : MonoBehaviour
 
     void Start()
     {
+        level = 0;
         initialSpeed = PlayerControl1.Instance.speed;
     }
 
