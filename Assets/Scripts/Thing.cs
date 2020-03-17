@@ -197,6 +197,8 @@ public class Thing : MonoBehaviour {
 		}
         if (body.gravityScale != 0f)
             body.gravityScale = 165f;
+        if (PlayerControl1.Instance.GetComponent<InvertGravity>() != null)
+            body.gravityScale = !PlayerControl1.Instance.GetComponent<InvertGravity>().even ? Mathf.Abs(body.gravityScale) : -Mathf.Abs(body.gravityScale);
         gravity = body.gravityScale;
         InitWallChecks();
     }

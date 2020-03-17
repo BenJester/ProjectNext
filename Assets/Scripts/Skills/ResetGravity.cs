@@ -14,6 +14,6 @@ public class ResetGravity : MonoBehaviour
             }
             PlayerControl1.Instance.rb.gravityScale = PlayerControl1.Instance.GetComponent<Thing>().gravity;
         }
-        
+        PlayerControl1.Instance.GetComponent<InvertGravity>().even = false;
     }
 }

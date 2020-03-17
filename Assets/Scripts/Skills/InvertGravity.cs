@@ -5,7 +5,7 @@ using UnityEngine;
 public class InvertGravity : Skill
 {
     // Start is called before the first frame update
-    bool odd;
+    public bool even;
     void Start()
     {
         playerControl.swap.OnSwap += HandleSwap;
@@ -14,8 +14,9 @@ public class InvertGravity : Skill
     {
         foreach (var thing in playerControl.thingList)
         {
-            thing.body.gravityScale *= -1;
+            thing.body.gravityScale = even ? Mathf.Abs(thing.body.gravityScale) : -Mathf.Abs(thing.body.gravityScale);
         }
+        even = !even;
         //playerControl.rb.gravityScale *= -1;
     }
     // Update is called once per frame
