@@ -24,6 +24,19 @@ public class Ti_JumpingBox : MonoBehaviour
     public void AddForceToPlayer() {
         PlayerControl1.Instance.GetComponent<Rigidbody2D>().AddForce(Vector2.up * force);
     }
+
+    public void AddHorizontalForceToPlayer() {
+        StartCoroutine(disAbleAir());
+        PlayerControl1.Instance.GetComponent<Rigidbody2D>().AddForce(transform.up * force);
+
+
+    }
+
+    IEnumerator disAbleAir() {
+        PlayerControl1.Instance.disableAirControl = true;
+        yield return new WaitForSeconds(0.3f);
+        PlayerControl1.Instance.disableAirControl = false;
+    }
     public void AddForceToSelf()
     {
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * force);
