@@ -656,10 +656,15 @@ public class PlayerControl1 : PlayerControl {
         //}
         if (disableAirControl && !isTouchingGround)
         {
-            h = 0;
+            //h = 0;
         }
         //
-        rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        if (disableAirControl && !isTouchingGround)
+        {
+
+        }
+        else
+            rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         
         //
         if (true == false && canJump == false && !disableAirControl)
