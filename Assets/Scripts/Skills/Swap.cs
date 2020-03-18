@@ -1181,7 +1181,8 @@ public class Swap : Skill {
         if (target.GetComponent<Animator>() != null)
             target.GetComponent<Animator>().enabled = true;
         playerControl.disableAirControl = false;
-        playerControl.rb.velocity = new Vector2(0f, 250f);
+        //if (!playerControl.touchingFloor())
+            //playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
         player.layer = 9;
         targetThing.swapping = false;
