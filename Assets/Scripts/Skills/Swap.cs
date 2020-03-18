@@ -1084,8 +1084,7 @@ public class Swap : Skill {
         Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         Vector3 diff = Input.mousePosition - startingPoint;
 
-        Vector3 prevPos = transform.position;
-        Vector3 prevColPos = target.transform.position;
+        
 
         Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
@@ -1093,7 +1092,14 @@ public class Swap : Skill {
         if (target.GetComponent<Enemy>() != null)
             target.GetComponent<Enemy>().hpText.SetActive(false);
         bool targetIsTrigger = targetBox.isTrigger;
-
+        Vector3 prevPos = transform.position;
+        if (targetThing.touchingFloor())
+        {
+            Debug.Log("~~");
+        }
+        Vector3 prevColPos = new Vector3(target.transform.position.x, 
+                                         targetThing.touchingFloor() ? targetThing.GetLowerY() + playerControl.box.size.y / 2f: target.transform.position.y, 
+                                         target.transform.position.z);
         targetBox.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
@@ -1181,8 +1187,8 @@ public class Swap : Skill {
         if (target.GetComponent<Animator>() != null)
             target.GetComponent<Animator>().enabled = true;
         playerControl.disableAirControl = false;
-        //if (!playerControl.touchingFloor())
-            //playerControl.rb.velocity = new Vector2(0f, 250f);
+        if (!playerControl.touchingFloor())
+            playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
         player.layer = 9;
         targetThing.swapping = false;
