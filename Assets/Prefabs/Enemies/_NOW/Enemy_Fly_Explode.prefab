@@ -371,6 +371,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
@@ -383,6 +384,7 @@ MonoBehaviour:
   TouchLayer:
     serializedVersion: 2
     m_Bits: 0
+  gravity: 0
 --- !u!251 &5604498651796295283
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -458,10 +460,12 @@ MonoBehaviour:
     m_Bits: 8
   faceRight: 0
   sightDistance: 600
+  invincible: 0
+  invincibleDurAfterHit: 0
   hpText: {fileID: 0}
   speed: 280
   dashPreload: 0.85
-  dashSpeed: 1000
+  dashSpeed: 800
   dashDuration: 5
   hitboxWidth: 0
   explosionRadius: 250
