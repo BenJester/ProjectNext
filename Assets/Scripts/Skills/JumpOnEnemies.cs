@@ -16,6 +16,11 @@ public class JumpOnEnemies : Skill
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
+        if (clip != null) {
+            GetComponent<AudioSource>().clip = clip;
+            GetComponent<AudioSource>().Play();
+        }
+        
         playerBody.velocity = new Vector2(playerBody.velocity.x, playerControl.jumpSpeed);
     }
 }
