@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour{
     public LayerMask floorLayer = 8;
     protected Color originalColor;
     protected Vector3 originalScale;
-    private SpriteRenderer m_spRender;
+    protected SpriteRenderer m_spRender;
     public bool faceRight;
     private UnityAction<int> m_takeDamageAct;
     bool justSawPlayer;
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour{
     public event LoseHPDelegate OnLoseHP;
     public GameObject hpText;
     AudioClip hitClip;
-
+    protected Rigidbody2D rb;
     private void Awake()
     {
 
@@ -59,6 +59,7 @@ public class Enemy : MonoBehaviour{
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.enemyCount += 1;
         box = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
         groundCheckTopLeft = new Vector2
                                  (
                                     -(box.size.x / 2f - groundCheckBoxIndent),

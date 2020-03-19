@@ -22,9 +22,9 @@ public class Enemy_Shooter_Aim : Enemy {
 	public Transform player;
 	public bool isInSight = false;
 	public LineRenderer lr;
-   
 
-	private void Awake () {
+
+    protected void Awake () {
 		animator = GetComponent<Animator> ();
 		player = GameObject.FindGameObjectWithTag ("player").GetComponent<Transform> ();
 		lr = GetComponent<LineRenderer> ();
@@ -56,7 +56,7 @@ public class Enemy_Shooter_Aim : Enemy {
 
 	}
 
-	IEnumerator HandleShoot () {
+	protected IEnumerator HandleShoot () {
 
 		while (canShoot) {
 			if (isInSight) {
