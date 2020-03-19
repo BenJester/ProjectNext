@@ -28,7 +28,7 @@ public class Enemy_Miner : Enemy
     {
         if (triggered) yield break;
         triggered = true;
-        
+        GetComponent<SpriteRenderer>().color = Color.red;
         float timer = 0f;
         while (timer < runDur)
         {

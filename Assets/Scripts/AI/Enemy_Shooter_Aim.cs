@@ -165,14 +165,13 @@ public class Enemy_Shooter_Aim : Enemy {
                 {
                     col.GetComponent<PlayerControl1>().Die();
                 }
-                if (col.CompareTag("thing") && col.GetComponent<Enemy>())
+                if (col.CompareTag("thing") && col.GetComponent<Enemy>() && col.gameObject != gameObject)
                 {
                     col.GetComponent<Enemy>().TakeDamage(damage);
                 }
                 if (col.CompareTag("thing"))
                     col.GetComponent<Thing>().TriggerMethod?.Invoke();
-                if (col.CompareTag("floor"))
-                    timer = dashDur;
+                
             }
             yield return new WaitForFixedUpdate();
         }

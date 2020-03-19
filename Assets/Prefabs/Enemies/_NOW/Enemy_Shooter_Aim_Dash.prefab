@@ -372,7 +372,7 @@ MonoBehaviour:
   invincible: 0
   invincibleDurAfterHit: 0
   hpText: {fileID: 0}
-  canShoot: 0
+  canShoot: 1
   aimNoCollider: 0
   distance: 850
   bullet: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
@@ -384,10 +384,10 @@ MonoBehaviour:
   isInSight: 0
   lr: {fileID: 0}
   dashSpeed: 1300
-  dashDur: 2
+  dashDur: 1
   dir: {x: 0, y: 0}
   dashPreload: 0.3
-  hitboxWidth: 50
+  hitboxWidth: 20
   damage: 1
 --- !u!114 &8983548669855484567
 MonoBehaviour:
