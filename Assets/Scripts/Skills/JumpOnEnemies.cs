@@ -29,6 +29,7 @@ public class JumpOnEnemies : Skill
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
+        GetComponent<AirJump>().charge = GetComponent<AirJump>().maxCharge;
         if (clip != null) {
             GetComponent<AudioSource>().clip = clip;
             GetComponent<AudioSource>().Play();
