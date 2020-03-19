@@ -168,6 +168,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
@@ -180,6 +181,7 @@ MonoBehaviour:
   TouchLayer:
     serializedVersion: 2
     m_Bits: 0
+  gravity: 0
 --- !u!251 &740622588627588738
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -356,6 +358,8 @@ MonoBehaviour:
     m_Bits: 8
   faceRight: 0
   sightDistance: 0
+  invincible: 0
+  invincibleDurAfterHit: 0
   hpText: {fileID: 0}
   canShoot: 1
   aimNoCollider: 0
@@ -368,6 +372,12 @@ MonoBehaviour:
   player: {fileID: 0}
   isInSight: 0
   lr: {fileID: 0}
+  dashSpeed: 1300
+  dashDur: 2
+  dir: {x: 0, y: 0}
+  dashPreload: 0.3
+  hitboxWidth: 50
+  damage: 1
 --- !u!114 &772221102876635208
 MonoBehaviour:
   m_ObjectHideFlags: 0
