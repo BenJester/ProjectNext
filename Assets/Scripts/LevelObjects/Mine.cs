@@ -9,10 +9,11 @@ public class Mine : MonoBehaviour
     public GameObject explosionAreaIndicator;
     public int damage;
     bool busy;
-
+    public AudioClip clip;
+    AudioSource source;
     void Start()
     {
-        
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,6 +35,7 @@ public class Mine : MonoBehaviour
         if (busy) yield break;
         busy = true;
         GetComponent<SpriteRenderer>().color = Color.black;
+        source.PlayOneShot(clip);
         yield return new WaitForSeconds(explosionDelay);
 
 

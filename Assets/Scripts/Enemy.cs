@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour{
     public LayerMask floorLayer = 8;
     protected Color originalColor;
     protected Vector3 originalScale;
-    private SpriteRenderer m_spRender;
+    protected SpriteRenderer m_spRender;
     public bool faceRight;
     private UnityAction<int> m_takeDamageAct;
     bool justSawPlayer;
