@@ -5,7 +5,7 @@ using UnityEngine;
 public class AirJump : Skill
 {
     public int maxCharge;
-    int charge;
+    public int charge;
     public float CoyoteDelay;
     public float CoyoteDuration;
     
@@ -14,7 +14,7 @@ public class AirJump : Skill
         charge = maxCharge;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (playerControl.isTouchingGround)
         {
