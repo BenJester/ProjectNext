@@ -11,6 +11,7 @@ public class Shield : MonoBehaviour
     private Animator m_animator;
     void Start()
     {
+        //GetComponent<CircleCollider2D>().radius = 10f;
         if(transform.parent != null)
         {
             thing = transform.parent.GetComponent<Thing>();
@@ -45,13 +46,13 @@ public class Shield : MonoBehaviour
     public void Deactivate()
     {
         GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<Collider2D>().enabled = false;
+        //GetComponent<Collider2D>().enabled = false;
     }
 
     public void Activate()
     {
         GetComponent<SpriteRenderer>().enabled = true;
-        GetComponent<Collider2D>().enabled = true;
+        //GetComponent<Collider2D>().enabled = true;
         m_animator.SetInteger(ParamAnimation, 1);
     }
 }

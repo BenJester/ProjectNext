@@ -31,13 +31,14 @@ public class Enemy : MonoBehaviour{
     private UnityAction<int> m_takeDamageAct;
     bool justSawPlayer;
     public float sightDistance;
-
+    public bool invincible;
+    public float invincibleDurAfterHit;
     protected GameObject exclamation;
     public delegate void LoseHPDelegate(int lossHP);
     public event LoseHPDelegate OnLoseHP;
     public GameObject hpText;
     AudioClip hitClip;
-
+    protected Rigidbody2D rb;
     private void Awake()
     {
 
@@ -58,6 +59,7 @@ public class Enemy : MonoBehaviour{
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
 		goal.enemyCount += 1;
         box = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
         groundCheckTopLeft = new Vector2
                                  (
                                     -(box.size.x / 2f - groundCheckBoxIndent),
@@ -69,6 +71,8 @@ public class Enemy : MonoBehaviour{
                                     -(box.size.y / 2f + groundCheckBoxHeight / 2f)
                                  );
         m_spRender = GetComponent<SpriteRenderer>();
+        if (m_spRender == null)
+            m_spRender = thing.sr;
         if(m_spRender != null)
         {
             originalColor = m_spRender.color;
@@ -104,6 +108,7 @@ public class Enemy : MonoBehaviour{
     }
 
 	void OnCollisionEnter2D (Collision2D col) {
+        thing = GetComponent<Thing>();
         if (thing.prevVelocity.y < -dropKillSpeed && canShuaisi && grounded) {
 			thing.collider.enabled = false;
 			thing.Die ();
@@ -118,9 +123,17 @@ public class Enemy : MonoBehaviour{
     {
         m_takeDamageAct -= _act;
     }
-
+    IEnumerator CancelInvincible()
+    {
+        invincible = true;
+        yield return new WaitForSeconds(invincibleDurAfterHit);
+        invincible = false;
+    }
     public void TakeDamage(int damage)
 	{
+        if (invincible) return;
+        if (invincibleDurAfterHit > 0f)
+            StartCoroutine(CancelInvincible());
 		health -= damage;
         OnLoseHP?.Invoke(damage);
         if (m_takeDamageAct != null)

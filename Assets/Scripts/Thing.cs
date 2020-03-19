@@ -16,6 +16,7 @@ namespace Ben
     }
 }
 public class Thing : MonoBehaviour {
+    public SpriteRenderer sr;
     public GameObject SpawnObjOnDie;
     public GameObject dieParticle;
     public UnityEvent TriggerMethod;
@@ -33,6 +34,7 @@ public class Thing : MonoBehaviour {
 	Goal goal;
 	public bool dead = false;
     public bool hasShield = false;
+    public bool isKey;
     public GameObject shield;
 	GameObject player;
 	[Header("死亡动画，需要有HeadBodySeparation脚本")]
@@ -63,7 +65,103 @@ public class Thing : MonoBehaviour {
     public delegate void OnDieDelegate();
     public event OnDieDelegate OnDie;
 
+    float wallCheckBoxWidth = 10f;
+    float wallCheckBoxIndent = 2f;
 
+    Vector2 wallCheckTopLeft;
+    Vector2 wallCheckBottomRight;
+    Vector2 leftWallCheckTopLeft;
+    Vector2 leftWallCheckBottomRight;
+
+    Vector2 upWallCheckTopLeft;
+    Vector2 upWallCheckBottomRight;
+    Vector2 floorCheckTopLeft;
+    Vector2 floorCheckBottomRight;
+    public LayerMask TouchLayer;
+    public float gravity;
+    #region wallTouchChecks
+    void InitWallChecks()
+    {
+        wallCheckTopLeft = new Vector2
+                         (
+                            (collider.size.x / 2f - wallCheckBoxWidth / 2f),
+                            (collider.size.y / 2f - wallCheckBoxIndent)
+                         );
+        wallCheckBottomRight = new Vector2
+                                 (
+                                    collider.size.x / 2f + wallCheckBoxWidth / 2f,
+                                    -(collider.size.y / 2f - wallCheckBoxIndent)
+                                 );
+        leftWallCheckTopLeft = new Vector2
+                         (
+                            -(collider.size.x / 2f + wallCheckBoxWidth / 2f),
+                            (collider.size.y / 2f - wallCheckBoxIndent)
+                         );
+        leftWallCheckBottomRight = new Vector2
+                                 (
+                                    -(collider.size.x / 2f - wallCheckBoxWidth / 2f),
+                                    -(collider.size.y / 2f - wallCheckBoxIndent)
+                                 );
+        upWallCheckTopLeft = new Vector2
+                         (
+                            -(collider.size.x / 2f - wallCheckBoxIndent),
+                            collider.size.y / 2f + wallCheckBoxWidth / 2f
+                         );
+        upWallCheckBottomRight = new Vector2
+                                 (
+                                    collider.size.x / 2f - wallCheckBoxIndent,
+                                    collider.size.y / 2f - wallCheckBoxWidth / 2f
+                                 );
+        floorCheckTopLeft = new Vector2
+                         (
+                            -(collider.size.x / 2f - wallCheckBoxIndent),
+                            -(collider.size.y / 2f - wallCheckBoxWidth / 2f)
+                         );
+        floorCheckBottomRight = new Vector2
+                                 (
+                                    collider.size.x / 2f - wallCheckBoxIndent,
+                                    -(collider.size.y / 2f + wallCheckBoxIndent)
+                                 );
+    }
+    public bool touchingWallRight()
+    {
+        var col = Physics2D.OverlapAreaAll
+                (
+                    (Vector2)transform.position + wallCheckTopLeft,
+                    (Vector2)transform.position + wallCheckBottomRight,
+                    TouchLayer
+                );
+        return col.Length > 1;
+    }
+    public bool touchingWallLeft()
+    {
+        return Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + leftWallCheckTopLeft,
+                    (Vector2)transform.position + leftWallCheckBottomRight,
+                    TouchLayer
+                );
+    }
+    public bool touchingWallUp()
+    {
+        return Physics2D.OverlapArea
+                (
+                    (Vector2)transform.position + upWallCheckTopLeft,
+                    (Vector2)transform.position + upWallCheckBottomRight,
+                    TouchLayer
+                );
+    }
+    public bool touchingFloor()
+    {
+        var col = Physics2D.OverlapAreaAll
+                (
+                    (Vector2)transform.position + floorCheckTopLeft,
+                    (Vector2)transform.position + floorCheckBottomRight,
+                    TouchLayer
+                );
+        return col.Length > 1;
+    }
+    #endregion
     public virtual void Start () {
         m_spRender = GetComponent<SpriteRenderer>();
         if(m_spRender == null)
@@ -79,14 +177,18 @@ public class Thing : MonoBehaviour {
 		playerControl = player.GetComponent<PlayerControl1> ();
 		originalScale = transform.localScale;
 		collider = GetComponent<BoxCollider2D> ();
-		body = GetComponent<Rigidbody2D> ();
-		GameObject goalObject = GameObject.FindWithTag ("goal");
+
+        
+        body = GetComponent<Rigidbody2D> ();
+        
+        GameObject goalObject = GameObject.FindWithTag ("goal");
 		if (goalObject != null)
 			goal = goalObject.GetComponent<Goal>();
 
         if (hasShield && GetComponentInChildren<Shield>() == null)
             Instantiate(Resources.Load<GameObject>("shield"), transform.position, Quaternion.identity, transform);
-
+        if (isKey)
+            Instantiate(Resources.Load<GameObject>("key"), new Vector3(transform.position.x - 70f, GetUpperY() + 60f, transform.position.z) , Quaternion.identity, transform);
         //HandleRewind();
 
         if (type != Type.player) 
@@ -95,7 +197,11 @@ public class Thing : MonoBehaviour {
 		}
         if (body.gravityScale != 0f)
             body.gravityScale = 165f;
-	}
+        if (PlayerControl1.Instance.GetComponent<InvertGravity>() != null)
+            body.gravityScale = !PlayerControl1.Instance.GetComponent<InvertGravity>().even ? Mathf.Abs(body.gravityScale) : -Mathf.Abs(body.gravityScale);
+        gravity = body.gravityScale;
+        InitWallChecks();
+    }
     public Quaternion GetOriginalQuat()
     {
         return m_qtOriginalQuat;

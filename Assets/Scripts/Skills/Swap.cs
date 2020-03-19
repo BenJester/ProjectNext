@@ -86,11 +86,14 @@ public class Swap : Skill {
     public delegate void DropDelegate();
     public event OverheadDelegate OnDrop;
 
+    public delegate void SwapDelegate();
+    public event SwapDelegate OnSwap;
+
     public float inputCancelDelay;
     public Vector2 keyboardDir;
     public bool canceled;
     public bool triggerItemEvent;
-
+    BulletTime bulletTime;
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -100,6 +103,7 @@ public class Swap : Skill {
             SwapAnimatorSpr = SwapAnimator.GetComponent<SpriteRenderer>();
             SwapAnimatorSpr.enabled = false;
         }
+        bulletTime = GetComponent<BulletTime>();
     }
 
     public override void Do()
@@ -119,6 +123,7 @@ public class Swap : Skill {
        // playerControl.SetColShadow();
 
     }
+    
     public IEnumerator delayedRecoverCancel()
     {
         yield return new WaitForSecondsRealtime(0.1f);
@@ -957,7 +962,6 @@ public class Swap : Skill {
         while (curr < pokerTransitionDur)
         {
             curr += Time.deltaTime;
-            
             playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
@@ -1049,27 +1053,38 @@ public class Swap : Skill {
         playerControl.box.enabled = true;
         busy = false;
     }
+    public float dashReducedTimeScale;
     IEnumerator PokerDash()
     {
         if (busy) yield break;
         busy = true;
-        Smoke();
-        Collider2D target = col;
 
+        OnSwap?.Invoke();
+
+        Smoke();
+        float timer = Time.realtimeSinceStartup;
+
+        bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
+
+
+        Collider2D target = col;
+        Sprite targetSprite = null;
         Sprite playerSprite = playerControl.spriteRenderer.sprite;
-        Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
+        if (target.GetComponent<SpriteRenderer>() != null)
+            targetSprite = target.GetComponent<SpriteRenderer>().sprite;
+        else
+            targetSprite = target.GetComponent<Thing>().sr.sprite;
         //target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
         //playerControl.spriteRenderer.sprite = pokerSprite;
-
-        playerControl.box.enabled = false;
+        player.layer = 18;
+        //playerControl.box.enabled = false;
         playerControl.disableAirControl = true;
         bool playerFaceRight = playerControl.spriteRenderer.flipX;
 
         Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         Vector3 diff = Input.mousePosition - startingPoint;
 
-        Vector3 prevPos = transform.position;
-        Vector3 prevColPos = target.transform.position;
+        
 
         Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
@@ -1077,7 +1092,14 @@ public class Swap : Skill {
         if (target.GetComponent<Enemy>() != null)
             target.GetComponent<Enemy>().hpText.SetActive(false);
         bool targetIsTrigger = targetBox.isTrigger;
-
+        Vector3 prevPos = transform.position;
+        if (targetThing.touchingFloor())
+        {
+            Debug.Log("~~");
+        }
+        Vector3 prevColPos = new Vector3(target.transform.position.x, 
+                                         targetThing.touchingFloor() ? targetThing.GetLowerY() + playerControl.box.size.y / 2f: target.transform.position.y, 
+                                         target.transform.position.z);
         targetBox.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
@@ -1091,6 +1113,8 @@ public class Swap : Skill {
         Vector3 playerScale = transform.localScale;
         Vector3 targetScale = target.transform.localScale;
         SpriteRenderer targetSr = target.GetComponent<SpriteRenderer>();
+        if (targetSr == null)
+            targetSr = target.GetComponent<Thing>().sr;
         float playerGravity = playerControl.rb.gravityScale;
         float targetGravity = targetRb.gravityScale;
         playerControl.rb.gravityScale = 0f;
@@ -1163,8 +1187,10 @@ public class Swap : Skill {
         if (target.GetComponent<Animator>() != null)
             target.GetComponent<Animator>().enabled = true;
         playerControl.disableAirControl = false;
-        playerControl.rb.velocity = new Vector2(0f, 250f);
+        if (!playerControl.touchingFloor())
+            playerControl.rb.velocity = new Vector2(0f, 250f);
         Smoke();
+        player.layer = 9;
         targetThing.swapping = false;
         playerControl.spriteRenderer.sprite = playerSprite;
         player.transform.localScale = playerScale;
@@ -1173,7 +1199,7 @@ public class Swap : Skill {
         targetRb.gravityScale = targetGravity;
         if (targetRb != null)
         {
-            target.GetComponent<SpriteRenderer>().sprite = targetSprite;
+            targetSr.sprite = targetSprite;
             //targetBox.isTrigger = targetIsTrigger;
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
                 targetRb.velocity = dir.normalized * swapSpeed;
@@ -1183,7 +1209,7 @@ public class Swap : Skill {
             targetBox.enabled = true;
             if (target.GetComponent<Enemy>() != null)
             {
-                target.GetComponent<Enemy>().faceRight = !playerFaceRight;
+                //target.GetComponent<Enemy>().faceRight = !playerFaceRight;
                 target.GetComponent<Enemy>().hpText.SetActive(true);
             }
 
@@ -1192,5 +1218,6 @@ public class Swap : Skill {
         playerControl.spriteRenderer.flipX = playerFaceRight;
         playerControl.box.enabled = true;
         busy = false;
+        bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
     }
 }

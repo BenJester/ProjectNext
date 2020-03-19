@@ -49,10 +49,10 @@ public class AirJump : Skill
         float curr = 0f;
         while (curr < CoyoteDuration)
         {
-            playerBody.gravityScale = 75f;
+            //playerBody.gravityScale = 75f;
             curr += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        playerBody.gravityScale = gravity;
+        //playerBody.gravityScale = gravity;
     }
 }

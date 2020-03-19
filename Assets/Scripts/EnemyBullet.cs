@@ -63,7 +63,7 @@ public int damage;
 		else if (col.CompareTag ("floor") && floorCollide) {
 			Deactivate ();
 		}
-        else if (col.CompareTag("metalShield") && floorCollide)
+        else if (col.CompareTag("metalShield"))
         {
             body.velocity = -body.velocity.normalized * startSpeed * 2f;
         }

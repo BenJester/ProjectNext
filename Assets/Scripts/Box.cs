@@ -18,41 +18,156 @@ public class Box : MonoBehaviour {
 		_boxThing = GetComponent<Thing> ();	
 	}
 	
-	void Update () {
-		prevVelocity = body.velocity;
+	void FixedUpdate () {
+        StartCoroutine(Late());
 	}
 
-	void OnCollisionEnter2D(Collision2D col) {
+    IEnumerator Late()
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        prevVelocity = body.velocity;
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("thing"))
+        {
+            Thing colThing = col.gameObject.GetComponent<Thing>();
+            //这里逻辑有点奇怪
+            //if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
+            if (body.gravityScale > 0)
+            {
+                if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed)//&& _boxThing.GetLowerY() >= colThing.GetUpperY())
+                {
+                    if (colThing.GetLowerY() > _boxThing.GetLowerY())
+                    {
+                        //碰撞物在箱子上面。就不处理。
+                    }
+                    else
+                    {
+                        if (useDamage && colThing.GetComponent<Enemy>() != null)
+                        {
+                            //colThing.hasShield = false;
+                            //colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                            colThing.GetComponent<Enemy>().TakeDamage(damage);
+                            body.velocity = new Vector2(400f, 500f);
+                        }
+                        else
+                            colThing.Die();
+
+                    }
+                }
+                else
+                {
+                    //Debug.Assert(false);
+                }
+                if (body != null)
+                {
+                    //body.velocity = prevVelocity;
+                }
+            }
+            else
+            {
+                if (colThing.type == Type.enemy && prevVelocity.y > killDropSpeed)
+                {
+                    if (colThing.GetUpperY() < _boxThing.GetUpperY())
+                    {
+                        //碰撞物在箱子上面。就不处理。
+                    }
+                    else
+                    {
+                        if (useDamage && colThing.GetComponent<Enemy>() != null)
+                        {
+                            //colThing.hasShield = false;
+                            //colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                            colThing.GetComponent<Enemy>().TakeDamage(damage);
+                            body.velocity = new Vector2(400f, 500f);
+                        }
+                        else
+                            colThing.Die();
+
+                    }
+                }
+                else
+                {
+                    //Debug.Assert(false);
+                }
+                if (body != null)
+                {
+                    //body.velocity = prevVelocity;
+                }
+            }
+
+        }
+    }
+    void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.CompareTag("thing")) {
 			Thing colThing = col.gameObject.GetComponent<Thing> ();
             //这里逻辑有点奇怪
             //if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
-            if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() >= colThing.GetUpperY() )
+            if (body.gravityScale > 0)
             {
-                if ( colThing.GetLowerY() > _boxThing.GetLowerY() )
+                if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed )//&& _boxThing.GetLowerY() >= colThing.GetUpperY())
                 {
-                    //碰撞物在箱子上面。就不处理。
+                    if (colThing.GetLowerY() > _boxThing.GetLowerY())
+                    {
+                        //碰撞物在箱子上面。就不处理。
+                    }
+                    else
+                    {
+                        if (useDamage && colThing.GetComponent<Enemy>() != null)
+                        {
+                            //colThing.hasShield = false;
+                            //colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                        }
+                        else
+                            colThing.Die();
+
+                    }
                 }
                 else
                 {
-                    if (useDamage && colThing.GetComponent<Enemy>() != null)
-                    {
-                        colThing.hasShield = false;
-                        colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
-                    }
-                    else
-                        colThing.Die();
-
+                    //Debug.Assert(false);
                 }
-			}
+                if (body != null)
+                {
+                    //body.velocity = prevVelocity;
+                }
+            }
             else
             {
-                //Debug.Assert(false);
+                if (colThing.type == Type.enemy && prevVelocity.y > killDropSpeed)
+                {
+                    if (colThing.GetUpperY() < _boxThing.GetUpperY())
+                    {
+                        //碰撞物在箱子上面。就不处理。
+                    }
+                    else
+                    {
+                        if (useDamage && colThing.GetComponent<Enemy>() != null)
+                        {
+                            colThing.hasShield = false;
+                            colThing.GetComponent<Enemy>().canBeDamagedByKunaiDash = true;
+                        }
+                        else
+                            colThing.Die();
+
+                    }
+                }
+                else
+                {
+                    //Debug.Assert(false);
+                }
+                if (body != null)
+                {
+                    //body.velocity = prevVelocity;
+                }
             }
-            if(body != null)
-            {
-                body.velocity = prevVelocity;
-            }
+            
 		}
 	}
 

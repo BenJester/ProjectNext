@@ -200,6 +200,7 @@ public class PlayerControl1 : PlayerControl {
     public Dash dash;
 
     public LayerMask TouchLayer;
+    public LayerMask ScanObjectLayer;
     public LayerMask LayerForLockObject;
     public LayerMask BoxLayer;
     public LayerMask MovePlatformLayer;
@@ -549,11 +550,11 @@ public class PlayerControl1 : PlayerControl {
         RaycastHit2D _ray5 = Physics2D.Raycast(groundCheckPoint5.position, Vector3.down, 5f, TouchLayer);
 
 
-        isTouchingGround = (_ray1 | _ray2 | _ray3 | _ray4 | _ray5) || (wallJump ? isTouchingGround : false);
-
+        //isTouchingGround = (_ray1 | _ray2 | _ray3 | _ray4 | _ray5) || (wallJump ? isTouchingGround : false);
+        isTouchingGround = rb.gravityScale > 0 ? touchingFloor() : touchingWallUp();
         if (isTouchingGround == true && !wallJump)
         {
-            isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
+            //isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);
         }
 
         if (isTouchingGround == true)
@@ -655,10 +656,15 @@ public class PlayerControl1 : PlayerControl {
         //}
         if (disableAirControl && !isTouchingGround)
         {
-            h = 0;
+            //h = 0;
         }
         //
-        rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        if (disableAirControl && !isTouchingGround)
+        {
+
+        }
+        else
+            rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         
         //
         if (true == false && canJump == false && !disableAirControl)
@@ -852,7 +858,7 @@ public class PlayerControl1 : PlayerControl {
             DashRequestByPlayer();
         }
         if (player.GetButtonUp("Switch"))
-            Debug.Log("swi");
+
         // 左键子弹时间结束
 
         //处理按下的指示器
@@ -958,7 +964,7 @@ public class PlayerControl1 : PlayerControl {
 
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Jumping);
         box.sharedMaterial = slipperyMat;
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * rb.gravityScale / Mathf.Abs(rb.gravityScale));
         canJump = false;
         m_fCurrentKeepJumping = 0.0f;
         m_fTotalForce = 0.0f;
@@ -982,7 +988,7 @@ public class PlayerControl1 : PlayerControl {
         }
         else
         {
-            return TouchLayer;
+            return ScanObjectLayer;
         }
     }
 
@@ -1368,7 +1374,7 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void FixedUpdate() {
-        if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
+        //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
         if (m_bJumpingWindow == true)
         {
 
