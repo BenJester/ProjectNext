@@ -34,7 +34,7 @@ public class Ti_JumpingBox : MonoBehaviour
 
     IEnumerator disAbleAir() {
         PlayerControl1.Instance.disableAirControl = true;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         PlayerControl1.Instance.disableAirControl = false;
     }
     public void AddForceToSelf()

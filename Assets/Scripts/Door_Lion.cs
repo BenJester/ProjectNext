@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Door_Lion : MonoBehaviour {
     public bool active;
+    public bool isChecking = true;
     public bool isOpen = false;
     public List<Thing> enemyList;
     public List<PhysicalButton> buttonList;
@@ -29,26 +30,38 @@ public class Door_Lion : MonoBehaviour {
     }
     void Start () {
 
-    }
-
-    void Update () {
-        if (checkEnemies () && checkButtons () && checkHostages ()) {
-            active = true;
-            //anim.SetBool("Active", true);
-            Open ();
-            opened = true;
-        } else {
-
-            active = false;
-            //anim.SetBool("Active", false);
-            if (opened && doesNotCloseOnceOpened)
-                return;
-            Close ();
-
+        if (isOpen) {
+            Open();
         }
     }
 
-    void Open () {
+    void Update () {
+
+        if (isChecking) {
+            if (checkEnemies() && checkButtons() && checkHostages())
+            {
+                active = true;
+                //anim.SetBool("Active", true);
+                Open();
+                opened = true;
+            }
+            else
+            {
+
+                active = false;
+                //anim.SetBool("Active", false);
+                if (opened && doesNotCloseOnceOpened)
+                    return;
+                Close();
+
+            }
+
+
+        }
+        
+    }
+
+    public void Open () {
 
         GetComponent<BoxCollider2D> ().enabled = false;
 
@@ -56,7 +69,7 @@ public class Door_Lion : MonoBehaviour {
 
     }
 
-    void Close () {
+    public void Close () {
 
         GetComponent<BoxCollider2D> ().enabled = true;
 

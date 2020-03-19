@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class JumpOnEnemies : Skill
 {
+
+    public bool canKick = false;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.GetComponent<Enemy>() != null & collision.collider.transform.position.y < transform.position.y)
+        if (collision.collider.GetComponent<Enemy>() != null & collision.collider.transform.position.y < transform.position.y) {
+
             StartCoroutine(LateJump());
+
+            // 
+            if (canKick && collision.collider.GetComponent<Thing>().hasShield) {
+                collision.collider.GetComponent<Thing>().SetShield(false);
+                collision.collider.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            }
+
+
+        }
+            
     }
 
     IEnumerator LateJump()
@@ -22,5 +35,10 @@ public class JumpOnEnemies : Skill
         }
         
         playerBody.velocity = new Vector2(playerBody.velocity.x, playerControl.jumpSpeed);
+    }
+
+    public void KickEnemy() { 
+        
+    
     }
 }
