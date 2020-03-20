@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy_Miner : Enemy
 {
     public float runDur;
+    public float chaseSpeed;
     public float speed;
     bool busy;
     public float explosionDelay;
@@ -23,7 +24,27 @@ public class Enemy_Miner : Enemy
     {
         StartCoroutine(DoRun());
     }
-
+    IEnumerator DoChase()
+    {
+        if (triggered) yield break;
+        triggered = true;
+        GetComponent<SpriteRenderer>().color = Color.red;
+        float timer = 0f;
+        while (timer < runDur)
+        {
+            timer += 0.2f;
+            if (player.transform.position.x > transform.position.x)
+            {
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(-speed, rb.velocity.y);
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+        StartCoroutine(Explode());
+    }
     IEnumerator DoRun()
     {
         if (triggered) yield break;

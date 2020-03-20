@@ -273,7 +273,7 @@ public class PlayerControl1 : PlayerControl {
     private BulletTime m_bulletTime;
     private PlayerDoubleSwap m_doubleSwap;
 
-    float wallCheckBoxWidth = 80f;
+    float wallCheckBoxWidth = 20f;
     float wallCheckBoxIndent = 2f;
 
     Vector2 wallCheckTopLeft;
