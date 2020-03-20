@@ -1058,7 +1058,7 @@ public class Swap : Skill {
     {
         if (busy) yield break;
         busy = true;
-
+        playerControl.invincible = true;
         OnSwap?.Invoke();
 
         Smoke();
@@ -1214,10 +1214,12 @@ public class Swap : Skill {
             }
 
             targetThing.swapTriggerMethod?.Invoke();
+            StartCoroutine(targetThing.CancelBeingThrown(0.65f));
         }
         playerControl.spriteRenderer.flipX = playerFaceRight;
         playerControl.box.enabled = true;
         busy = false;
+        playerControl.invincible = false;
         bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
     }
 }

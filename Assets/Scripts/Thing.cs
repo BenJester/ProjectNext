@@ -16,6 +16,7 @@ namespace Ben
     }
 }
 public class Thing : MonoBehaviour {
+    public bool beingThrown;
     public SpriteRenderer sr;
     public GameObject SpawnObjOnDie;
     public GameObject dieParticle;
@@ -162,6 +163,13 @@ public class Thing : MonoBehaviour {
         return col.Length > 1;
     }
     #endregion
+
+    public IEnumerator CancelBeingThrown(float delay)
+    {
+        beingThrown = true;
+        yield return new WaitForSeconds(delay);
+        beingThrown = false;
+    }
     public virtual void Start () {
         m_spRender = GetComponent<SpriteRenderer>();
         if(m_spRender == null)

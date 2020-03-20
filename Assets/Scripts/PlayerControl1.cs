@@ -37,7 +37,7 @@ public class PlayerControl1 : PlayerControl {
     [Header("基本参数")]
     public int maxhp = 1;
     public int hp;
-    bool invincible;
+    public bool invincible;
     public float speed;
     [Tooltip("跳跃中水平移动最大速度向上")]
     public float JumpingHorizontalUpMaxSpeed;
