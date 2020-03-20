@@ -152,8 +152,11 @@ public class Enemy_Shooter_Aim : Enemy {
         gameObject.layer = 18;
         float drag = rb.drag;
         rb.drag = 0f;
+        Color color = m_spRender.color;
         while (timer < dashDur)
         {
+            
+            m_spRender.color = Color.red;
             timer += Time.fixedDeltaTime;
             Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + (Vector3) dir * (box.size.x + hitboxWidth),
                                  new Vector2(hitboxWidth * 2, box.size.y),
@@ -175,6 +178,7 @@ public class Enemy_Shooter_Aim : Enemy {
             }
             yield return new WaitForFixedUpdate();
         }
+        m_spRender.color = color;
         rb.drag = drag;
         gameObject.layer = 10;
         rb.velocity = Vector2.zero;

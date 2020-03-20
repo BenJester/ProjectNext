@@ -71,6 +71,8 @@ public class Enemy_Dash_Enrage : Enemy
         gameObject.layer = 18;
         float drag = rb.drag;
         rb.drag = 0f;
+        Color color = m_spRender.color;
+        m_spRender.color = Color.red;
         while (timer < dashDur)
         {
             lr.SetPosition(0, transform.position);
@@ -94,6 +96,7 @@ public class Enemy_Dash_Enrage : Enemy
             }
             yield return new WaitForFixedUpdate();
         }
+        m_spRender.color = color;
         lr.enabled = false;
         rb.drag = drag;
         gameObject.layer = 10;

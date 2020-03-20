@@ -121,7 +121,7 @@ public class Thing : MonoBehaviour {
         floorCheckBottomRight = new Vector2
                                  (
                                     collider.size.x / 2f - wallCheckBoxIndent,
-                                    -(collider.size.y / 2f + wallCheckBoxWidth / 2f)
+                                    -(collider.size.y / 2f + wallCheckBoxIndent)
                                  );
     }
     public bool touchingWallRight()

@@ -24,27 +24,7 @@ public class Enemy_Miner : Enemy
     {
         StartCoroutine(DoRun());
     }
-    IEnumerator DoChase()
-    {
-        if (triggered) yield break;
-        triggered = true;
-        GetComponent<SpriteRenderer>().color = Color.red;
-        float timer = 0f;
-        while (timer < runDur)
-        {
-            timer += 0.2f;
-            if (player.transform.position.x > transform.position.x)
-            {
-                rb.velocity = new Vector2(speed, rb.velocity.y);
-            }
-            else
-            {
-                rb.velocity = new Vector2(-speed, rb.velocity.y);
-            }
-            yield return new WaitForSeconds(0.2f);
-        }
-        StartCoroutine(Explode());
-    }
+
     IEnumerator DoRun()
     {
         if (triggered) yield break;
@@ -54,13 +34,14 @@ public class Enemy_Miner : Enemy
         while (timer < runDur)
         {
             timer += 0.2f;
-            if (player.transform.position.x > transform.position.x)
+            if (player.transform.position.x > transform.position.x && !thing.beingThrown)
             {
                 rb.velocity = new Vector2(speed, rb.velocity.y);
             }
             else
             {
-                rb.velocity = new Vector2(-speed, rb.velocity.y);
+                if (!thing.beingThrown)
+                    rb.velocity = new Vector2(-speed, rb.velocity.y);
             }
             yield return new WaitForSeconds(0.2f);
         }
@@ -121,8 +102,14 @@ public class Enemy_Miner : Enemy
         player = GameObject.FindGameObjectWithTag("player").GetComponent<Transform>();
         lr = GetComponent<LineRenderer>();
     }
-
-
+    public float jumpSpeed;
+    void Jump()
+    {
+        if (thing.touchingFloor())
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -145,9 +132,13 @@ public class Enemy_Miner : Enemy
             lr.SetPosition(1, (player.position - transform.position).normalized * distance + transform.position);
         }
         else lr.enabled = false;
+        if (CheckPlayerInSight())
+        {
+            SelfDestroy();
+        }
 
     }
-
+    public float triggerDistance;
     protected IEnumerator HandleShoot()
     {
 
@@ -173,9 +164,9 @@ public class Enemy_Miner : Enemy
 
     public void Shoot()
     {
-        if (thing.dead)
+        if (thing.dead || triggered)
             return;
-        GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
+        GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction + Vector3.up * 50f, Quaternion.identity);
         Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
         bulletBody.velocity = direction * bulletSpeed;
 
