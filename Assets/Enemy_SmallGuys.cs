@@ -18,6 +18,7 @@ public class Enemy_SmallGuys : Enemy
     
     void Start()
     {
+        base.Start();
         target = PlayerControl1.Instance.GetComponent<Transform>();
     }
 
