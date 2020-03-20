@@ -273,7 +273,7 @@ public class PlayerControl1 : PlayerControl {
     private BulletTime m_bulletTime;
     private PlayerDoubleSwap m_doubleSwap;
 
-    float wallCheckBoxWidth = 50f;
+    float wallCheckBoxWidth = 80f;
     float wallCheckBoxIndent = 2f;
 
     Vector2 wallCheckTopLeft;
@@ -427,7 +427,7 @@ public class PlayerControl1 : PlayerControl {
         floorCheckBottomRight = new Vector2
                                  (
                                     box.size.x / 2f - wallCheckBoxIndent,
-                                    -(box.size.y / 2f + wallCheckBoxIndent)
+                                    -(box.size.y / 2f + wallCheckBoxWidth / 2f)
                                  );
     }
     public bool touchingWallRight()
