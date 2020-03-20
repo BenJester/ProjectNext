@@ -76,10 +76,8 @@ public class Enemy_Dash_Enrage : Enemy
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, transform.position + (Vector3)rb.velocity.normalized * 2000f);
             timer += Time.fixedDeltaTime;
-            Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + (Vector3)dir * (box.size.x + hitboxWidth),
-                                 new Vector2(hitboxWidth * 2, box.size.y),
-                                 Vector2.SignedAngle(transform.position, player.position));
-            
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 50f);
+
             foreach (var col in cols)
             {
                 if (col.CompareTag("player"))
@@ -92,8 +90,7 @@ public class Enemy_Dash_Enrage : Enemy
                 }
                 if (col.CompareTag("thing"))
                     col.GetComponent<Thing>().TriggerMethod?.Invoke();
-                if (col.CompareTag("floor"))
-                    timer = dashDur;
+                
             }
             yield return new WaitForFixedUpdate();
         }

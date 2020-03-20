@@ -41,6 +41,7 @@ public class AirJump : Skill
         StartCoroutine(Coyote());
         GameObject part = Instantiate(playerControl.landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
         Destroy(part, 2f);
+        audioSource.PlayOneShot(clip, 0.35f);
     }
 
     IEnumerator Coyote()
