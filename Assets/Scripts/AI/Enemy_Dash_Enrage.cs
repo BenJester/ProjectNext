@@ -21,6 +21,7 @@ public class Enemy_Dash_Enrage : Enemy
 
     void Chase()
     {
+        if (thing.dead) return;
         if (CheckPlayerInSight() && !thing.beingThrown && !busy)
             rb.velocity = (player.position - transform.position).normalized * speed;
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 50f);
