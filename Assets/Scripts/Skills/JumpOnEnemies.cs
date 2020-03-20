@@ -14,8 +14,9 @@ public class JumpOnEnemies : Skill
 
             // 
             if (canKick && collision.collider.GetComponent<Thing>().hasShield) {
-                collision.collider.GetComponent<Thing>().SetShield(false);
+                    //  collision.collider.GetComponent<Thing>().SetShield(false);
                 collision.collider.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                collision.collider.GetComponent<Rigidbody2D>().velocity = Vector2.down * 100;
             }
 
 

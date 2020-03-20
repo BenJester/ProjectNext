@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
 {
@@ -14,6 +15,9 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
     public float explosionRadius;
     public int damage = 1;
     private float tempTimer;
+    private float _triggerTime;
+
+    public Text timeLeft;
 
     public GameObject areaIndicator;
     Thing thing;
@@ -22,6 +26,7 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
     {
         thing = GetComponent<Thing>();
         thing.OnDie += Explode;
+        timeLeft.text = triggerTime.ToString("F1");
     }
 
     void Update()
@@ -30,6 +35,12 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
             Explode();
             isTrigger = false;
             //Destroy(gameObject);
+        }
+
+        if (triggered) {
+            float time = (triggerTime - (Time.time - _triggerTime));
+            time = Mathf.Clamp(time, 0, triggerTime);
+            timeLeft.text = time.ToString("F1");
         }
     }
 
@@ -53,7 +64,9 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
     {
         GetComponent<SpriteRenderer>().color = Color.red;
 
-        yield return new WaitForSeconds(triggerDelay);
+
+        _triggerTime = Time.time;
+        yield return new WaitForSeconds(triggerTime);
         
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
@@ -76,6 +89,7 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
         
         if (!thing.dead)
             thing.Die();
+        Destroy(gameObject);
     }
 
     public void Explode()
