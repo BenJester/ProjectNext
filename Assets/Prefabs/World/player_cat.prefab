@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beingThrown: 0
   sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
@@ -662,6 +663,7 @@ MonoBehaviour:
   HasRepawnPoint: 1
   maxhp: 5
   hp: 5
+  invincible: 0
   speed: 550
   JumpingHorizontalUpMaxSpeed: 250
   JumpingHorizontalUpForce: 40000
@@ -755,7 +757,7 @@ MonoBehaviour:
     m_Bits: 1907968
   LayerForLockObject:
     serializedVersion: 2
-    m_Bits: 1840128
+    m_Bits: 256
   BoxLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -1035,6 +1037,7 @@ MonoBehaviour:
   playerControl: {fileID: 0}
   clip: {fileID: 0}
   maxCharge: 0
+  charge: 0
   CoyoteDelay: 0.2
   CoyoteDuration: 0.15
 --- !u!114 &1302247502408092104
