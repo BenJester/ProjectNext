@@ -22,6 +22,11 @@ public class Mine : MonoBehaviour
         
     }
 
+    public void DoExplode()
+    {
+        StartCoroutine(Explode());
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("player") || collision.CompareTag("thing") || collision.CompareTag("bullet"))

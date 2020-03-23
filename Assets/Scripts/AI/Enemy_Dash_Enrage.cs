@@ -12,7 +12,17 @@ public class Enemy_Dash_Enrage : Enemy
         player = GameObject.FindGameObjectWithTag("player").GetComponent<Transform>();
         base.Start();
     }
+    public void TempShield()
+    {
+        StartCoroutine(DoTempShield());
+    }
 
+    IEnumerator DoTempShield()
+    {
+        thing.SetShield(true);
+        yield return new WaitForSeconds(dashDur);
+        thing.SetShield(false);
+    }
     void Update()
     {
         Chase();
