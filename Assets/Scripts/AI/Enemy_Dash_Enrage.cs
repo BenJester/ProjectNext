@@ -65,7 +65,7 @@ public class Enemy_Dash_Enrage : Enemy
         busy = true;
         float timer = 0f;
         exclamation.SetActive(true);
-        while(timer < dashPreload)
+        while(timer < dashPreload || thing.beingThrown)
         {
             dir = (player.transform.position - transform.position).normalized;
             lr.enabled = true;
