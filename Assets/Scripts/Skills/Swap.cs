@@ -1202,7 +1202,11 @@ public class Swap : Skill {
             targetSr.sprite = targetSprite;
             //targetBox.isTrigger = targetIsTrigger;
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
+            {
+                StartCoroutine(targetThing.CancelBeingThrown(0.65f));
                 targetRb.velocity = dir.normalized * swapSpeed;
+            }
+                
             else
                 targetRb.velocity = Vector3.zero;
             target.transform.position = prevPos;
@@ -1214,7 +1218,7 @@ public class Swap : Skill {
             }
 
             targetThing.swapTriggerMethod?.Invoke();
-            StartCoroutine(targetThing.CancelBeingThrown(0.65f));
+            
         }
         playerControl.spriteRenderer.flipX = playerFaceRight;
         playerControl.box.enabled = true;
