@@ -136,7 +136,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7376209320153618815}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -4971, y: 33834, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
@@ -144,7 +144,7 @@ Transform:
   - {fileID: 5422414117311113223}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &7253664170740353617
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   isTrigger: 0
   speed: 5
   accSpeed: 1
-  explosionRadius: 250
+  explosionRadius: 350
   triggerBox: {fileID: 0}
   triggerParticle: {fileID: 1447157706495034, guid: 108ad1cecb0e29e46ab8ff7a79084a6a,
     type: 3}

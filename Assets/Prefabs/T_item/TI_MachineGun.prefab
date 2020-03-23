@@ -395,11 +395,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beingThrown: 0
+  sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
   TriggerMethod:
     m_PersistentCalls:
       m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6414563265969610984}
+        m_MethodName: HandleSwapTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   type: 3
   lowerY: 0
   upperY: 0
@@ -410,13 +426,20 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 0
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  gravity: 0
 --- !u!251 &6520330477669975851
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -456,7 +479,7 @@ MonoBehaviour:
   isRight: 1
   bullet: {fileID: 1249693321910232, guid: 0ad5517018b3b4f96aeda2856efef134, type: 3}
   times: 10
-  intervals: 0.5
+  intervals: 0.3
   recoil: 5
   bulletSpeed: 1000
   bulletInstanceDistance: 50

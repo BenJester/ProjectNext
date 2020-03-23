@@ -4,6 +4,7 @@ using UnityEngine;
 using Ben;
 public class Enemy_TouchDamage : MonoBehaviour
 {
+    public Thing selfEnemy;
     public bool EnemyDamage;
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,10 @@ public class Enemy_TouchDamage : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (selfEnemy.dead) {
+            return;
+        }
+
         if( collision.CompareTag(GlobalTagDefine.TagName_player) == true )
         {
             PlayerControl1 _ctrl = collision.GetComponent<PlayerControl1>();
