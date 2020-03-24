@@ -1087,6 +1087,7 @@ public class Swap : Skill {
         
 
         Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
+        Vector2 targetV = targetRb.velocity;
         BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
         Thing targetThing = target.GetComponent<Thing>();
         if (target.GetComponent<Enemy>() != null)
@@ -1206,9 +1207,11 @@ public class Swap : Skill {
                 StartCoroutine(targetThing.CancelBeingThrown(0.65f));
                 targetRb.velocity = dir.normalized * swapSpeed;
             }
-                
-            else
+
+            else if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)
                 targetRb.velocity = Vector3.zero;
+            else
+                targetRb.velocity = targetV;
             target.transform.position = prevPos;
             targetBox.enabled = true;
             if (target.GetComponent<Enemy>() != null)

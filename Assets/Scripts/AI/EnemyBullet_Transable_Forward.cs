@@ -47,11 +47,16 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
             if (col.GetComponent<Thing>().type == Type.enemy)
             {
                 col.GetComponent<Enemy>().TakeDamage(2);
+                Deactivate();
             }
             else if (col.GetComponent<Thing>().type != Type.box)
+            {
                 col.GetComponent<Thing>().Die();
+                Deactivate();
+            }
+                
             col.GetComponent<Thing>().TriggerMethod?.Invoke();
-            Deactivate();
+            
 
 
         }
@@ -64,7 +69,7 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
         else if (col.CompareTag("floor") && floorCollide)
         {
 
-            StartCoroutine(DelayDeavtive());
+            Deactivate();
         }
 
     }
@@ -82,6 +87,6 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
 
     IEnumerator DelayDeavtive(){
         yield return new WaitForSeconds(0.1f);
-        Deactivate();
+        
     }
 }
