@@ -37,6 +37,8 @@ public class Enemy_SmallGuys : Enemy
         else {
             return;
         }
+
+        
     }
 
     public void FollowPlayer() {
