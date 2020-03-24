@@ -27,9 +27,9 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
     }
     public void HandleSwapTrigger()
     {
-        transform.GetComponent<Rigidbody2D>().velocity *= 2;
-        GetComponent<SpriteRenderer>().color = Color.red;
-        transform.DOScale(new Vector3(2f, 2f, 1),0.5f);
+        //transform.GetComponent<Rigidbody2D>().velocity *= 2;
+        //GetComponent<SpriteRenderer>().color = Color.red;
+        //transform.DOScale(new Vector3(2f, 2f, 1),0.5f);
     }
 
     public void HandleKickTrigger()
