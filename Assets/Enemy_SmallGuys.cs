@@ -13,6 +13,12 @@ public class Enemy_SmallGuys : Enemy
     public bool isTracing;
     public float speed;
     public Transform target;
+
+
+    [Header("老母亲")]
+    public Enemy_MisselBoy wormMother;
+    bool isDead = false;
+     LineRenderer lr;
     
 
     
@@ -20,6 +26,8 @@ public class Enemy_SmallGuys : Enemy
     {
         base.Start();
         target = PlayerControl1.Instance.GetComponent<Transform>();
+        wormMother = GameObject.FindGameObjectWithTag("wormMother").GetComponent<Enemy_MisselBoy>();
+        lr = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -38,6 +46,14 @@ public class Enemy_SmallGuys : Enemy
             return;
         }
 
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, wormMother.transform.position);
+
+        if (health <= 0 && !isDead) {
+            wormMother.TakeDamage(1);
+            isDead = true;
+            lr.enabled = false;
+        }
         
     }
 
@@ -45,6 +61,8 @@ public class Enemy_SmallGuys : Enemy
         transform.position = transform.position + (target.position - transform.position).normalized * speed * Time.deltaTime; ;
     
     }
+
+    
 
     
 }
