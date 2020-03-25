@@ -1205,7 +1205,11 @@ public class Swap : Skill {
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
             {
                 StartCoroutine(targetThing.CancelBeingThrown(0.65f));
-                targetRb.velocity = dir.normalized * swapSpeed;
+                if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)     
+                    targetRb.velocity = dir.normalized * swapSpeed;
+                else
+                    targetRb.velocity = dir.normalized * targetV.magnitude;
+
             }
 
             else if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)
