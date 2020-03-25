@@ -10,7 +10,7 @@ public class Door_Lion : MonoBehaviour {
     public List<Thing> enemyList;
     public List<PhysicalButton> buttonList;
     public List<Thing> hostageList;
-
+    public List<Mech_EnemySpawner> spawnerList;
     private Animator animator;
     public bool hasUIIndicator = false;
     public Vector3 origin;
@@ -38,7 +38,7 @@ public class Door_Lion : MonoBehaviour {
     void Update () {
 
         if (isChecking) {
-            if (checkEnemies() && checkButtons() && checkHostages())
+            if (checkEnemies() && checkButtons() && checkHostages() && checkSpawner())
             {
                 active = true;
                 //anim.SetBool("Active", true);
@@ -82,6 +82,19 @@ public class Door_Lion : MonoBehaviour {
         for (int i = 0; i < buttonList.Count; i++) {
             if (buttonList[i].state != ClickState.IsClick)
                 return false;
+        }
+        return true;
+    }
+
+    public bool checkSpawner()
+    {
+        foreach (var spawner in spawnerList)
+        {
+            if (!spawner.spawningNotFirstTime) return false;
+        }
+        foreach (var spawner in spawnerList)
+        {
+            spawner.end = true;
         }
         return true;
     }
