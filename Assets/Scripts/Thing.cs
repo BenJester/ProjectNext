@@ -80,6 +80,9 @@ public class Thing : MonoBehaviour {
     Vector2 floorCheckBottomRight;
     public LayerMask TouchLayer;
     public float gravity;
+
+    [Header("是否是标准重力？")]
+    public bool isStandardGravity = true;
     #region wallTouchChecks
     void InitWallChecks()
     {
@@ -203,7 +206,7 @@ public class Thing : MonoBehaviour {
 		{
 			playerControl.thingList.Add (this);
 		}
-        if (body.gravityScale != 0f)
+        if (body.gravityScale != 0f && isStandardGravity)
             body.gravityScale = 165f;
         if (PlayerControl1.Instance.GetComponent<InvertGravity>() != null)
             body.gravityScale = !PlayerControl1.Instance.GetComponent<InvertGravity>().even ? Mathf.Abs(body.gravityScale) : -Mathf.Abs(body.gravityScale);

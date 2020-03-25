@@ -9,6 +9,8 @@ public class Dir_spear : MonoBehaviour
     Rigidbody2D rb;
     public float rotateSpeed;
     public float velocityThreshold;
+    public float bouncingSpeed;
+    public float floorBouncingThreshold;
     public GameObject DamageBox;
 
 
@@ -22,6 +24,7 @@ public class Dir_spear : MonoBehaviour
     {
         
         CheckSpeed();
+        MoveToPlayer();
     }
 
     void CheckSpeed() {
@@ -36,8 +39,13 @@ public class Dir_spear : MonoBehaviour
     }
 
     public void addSpeed() {
-
         rb.velocity *= 3;
+    }
+
+    public void MoveToPlayer() {
+        Vector2 dir = PlayerControl1.Instance.gameObject.transform.position - transform.position;
+        rb.AddForce(dir*5);
+
     }
 
     public void DoRotate() {
@@ -63,6 +71,19 @@ public class Dir_spear : MonoBehaviour
         return angle;
     }
 
+
+    public void JumpOffFloor() {
+        Vector2 dir = PlayerControl1.Instance.gameObject.transform.position - transform.position;
+        rb.velocity=(-rb.velocity.normalized + dir.normalized) * Random.Range(0.5f, 1f)* bouncingSpeed* rb.velocity.magnitude;
+    
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "floor" && rb.velocity.magnitude >= floorBouncingThreshold) {
+            JumpOffFloor();
+        }
+    }
 
 
 }
