@@ -11,9 +11,11 @@ public class Mech_EnemySpawner : MonoBehaviour
     public float cooldown;
 
     public Thing currThing;
-    bool spawning;
+    public bool spawning;
+    public bool spawningNotFirstTime;
+    bool firstTime;
     bool finished;
-
+    public bool end;
     public GameObject SpawnHint;
     Vector3 nextPos;
 
@@ -21,6 +23,12 @@ public class Mech_EnemySpawner : MonoBehaviour
     {
         if (!spawning && !finished && (currThing == null || currThing.dead))
         {
+            if (firstTime)
+                spawningNotFirstTime = true;
+            if (!firstTime)
+            {
+                firstTime = true;
+            }
             spawning = true;
             StartCoroutine(DoSpawn());
         }
@@ -36,10 +44,16 @@ public class Mech_EnemySpawner : MonoBehaviour
         Spawn();
         SpawnHint.SetActive(false);
         spawning = false;
+        spawningNotFirstTime = false;
     }
 
     void Spawn()
     {
+        if (end)
+        {
+            finished = true;
+            return;
+        }
         currThing = Instantiate(thingList[Random.Range(0, thingList.Count)].gameObject, nextPos, Quaternion.identity).GetComponent<Thing>();
         count += 1;
         if (count >= maxNum)
