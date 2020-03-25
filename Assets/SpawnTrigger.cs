@@ -19,7 +19,7 @@ public class SpawnTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (checkSpawner()) {
+        if (checkSpawner() && !isTrigger) {
             triggerEvent.Invoke();
         }
     }
