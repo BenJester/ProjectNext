@@ -42,7 +42,7 @@ public class Enemy_Shooter_Aim : Enemy {
 			lr.enabled = false;
 			return;
 		}
-		direction = (player.position - transform.position).normalized;
+		direction = (player.position + Vector3.up * 15f - transform.position).normalized;
 		//在视线中
 		isInSight = CheckPlayerInSight ();
 
