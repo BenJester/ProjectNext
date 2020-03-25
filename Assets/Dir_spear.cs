@@ -81,7 +81,7 @@ public class Dir_spear : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "floor" && rb.velocity.magnitude >= floorBouncingThreshold) {
-            JumpOffFloor();
+            //JumpOffFloor();
         }
     }
 

@@ -19,7 +19,9 @@ public class Bubble : MonoBehaviour
         if (!isDead && thisThing.dead) {
 
             isDead = true;
-        
+            GameObject part = explodeParticle;
+
+
         }
     }
 
