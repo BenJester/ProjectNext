@@ -24,7 +24,7 @@ public class Dir_spear : MonoBehaviour
     {
         
         CheckSpeed();
-        MoveToPlayer();
+        //MoveToPlayer();
     }
 
     void CheckSpeed() {
