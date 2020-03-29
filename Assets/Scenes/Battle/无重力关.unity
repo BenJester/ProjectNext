@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -959,6 +959,18 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 1538798446}
+    ActiveGameObject: {fileID: 1538798446}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 576625922}
     ActiveGameObject: {fileID: 576625922}
     GUIDsList: []
@@ -1446,29 +1458,6 @@ MonoBehaviour:
     FavString: []
     list:
     - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    ActiveGameObject: {fileID: 0}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -7954,6 +7943,16 @@ PrefabInstance:
       propertyPath: waitTime
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2198391889307519823, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+        type: 3}
+      propertyPath: h
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2198391889307519823, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+        type: 3}
+      propertyPath: acc
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2239482339701475466, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: active
@@ -8070,10 +8069,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2278838075786933875, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 165
+      objectReference: {fileID: 0}
     - target: {fileID: 2198702426476806373, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: isStandardGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2aa5bd427ca2f24ea7085339a8125ed, type: 3}
@@ -56789,6 +56793,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkited: 0
+--- !u!1 &1538798446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5146883029307892735, guid: 810a76cda5e173341bf5d12f56d53cd5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2057057459}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1556564147
 GameObject:
   m_ObjectHideFlags: 0

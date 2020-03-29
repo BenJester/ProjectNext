@@ -512,6 +512,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   gravity: 0
+  isStandardGravity: 1
 --- !u!120 &2213982000770385547
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -792,6 +793,8 @@ MonoBehaviour:
     MaxBoostySpeed: 1000
   DistanceOfPlayerAndThing: 1200
   disableAirControl: 0
+  acc: 0.1
+  h: 0
 --- !u!114 &2198510326049772165
 MonoBehaviour:
   m_ObjectHideFlags: 0
