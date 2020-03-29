@@ -526,6 +526,14 @@ public class PlayerControl1 : PlayerControl {
     float currAccV;
     float h;
     float v;
+    bool hasMomentum;
+    IEnumerator CancelMomentum()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if (player.GetAxisRaw("MoveHorizontal") > 0.2f || player.GetAxisRaw("MoveHorizontal") < -0.2f) yield break;
+        hasMomentum = false;
+        currAcc = accLow;
+    }
     void Update() {
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
@@ -640,11 +648,14 @@ public class PlayerControl1 : PlayerControl {
         if (player.GetAxisRaw("MoveHorizontal") < 0.2f && player.GetAxisRaw("MoveHorizontal") > -0.2f)
         {
             h = 0f;
-            currAcc = Mathf.Clamp(currAcc - acc, accLow, 1f);
+            
+            StartCoroutine(CancelMomentum());
         }
         else
         {
             currAcc = Mathf.Clamp(currAcc + acc, accLow, 1);
+            //hasMomentum = true;
+            //StopCoroutine(CancelMomentum());
         }
         
         h = Mathf.Clamp(h, -1f, 1f);
