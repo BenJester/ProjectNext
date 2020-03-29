@@ -520,6 +520,10 @@ public class PlayerControl1 : PlayerControl {
         return bRes;
     }
 
+    public float acc;
+    float currAcc;
+    public float h;
+
     void Update() {
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
@@ -621,10 +625,23 @@ public class PlayerControl1 : PlayerControl {
 
         //左右移动
         //float h = (Input.GetKey(KeyCode.D) ? 1 : 0) + (Input.GetKey(KeyCode.A) ? -1 : 0);
-        float h = 0.0f;
+
         //Rewired------------------------------------------------------------
         //h += (player.GetAxis("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxis("MoveHorizontal") < -0.2f ? -1 : 0);
-        h += (player.GetAxisRaw("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
+
+
+        //float h = 0.0f;
+        //h += (player.GetAxisRaw("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
+        currAcc = Mathf.Clamp(Mathf.Abs(h), acc, Mathf.Abs(h));
+        h += (player.GetAxisRaw("MoveHorizontal") > 0.2f ? currAcc : -currAcc) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -currAcc : currAcc);
+        
+        if (player.GetAxisRaw("MoveHorizontal") < 0.2f && player.GetAxisRaw("MoveHorizontal") > -0.2f)
+        {
+            h = 0f;
+            currAcc = acc;
+        }
+        
+        h = Mathf.Clamp(h, -1f, 1f);
 
         if (Mathf.Abs(h) > 0) {
             m_bJumpRelease = false;
