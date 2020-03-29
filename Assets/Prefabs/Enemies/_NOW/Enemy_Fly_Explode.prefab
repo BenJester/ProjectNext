@@ -351,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beingThrown: 0
   sr: {fileID: 4735302406628255466}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
@@ -385,6 +386,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   gravity: 0
+  isStandardGravity: 1
 --- !u!251 &5604498651796295283
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -459,7 +461,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   faceRight: 0
-  sightDistance: 600
+  sightDistance: 1500
   invincible: 0
   invincibleDurAfterHit: 0
   hpText: {fileID: 0}
@@ -472,7 +474,7 @@ MonoBehaviour:
   triggerLayer:
     serializedVersion: 2
     m_Bits: 4265728
-  explodePreload: 0.08
+  explodePreload: 0.25
   damage: 1
   dashThreshold: 600
   dashCD: 1
