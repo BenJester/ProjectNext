@@ -521,9 +521,11 @@ public class PlayerControl1 : PlayerControl {
     }
 
     public float acc;
-    float currAcc;
+    public float accLow;
+    public float currAcc;
+    float currAccV;
     float h;
-    public float v;
+    float v;
     void Update() {
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
@@ -632,23 +634,27 @@ public class PlayerControl1 : PlayerControl {
 
         //float h = 0.0f;
         //h += (player.GetAxisRaw("MoveHorizontal") > 0.2f ? 1 : 0) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -1 : 0);
-        currAcc = Mathf.Clamp(Mathf.Abs(h), acc, Mathf.Abs(h));
+        
         h += (player.GetAxisRaw("MoveHorizontal") > 0.2f ? currAcc : -currAcc) + (player.GetAxisRaw("MoveHorizontal") < -0.2f ? -currAcc : currAcc);
         
         if (player.GetAxisRaw("MoveHorizontal") < 0.2f && player.GetAxisRaw("MoveHorizontal") > -0.2f)
         {
             h = 0f;
-            currAcc = acc;
+            currAcc = Mathf.Clamp(currAcc - acc, accLow, 1f);
+        }
+        else
+        {
+            currAcc = Mathf.Clamp(currAcc + acc, accLow, 1);
         }
         
         h = Mathf.Clamp(h, -1f, 1f);
 
-        v += (player.GetAxisRaw("MoveVertical") > 0.2f ? currAcc : -currAcc) + (player.GetAxisRaw("MoveVertical") < -0.2f ? -currAcc : currAcc);
+        v += (player.GetAxisRaw("MoveVertical") > 0.2f ? currAccV : -currAccV) + (player.GetAxisRaw("MoveVertical") < -0.2f ? -currAccV : currAccV);
 
         if (player.GetAxisRaw("MoveVertical") < 0.2f && player.GetAxisRaw("MoveVertical") > -0.2f)
         {
             v = 0f;
-            currAcc = acc;
+            currAccV = acc;
         }
 
         v = Mathf.Clamp(v, -1f, 1f);
