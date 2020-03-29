@@ -522,8 +522,8 @@ public class PlayerControl1 : PlayerControl {
 
     public float acc;
     float currAcc;
-    public float h;
-
+    float h;
+    public float v;
     void Update() {
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
@@ -642,6 +642,21 @@ public class PlayerControl1 : PlayerControl {
         }
         
         h = Mathf.Clamp(h, -1f, 1f);
+
+        v += (player.GetAxisRaw("MoveVertical") > 0.2f ? currAcc : -currAcc) + (player.GetAxisRaw("MoveVertical") < -0.2f ? -currAcc : currAcc);
+
+        if (player.GetAxisRaw("MoveVertical") < 0.2f && player.GetAxisRaw("MoveVertical") > -0.2f)
+        {
+            v = 0f;
+            currAcc = acc;
+        }
+
+        v = Mathf.Clamp(v, -1f, 1f);
+
+        if (!GetComponent<Thing>().isStandardGravity)
+        {
+            rb.velocity = new Vector2(h * speed, Mathf.Clamp(v * speed, -maxSpeed, maxSpeed));
+        }
 
         if (Mathf.Abs(h) > 0) {
             m_bJumpRelease = false;
