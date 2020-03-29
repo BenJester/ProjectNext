@@ -760,6 +760,8 @@ MonoBehaviour:
     m_Bits: 8
   faceRight: 0
   sightDistance: 0
+  invincible: 0
+  invincibleDurAfterHit: 0
   hpText: {fileID: 0}
 --- !u!4 &192760065 stripped
 Transform:
@@ -1253,6 +1255,18 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 1952075767}
+    ActiveGameObject: {fileID: 1952075767}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 1180599131}
     ActiveGameObject: {fileID: 1180599131}
     GUIDsList: []
@@ -1519,18 +1533,6 @@ MonoBehaviour:
     list:
     - {fileID: 916615939}
     ActiveGameObject: {fileID: 916615939}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 375828813}
-    ActiveGameObject: {fileID: 375828813}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -7231,7 +7233,7 @@ PrefabInstance:
     - target: {fileID: 2198226801103984335, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: pokerTransitionDur
-      value: 0.07
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 763395707, guid: b2aa5bd427ca2f24ea7085339a8125ed, type: 3}
       propertyPath: m_Enabled
@@ -134515,6 +134517,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948631074}
   m_CullTransparentMesh: 0
+--- !u!1 &1952075767 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2238334444430495565, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 576625921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1966067036
 PrefabInstance:
   m_ObjectHideFlags: 0
