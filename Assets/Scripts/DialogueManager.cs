@@ -51,6 +51,13 @@ public class DialogueManager : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
+        StartCoroutine(autoNext());
+    }
+    public float delay = 1.4f;
+    IEnumerator autoNext()
+    {
+        yield return new WaitForSeconds(delay);
+        DisplayNextSentence();
     }
 
     void EndDialogue()
