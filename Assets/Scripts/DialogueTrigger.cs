@@ -10,4 +10,12 @@ public class DialogueTrigger : MonoBehaviour
 
         DialogueManager.instance.StartDialogue(dialogue);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("player"))
+        {
+            TriggerDialogue();
+        }
+    }
 }

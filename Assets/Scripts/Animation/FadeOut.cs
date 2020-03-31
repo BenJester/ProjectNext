@@ -11,6 +11,7 @@ public class FadeOut : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        sr.color = Color.white;
         a = sr.color.a;
         StartCoroutine(DoFadeOut());
     }
