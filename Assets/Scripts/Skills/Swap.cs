@@ -1062,6 +1062,9 @@ public class Swap : Skill {
         busy = false;
     }
     public float dashReducedTimeScale;
+
+
+
     IEnumerator PokerDash()
     {
         if (busy) yield break;
@@ -1101,14 +1104,20 @@ public class Swap : Skill {
         if (target.GetComponent<Enemy>() != null)
             target.GetComponent<Enemy>().hpText.SetActive(false);
         bool targetIsTrigger = targetBox.isTrigger;
-        Vector3 prevPos = transform.position;
-        if (targetThing.touchingFloor())
-        {
-            Debug.Log("~~");
-        }
+
+
+
+
+        Vector3 prevPos = new Vector3(transform.position.x,
+                                         playerControl.isTouchingGround ? player.GetComponent<Thing>().GetLowerY() + targetBox.size.y / 2f : transform.position.y,
+                                         transform.position.z);
+
         Vector3 prevColPos = new Vector3(target.transform.position.x, 
-                                         targetThing.touchingFloor() ? targetThing.GetLowerY() + playerControl.box.size.y / 2f: target.transform.position.y, 
+                                         targetThing.isTouchingGround ? targetThing.GetLowerY() + playerControl.box.size.y / 2f: target.transform.position.y, 
                                          target.transform.position.z);
+
+
+
         targetBox.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
@@ -1210,7 +1219,7 @@ public class Swap : Skill {
         {
             targetSr.sprite = targetSprite;
             //targetBox.isTrigger = targetIsTrigger;
-            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity && consecutiveThrowCount <= allowedConsecutiveThrowCount)
+            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
             {
                 StartCoroutine(targetThing.CancelBeingThrown(0.65f));
                 if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)     
@@ -1220,6 +1229,8 @@ public class Swap : Skill {
                 if (prevCol == col)
                 {
                     consecutiveThrowCount += 1;
+                    if (consecutiveThrowCount >= allowedConsecutiveThrowCount)
+                        StartCoroutine(CancelDirectionThrow());
                 }
                 else
                 {

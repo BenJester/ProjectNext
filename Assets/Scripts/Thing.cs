@@ -80,7 +80,7 @@ public class Thing : MonoBehaviour {
     Vector2 floorCheckBottomRight;
     public LayerMask TouchLayer;
     public float gravity;
-
+    public bool isTouchingGround;
     [Header("是否是标准重力？")]
     public bool isStandardGravity = true;
     #region wallTouchChecks
@@ -299,7 +299,9 @@ public class Thing : MonoBehaviour {
 
 	void FixedUpdate () {
 		prevVelocity = body.velocity;
-	}
+        isTouchingGround = body.gravityScale > 0f && Mathf.Abs(body.velocity.y) < 1f;
+
+    }
 
 	public void Die() {
         //		if (type == Type.player && playerControl.isWorld) {
