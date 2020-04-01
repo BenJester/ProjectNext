@@ -6,7 +6,8 @@ using Ben;
 [RequireComponent(typeof(CompositeCollider2D))]
 public class Spike : MonoBehaviour {
     public bool destroyBox = false;
-	// Use this for initialization
+    public bool instaKill;
+
 	void Start () {
         CompositeCollider2D _composite = GetComponent<CompositeCollider2D>();
         if( _composite != null )
@@ -54,7 +55,9 @@ public class Spike : MonoBehaviour {
 
             if (colThing.GetComponent<Enemy>() != null)
             {
-                colThing.GetComponent<Enemy>().TakeDamage(1);
+                if (instaKill) colThing.GetComponent<Enemy>().TakeDamage(999);
+                else
+                    colThing.GetComponent<Enemy>().TakeDamage(1);
             }
             if (colThing.type == Type.player)
             {
