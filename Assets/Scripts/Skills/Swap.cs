@@ -94,6 +94,9 @@ public class Swap : Skill {
     public bool canceled;
     public bool triggerItemEvent;
     BulletTime bulletTime;
+
+    
+
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -598,6 +601,11 @@ public class Swap : Skill {
             Debug.Log("should not appear first");
             StopAllCoroutines();
             StartCoroutine(CancelDelay());
+        }
+
+        if (playerControl.isTouchingGround)
+        {
+            consecutiveThrowCount = 0;
         }
         //if(m_bSwaping == true)
         //{
@@ -1202,14 +1210,23 @@ public class Swap : Skill {
         {
             targetSr.sprite = targetSprite;
             //targetBox.isTrigger = targetIsTrigger;
-            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
+            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity && consecutiveThrowCount <= allowedConsecutiveThrowCount)
             {
                 StartCoroutine(targetThing.CancelBeingThrown(0.65f));
                 if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)     
                     targetRb.velocity = dir.normalized * swapSpeed;
                 else
                     targetRb.velocity = dir.normalized * targetV.magnitude;
-
+                if (prevCol == col)
+                {
+                    consecutiveThrowCount += 1;
+                }
+                else
+                {
+                    consecutiveThrowCount = 0;
+                }
+                prevCol = col;
+                
             }
 
             else if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)
@@ -1232,5 +1249,19 @@ public class Swap : Skill {
         busy = false;
         playerControl.invincible = false;
         bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+
+        
+    }
+
+    Collider2D prevCol;
+    int consecutiveThrowCount;
+    public int allowedConsecutiveThrowCount;
+
+    IEnumerator CancelDirectionThrow()
+    {
+        directionSwap = false;
+        yield return new WaitForSeconds(1f);
+        consecutiveThrowCount = 0;
+        directionSwap = true;
     }
 }
