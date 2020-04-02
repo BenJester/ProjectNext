@@ -183,7 +183,7 @@ public class Enemy_Bomber : Enemy, TriggerItem_Base
 
         direction = PlayerControl1.Instance.transform.position - transform.position;
         GameObject bombTemp = Instantiate(bomb,(Vector2)transform.position+Vector2.up*20,Quaternion.identity);
-        bombTemp.GetComponent<Rigidbody2D>().velocity = direction.normalized*throwSpeed;
+        bombTemp.GetComponent<Rigidbody2D>().velocity = (direction.normalized+new Vector2(0,1))*throwSpeed;
         Ti_TimerBomb bombTi =  bombTemp.GetComponent<Ti_TimerBomb>();
         bombTi.triggerDelay=bombTriggerTime;
         bombTi.isTrigger=true;
