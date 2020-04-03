@@ -35,6 +35,7 @@ public class Thing : MonoBehaviour {
 	Goal goal;
 	public bool dead = false;
     public bool hasShield = false;
+    public bool isHeld;
     public bool isKey;
     public GameObject shield;
 	GameObject player;
@@ -201,7 +202,14 @@ public class Thing : MonoBehaviour {
         if (isKey)
             Instantiate(Resources.Load<GameObject>("key"), new Vector3(transform.position.x - 70f, GetUpperY() + 60f, transform.position.z) , Quaternion.identity, transform);
         //HandleRewind();
-
+        if (isHeld)
+        {
+            var obj = Instantiate(Resources.Load<GameObject>("rope"), new Vector3(transform.position.x, GetUpperY() + 60f, transform.position.z), Quaternion.identity, transform);
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            obj.GetComponent<BombHolder>().thing = this;
+        }
+            
+        
         if (type != Type.player) 
 		{
 			playerControl.thingList.Add (this);
@@ -395,5 +403,11 @@ public class Thing : MonoBehaviour {
         hasShield = has;
         if (hasShield && GetComponentInChildren<Shield>() == null)
             Instantiate(Resources.Load<GameObject>("shield"), transform.position, Quaternion.identity, transform);
+    }
+
+    public void Fall()
+    {
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        TriggerMethod?.Invoke();
     }
 }
