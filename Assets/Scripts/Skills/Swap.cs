@@ -1109,7 +1109,7 @@ public class Swap : Skill {
 
 
         Vector3 prevPos = new Vector3(transform.position.x,
-                                         playerControl.isTouchingGround ? player.GetComponent<Thing>().GetLowerY() + targetBox.size.y / 2f : transform.position.y,
+                                         playerControl.isTouchingGround ? player.GetComponent<Thing>().GetLowerY() + targetBox.size.y / 2f + 2f : transform.position.y,
                                          transform.position.z);
 
         Vector3 prevColPos = new Vector3(target.transform.position.x, 
