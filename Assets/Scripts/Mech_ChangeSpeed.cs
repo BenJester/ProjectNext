@@ -32,12 +32,12 @@ public class Mech_ChangeSpeed : MonoBehaviour
         if (dir != Vector2.zero)
         {
             rb.velocity = dir * speed*speedFactor;
-            anim.CrossFade("Mech_Tanhuang", 0.01f);
+            if(anim!=null) anim.CrossFade("Mech_Tanhuang", 0.01f);
         }
         else if(speedFactor!=0)
         {
             rb.velocity = -rb.velocity * speedFactor;
-            anim.CrossFade("Mech_Tanhuang", 0.01f);
+            if(anim!=null) anim.CrossFade("Mech_Tanhuang", 0.01f);
         }
 
         if (col.gameObject.CompareTag("player"))
@@ -52,7 +52,7 @@ public class Mech_ChangeSpeed : MonoBehaviour
                 Debug.Assert(false, string.Format("Player has not playerstatemanager component"));
             }
 
-            anim.CrossFade("Mech_Tanhuang", 0.01f);
+            if(anim!=null) anim.CrossFade("Mech_Tanhuang", 0.01f);
         }
 
         if (col.gameObject.CompareTag("player") || col.gameObject.CompareTag("thing"))
