@@ -5,7 +5,7 @@ using UnityEngine;
 public class BombHolder : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Ti_TimerBomb bomb;
+    public Thing thing;
     LineRenderer lineRenderer;
     void Start()
     {
@@ -23,7 +23,7 @@ public class BombHolder : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "thing" && other.GetComponent<EnemyBullet_Transable_Forward>()!=null){
-            bomb.Fall();
+            thing.Fall();
             lineRenderer.enabled = false;
         }
     }
