@@ -98,4 +98,11 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
         triggered = true;
         StartCoroutine(DoExplode());
     }
+
+    public void Fall(){
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        Explode();
+
+
+    }
 }
