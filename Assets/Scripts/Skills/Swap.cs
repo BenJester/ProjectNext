@@ -1226,7 +1226,7 @@ public class Swap : Skill {
                     targetRb.velocity = dir.normalized * swapSpeed;
                 else
                     targetRb.velocity = dir.normalized * targetV.magnitude;
-                if (prevCol == col)
+                if (prevCol == col && Mathf.Abs(targetRb.gravityScale) >= 10f)
                 {
                     consecutiveThrowCount += 1;
                     if (consecutiveThrowCount >= allowedConsecutiveThrowCount)
