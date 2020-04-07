@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class DetectBallon : MonoBehaviour
 {
 
@@ -9,9 +9,11 @@ public class DetectBallon : MonoBehaviour
     public SpriteRenderer spr2;
 
     public GameObject particle;
-    public GameObject nextObj;
+    
     AudioSource audioSource;
     bool veloTemp;
+
+    public UnityEvent OnActive;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,8 @@ public class DetectBallon : MonoBehaviour
             GameObject part = Instantiate(particle,transform.position,Quaternion.identity);
             other.GetComponent<Rigidbody2D>().velocity *= 1.5f;
             Destroy(part,.8f);
-            if(nextObj!=null) nextObj.SetActive(true);
+
+            OnActive.Invoke();
         }
     }
 }
