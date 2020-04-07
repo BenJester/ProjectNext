@@ -27,6 +27,7 @@ public class Boost : MonoBehaviour
         {
             GetComponent<Thing>().Die();
             pc.disableAirControl = true;
+            pc.GetComponent<AirJump>().charge = pc.GetComponent<AirJump>().maxCharge;
             yield return new WaitForSeconds(0.05f);
             Rigidbody2D rb = collision.collider.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(xSpeed, ySpeed);
