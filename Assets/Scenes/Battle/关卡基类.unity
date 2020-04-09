@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -971,6 +971,30 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 1576799921}
+    ActiveGameObject: {fileID: 1576799921}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 576625922}
+    ActiveGameObject: {fileID: 576625922}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 1730353373}
     ActiveGameObject: {fileID: 1730353373}
     GUIDsList: []
@@ -1291,31 +1315,6 @@ MonoBehaviour:
     - {fileID: 2108179618}
     - {fileID: 1185845580}
     - {fileID: 1058596714}
-    ActiveGameObject: {fileID: 2108179618}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 2108179618}
-    - {fileID: 1185845580}
-    ActiveGameObject: {fileID: 2108179618}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 2108179618}
     ActiveGameObject: {fileID: 2108179618}
     GUIDsList: []
     GUIDsActiveGameObject: 
@@ -4076,11 +4075,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2198391889307519823, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
-      propertyPath: jumpSpeed
-      value: 650
-      objectReference: {fileID: 0}
-    - target: {fileID: 2198391889307519823, guid: b2aa5bd427ca2f24ea7085339a8125ed,
-        type: 3}
       propertyPath: JumpingHorizontalUpForce
       value: 400000
       objectReference: {fileID: 0}
@@ -4247,6 +4241,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2aa5bd427ca2f24ea7085339a8125ed, type: 3}
+--- !u!1 &576625922 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2238334444430495565, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 576625921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &590527049
 GameObject:
   m_ObjectHideFlags: 0
