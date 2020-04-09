@@ -158,11 +158,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 0
+  isChecking: 1
   isOpen: 0
   enemyList: []
-  buttonList:
-  - {fileID: 0}
+  buttonList: []
   hostageList: []
+  spawnerList: []
   hasUIIndicator: 0
   origin: {x: 0, y: 0, z: 0}
   target: {x: 0, y: 0, z: 0}
