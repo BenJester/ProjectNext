@@ -133,6 +133,7 @@ public class Strawberry : MonoBehaviour
             m_bFollingPlayer = true;
             m_fCurFollingTime = 0.0f;
             StrawberryMgr.instance.TakeStrawberry(m_nIndexOfStrawberry);
+            StrawberryMgr.instance.GetComponent<AudioSource>().Play();
 
             if (getParticle != null)
             {
