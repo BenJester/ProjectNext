@@ -11,6 +11,7 @@ public class Door_Lion : MonoBehaviour {
     public List<PhysicalButton> buttonList;
     public List<Thing> hostageList;
     public List<Mech_EnemySpawner> spawnerList;
+    public List<MovingLaser> laserToTurnOff;
     private Animator animator;
     public bool hasUIIndicator = false;
     public Vector3 origin;
@@ -63,10 +64,14 @@ public class Door_Lion : MonoBehaviour {
 
     public void Open () {
 
+        animator.CrossFade("Door", 0.01f);
+        foreach (var laser in laserToTurnOff)
+        {
+            laser.active = false;
+        }
         GetComponent<BoxCollider2D> ().enabled = false;
 
-        animator.CrossFade ("Door", 0.01f);
-
+        
     }
 
     public void Close () {

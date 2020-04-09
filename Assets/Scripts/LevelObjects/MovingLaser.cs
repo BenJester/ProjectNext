@@ -9,7 +9,7 @@ public class MovingLaser : MonoBehaviour
 
 
    
-     Vector2 dir;
+    Vector2 dir;
     public float shootDistance;
     public Transform moveTarget;
     public Transform moveStart;
