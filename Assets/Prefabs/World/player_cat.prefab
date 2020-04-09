@@ -498,6 +498,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
   isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 1
@@ -512,6 +513,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   gravity: 0
+  isTouchingGround: 0
   isStandardGravity: 1
 --- !u!120 &2213982000770385547
 LineRenderer:
@@ -665,12 +667,12 @@ MonoBehaviour:
   maxhp: 5
   hp: 5
   invincible: 0
-  speed: 550
+  speed: 485
   JumpingHorizontalUpMaxSpeed: 250
   JumpingHorizontalUpForce: 40000
   JumpingHorizontalDownMaxSpeed: 250
   JumpingHorizontalDownForce: 60000
-  jumpSpeed: 700
+  jumpSpeed: 600
   jumpForceAir: 800000
   coyoteTime: 4
   cacheJumpTime: 10
@@ -7567,11 +7569,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2235284972380755415}
     m_Modifications:
-    - target: {fileID: 4284969010603471290, guid: f19fbaed84f9f4c4195838f04bc817d9,
-        type: 3}
-      propertyPath: m_Name
-      value: Effect-Swap
-      objectReference: {fileID: 0}
     - target: {fileID: 4284969010603470919, guid: f19fbaed84f9f4c4195838f04bc817d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7626,6 +7623,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284969010603471290, guid: f19fbaed84f9f4c4195838f04bc817d9,
+        type: 3}
+      propertyPath: m_Name
+      value: Effect-Swap
       objectReference: {fileID: 0}
     - target: {fileID: 3144376547450777182, guid: f19fbaed84f9f4c4195838f04bc817d9,
         type: 3}
