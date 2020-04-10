@@ -21,7 +21,7 @@ public class LoadThing : MonoBehaviour
     {
         if (collision.CompareTag("player"))
         {
-            
+            Destroy(CheckPointTotalManager.instance.gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }
     }

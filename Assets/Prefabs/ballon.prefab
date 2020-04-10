@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5764920446430165083}
   - component: {fileID: 5764920446430165082}
   - component: {fileID: 5764920446430165061}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.010498047, y: 32.367188}
+  m_Offset: {x: -0.011962891, y: 32.851562}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 37.123535, y: 13.7109375}
+  m_Size: {x: 56.48535, y: 14.6796875}
   m_EdgeRadius: 0
 --- !u!114 &5764920446430165082
 MonoBehaviour:
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 5764920446684662380}
   - component: {fileID: 5764920446684662383}
   - component: {fileID: 5764920446684662381}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ballon
   m_TagString: ballon
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 0.9
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -309,6 +309,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
   isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 0
