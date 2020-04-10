@@ -24,7 +24,15 @@ public class AirJump : Skill
         {
             Do();
         }
+        if (charge == 0)
+        {
+            playerControl.spriteRenderer.color = new Color(1f,0.65f,0.65f);
+        }
+        else
+        {
+            playerControl.spriteRenderer.color = Color.white;
 
+        }
     }
 
     public override bool Check()
@@ -42,6 +50,7 @@ public class AirJump : Skill
         GameObject part = Instantiate(playerControl.landingParticle, transform.position - Vector3.up * 10, Quaternion.identity);
         Destroy(part, 2f);
         audioSource.PlayOneShot(clip, 0.35f);
+        
     }
 
     IEnumerator Coyote()
