@@ -950,7 +950,11 @@ public class Swap : Skill {
             prev = pos;
             results[i - 1] = pos;
         }
-        Debug.Log(results.Length);
         return results;
+    }
+    
+    void HandleBulletAutoSelect()
+    {
+
     }
 }
