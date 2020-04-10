@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beingThrown: 0
   sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
@@ -257,6 +258,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
   isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 0
@@ -271,6 +273,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   gravity: 0
+  isTouchingGround: 0
+  isStandardGravity: 1
 --- !u!114 &859807075354635356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea89dd0da218d9e498867f2f7431fdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 25000000
+  force: 35000000
   SetObjects: []
   time: 0
