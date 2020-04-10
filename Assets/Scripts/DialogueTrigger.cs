@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class DialogueTrigger : MonoBehaviour
     AudioSource source;
     public bool multiTrigger;
     bool triggered;
+    public UnityEvent triggerEvent;
     private void Start()
     {
         source = GetComponent<AudioSource>();
@@ -23,6 +25,7 @@ public class DialogueTrigger : MonoBehaviour
         if (collision.CompareTag("player") && (!triggered || multiTrigger))
         {
             TriggerDialogue();
+            StartCoroutine(TriggerEvent());
             if (clip != null)
             {
                 source.PlayOneShot(clip);
@@ -30,5 +33,11 @@ public class DialogueTrigger : MonoBehaviour
             }
             triggered = true;
         }
+    }
+
+    IEnumerator TriggerEvent() {
+
+        yield return new WaitForSeconds(DialogueManager.instance.delay * dialogue.sentences.Length);
+        triggerEvent.Invoke();
     }
 }
