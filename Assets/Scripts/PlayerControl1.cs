@@ -2123,7 +2123,8 @@ public class PlayerControl1 : PlayerControl {
             {
                 anim.SetBool("isDead", true);
                 //_playerThing.Die();
-
+                CancelAimBulletTime();
+                m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
                 StartCoroutine(_playerThing.GetComponent<PlayerControl1>().DelayRestart());
             }
         }
