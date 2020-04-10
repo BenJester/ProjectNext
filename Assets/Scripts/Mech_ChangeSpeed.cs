@@ -20,25 +20,32 @@ public class Mech_ChangeSpeed : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        
+
 
         if (col.tag == "bullet")
             return;
-        Rigidbody2D rb = col.GetComponent<Rigidbody2D>();
-        float speed = rb.velocity.magnitude;
+        if (col.GetComponent<Rigidbody2D>() != null) {
+            Rigidbody2D rb = col.GetComponent<Rigidbody2D>();
+            float speed = rb.velocity.magnitude;
+            if (dir != Vector2.zero)
+            {
+                rb.velocity = dir * speed * speedFactor;
+                if (anim != null) anim.CrossFade("Mech_Tanhuang", 0.01f);
+            }
+            else if (speedFactor != 0)
+            {
+                rb.velocity = -rb.velocity * speedFactor;
+                if (anim != null) anim.CrossFade("Mech_Tanhuang", 0.01f);
+            }
+
+
+
+        }
+       
 
         
 
-        if (dir != Vector2.zero)
-        {
-            rb.velocity = dir * speed*speedFactor;
-            if(anim!=null) anim.CrossFade("Mech_Tanhuang", 0.01f);
-        }
-        else if(speedFactor!=0)
-        {
-            rb.velocity = -rb.velocity * speedFactor;
-            if(anim!=null) anim.CrossFade("Mech_Tanhuang", 0.01f);
-        }
+        
 
         if (col.gameObject.CompareTag("player"))
         {

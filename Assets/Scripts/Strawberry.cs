@@ -91,6 +91,7 @@ public class Strawberry : MonoBehaviour
     {
         if( m_bFollingPlayer == true )
         {
+            if (m_playerCtrl == null) m_playerCtrl = PlayerControl1.Instance;
             Vector3 vecDst = Vector3.MoveTowards(transform.position, m_playerCtrl.transform.position, FollowingSpeed);
             transform.position = new Vector3(vecDst.x, vecDst.y, transform.position.z);
             m_fCurFollingTime += Time.fixedDeltaTime;
