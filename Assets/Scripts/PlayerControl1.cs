@@ -973,6 +973,9 @@ public class PlayerControl1 : PlayerControl {
 
         HandleToggleSwapTarget();
 
+        //子弹时间下tab换目标
+        HandleBulletTimeTabSelect();
+
         if (Input.GetKey(KeyCode.LeftShift)) rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         if (Input.GetMouseButtonUp(1))
         {
@@ -1826,6 +1829,44 @@ public class PlayerControl1 : PlayerControl {
         canJump = false;
     }
 
+    void HandleBulletTimeTabSelect()
+    {
+        if (!(swap.directionSwap && Input.GetMouseButton(0))) return;
+        if (Input.GetKeyDown(KeyCode.Tab) || closestObjectToCursor == null)
+        {
+            swappable = new List<GameObject>();
+            foreach (var thing in thingList)
+            {
+                if (thing != null)
+                {
+                    Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    float distanceToPlayer = Vector2.Distance((Vector2)transform.position, (Vector2)thing.transform.position);
+
+                    if (!thing.dead && thing.enabled == true && !thing.hasShield && distanceToPlayer < shootDistance && Hit(thing.gameObject))
+                    {
+                        swappable.Add(thing.gameObject);
+                    }
+                }
+            }
+            // 根据x坐标排序
+            if (swappable.Count == 0) return;
+            swappable.Sort((emp1, emp2) =>
+                           Vector3.Distance(emp1.transform.position, transform.position)
+                .CompareTo(Vector3.Distance(emp2.transform.position, transform.position)));
+            GameObject closestSwappable = swappable[0];
+            swappable.Sort((emp1, emp2) => emp1.transform.position.x.CompareTo(emp2.transform.position.x));
+
+            
+
+            index = swappable.IndexOf(closestObjectToCursor);
+            if (index == swappable.Count - 1) index = -1;
+            closestObjectToCursor = swappable[index + 1];
+            index += 1;
+            justToggled = true;
+            StartCoroutine(cancelToggled());
+            toggleMode = true;
+        }
+    }
     IEnumerator CacheJump() {
         int curr = 0;
 
