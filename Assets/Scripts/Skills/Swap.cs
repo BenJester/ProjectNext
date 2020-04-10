@@ -95,8 +95,8 @@ public class Swap : Skill {
     public bool triggerItemEvent;
     BulletTime bulletTime;
 
-    
 
+    LineRenderer lr;
     private void Start()
     {
         m_doubleSwap = GetComponent<PlayerDoubleSwap>();
@@ -107,6 +107,7 @@ public class Swap : Skill {
             SwapAnimatorSpr.enabled = false;
         }
         bulletTime = GetComponent<BulletTime>();
+        lr = GetComponent<LineRenderer>();
     }
 
     public override void Do()
@@ -174,6 +175,7 @@ public class Swap : Skill {
                 dashPointer.SetActive(false);
             }
         }
+        DrawTrajectory();
     }
 
     public void SetPowerParticle(GameObject powerParticle){
@@ -695,372 +697,10 @@ public class Swap : Skill {
     bool busy;
     public Sprite pokerSprite;
 
-    IEnumerator DoDash()
-    {
-        if (busy) yield break;
-        busy = true;
-        Smoke();
-        Collider2D target = col;
-
-        Sprite playerSprite = playerControl.spriteRenderer.sprite;
-        Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
-        target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
-        playerControl.spriteRenderer.sprite = pokerSprite;
-
-        playerControl.box.enabled = false;
-        playerControl.disableAirControl = true;
-        bool playerFaceRight = playerControl.spriteRenderer.flipX;
-
-        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-        Vector3 diff = Input.mousePosition - startingPoint;
-
-        Vector3 prevPos = transform.position;
-        Vector3 prevColPos = target.transform.position;
-
-        Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
-        BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
-        Thing targetThing = target.GetComponent<Thing>();
-        if (target.GetComponent<Enemy>() != null)
-            target.GetComponent<Enemy>().hpText.SetActive(false);
-        bool targetIsTrigger = targetBox.isTrigger;
-
-        targetBox.enabled = false;
-        audioSource.PlayOneShot(clip, 0.8f);
-
-        //float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
-        targetThing.swapping = true;
-        //target.transform.position = prevPos;
-        //player.transform.position = prevPos;
-        playerControl.spriteRenderer.GetComponent<Animator>().enabled = false;
-        while (Vector3.Distance(player.transform.position, prevColPos) > 65f)
-        {
-            playerControl.spriteRenderer.sprite = pokerSprite;
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * dashSpeed;
-            if (targetRb != null)
-                targetRb.velocity = -(prevColPos - prevPos).normalized * dashSpeed;
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        playerControl.spriteRenderer.GetComponent<Animator>().enabled = true;
-        playerControl.transform.position = prevColPos;
-        playerControl.disableAirControl = false;
-        playerControl.rb.velocity = new Vector2(0f, 250f);
-        Smoke();
-        targetThing.swapping = false;
-        playerControl.spriteRenderer.sprite = playerSprite;
-        
-        if (targetRb != null)
-        {
-            target.GetComponent<SpriteRenderer>().sprite = targetSprite;
-            //targetBox.isTrigger = targetIsTrigger;
-            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
-                targetRb.velocity = dir.normalized * swapSpeed;
-            else
-                targetRb.velocity = Vector3.zero;
-            target.transform.position = prevPos;
-            targetBox.enabled = true;
-            if (target.GetComponent<Enemy>() != null)
-            {
-                target.GetComponent<Enemy>().faceRight = !playerFaceRight;
-                target.GetComponent<Enemy>().hpText.SetActive(true);
-            }
-                
-            targetThing.swapTriggerMethod?.Invoke();
-        }
-        playerControl.spriteRenderer.flipX = playerFaceRight;
-        playerControl.box.enabled = true;
-        busy = false;
-    }
     public float pokerTransitionDur;
     public Sprite turnPokerSprite;
 
-    IEnumerator Poker()
-    {
-        if (busy) yield break;
-        busy = true;
-        Smoke();
-        Collider2D target = col;
 
-        Sprite playerSprite = playerControl.spriteRenderer.sprite;
-        Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
-        //target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
-        //playerControl.spriteRenderer.sprite = pokerSprite;
-        
-        playerControl.box.enabled = false;
-        playerControl.disableAirControl = true;
-        bool playerFaceRight = playerControl.spriteRenderer.flipX;
-
-        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-        Vector3 diff = Input.mousePosition - startingPoint;
-
-        Vector3 prevPos = transform.position;
-        Vector3 prevColPos = target.transform.position;
-
-        Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
-        BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
-        Thing targetThing = target.GetComponent<Thing>();
-        if (target.GetComponent<Enemy>() != null)
-            target.GetComponent<Enemy>().hpText.SetActive(false);
-        bool targetIsTrigger = targetBox.isTrigger;
-        
-        targetBox.enabled = false;
-        audioSource.PlayOneShot(clip, 0.8f);
-
-        //float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
-        targetThing.swapping = true;
-        //target.transform.position = prevPos;
-        //player.transform.position = prevPos;
-        playerControl.spriteRenderer.GetComponent<Animator>().enabled = false;
-        if (target.GetComponent<Animator>() != null)
-            target.GetComponent<Animator>().enabled = false;
-        Vector3 playerScale = transform.localScale;
-        Vector3 targetScale = target.transform.localScale;
-        SpriteRenderer targetSr = target.GetComponent<SpriteRenderer>();
-        float playerGravity = playerControl.rb.gravityScale;
-        float targetGravity = targetRb.gravityScale;
-        playerControl.rb.gravityScale = 0f;
-        targetRb.gravityScale = 0f;
-        float speed = Vector3.Distance(prevColPos, prevPos) / pokerTransitionDur / 4f;
-        float curr = 0f;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            //playerControl.spriteRenderer.sprite = pokerSprite;
-            playerControl.rb.velocity = Vector2.zero;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        curr = curr - pokerTransitionDur;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.spriteRenderer.sprite = turnPokerSprite;
-            targetSr.sprite = turnPokerSprite;
-            playerControl.rb.velocity = Vector2.zero;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3(curr / pokerTransitionDur, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3(curr / pokerTransitionDur, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        curr = curr - pokerTransitionDur;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.spriteRenderer.sprite = turnPokerSprite;
-            targetSr.sprite = turnPokerSprite;
-            playerControl.rb.velocity = Vector2.zero;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        curr = curr - pokerTransitionDur;
-        playerControl.transform.position = prevColPos;
-        target.transform.position = prevPos;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.spriteRenderer.sprite = playerSprite;
-            targetSr.sprite = targetSprite;
-            playerControl.rb.velocity = Vector2.zero;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3(curr / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3(curr / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        playerControl.spriteRenderer.GetComponent<Animator>().enabled = true;
-        if (target.GetComponent<Animator>() != null)
-            target.GetComponent<Animator>().enabled = true;
-        playerControl.disableAirControl = false;
-        playerControl.rb.velocity = new Vector2(0f, 250f);
-        Smoke();
-        targetThing.swapping = false;
-        playerControl.spriteRenderer.sprite = playerSprite;
-        player.transform.localScale = playerScale;
-        target.transform.localScale = targetScale;
-        playerControl.rb.gravityScale = playerGravity;
-        targetRb.gravityScale = targetGravity;
-        if (targetRb != null)
-        {
-            target.GetComponent<SpriteRenderer>().sprite = targetSprite;
-            //targetBox.isTrigger = targetIsTrigger;
-            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
-                targetRb.velocity = dir.normalized * swapSpeed;
-            else
-                targetRb.velocity = Vector3.zero;
-            target.transform.position = prevPos;
-            targetBox.enabled = true;
-            if (target.GetComponent<Enemy>() != null)
-            {
-                target.GetComponent<Enemy>().faceRight = !playerFaceRight;
-                target.GetComponent<Enemy>().hpText.SetActive(true);
-            }
-
-            targetThing.swapTriggerMethod?.Invoke();
-        }
-        playerControl.spriteRenderer.flipX = playerFaceRight;
-        playerControl.box.enabled = true;
-        busy = false;
-    }
-
-    IEnumerator PokerShoot()
-    {
-        if (busy) yield break;
-        busy = true;
-        Smoke();
-        Collider2D target = col;
-
-        Sprite playerSprite = playerControl.spriteRenderer.sprite;
-        Sprite targetSprite = target.GetComponent<SpriteRenderer>().sprite;
-        //target.GetComponent<SpriteRenderer>().sprite = pokerSprite;
-        //playerControl.spriteRenderer.sprite = pokerSprite;
-
-        playerControl.box.enabled = false;
-        playerControl.disableAirControl = true;
-        bool playerFaceRight = playerControl.spriteRenderer.flipX;
-
-        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-        Vector3 diff = Input.mousePosition - startingPoint;
-
-        Vector3 prevPos = transform.position;
-        Vector3 prevColPos = target.transform.position;
-
-        Rigidbody2D targetRb = target.GetComponent<Rigidbody2D>();
-        BoxCollider2D targetBox = target.GetComponent<BoxCollider2D>();
-        Thing targetThing = target.GetComponent<Thing>();
-        if (target.GetComponent<Enemy>() != null)
-            target.GetComponent<Enemy>().hpText.SetActive(false);
-        bool targetIsTrigger = targetBox.isTrigger;
-
-        targetBox.enabled = false;
-        audioSource.PlayOneShot(clip, 0.8f);
-
-        //float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
-        targetThing.swapping = true;
-        //target.transform.position = prevPos;
-        //player.transform.position = prevPos;
-        playerControl.spriteRenderer.GetComponent<Animator>().enabled = false;
-        if (target.GetComponent<Animator>() != null)
-            target.GetComponent<Animator>().enabled = false;
-        Vector3 playerScale = transform.localScale;
-        Vector3 targetScale = target.transform.localScale;
-        SpriteRenderer targetSr = target.GetComponent<SpriteRenderer>();
-        float playerGravity = playerControl.rb.gravityScale;
-        float targetGravity = targetRb.gravityScale;
-        playerControl.rb.gravityScale = 0f;
-        targetRb.gravityScale = 0f;
-        float speed = Vector3.Distance(prevColPos, prevPos) / pokerTransitionDur / 3f;
-        float curr = 0f;
-        playerControl.spriteRenderer.sprite = turnPokerSprite;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        curr = curr - pokerTransitionDur;
-        target.transform.position = prevPos;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.spriteRenderer.sprite = turnPokerSprite;
-            targetSr.sprite = turnPokerSprite;
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3(curr / pokerTransitionDur, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3(curr / pokerTransitionDur, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        curr = curr - pokerTransitionDur;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.spriteRenderer.sprite = turnPokerSprite;
-            targetSr.sprite = turnPokerSprite;
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        curr = curr - pokerTransitionDur;
-        playerControl.transform.position = prevColPos;
-        target.transform.position = prevPos;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.spriteRenderer.sprite = playerSprite;
-            targetSr.sprite = targetSprite;
-            playerControl.rb.velocity = Vector2.zero;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3(curr / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3(curr / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            //ShadowPool.instance.GetFromPool();
-
-        }
-        playerControl.spriteRenderer.GetComponent<Animator>().enabled = true;
-        if (target.GetComponent<Animator>() != null)
-            target.GetComponent<Animator>().enabled = true;
-        playerControl.disableAirControl = false;
-        playerControl.rb.velocity = new Vector2(0f, 250f);
-        Smoke();
-        targetThing.swapping = false;
-        playerControl.spriteRenderer.sprite = playerSprite;
-        player.transform.localScale = playerScale;
-        target.transform.localScale = targetScale;
-        playerControl.rb.gravityScale = playerGravity;
-        targetRb.gravityScale = targetGravity;
-        if (targetRb != null)
-        {
-            target.GetComponent<SpriteRenderer>().sprite = targetSprite;
-            //targetBox.isTrigger = targetIsTrigger;
-            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
-                targetRb.velocity = dir.normalized * swapSpeed;
-            else
-                targetRb.velocity = Vector3.zero;
-            target.transform.position = prevPos;
-            targetBox.enabled = true;
-            if (target.GetComponent<Enemy>() != null)
-            {
-                target.GetComponent<Enemy>().faceRight = !playerFaceRight;
-                target.GetComponent<Enemy>().hpText.SetActive(true);
-            }
-
-            targetThing.swapTriggerMethod?.Invoke();
-        }
-        playerControl.spriteRenderer.flipX = playerFaceRight;
-        playerControl.box.enabled = true;
-        busy = false;
-    }
     public float dashReducedTimeScale;
 
 
@@ -1274,5 +914,43 @@ public class Swap : Skill {
         yield return new WaitForSeconds(1f);
         consecutiveThrowCount = 0;
         directionSwap = true;
+    }
+    public float TrajectoryTimeStep;
+    public int TrajectoryStepCounts;
+    void DrawTrajectory()
+    {
+        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        Vector3 diff = Input.mousePosition - startingPoint;
+        if (!(col != null && diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity && Input.GetMouseButton(0)))
+        {
+            lr.enabled = false;
+            return;
+        }
+        lr.enabled = true;
+        GameObject target = col.gameObject;
+        lr.SetPositions(PlotTrajectory(target, transform.position, dir * swapSpeed, TrajectoryTimeStep, TrajectoryStepCounts));
+    }
+
+    public Vector3 PlotTrajectoryAtTime(GameObject target, Vector3 start, Vector3 startVelocity, float time)
+    {
+        return start + startVelocity * time + Physics.gravity * target.GetComponent<Rigidbody2D>().gravityScale * time * time * 0.5f;
+    }
+
+    public Vector3[] PlotTrajectory(GameObject target, Vector3 start, Vector3 startVelocity, float fTimeStep, int stepCounts)
+    {
+        float maxTime = fTimeStep * stepCounts;
+        Vector3[] results = new Vector3[stepCounts];
+        Vector3 prev = start;
+        for (int i = 1; ; i++)
+        {
+            float t = fTimeStep * i;
+            if (t >= maxTime) break;
+            Vector3 pos = PlotTrajectoryAtTime(target, start, startVelocity, t);
+            if (Physics.Linecast(prev, pos)) break;
+            prev = pos;
+            results[i - 1] = pos;
+        }
+        Debug.Log(results.Length);
+        return results;
     }
 }
