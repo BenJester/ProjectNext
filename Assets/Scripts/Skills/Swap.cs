@@ -542,7 +542,9 @@ public class Swap : Skill {
 
 	}
 	IEnumerator DelayedSwap (float waitTime) {
-        
+
+        if (!Energy.Instance.Spend(Energy.Instance.swapCost)) yield break;
+        Energy.Instance.bulletTimeTimer = 0f;
         if (delay) {
             delaying = true;
 			Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);

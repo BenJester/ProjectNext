@@ -886,7 +886,7 @@ public class PlayerControl1 : PlayerControl {
             || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag && currWaitTime >= waitTime)) && !swap.canceled
             )
         {
-            
+            if (Energy.Instance.energy < 5f) return;
             m_bulletTime.SetCustomizeTime(Mathf.Min(Time.timeScale, dash.reducedTimeScale), dash.reducedTimeScale * startDeltaTime);
             m_bulletTime.DelayActive(DelaySwitchTime);
             //Time.timeScale = Mathf.Min(Time.timeScale, dash.reducedTimeScale);
@@ -979,6 +979,7 @@ public class PlayerControl1 : PlayerControl {
         if (Input.GetKey(KeyCode.LeftShift)) rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
         if (Input.GetMouseButtonUp(1))
         {
+            CancelAimBulletTime();
             m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
         }
 
@@ -1005,11 +1006,39 @@ public class PlayerControl1 : PlayerControl {
     }
     public void CancelAimBulletTime()
     {
+        //StartCoroutine(CancelBulletTimeFade());
+        //return;
         currWaitTime = 0;
         Time.timeScale = 1f;
         targetTimeScale = 1f;
         Time.fixedDeltaTime = startDeltaTime;
         targetDeltaTime = Time.fixedDeltaTime;
+    }
+
+    public float cancelBulletTimeFadeDur;
+    IEnumerator CancelBulletTimeFade()
+    {
+        //yield break;
+        float timer = 0f;
+        float currTimeScale = Time.timeScale;
+        float currFixedDeltaTime = Time.fixedDeltaTime;
+        //Debug.Log(Time.fixedDeltaTime);
+        yield return new WaitForSecondsRealtime(0.5f);
+        while (timer < cancelBulletTimeFadeDur)
+        {
+            Time.timeScale = currTimeScale + (1 - currTimeScale) * (timer / cancelBulletTimeFadeDur);
+            //Time.fixedDeltaTime = currFixedDeltaTime + (startDeltaTime - currFixedDeltaTime) * (timer / cancelBulletTimeFadeDur);
+            yield return new WaitForSecondsRealtime(0.05f);
+            timer += 0.05f;
+            Debug.Log(Time.timeScale);
+        }
+        m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+        currWaitTime = 0;
+        Time.timeScale = 1f;
+        targetTimeScale = 1f;
+        Time.fixedDeltaTime = startDeltaTime;
+        targetDeltaTime = Time.fixedDeltaTime;
+        //Debug.Log(Time.fixedDeltaTime);
     }
 
     void Jump() {
