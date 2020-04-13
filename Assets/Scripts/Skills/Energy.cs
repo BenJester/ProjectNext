@@ -15,7 +15,7 @@ public class Energy : Skill
     public Image hpBar;
     public Image hpBg;
     public Image lossHPbar;
-
+    public bool freeSwap = true;
     public float lossHPAnimDelay;
     public float lossHPAnimDuration;
     float currDelayTimer;
@@ -32,7 +32,7 @@ public class Energy : Skill
     {
         energy = Mathf.Clamp(energy + restoreSpeed * Time.deltaTime, 0f, maxEnergy);
         //Debug.Log("~");
-        
+        freeSwap = true;
     }
     void UpdateLostHPUI(float lossHP)
     {
@@ -104,7 +104,7 @@ public class Energy : Skill
         //Debug.Log(energy / maxEnergy);
         prevRealTime = Time.realtimeSinceStartup;
         HandleLostHPUI();
-        if (energy < swapCost)
+        if (energy < swapCost && !freeSwap)
         {
             lossHPbar.color = new Color(1f, 0.7f, 0.7f);
         }

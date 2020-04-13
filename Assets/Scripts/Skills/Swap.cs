@@ -116,6 +116,7 @@ public class Swap : Skill {
         {
             return;
         }
+        
         m_doubleSwap.SetDoubleSwapObject(col.GetComponent<Thing>());
         StartCoroutine(DelayedSwap(waitTime));
         if(SwapAnimator!=null)
@@ -542,8 +543,9 @@ public class Swap : Skill {
 
 	}
 	IEnumerator DelayedSwap (float waitTime) {
-
-        if (!Energy.Instance.Spend(Energy.Instance.swapCost)) yield break;
+        if (!Energy.Instance.freeSwap && Energy.Instance.energy < Energy.Instance.swapCost)
+            yield break;
+        if (!Energy.Instance.Spend(Energy.Instance.swapCost)) Energy.Instance.freeSwap = false;
         
         if (delay) {
             delaying = true;
