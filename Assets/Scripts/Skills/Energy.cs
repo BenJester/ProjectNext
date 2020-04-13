@@ -82,7 +82,7 @@ public class Energy : Skill
 
     void Update()
     {
-        Debug.Log(Time.timeScale);
+        //Debug.Log(Time.timeScale);
         if (Time.timeScale < 0.8f)
         {
             bulletTimeTimer += Time.deltaTime;
