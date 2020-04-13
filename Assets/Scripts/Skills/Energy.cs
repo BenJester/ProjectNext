@@ -13,7 +13,7 @@ public class Energy : Skill
     public float swapCost;
     public float bulletTimeCost;
     public Image hpBar;
-
+    public Image hpBg;
     public Image lossHPbar;
 
     public float lossHPAnimDelay;
@@ -79,7 +79,7 @@ public class Energy : Skill
     {
         
     }
-
+    float prevRealTime;
     void Update()
     {
         //Debug.Log(Time.timeScale);
@@ -102,7 +102,15 @@ public class Energy : Skill
         }
         hpBar.fillAmount = (float)energy / maxEnergy;
         //Debug.Log(energy / maxEnergy);
-        
+        prevRealTime = Time.realtimeSinceStartup;
         HandleLostHPUI();
+        if (energy < swapCost)
+        {
+            lossHPbar.color = new Color(1f, 0.7f, 0.7f);
+        }
+        else
+        {
+            lossHPbar.color = Color.white;
+        }
     }
 }

@@ -544,7 +544,7 @@ public class Swap : Skill {
 	IEnumerator DelayedSwap (float waitTime) {
 
         if (!Energy.Instance.Spend(Energy.Instance.swapCost)) yield break;
-        Energy.Instance.bulletTimeTimer = 0f;
+        
         if (delay) {
             delaying = true;
 			Time.timeScale = Mathf.Min(Time.timeScale, reducedTimeScale);
@@ -902,8 +902,8 @@ public class Swap : Skill {
         busy = false;
         playerControl.invincible = false;
         bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+        Energy.Instance.bulletTimeTimer = 0f;
 
-        
     }
 
     Collider2D prevCol;
