@@ -31,7 +31,7 @@ public class Energy : Skill
     public void Restore()
     {
         energy = Mathf.Clamp(energy + restoreSpeed * Time.deltaTime, 0f, maxEnergy);
-        Debug.Log("~");
+        //Debug.Log("~");
         
     }
     void UpdateLostHPUI(float lossHP)
@@ -82,6 +82,7 @@ public class Energy : Skill
 
     void Update()
     {
+        Debug.Log(Time.timeScale);
         if (Time.timeScale < 0.8f)
         {
             bulletTimeTimer += Time.deltaTime;

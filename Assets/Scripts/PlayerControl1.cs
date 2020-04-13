@@ -672,7 +672,7 @@ public class PlayerControl1 : PlayerControl {
 
         if (!GetComponent<Thing>().isStandardGravity)
         {
-            rb.velocity = new Vector2(h * speed, Mathf.Clamp(v * speed, -maxSpeed, maxSpeed));
+            rb.velocity = new Vector2(h * speed, Mathf.Clamp(v * speed, -maxSpeed, 3000f));
         }
 
         if (Mathf.Abs(h) > 0) {
@@ -713,7 +713,7 @@ public class PlayerControl1 : PlayerControl {
 
         }
         else
-            rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+            rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, 3000f));
         
         //
         if (true == false && canJump == false && !disableAirControl)
@@ -759,11 +759,11 @@ public class PlayerControl1 : PlayerControl {
         {
             if (Mathf.Abs(rb.velocity.x) <= speed && dash.isDashing == false)
             {
-                rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+                rb.velocity = new Vector2(h * speed, Mathf.Clamp(rb.velocity.y, -maxSpeed, 3000f));
             }
             else
             {
-                rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+                rb.velocity = new Vector2(h * rb.velocity.x < 0 ? rb.velocity.x + 6f * h : rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxSpeed, 3000f));
             }
         }
         PlayerBoostyAttr.BoostyProcess();
@@ -976,7 +976,7 @@ public class PlayerControl1 : PlayerControl {
         //子弹时间下tab换目标
         HandleBulletTimeTabSelect();
 
-        if (Input.GetKey(KeyCode.LeftShift)) rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed));
+        if (Input.GetKey(KeyCode.LeftShift)) rb.velocity = new Vector2(0f, Mathf.Clamp(rb.velocity.y, -maxSpeed, 3000f));
         if (Input.GetMouseButtonUp(1))
         {
             CancelAimBulletTime();
