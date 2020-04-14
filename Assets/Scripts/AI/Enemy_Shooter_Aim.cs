@@ -73,9 +73,9 @@ public class Enemy_Shooter_Aim : Enemy {
 		}
 
 	}
-
+    public float fearRadius;
 	public void Shoot () {
-		if (thing.dead)
+		if (thing.dead || Vector3.Distance(transform.position, player.position) < fearRadius)
 			return;
 		GameObject newBullet = Instantiate (bullet, transform.position + bulletInstanceDistance * (Vector3) direction, Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();

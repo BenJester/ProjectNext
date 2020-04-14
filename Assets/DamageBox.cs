@@ -14,7 +14,7 @@ public class DamageBox : MonoBehaviour
     {
         if (collision.CompareTag("player"))
         {
-            collision.GetComponent<PlayerControl1>().Die();
+            //collision.GetComponent<PlayerControl1>().Die();
         }
         if (collision.CompareTag("thing") && collision.GetComponent<Enemy>())
         {

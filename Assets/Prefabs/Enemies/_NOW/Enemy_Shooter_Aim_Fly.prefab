@@ -169,6 +169,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
   isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 1
@@ -183,6 +184,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   gravity: 0
+  isTouchingGround: 0
   isStandardGravity: 1
 --- !u!251 &740622588627588738
 PlatformEffector2D:
@@ -374,6 +376,7 @@ MonoBehaviour:
   player: {fileID: 0}
   isInSight: 0
   lr: {fileID: 0}
+  fearRadius: 250
   dashSpeed: 1300
   dashDur: 2
   dir: {x: 0, y: 0}
