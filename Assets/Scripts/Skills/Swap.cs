@@ -905,7 +905,7 @@ public class Swap : Skill {
         playerControl.invincible = false;
         bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
         Energy.Instance.bulletTimeTimer = 0f;
-
+        playerControl.canJump = false;
     }
 
     Collider2D prevCol;

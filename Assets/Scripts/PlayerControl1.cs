@@ -520,6 +520,36 @@ public class PlayerControl1 : PlayerControl {
         return bRes;
     }
 
+    bool canStartCoyote;
+    void HandleCoyote()
+    {
+        if (!isTouchingGround && canStartCoyote)
+        {
+            StartCoroutine(DoCoyote());
+        }
+        if (isTouchingGround)
+        {
+            canStartCoyote = true;
+            canJump = true;
+        }
+            
+    }
+    IEnumerator DoCoyote()
+    {
+
+        canStartCoyote = false;
+
+        int curr = 0;
+        while (curr <= coyoteTime)
+        {
+
+            yield return new WaitForEndOfFrame();
+            curr++;
+        }
+        if (!isTouchingGround)
+            canJump = false;
+        canStartCoyote = true;
+    }
     public float acc;
     public float accLow;
     public float currAcc;
@@ -966,7 +996,7 @@ public class PlayerControl1 : PlayerControl {
         // 找到离鼠标最近单位
         HandleObjectDistance();
         // coyote
-        HandleJump();
+        //HandleJump();
 
         HandleTrajectoryTest();
         HandleShootSlowBullet();
@@ -1040,9 +1070,16 @@ public class PlayerControl1 : PlayerControl {
         targetDeltaTime = Time.fixedDeltaTime;
         //Debug.Log(Time.fixedDeltaTime);
     }
-
+    IEnumerator DelayDisableCanJump()
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        canJump = false;
+    }
     void Jump() {
-
+        StartCoroutine(DelayDisableCanJump());
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Jumping);
         box.sharedMaterial = slipperyMat;
         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * rb.gravityScale / Mathf.Abs(rb.gravityScale));
@@ -1456,6 +1493,7 @@ public class PlayerControl1 : PlayerControl {
 
     void FixedUpdate() {
         //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
+        HandleCoyote();
         if (m_bJumpingWindow == true)
         {
 
@@ -1812,7 +1850,7 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void HandleJump() {
-        if (!isTouchingGround)
+        if (!touchingFloor())
             StartCoroutine(JumpTolerence());
         else
         {
@@ -1842,7 +1880,7 @@ public class PlayerControl1 : PlayerControl {
     IEnumerator JumpTolerence() {
         int curr = 0;
         while (curr <= coyoteTime) {
-            if (isTouchingGround) {
+            if (touchingFloor()) {
 
                 _logHeight();
                 canJump = true;
