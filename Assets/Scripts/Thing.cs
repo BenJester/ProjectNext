@@ -175,6 +175,8 @@ public class Thing : MonoBehaviour {
         beingThrown = false;
     }
     public virtual void Start () {
+        slipperyDur = 0.2f;
+        slipperyTime = 1f;
         m_spRender = GetComponent<SpriteRenderer>();
         if(m_spRender == null)
         {
