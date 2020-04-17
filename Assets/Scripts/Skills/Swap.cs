@@ -831,20 +831,20 @@ public class Swap : Skill {
         curr = curr - pokerTransitionDur;
         playerControl.transform.position = prevColPos;
         target.transform.position = prevPos;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            playerControl.spriteRenderer.sprite = playerSprite;
-            targetSr.sprite = targetSprite;
-            playerControl.rb.velocity = Vector2.zero;
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3(curr / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3(curr / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            ShadowPool.instance.GetFromPool();
+        //while (curr < pokerTransitionDur)
+        //{
+        //    curr += Time.deltaTime;
+        //    playerControl.spriteRenderer.sprite = playerSprite;
+        //    targetSr.sprite = targetSprite;
+        //    playerControl.rb.velocity = Vector2.zero;
+        //    if (targetRb != null)
+        //        targetRb.velocity = Vector2.zero;
+        //    transform.localScale = new Vector3(curr / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
+        //    target.transform.localScale = new Vector3(curr / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
+        //    yield return new WaitForEndOfFrame();
+        //    ShadowPool.instance.GetFromPool();
 
-        }
+        //}
         playerControl.spriteRenderer.GetComponent<Animator>().enabled = true;
         if (target.GetComponent<Animator>() != null)
             target.GetComponent<Animator>().enabled = true;
@@ -870,6 +870,8 @@ public class Swap : Skill {
                     targetRb.velocity = dir.normalized * swapSpeed;
                 else
                     targetRb.velocity = dir.normalized * targetV.magnitude;
+                StartCoroutine(targetThing.SetSlippery());
+                targetThing.thrownDir = dir;
                 if (prevCol == col && Mathf.Abs(targetRb.gravityScale) >= 10f)
                 {
                     consecutiveThrowCount += 1;

@@ -410,4 +410,34 @@ public class Thing : MonoBehaviour {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         TriggerMethod?.Invoke();
     }
+    public Vector2 thrownDir;
+    public bool slippery;
+    public float slipperyTime;
+    public float slipperyDur;
+    //public float 
+    public IEnumerator SetSlippery()
+    {
+        slippery = true;
+        yield return new WaitForSeconds(slipperyTime);
+        slippery = false;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (slippery && !touchingFloor())
+        {
+            StartCoroutine(SlipperyThrow());
+        }
+    }
+    IEnumerator SlipperyThrow()
+    {
+        float timer = 0f;
+        slippery = false;
+        while (timer < slipperyDur)
+        {
+            body.velocity = thrownDir * playerControl.swap.swapSpeed * 0.35f;
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+            
+        }
+    }
 }

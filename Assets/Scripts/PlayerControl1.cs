@@ -565,6 +565,7 @@ public class PlayerControl1 : PlayerControl {
         currAcc = accLow;
     }
     void Update() {
+        BetterJump();
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
                 (
@@ -1078,6 +1079,8 @@ public class PlayerControl1 : PlayerControl {
         yield return new WaitForFixedUpdate();
         canJump = false;
     }
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
     void Jump() {
         StartCoroutine(DelayDisableCanJump());
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Jumping);
@@ -1097,7 +1100,16 @@ public class PlayerControl1 : PlayerControl {
             Instantiate(FirstJumpEffect, transform.position - Vector3.up * 10, Quaternion.identity);
         }
     }
-
+    void BetterJump()
+    {
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);
+        }
+        else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.W)){
+           rb.velocity += Vector2.up* Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime; 
+        }
+    }
     public LayerMask GetCurrentLayerMask()
     {
         if(ClickChangeDirectly == true)

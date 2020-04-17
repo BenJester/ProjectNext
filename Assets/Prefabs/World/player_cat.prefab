@@ -584,6 +584,10 @@ MonoBehaviour:
   gravity: 0
   isTouchingGround: 0
   isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!120 &2213982000770385547
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -745,7 +749,7 @@ MonoBehaviour:
   maxhp: 5
   hp: 5
   invincible: 0
-  speed: 485
+  speed: 440
   JumpingHorizontalUpMaxSpeed: 250
   JumpingHorizontalUpForce: 40000
   JumpingHorizontalDownMaxSpeed: 250
@@ -877,6 +881,8 @@ MonoBehaviour:
   accLow: 0.01
   currAcc: 0
   cancelBulletTimeFadeDur: 0
+  fallMultiplier: 20
+  lowJumpMultiplier: 100
 --- !u!114 &2198510326049772165
 MonoBehaviour:
   m_ObjectHideFlags: 0
