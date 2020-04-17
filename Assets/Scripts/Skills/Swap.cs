@@ -807,7 +807,7 @@ public class Swap : Skill {
             playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3(curr / pokerTransitionDur, playerScale.y, playerScale.z);
+            //transform.localScale = new Vector3(curr / pokerTransitionDur, playerScale.y, playerScale.z);
             target.transform.localScale = new Vector3(curr / pokerTransitionDur, targetScale.y, targetScale.z);
             yield return new WaitForEndOfFrame();
             ShadowPool.instance.GetFromPool();
@@ -822,7 +822,7 @@ public class Swap : Skill {
             playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
-            transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, playerScale.y, playerScale.z);
+            //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, playerScale.y, playerScale.z);
             target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, targetScale.y, targetScale.z);
             yield return new WaitForEndOfFrame();
             ShadowPool.instance.GetFromPool();
