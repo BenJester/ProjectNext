@@ -972,6 +972,30 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 1367315685}
+    ActiveGameObject: {fileID: 1367315685}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
+    - {fileID: 801784671}
+    ActiveGameObject: {fileID: 801784671}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 576625922}
     ActiveGameObject: {fileID: 576625922}
     GUIDsList: []
@@ -1214,30 +1238,6 @@ MonoBehaviour:
     list:
     - {fileID: 411826225}
     ActiveGameObject: {fileID: 411826225}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 576625922}
-    ActiveGameObject: {fileID: 576625922}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1297599297}
-    ActiveGameObject: {fileID: 1297599297}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -4271,11 +4271,6 @@ PrefabInstance:
         type: 3}
       propertyPath: waitTime
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2198391889307519823, guid: b2aa5bd427ca2f24ea7085339a8125ed,
-        type: 3}
-      propertyPath: speed
-      value: 440
       objectReference: {fileID: 0}
     - target: {fileID: 2239482339701475466, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
@@ -20068,6 +20063,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39f8095fddabb2644bfa85c72c3abee4, type: 3}
+--- !u!1 &1367315685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2238742991639153443, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 576625921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1369100938
 GameObject:
   m_ObjectHideFlags: 0
