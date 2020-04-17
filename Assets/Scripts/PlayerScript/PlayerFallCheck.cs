@@ -38,7 +38,7 @@ public class PlayerFallCheck : MonoBehaviour
                     }
                     if (bRes == false)
                     {
-                        Anim.SetTrigger("IsFall");
+                        //Anim.SetTrigger("IsFall");
                         m_bTrigger = true;
                     }
                 }
