@@ -436,7 +436,8 @@ public class Thing : MonoBehaviour {
         slippery = false;
         while (timer < slipperyDur)
         {
-            body.velocity = thrownDir * playerControl.swap.swapSpeed * 0.35f;
+            if (Mathf.Abs(body.velocity.x) < 10f)
+                body.velocity = thrownDir * playerControl.swap.swapSpeed * 0.35f;
             timer += Time.deltaTime;
             yield return new WaitForEndOfFrame();
             
