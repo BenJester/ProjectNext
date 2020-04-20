@@ -29,7 +29,9 @@ public class MovingLaser : MonoBehaviour
     [Space]
     [Header("开关切换的参数")]
     public bool isIntervalsLaser=false;
+    public bool isDoubleIntervalLaser = false;
     public float interval;
+    public float inactiveInterval;
     public float offset;
 
 
@@ -45,6 +47,7 @@ public class MovingLaser : MonoBehaviour
         dir = transform.up;
 
         if(isIntervalsLaser) StartCoroutine(IntervalLaser());
+        else if (isDoubleIntervalLaser ) StartCoroutine(DoubleIntervalLaser());
     }
 
     // Update is called once per frame
@@ -101,6 +104,18 @@ public class MovingLaser : MonoBehaviour
         while(true){
             active = !active;
             yield return new WaitForSeconds(interval);
+        }
+    }
+
+    IEnumerator DoubleIntervalLaser()
+    {
+        yield return new WaitForSeconds(offset);
+        while (true)
+        {
+            active = true;
+            yield return new WaitForSeconds(interval);
+            active = false;
+            yield return new WaitForSeconds(inactiveInterval);
         }
     }
 }
