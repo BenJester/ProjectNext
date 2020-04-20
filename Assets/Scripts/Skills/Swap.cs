@@ -719,7 +719,7 @@ public class Swap : Skill {
         Smoke();
         float timer = Time.realtimeSinceStartup;
 
-        bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
+        //bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
 
 
         Collider2D target = col;
@@ -788,11 +788,11 @@ public class Swap : Skill {
         {
             curr += Time.deltaTime;
 
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
             //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
+            //target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
             yield return new WaitForEndOfFrame();
             ShadowPool.instance.GetFromPool();
 
@@ -804,11 +804,11 @@ public class Swap : Skill {
             curr += Time.deltaTime;
             //playerControl.spriteRenderer.sprite = turnPokerSprite;
             targetSr.sprite = turnPokerSprite;
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
             //transform.localScale = new Vector3(curr / pokerTransitionDur, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3(curr / pokerTransitionDur, targetScale.y, targetScale.z);
+            //target.transform.localScale = new Vector3(curr / pokerTransitionDur, targetScale.y, targetScale.z);
             yield return new WaitForEndOfFrame();
             ShadowPool.instance.GetFromPool();
 
@@ -819,11 +819,11 @@ public class Swap : Skill {
             curr += Time.deltaTime;
             //playerControl.spriteRenderer.sprite = turnPokerSprite;
             targetSr.sprite = turnPokerSprite;
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
             //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, playerScale.y, playerScale.z);
-            target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, targetScale.y, targetScale.z);
+            //target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, targetScale.y, targetScale.z);
             yield return new WaitForEndOfFrame();
             ShadowPool.instance.GetFromPool();
 
@@ -905,7 +905,7 @@ public class Swap : Skill {
         playerControl.box.enabled = true;
         busy = false;
         playerControl.invincible = false;
-        bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+        //bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
         Energy.Instance.bulletTimeTimer = 0f;
         playerControl.canJump = false;
     }
