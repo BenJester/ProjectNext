@@ -564,8 +564,75 @@ public class PlayerControl1 : PlayerControl {
         hasMomentum = false;
         currAcc = accLow;
     }
-    void Update() {
+    void FixedUpdate() {
         BetterJump();
+        //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
+        HandleCoyote();
+        if (m_bJumpingWindow == true)
+        {
+
+
+            m_fCurrentKeepJumping += Time.fixedDeltaTime;
+            if (m_fCurrentKeepJumping <= JumpAddForceTime)
+            {
+                float fTimeBase = Time.fixedDeltaTime / Time.timeScale;
+                rb.AddForce(transform.up * fTimeBase * jumpForceAir);
+            }
+            else
+            {
+                m_bJumpingWindow = false;
+            }
+
+        }
+        // 左键子弹时间
+        //Rewired------------------------------------------------------------
+        //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        if (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        {
+            currWaitTime += 1;
+        }
+        //Rewired------------------------------------------------------------
+        //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag)) {
+        if (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
+        {
+            anim.SetBool("IsCharging", true);
+
+            chargeCounter += 1;
+            if (chargeCounter > 25f)
+            {
+                if (useLineRenderer)
+                {
+                    lr.startColor = Color.red;
+                }
+
+                chargeCounter = 0;
+
+            }
+            else if (chargeCounter > 15f)
+            {
+                // Time.timeScale = 0.1f;
+                // targetTimeScale = 0.1f;
+                // Time.fixedDeltaTime = startDeltaTime * 0.1f;
+                // targetDeltaTime = startDeltaTime * 0.1f;
+                //TODO:之后会写成渐变的感觉
+                //PostEffect.SetActive (true);
+            }
+        }
+        else
+        {
+            chargeCounter = 0;
+        }
+
+        if (m_bDashMove == true)
+        {
+            m_fCurDashDuration += Time.fixedDeltaTime;
+            if (m_fCurDashDuration >= DashingMoveTime)
+            {
+                m_bDashMove = false;
+                m_bJumpRelease = true;
+                m_bDashResult = true;
+            }
+        }
         if (wallJump)
             isTouchingGround = Physics2D.OverlapArea
                 (
@@ -1503,69 +1570,7 @@ public class PlayerControl1 : PlayerControl {
         pointer.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    void FixedUpdate() {
-        //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
-        HandleCoyote();
-        if (m_bJumpingWindow == true)
-        {
 
-
-            m_fCurrentKeepJumping += Time.fixedDeltaTime;
-            if (m_fCurrentKeepJumping <= JumpAddForceTime)
-            {
-                float fTimeBase = Time.fixedDeltaTime / Time.timeScale;
-                rb.AddForce(transform.up * fTimeBase * jumpForceAir);
-            }
-            else
-            {
-                m_bJumpingWindow = false;
-            }
-
-        }
-        // 左键子弹时间
-        //Rewired------------------------------------------------------------
-        //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
-        if (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
-        {
-            currWaitTime += 1;
-        }
-        //Rewired------------------------------------------------------------
-        //if (Input.GetMouseButton(0) || player.GetButton("Switch") || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag)) {
-        if (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true || (controlState == ControlWay.isMobile && TouchControl.Instance.aimDrag))
-        {
-            anim.SetBool("IsCharging", true);
-
-            chargeCounter += 1;
-            if (chargeCounter > 25f) {
-                if (useLineRenderer) {
-                    lr.startColor = Color.red;
-                }
-
-                chargeCounter = 0;
-
-            } else if (chargeCounter > 15f) {
-                // Time.timeScale = 0.1f;
-                // targetTimeScale = 0.1f;
-                // Time.fixedDeltaTime = startDeltaTime * 0.1f;
-                // targetDeltaTime = startDeltaTime * 0.1f;
-                //TODO:之后会写成渐变的感觉
-                //PostEffect.SetActive (true);
-            }
-        } else {
-            chargeCounter = 0;
-        }
-
-        if(m_bDashMove == true)
-        {
-            m_fCurDashDuration += Time.fixedDeltaTime;
-            if( m_fCurDashDuration >= DashingMoveTime)
-            {
-                m_bDashMove = false;
-                m_bJumpRelease = true;
-                m_bDashResult = true;
-            }
-        }
-    }
 
     void HandleLineRenderer() {
         lr.SetPosition(0, transform.position);
