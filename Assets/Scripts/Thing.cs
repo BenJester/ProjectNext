@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Ben;
+using Com.LuisPedroFonseca.ProCamera2D;
 namespace Ben
 {
     public enum Type
@@ -349,7 +350,7 @@ public class Thing : MonoBehaviour {
 			GetComponent<HeadBodySeparation>().Dead(force);
 			//print("die");
 		}
-
+        ProCamera2DShake.Instance.Shake(0.2f, new Vector2(200f, 200f));
         if (PlayerControl1.Instance.swap.overheadRB != null && PlayerControl1.Instance.swap.overheadRB.gameObject == gameObject)
             PlayerControl1.Instance.swap.DropOverhead();
 		StartCoroutine (ScaleDown(0.2f));

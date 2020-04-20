@@ -920,6 +920,7 @@ public class Swap : Skill {
         //bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
         Energy.Instance.bulletTimeTimer = 0f;
         playerControl.canJump = false;
+        ProCamera2DShake.Instance.Shake(0.2f, new Vector2(50f,50f));
     }
 
     Collider2D prevCol;
