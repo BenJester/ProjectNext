@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour {
     BulletType bulletType;
     public bool isHomingBullet=false;
 	
-	private float speed;
+	public float speed;
 	private float rotateSpeed;
 	private Transform target = null;
 	

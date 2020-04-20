@@ -80,7 +80,7 @@ public class Enemy_IronFoot : Enemy_Base {
         {
             //originalGravity = playerBody.gravityScale;
             //playerBody.gravityScale = 0;
-            rb.velocity = new Vector2(rb.velocity.x, -100f);
+            rb.velocity = new Vector2(rb.velocity.x, -FallingSpeed);
             //switched = true;
         }
     }

@@ -869,7 +869,12 @@ public class Swap : Skill {
                 if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)     
                     targetRb.velocity = dir.normalized * swapSpeed;
                 else
+                {
                     targetRb.velocity = dir.normalized * targetV.magnitude;
+                    HandleBulletAcc(targetRb.GetComponent<EnemyBullet_Transable_Forward>(), dir);
+
+                }
+
                 StartCoroutine(targetThing.SetSlippery());
                 targetThing.thrownDir = dir;
                 if (prevCol == col && Mathf.Abs(targetRb.gravityScale) >= 10f)
@@ -887,9 +892,16 @@ public class Swap : Skill {
             }
 
             else if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)
+            {
                 targetRb.velocity = Vector3.zero;
+                
+            }
+                
             else
+            {
                 targetRb.velocity = targetV;
+            }
+                
             target.transform.position = prevPos;
             targetBox.enabled = true;
             if (target.GetComponent<Enemy>() != null)
@@ -958,7 +970,18 @@ public class Swap : Skill {
         }
         return results;
     }
-    
+    public LayerMask enemyMask;
+    void HandleBulletAcc(EnemyBullet_Transable_Forward bullet, Vector2 dir)
+    {
+        RaycastHit2D hit0 = Physics2D.Raycast(bullet.transform.position, dir.normalized, 3000f, enemyMask);
+        if (!hit0) return;
+        if (hit0.collider.gameObject.GetComponent<Enemy>() != null)
+        {
+            
+            bullet.GetComponent<Rigidbody2D>().velocity *= 2f;
+            //bullet.transform.localScale *= 2f;
+        }
+    }
     void HandleBulletAutoSelect()
     {
 

@@ -9,6 +9,7 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
 
     public bool floorCollide = true;
     PlayerControl pc;
+    public bool friendly;
     void Start()
     {
         pc = GameObject.FindWithTag("player").GetComponent<PlayerControl>();
@@ -62,7 +63,6 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
         }
         else if (col.CompareTag("player"))
         {
-
             pc.Die();
             Deactivate();
         }
