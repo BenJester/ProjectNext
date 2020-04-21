@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
-  shootDistance: 2000
+  shootDistance: 5000
   moveTarget: {fileID: 6593611171619408990}
   moveStart: {fileID: 360219926308586500}
   damage: 1
@@ -169,7 +169,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4200192
   isIntervalsLaser: 0
+  isDoubleIntervalLaser: 0
   interval: 0
+  inactiveInterval: 0
   offset: 0
 --- !u!120 &6593611172611441158
 LineRenderer:
