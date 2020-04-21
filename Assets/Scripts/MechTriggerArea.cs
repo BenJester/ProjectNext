@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class MechTriggerArea : MonoBehaviour
 {
@@ -14,8 +15,8 @@ public class MechTriggerArea : MonoBehaviour
     SpriteRenderer spr;
 
     public Text time;
-    
 
+    public UnityEvent triggerEvent;
 
     private void Awake()
     {
@@ -48,7 +49,8 @@ public class MechTriggerArea : MonoBehaviour
 
     IEnumerator StartTrigger(float delay) {
         yield return new WaitForSeconds(delay);
-        triggerMech.DoOnce();
+        triggerMech?.DoOnce();
         spr.color = Color.red;
+        triggerEvent?.Invoke();
     }
 }
