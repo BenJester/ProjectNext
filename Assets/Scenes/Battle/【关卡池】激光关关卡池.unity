@@ -2084,6 +2084,18 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 963213344}
+    ActiveGameObject: {fileID: 963213344}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 3005318731743738253}
     ActiveGameObject: {fileID: 3005318731743738253}
     GUIDsList: []
@@ -2378,18 +2390,6 @@ MonoBehaviour:
     list:
     - {fileID: 64615270}
     ActiveGameObject: {fileID: 64615270}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1595675408}
-    ActiveGameObject: {fileID: 1595675408}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -5669,7 +5669,7 @@ PrefabInstance:
     - target: {fileID: 2198226801103984335, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: directionSwap
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2198226801103984335, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
@@ -7402,6 +7402,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955169493}
   m_CullTransparentMesh: 0
+--- !u!1 &963213344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2238334444430495565, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 576625921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &980261718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54286,7 +54292,7 @@ Transform:
   - {fileID: 989608081}
   - {fileID: 2001782358}
   m_Father: {fileID: 0}
-  m_RootOrder: 62
+  m_RootOrder: 64
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1616453101
 GameObject:
@@ -69237,7 +69243,7 @@ RectTransform:
   - {fileID: 904727594}
   - {fileID: 893877696}
   m_Father: {fileID: 0}
-  m_RootOrder: 56
+  m_RootOrder: 58
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
