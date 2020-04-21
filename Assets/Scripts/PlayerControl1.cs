@@ -1010,39 +1010,7 @@ public class PlayerControl1 : PlayerControl {
 
         //处理按下的指示器
         //Rewired------------------------------------------------------------
-        if ( player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true) {
-            //m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_Low);
-            //m_bulletTime.DelayActive(DelaySwitchTime);
-            if (useLineRenderer) {
-                //lr.enabled = true;
-                HandleLineRenderer();
-            }
-
-            IncreaseBulletSpeed();
-
-        } else //Rewired------------------------------------------------------------
-    if (player.GetButtonUp("Switch") && swap.IsSwapCoolDownValid() == true) {
-
-            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
-            // || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
-
-
-            anim.SetTrigger("Shot");
-            anim.SetBool("IsCharging", false);
-            chargeCounter = 0;
-          
-            StartCoroutine(RestoreTimeScale(0.035f));
-
-            if (useLineRenderer) {
-                lr.startColor = Color.black;
-                lr.enabled = false;
-            }
-
-            Shoot();
-
-           
-            
-        }
+        
         m_bDashRequest = false;
 
         //双重交换
@@ -1112,7 +1080,46 @@ public class PlayerControl1 : PlayerControl {
         Time.fixedDeltaTime = startDeltaTime;
         targetDeltaTime = Time.fixedDeltaTime;
     }
+    private void Update()
+    {
+        if (player.GetButton("Switch") && swap.IsSwapCoolDownValid() == true)
+        {
+            //m_bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+            //m_bulletTime.DelayActive(DelaySwitchTime);
+            if (useLineRenderer)
+            {
+                //lr.enabled = true;
+                HandleLineRenderer();
+            }
 
+            IncreaseBulletSpeed();
+
+        }
+        else if (player.GetButtonUp("Switch") && swap.IsSwapCoolDownValid() == true)
+        {
+
+            m_bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_Low);
+            // || (isPrepareToSwitch && player.GetAxis2DRaw("DashAimHorizontal", "DashAimVertical").magnitude == 0f
+
+
+            anim.SetTrigger("Shot");
+            anim.SetBool("IsCharging", false);
+            chargeCounter = 0;
+
+            StartCoroutine(RestoreTimeScale(0.035f));
+
+            if (useLineRenderer)
+            {
+                lr.startColor = Color.black;
+                lr.enabled = false;
+            }
+
+            Shoot();
+
+
+
+        }
+    }
     public float cancelBulletTimeFadeDur;
     IEnumerator CancelBulletTimeFade()
     {

@@ -67,6 +67,7 @@ public class Energy : Skill
     {
         if (energy >= amount)
         {
+            Debug.Log(amount);
             energy -= amount;
             UpdateLostHPUI(amount);
             return true;
