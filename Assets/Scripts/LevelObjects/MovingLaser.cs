@@ -33,7 +33,7 @@ public class MovingLaser : MonoBehaviour
     public float interval;
     public float inactiveInterval;
     public float offset;
-
+    public PhysicalButton button;
 
     void Start()
     {
@@ -56,8 +56,24 @@ public class MovingLaser : MonoBehaviour
         HandleColor();
         HandleRay();
         HandleMovement();
+        HandleButton();
     }
-
+    IEnumerator DelayedSwitch()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (button.state != ClickState.IsClick)
+            active = false;
+        else
+            active = true;
+    }
+    ClickState prev;
+    void HandleButton()
+    {
+        if (button == null) return;
+        if (prev != button.state)
+            StartCoroutine(DelayedSwitch());
+        prev = button.state;
+    }
 
     void HandleColor(){
         if(active) sr.color = Color.red;
