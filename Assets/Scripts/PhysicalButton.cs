@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public enum ClickState
 {
@@ -31,6 +31,8 @@ public class PhysicalButton : MonoBehaviour {
     private Vector3 targetPosition;
     private Vector3 originalPosition;
     private SpriteRenderer spr;
+    public UnityEvent pressEvent;
+    public UnityEvent releaseEvent;
 
 	Goal goal;
 
@@ -64,11 +66,22 @@ public class PhysicalButton : MonoBehaviour {
 
 
            
-        
+        if (prev != state && state == ClickState.IsClick)
+        {
+            StartCoroutine(DelayedSwitch());
+        }
+        prev = state;
 	}
+    ClickState prev;
 
-
-
+    IEnumerator DelayedSwitch()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (state != ClickState.IsClick)
+            releaseEvent?.Invoke();
+        else
+            pressEvent?.Invoke();
+    }
     void OnTriggerStay2D(Collider2D col)
     {
 
@@ -106,8 +119,9 @@ public class PhysicalButton : MonoBehaviour {
                 spr.sprite = buttonSprite;
             }
 
-			state = ClickState.NoClick;
-
+            StartCoroutine(DelayedSwitch());
+            state = ClickState.NoClick;
+            
             if (canRevert)
             {
                 foreach (var objectToActive in objectToActives)
