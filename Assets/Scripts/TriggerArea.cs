@@ -25,7 +25,9 @@ public class TriggerArea : MonoBehaviour
     {
         if (!isTrigger && collision.tag == "player")
         {
+            float temp = spr.color.a;
             spr.color = Color.yellow;
+            spr.color = new Color(spr.color.r,spr.color.g,spr.color.b,temp);
             isTrigger = true;
             trigger.Invoke();
         }

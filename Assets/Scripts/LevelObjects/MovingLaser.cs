@@ -134,4 +134,9 @@ public class MovingLaser : MonoBehaviour
             yield return new WaitForSeconds(inactiveInterval);
         }
     }
+
+    public void SetActive(float spe) {
+        speed = spe;
+        active = true;
+    }
 }
