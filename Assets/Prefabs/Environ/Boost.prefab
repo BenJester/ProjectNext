@@ -115,7 +115,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 1.3800659, y: -2.06987}
@@ -173,7 +173,7 @@ MonoBehaviour:
   body: {fileID: 0}
   prevVelocity: {x: 0, y: 0}
   dead: 0
-  hasShield: 0
+  hasShield: 1
   isHeld: 0
   isKey: 0
   shield: {fileID: 0}
@@ -210,4 +210,4 @@ MonoBehaviour:
   xSpeed: 0
   ySpeed: 600
   disableAirControlDur: 0
-  reviveDelay: 1
+  reviveDelay: 0.1
