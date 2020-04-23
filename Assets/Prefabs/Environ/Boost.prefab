@@ -162,7 +162,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
   type: 3
   lowerY: 0
@@ -191,6 +191,10 @@ MonoBehaviour:
   gravity: 0
   isTouchingGround: 0
   isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!114 &768908874859583042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,3 +210,4 @@ MonoBehaviour:
   xSpeed: 0
   ySpeed: 600
   disableAirControlDur: 0
+  reviveDelay: 1

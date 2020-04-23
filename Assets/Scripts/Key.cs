@@ -16,7 +16,7 @@ public class Key : MonoBehaviour
         {
             activated = true;
             sr.enabled = false;
-            ProCamera2DShake.Instance.Shake(0.2f, new Vector2(50f, 50f));
+            ProCamera2DShake.Instance.Shake(0.2f, new Vector2(20f, 20f));
         }
     }
 }
