@@ -12,6 +12,7 @@ public class Boost : MonoBehaviour
     BoxCollider2D box;
     SpriteRenderer sr;
     Rigidbody2D mrb;
+    bool originallyHasShield;
     void Start()
     {
         pc = PlayerControl1.Instance;
@@ -19,27 +20,28 @@ public class Boost : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
         mrb = GetComponent<Rigidbody2D>();
         originalPos = transform.position;
+        originallyHasShield = GetComponent<Thing>().hasShield;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.GetComponent<Thing>() != null)
+        if (collision.GetComponent<Thing>() != null)
         {
             StartCoroutine(DisableAirControl(collision));
             
         }
     }
-    IEnumerator DisableAirControl(Collision2D collision)
+    IEnumerator DisableAirControl(Collider2D collision)
     {
-        if (collision.collider.CompareTag("player"))
+        if (collision.CompareTag("player"))
         {
-            ProCamera2DShake.Instance.Shake(0.2f, new Vector2(100f, 100f));
+            ProCamera2DShake.Instance.Shake(0.2f, new Vector2(80f, 80f));
             sr.enabled = false;
             box.enabled = false;
             pc.disableAirControl = true;
             pc.GetComponent<AirJump>().charge = pc.GetComponent<AirJump>().maxCharge;
             yield return new WaitForSeconds(0.05f);
-            Rigidbody2D rb = collision.collider.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(xSpeed, ySpeed);
             yield return new WaitForSeconds(disableAirControlDur);
             pc.disableAirControl = false;
@@ -48,8 +50,12 @@ public class Boost : MonoBehaviour
         }
         else
         {
-            Rigidbody2D rb = collision.collider.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(xSpeed, ySpeed);
+            ProCamera2DShake.Instance.Shake(0.2f, new Vector2(50f, 50f));
+            sr.enabled = false;
+            box.enabled = false;
+            GetComponent<Thing>().dead = true;
         }
 
         
@@ -65,7 +71,7 @@ public class Boost : MonoBehaviour
         yield return new WaitForSeconds(reviveDelay);
         sr.enabled = true;
         box.enabled = true;
-        GetComponent<Thing>().hasShield = false;
+        GetComponent<Thing>().hasShield = originallyHasShield;
         GetComponent<Thing>().dead = false;
         transform.position = originalPos;
         busy = false;
