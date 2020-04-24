@@ -30,7 +30,7 @@ public class MovablePillar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!down && Mathf.Abs(transform.position.y - originalPos.y) > 5f && !atTop && !busy)
+        if (!down && Mathf.Abs(transform.position.y - originalPos.y) > 15f && !atTop && !busy)
         {
             rb.velocity = new Vector2(0f, stompReturnSpeed);
         }
