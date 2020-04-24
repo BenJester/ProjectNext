@@ -35,4 +35,8 @@ public class MovingLaserHelper : MonoBehaviour
     {
         
     }
+
+    public void SetOff(bool isOff) {
+        off = isOff;
+    }
 }
