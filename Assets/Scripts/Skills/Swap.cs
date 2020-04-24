@@ -310,6 +310,10 @@ public class Swap : Skill {
         //
         m_cacheBodyVelocity = playerBody.velocity = thingBody.velocity;
         Vector3 diff = Input.mousePosition - startingPoint;
+        if (!momentumSwap && !directionSwap)
+        {
+            thingBody.velocity = new Vector2(0f, 250);
+        }
         if (!momentumSwap)
         {
             if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)

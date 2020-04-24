@@ -32,7 +32,10 @@ public class MovablePillar : MonoBehaviour
     {
         if (!down && Mathf.Abs(transform.position.y - originalPos.y) > 15f && !atTop && !busy)
         {
-            rb.velocity = new Vector2(0f, stompReturnSpeed);
+            if (transform.position.y > originalPos.y)
+                rb.velocity = new Vector2(0f, -stompReturnSpeed);
+            else
+                rb.velocity = new Vector2(0f, stompReturnSpeed);
         }
         if (Mathf.Abs(transform.position.y - originalPos.y) < 5f && !atTop)
         {
