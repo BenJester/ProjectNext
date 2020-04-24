@@ -564,6 +564,7 @@ public class PlayerControl1 : PlayerControl {
         hasMomentum = false;
         currAcc = accLow;
     }
+
     void FixedUpdate() {
         BetterJump();
         //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
@@ -1180,7 +1181,7 @@ public class PlayerControl1 : PlayerControl {
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);
         }
-        else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.W)){
+        else if (rb.velocity.y > 0 && (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Space))){
            rb.velocity += Vector2.up* Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime; 
         }
     }
