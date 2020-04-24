@@ -10,7 +10,10 @@ public class Mech_Portal : MonoBehaviour {
     [HideInInspector]public bool canPort = true;
 	void Start () {
         canPort = true;
-        targetPos = target.transform.position;
+        if (target != null) {
+            targetPos = target.transform.position;
+        }
+        
 	}
 	
 	private void OnTriggerEnter2D(Collider2D col) {
