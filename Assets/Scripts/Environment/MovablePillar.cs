@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Com.LuisPedroFonseca.ProCamera2D;
 public class MovablePillar : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -94,6 +94,8 @@ public class MovablePillar : MonoBehaviour
             yield return new WaitForEndOfFrame();
             timer += Time.deltaTime;
         }
+        ProCamera2DShake.Instance.Shake(0.2f, new Vector2(100f, 100f));
+
         rb.velocity = Vector2.zero;
         atTop = false;
         yield return new WaitForSeconds(0.1f);

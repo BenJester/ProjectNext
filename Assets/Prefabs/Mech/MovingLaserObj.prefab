@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6593611171250933432}
+  - component: {fileID: 8826029897463297635}
   m_Layer: 12
   m_Name: MovingLaserObj
   m_TagString: Untagged
@@ -33,6 +34,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8826029897463297635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593611171250933435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb4a2da485156f41bccc76277387ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerArea: {fileID: 0}
+  laser: {fileID: 6593611172611441159}
 --- !u!1 &6593611171619408961
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,11 +183,14 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 4200192
-  isIntervalsLaser: 0
+  isIntervalsLaser: 1
   isDoubleIntervalLaser: 0
-  interval: 0
+  isCountDownLaser: 0
+  interval: 1.7
   inactiveInterval: 0
   offset: 0
+  button: {fileID: 0}
+  triggerArea: {fileID: 0}
 --- !u!120 &6593611172611441158
 LineRenderer:
   m_ObjectHideFlags: 0

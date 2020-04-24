@@ -28,12 +28,14 @@ public class MovingLaser : MonoBehaviour
 
     [Space]
     [Header("开关切换的参数")]
-    public bool isIntervalsLaser=false;
+    public bool isIntervalsLaser = false;
     public bool isDoubleIntervalLaser = false;
+    public bool isCountDownLaser = false;
     public float interval;
     public float inactiveInterval;
     public float offset;
     public PhysicalButton button;
+    public MechTriggerArea triggerArea;
 
     void Start()
     {
@@ -47,17 +49,26 @@ public class MovingLaser : MonoBehaviour
         dir = transform.up;
 
         if(isIntervalsLaser) StartCoroutine(IntervalLaser());
-        else if (isDoubleIntervalLaser ) StartCoroutine(DoubleIntervalLaser());
+        else if (isDoubleIntervalLaser) StartCoroutine(DoubleIntervalLaser());
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         HandleColor();
         HandleRay();
         HandleMovement();
         HandleButton();
+        HandleTrigger();
     }
+
+    void HandleTrigger()
+    {
+        if (triggerArea == null || !triggerArea.activated) return;
+        active = true;
+        
+
+    }
+
     IEnumerator DelayedSwitch()
     {
         yield return new WaitForSeconds(0.1f);
@@ -66,7 +77,9 @@ public class MovingLaser : MonoBehaviour
         else
             active = true;
     }
+
     ClickState prev;
+
     void HandleButton()
     {
         if (button == null) return;
@@ -79,6 +92,7 @@ public class MovingLaser : MonoBehaviour
         if(active) sr.color = Color.red;
         else sr.color = Color.yellow; 
     }
+
     void HandleRay()
     {
         if (!active)

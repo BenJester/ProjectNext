@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 public class MechTriggerArea : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class MechTriggerArea : MonoBehaviour
     SpriteRenderer spr;
 
     public Text time;
-
+    public bool activated = false;
     public UnityEvent triggerEvent;
 
     private void Awake()
@@ -28,7 +29,6 @@ public class MechTriggerArea : MonoBehaviour
         time.text = timeTemp.ToString("F1");
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isTrigger) {
@@ -52,5 +52,7 @@ public class MechTriggerArea : MonoBehaviour
         triggerMech?.DoOnce();
         spr.color = Color.red;
         triggerEvent?.Invoke();
+        activated = true;
+        ProCamera2DShake.Instance.Shake(0.2f, new Vector2(100f, 100f));
     }
 }
