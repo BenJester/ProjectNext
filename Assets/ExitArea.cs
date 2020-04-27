@@ -11,6 +11,8 @@ public class ExitArea : MonoBehaviour
     public GameObject saveImage;
     public SpriteRenderer image;
     public Door_Lion door;
+    public AudioSource audioPlayer;
+    
 
     void Start()
     {
@@ -33,7 +35,8 @@ public class ExitArea : MonoBehaviour
     }
 
     void SaveHostage() {
-
+        GetComponent<AudioSource>().Play();
+        audioPlayer.Play();
         hostage.gameObject.SetActive(false);
         GameObject ins = Instantiate(saveParticle, transform.position, Quaternion.identity);
         Destroy(ins, 1f);
