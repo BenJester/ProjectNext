@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ExitArea : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class ExitArea : MonoBehaviour
     void SaveHostage() {
         GetComponent<AudioSource>().Play();
         audioPlayer.Play();
+        hostage.GetComponent<BoxCollider2D>().enabled = false;
         hostage.gameObject.SetActive(false);
         GameObject ins = Instantiate(saveParticle, transform.position, Quaternion.identity);
         Destroy(ins, 1f);
