@@ -711,7 +711,7 @@ public class Swap : Skill {
 
     public float dashReducedTimeScale;
 
-
+    public Vector3 destinationUpdateSpeed;
 
     IEnumerator PokerDash()
     {
@@ -785,14 +785,19 @@ public class Swap : Skill {
         float targetGravity = targetRb.gravityScale;
         playerControl.rb.gravityScale = 0f;
         targetRb.gravityScale = 0f;
-        float speed = Vector3.Distance(prevColPos, prevPos) / pokerTransitionDur / 3f;
+        float speed = dashSpeed; // Vector3.Distance(prevColPos, prevPos) / pokerTransitionDur / 3f;
         float curr = 0f;
         //playerControl.spriteRenderer.sprite = turnPokerSprite;
+        pokerTransitionDur = Vector3.Distance(prevPos, prevColPos) / speed / 3f;
+        Vector3 destination = Vector3.zero;
+
+        
         while (curr < pokerTransitionDur)
         {
             curr += Time.deltaTime;
-
+            destination = prevColPos;
             //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
             //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
@@ -808,7 +813,9 @@ public class Swap : Skill {
             curr += Time.deltaTime;
             //playerControl.spriteRenderer.sprite = turnPokerSprite;
             targetSr.sprite = turnPokerSprite;
+            destination = destination = prevColPos;
             //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
             //transform.localScale = new Vector3(curr / pokerTransitionDur, playerScale.y, playerScale.z);
@@ -823,7 +830,9 @@ public class Swap : Skill {
             curr += Time.deltaTime;
             //playerControl.spriteRenderer.sprite = turnPokerSprite;
             targetSr.sprite = turnPokerSprite;
+            destination = destination = prevColPos;
             //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
             //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, playerScale.y, playerScale.z);
