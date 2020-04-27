@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Hostage : MonoBehaviour {
 
+
+    //public bool hasExitArea=false;
 	Thing thing;
 	public float dropKillSpeed;
 	Goal goal;
