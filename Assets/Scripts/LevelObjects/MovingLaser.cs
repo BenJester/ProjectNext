@@ -98,6 +98,7 @@ public class MovingLaser : MonoBehaviour
         if (!active)
         {
             lr.enabled = false;
+
             return;
         }
         
