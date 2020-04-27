@@ -4,6 +4,8 @@ using UnityEngine;
 using EZCameraShake;
 using Com.LuisPedroFonseca.ProCamera2D;
 using UnityEngine.Rendering.PostProcessing;
+using DG.Tweening;
+
 public class Swap : Skill {
 
     public bool swapDamageOn;
@@ -712,7 +714,7 @@ public class Swap : Skill {
     public float dashReducedTimeScale;
 
     public Vector3 destinationUpdateSpeed;
-
+    public float maxDashTime;
     IEnumerator PokerDash()
     {
         if (busy) yield break;
@@ -767,6 +769,7 @@ public class Swap : Skill {
 
 
         targetBox.enabled = false;
+        playerControl.box.enabled = false;
         audioSource.PlayOneShot(clip, 0.8f);
 
         //float speed = Vector3.Distance(prevPos, prevColPos) / dashDur;
@@ -785,79 +788,36 @@ public class Swap : Skill {
         float targetGravity = targetRb.gravityScale;
         playerControl.rb.gravityScale = 0f;
         targetRb.gravityScale = 0f;
-        float speed = dashSpeed; // Vector3.Distance(prevColPos, prevPos) / pokerTransitionDur / 3f;
+        float speed = Mathf.Max(dashSpeed, Vector3.Distance(prevColPos, prevPos) / maxDashTime); // Vector3.Distance(prevColPos, prevPos) / pokerTransitionDur / 3f;
         float curr = 0f;
         //playerControl.spriteRenderer.sprite = turnPokerSprite;
-        pokerTransitionDur = Vector3.Distance(prevPos, prevColPos) / speed / 3f;
+        pokerTransitionDur = Vector3.Distance(prevPos, prevColPos) / speed;
         Vector3 destination = Vector3.zero;
 
-        
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            destination = prevColPos;
-            //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
-            transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-            //target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            ShadowPool.instance.GetFromPool();
-
-        }
-        curr = curr - pokerTransitionDur;
         target.transform.position = prevPos;
         while (curr < pokerTransitionDur)
         {
-            curr += Time.deltaTime;
-            //playerControl.spriteRenderer.sprite = turnPokerSprite;
-            targetSr.sprite = turnPokerSprite;
-            destination = destination = prevColPos;
-            //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
-            transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
+            
+            destination = prevColPos;
+            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            //transform.DoMove();
+            //transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
-            //transform.localScale = new Vector3(curr / pokerTransitionDur, playerScale.y, playerScale.z);
-            //target.transform.localScale = new Vector3(curr / pokerTransitionDur, targetScale.y, targetScale.z);
+
             yield return new WaitForEndOfFrame();
+            curr += Time.deltaTime;
             ShadowPool.instance.GetFromPool();
 
         }
+
         curr = curr - pokerTransitionDur;
-        while (curr < pokerTransitionDur)
-        {
-            curr += Time.deltaTime;
-            //playerControl.spriteRenderer.sprite = turnPokerSprite;
-            targetSr.sprite = turnPokerSprite;
-            destination = destination = prevColPos;
-            //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
-            transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
-            if (targetRb != null)
-                targetRb.velocity = Vector2.zero;
-            //transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, playerScale.y, playerScale.z);
-            //target.transform.localScale = new Vector3((pokerTransitionDur - curr) / pokerTransitionDur, targetScale.y, targetScale.z);
-            yield return new WaitForEndOfFrame();
-            ShadowPool.instance.GetFromPool();
+        target.transform.position = prevPos;
 
-        }
         curr = curr - pokerTransitionDur;
         playerControl.transform.position = prevColPos;
-        target.transform.position = prevPos;
-        //while (curr < pokerTransitionDur)
-        //{
-        //    curr += Time.deltaTime;
-        //    playerControl.spriteRenderer.sprite = playerSprite;
-        //    targetSr.sprite = targetSprite;
-        //    playerControl.rb.velocity = Vector2.zero;
-        //    if (targetRb != null)
-        //        targetRb.velocity = Vector2.zero;
-        //    transform.localScale = new Vector3(curr / pokerTransitionDur * playerScale.x, playerScale.y, playerScale.z);
-        //    target.transform.localScale = new Vector3(curr / pokerTransitionDur * targetScale.x, targetScale.y, targetScale.z);
-        //    yield return new WaitForEndOfFrame();
-        //    ShadowPool.instance.GetFromPool();
+        
 
-        //}
         playerControl.spriteRenderer.GetComponent<Animator>().enabled = true;
         if (target.GetComponent<Animator>() != null)
             target.GetComponent<Animator>().enabled = true;
@@ -934,6 +894,13 @@ public class Swap : Skill {
         Energy.Instance.bulletTimeTimer = 0f;
         playerControl.canJump = false;
         ProCamera2DShake.Instance.Shake(0.2f, new Vector2(50f,50f));
+        yield return new WaitForFixedUpdate();
+        playerBody.velocity = Vector2.zero;
+        yield return new WaitForFixedUpdate();
+        playerBody.velocity = Vector2.zero;
+        yield return new WaitForFixedUpdate();
+        
+        playerBody.velocity = Vector2.zero;
     }
 
     Collider2D prevCol;
