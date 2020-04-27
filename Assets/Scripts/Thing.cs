@@ -23,6 +23,7 @@ public class Thing : MonoBehaviour {
     public GameObject dieParticle;
     public UnityEvent TriggerMethod;
     public UnityEvent swapTriggerMethod;
+    public UnityEvent dieEvent;
 	public Type type;
 	public float lowerY;
 	public float upperY;
@@ -318,7 +319,11 @@ public class Thing : MonoBehaviour {
         //		if (type == Type.player && playerControl.isWorld) {
         //			player.transform.position = CheckPointTotalManager.instance.savedPos;
         //			return;
-        //		}
+        //		}dieEvent
+        //		}dieEvent
+        //		}dieEvent
+
+        dieEvent.Invoke();
         if (type == Type.player)
         {
             PlayerControl1.Instance.Die();
@@ -354,6 +359,7 @@ public class Thing : MonoBehaviour {
         if (PlayerControl1.Instance.swap.overheadRB != null && PlayerControl1.Instance.swap.overheadRB.gameObject == gameObject)
             PlayerControl1.Instance.swap.DropOverhead();
 		StartCoroutine (ScaleDown(0.2f));
+
 	}
 
 	IEnumerator ScaleDown(float duration) {

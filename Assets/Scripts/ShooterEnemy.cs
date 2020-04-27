@@ -7,7 +7,10 @@ public class ShooterEnemy : Enemy {
 	// Use this for initialization
 	
 	public GameObject bullet;
+    public GameObject laser;
 	public float bulletSpeed;
+
+    
 
 	[Header("不打开就不会发射子弹")]
 	public bool BeSetShoot = true;
@@ -27,6 +30,7 @@ public class ShooterEnemy : Enemy {
 		if (faceRight)
 		{
 			GetComponent<SpriteRenderer>().flipX=true;
+
 		}
 	}
 
