@@ -799,14 +799,15 @@ public class Swap : Skill {
         {
             
             destination = prevColPos;
-            playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
+            transform.position += (prevColPos - prevPos).normalized * speed * Time.fixedDeltaTime;
+            //playerControl.rb.velocity = (prevColPos - prevPos).normalized * speed;
             //transform.DoMove();
             //transform.position = Vector3.SmoothDamp(transform.position, prevColPos, ref destinationUpdateSpeed, pokerTransitionDur);
             if (targetRb != null)
                 targetRb.velocity = Vector2.zero;
 
-            yield return new WaitForEndOfFrame();
-            curr += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+            curr += Time.fixedDeltaTime;
             ShadowPool.instance.GetFromPool();
 
         }
