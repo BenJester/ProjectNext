@@ -13,7 +13,7 @@ public class Hostage : MonoBehaviour {
     public float jumpSpeed;
     Transform player;
     Rigidbody2D rb;
-
+    public LayerMask checkLayer;
 	void Start () {
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
@@ -22,12 +22,53 @@ public class Hostage : MonoBehaviour {
         player = PlayerControl1.Instance.transform;
 	}
 
+    public float checkRange;
+
+    public Enemy NearestEnemyInSight()
+    {
+        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, checkRange, checkLayer);
+        float minDistance = Mathf.Infinity;
+        Enemy res = null;
+        foreach (Collider2D col in cols)
+        {
+            if (col.GetComponent<Enemy>() != null && !col.GetComponent<Thing>().dead && col.gameObject != gameObject)
+            {
+                float distance = Vector3.Distance(transform.position, col.transform.position);
+                if (distance < minDistance)
+                {
+                    res = col.GetComponent<Enemy>();
+                    minDistance = distance;
+                }
+            }
+        }
+        return res;
+    }
+    public GameObject bullet;
+    public float bulletSpeed;
+    public float bulletInstanceDistance;
+
+    void HandleShoot()
+    {
+        Enemy target = NearestEnemyInSight();
+        if (target != null)
+        {
+            Vector3 direction = (target.transform.position - transform.position).normalized;
+            GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
+            Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+            bulletBody.velocity = direction * bulletSpeed;
+        }
+    }
+    public bool shoot;
 	// Update is called once per frame
 	void Update () {
 		if (thing.upperY<-600f)
 		{
 			thing.Die();
 		}
+        if (shoot)
+        {
+            HandleShoot();
+        }
 	}
 
     bool detectObstacle()
