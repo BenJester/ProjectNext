@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Hostage : MonoBehaviour {
 
@@ -16,6 +17,10 @@ public class Hostage : MonoBehaviour {
     public LayerMask checkLayer;
     public LayerMask scanLayer;
     public LayerMask playerLayer;
+
+    public bool useAmmo;
+    public int ammo;
+    public Text ammoText;
     void Start () {
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
@@ -64,12 +69,13 @@ public class Hostage : MonoBehaviour {
         {
             yield return new WaitForSeconds(shootInterval);
             Enemy target = NearestEnemyInSight();
-            if (target != null)
+            if (target != null && (!useAmmo || ammo >= 1))
             {
                 Vector3 direction = (target.transform.position - transform.position).normalized;
                 GameObject newBullet = Instantiate(bullet, transform.position + bulletInstanceDistance * (Vector3)direction, Quaternion.identity);
                 Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
                 bulletBody.velocity = direction * bulletSpeed;
+                ammo -= 1;
             }
         }
         
@@ -81,9 +87,9 @@ public class Hostage : MonoBehaviour {
 		{
 			thing.Die();
 		}
-        if (shoot)
+        if (useAmmo)
         {
-            //HandleShoot();
+            ammoText.text = ammo.ToString();
         }
 	}
 
