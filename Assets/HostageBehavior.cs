@@ -14,6 +14,7 @@ public class HostageBehavior : MonoBehaviour
     int count=0;
     public AudioClip sound1;
     public AudioClip sound2;
+    public AudioClip sound3;
     AudioSource _asr;
     Rigidbody2D _rb;
 
@@ -54,6 +55,8 @@ public class HostageBehavior : MonoBehaviour
 
         GameObject newBullet = Instantiate(projectile, faceRight ? (transform.position + 60f * Vector3.right) : (transform.position + 60f * Vector3.left), Quaternion.identity);
         Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
+        _asr.clip = sound3;
+        _asr.Play();
         bulletBody.velocity = new Vector2(faceRight ? bulletSpeed * 3 : -bulletSpeed * 3, 0f);
 
     }
