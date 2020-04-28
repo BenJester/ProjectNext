@@ -557,6 +557,9 @@ MonoBehaviour:
   swapTriggerMethod:
     m_PersistentCalls:
       m_Calls: []
+  dieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   type: 1
   lowerY: 0
   upperY: 0
@@ -758,7 +761,7 @@ MonoBehaviour:
   jumpForceAir: 800000
   coyoteTime: 60
   cacheJumpTime: 10
-  maxSpeed: 1200
+  maxSpeed: 800
   groundCheckPoint1: {fileID: 2241210209661831357}
   groundCheckPoint2: {fileID: 2241385735876321219}
   groundCheckPoint3: {fileID: 2241555018136539069}

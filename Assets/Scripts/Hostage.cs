@@ -17,10 +17,11 @@ public class Hostage : MonoBehaviour {
     public LayerMask checkLayer;
     public LayerMask scanLayer;
     public LayerMask playerLayer;
-
+    AudioSource source;
     public bool useAmmo;
     public int ammo;
     public Text ammoText;
+    public AudioClip shootSound;
     void Start () {
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
@@ -28,6 +29,7 @@ public class Hostage : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         player = PlayerControl1.Instance.transform;
         StartCoroutine(HandleShoot());
+        source = GetComponent<AudioSource>();
 	}
 
     public float checkRange;
@@ -76,6 +78,7 @@ public class Hostage : MonoBehaviour {
                 Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D>();
                 bulletBody.velocity = direction * bulletSpeed;
                 ammo -= 1;
+                source.PlayOneShot(shootSound);
             }
         }
         
