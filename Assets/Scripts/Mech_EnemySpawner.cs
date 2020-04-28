@@ -18,11 +18,32 @@ public class Mech_EnemySpawner : MonoBehaviour
     public bool end;
     public GameObject SpawnHint;
     Vector3 nextPos;
+    public float preWait;
+
+    private void Start()
+    {
+        if (preWait != 0f)
+        {
+            finished = true;
+            StartCoroutine(DelayedSpawn());
+        }
+            
+    }
+
+    IEnumerator DelayedSpawn()
+    {
+        SpawnHint.SetActive(false);
+        yield return new WaitForSeconds(preWait);
+        finished = false;
+        SpawnHint.SetActive(true);
+    }
 
     private void Update()
     {
         if (!spawning && !finished && (currThing == null || currThing.dead))
         {
+            
+
             if (firstTime)
                 spawningNotFirstTime = true;
             if (!firstTime)

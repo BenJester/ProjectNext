@@ -22,6 +22,10 @@ public class Hostage : MonoBehaviour {
     public int ammo;
     public Text ammoText;
     public AudioClip shootSound;
+
+    public bool useLevel;
+    public int level;
+
     void Start () {
 		thing = GetComponent<Thing> ();
 		goal = GameObject.FindGameObjectWithTag ("goal").GetComponent<Goal>();
@@ -44,8 +48,8 @@ public class Hostage : MonoBehaviour {
         {
             if (col.GetComponent<Enemy>() != null && !col.GetComponent<Thing>().dead && col.gameObject != gameObject)
             {
-                RaycastHit2D hit0 = Physics2D.Raycast(transform.position + (col.transform.position - transform.position).normalized * 50f, (col.transform.position - transform.position).normalized, checkRange, scanLayer);
-                RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position + (col.transform.position - transform.position).normalized * 50f, (col.transform.position - transform.position).normalized, checkRange, playerLayer);
+                RaycastHit2D hit0 = Physics2D.Raycast(transform.position + (col.transform.position - transform.position).normalized * 50f * transform.localScale.x, (col.transform.position - transform.position).normalized, checkRange, scanLayer);
+                RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position + (col.transform.position - transform.position).normalized * 50f * transform.localScale.x, (col.transform.position - transform.position).normalized, checkRange, playerLayer);
                 if (hitPlayer) return null;
                 if (hit0.collider.gameObject == col.gameObject)
                 {
