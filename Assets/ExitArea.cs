@@ -38,7 +38,8 @@ public class ExitArea : MonoBehaviour
     void SaveHostage() {
         GetComponent<AudioSource>().Play();
         audioPlayer.Play();
-        hostage.GetComponent<BoxCollider2D>().enabled = false;
+        hostage.GetComponent<Thing>().Die();
+
         hostage.gameObject.SetActive(false);
         GameObject ins = Instantiate(saveParticle, transform.position, Quaternion.identity);
         Destroy(ins, 1f);
