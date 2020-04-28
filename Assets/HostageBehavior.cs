@@ -8,10 +8,14 @@ public class HostageBehavior : MonoBehaviour
 
     public GameObject projectile;
     public float bulletSpeed;
+    public float dashSpeed;
     Swap _swap;
     Thing _thing;
     int count=0;
-
+    public AudioClip sound1;
+    public AudioClip sound2;
+    AudioSource _asr;
+    Rigidbody2D _rb;
 
     private void Awake()
     {
@@ -19,8 +23,10 @@ public class HostageBehavior : MonoBehaviour
     }
     void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();
         _swap = PlayerControl1.Instance.GetComponent<Swap>();
         _thing = GetComponent<Thing>();
+        _asr = GetComponent<AudioSource>();
         count = 0;
     }
 
@@ -31,7 +37,10 @@ public class HostageBehavior : MonoBehaviour
     }
 
     public void ReSwap(float time) {
-        
+        _asr.clip = sound1;
+        _asr.Play();
+
+
             StartCoroutine(StartReSwap(time));
             _thing.SetShield(true);
         
@@ -51,10 +60,23 @@ public class HostageBehavior : MonoBehaviour
 
     IEnumerator StartReSwap(float _time) {
         yield return new WaitForSeconds(_time);
+        _rb.gravityScale = 50;
+        _asr.clip = sound2;
+        _asr.Play();
         _thing.SetShield(false);
         _swap.col = transform.GetComponent<BoxCollider2D>();
         _swap.DoSwap();
         
+
+
+    }
+
+
+    public void Dash() {
+
+        _rb.gravityScale = 0;
+        bool faceRight = !_swap.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX;
+        _rb.velocity = new Vector2(faceRight ? dashSpeed : -dashSpeed,0);
 
 
     }
