@@ -159,6 +159,9 @@ MonoBehaviour:
   swapTriggerMethod:
     m_PersistentCalls:
       m_Calls: []
+  dieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   type: 2
   lowerY: 0
   upperY: 0
@@ -186,6 +189,10 @@ MonoBehaviour:
   gravity: 0
   isTouchingGround: 0
   isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!251 &740622588627588738
 PlatformEffector2D:
   m_ObjectHideFlags: 0
