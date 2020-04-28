@@ -6,6 +6,8 @@ public class HostageBehavior : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public bool isFlying;
+    public float flySpeed;
     public GameObject projectile;
     public float bulletSpeed;
     public float dashSpeed;
@@ -34,7 +36,9 @@ public class HostageBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isFlying) {
+            _rb.velocity = new Vector2(flySpeed, 0);
+        }
     }
 
     public void ReSwap(float time) {
