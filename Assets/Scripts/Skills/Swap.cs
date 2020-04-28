@@ -908,6 +908,8 @@ public class Swap : Skill {
     int consecutiveThrowCount;
     public int allowedConsecutiveThrowCount;
 
+
+
     IEnumerator CancelDirectionThrow()
     {
         directionSwap = false;

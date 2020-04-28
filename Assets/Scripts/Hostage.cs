@@ -103,7 +103,7 @@ public class Hostage : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (speed != 0f)
+        if (speed != 0f && thing.touchingFloor())
         {
             rb.velocity = new Vector2(speed, rb.velocity.y);
         }
