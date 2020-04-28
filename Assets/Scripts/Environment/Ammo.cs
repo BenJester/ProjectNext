@@ -8,11 +8,14 @@ public class Ammo : MonoBehaviour
     BoxCollider2D box;
     SpriteRenderer sr;
     Thing thing;
+    AudioSource source;
+    public AudioClip sound;
     private void Start()
     {
         box = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
         thing = GetComponent<Thing>();
+        source = GetComponent<AudioSource>();
     }
     private void OnCollisionEnter2D (Collision2D col)
     {
@@ -23,6 +26,7 @@ public class Ammo : MonoBehaviour
             box.enabled = false;
             sr.enabled = false;
             thing.Die();
+            source.PlayOneShot(sound);
         }
     }
 }
