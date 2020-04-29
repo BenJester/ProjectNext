@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1562, y: 1111}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7076952756931388881
 Canvas:
@@ -224,6 +224,10 @@ MonoBehaviour:
   triggerMech: {fileID: 0}
   timeDelayToTrigger: 2
   time: {fileID: 7076952757766481250}
+  activated: 0
+  triggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7076952757766481249
 GameObject:
   m_ObjectHideFlags: 0
