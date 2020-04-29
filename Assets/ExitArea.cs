@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class ExitArea : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class ExitArea : MonoBehaviour
     public SpriteRenderer image;
     public Door_Lion door;
     public AudioSource audioPlayer;
+    public UnityEvent SaveEvent;
     
 
     void Start()
@@ -47,6 +49,7 @@ public class ExitArea : MonoBehaviour
         image.color = Color.white;
 
         if (door != null) door.Open();
+        SaveEvent.Invoke();
 
     }
 }
