@@ -11,6 +11,8 @@ public class MovablePillar : MonoBehaviour
     public float stompDistance;
     public float stompPostDur;
     public float stompReturnSpeed;
+    public bool left;
+    public bool right;
     Vector3 originalPos;
     SpriteRenderer sr;
     Rigidbody2D rb;
@@ -30,6 +32,7 @@ public class MovablePillar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (!down && Mathf.Abs(transform.position.y - originalPos.y) > 15f && !atTop && !busy)
         {
             if (transform.position.y > originalPos.y)
