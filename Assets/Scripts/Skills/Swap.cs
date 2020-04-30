@@ -823,8 +823,7 @@ public class Swap : Skill {
         if (target.GetComponent<Animator>() != null)
             target.GetComponent<Animator>().enabled = true;
         playerControl.disableAirControl = false;
-        if (!playerControl.touchingFloor())
-            playerControl.rb.velocity = new Vector2(0f, 250f);
+        
         Smoke();
         player.layer = 9;
         targetThing.swapping = false;
@@ -895,13 +894,23 @@ public class Swap : Skill {
         Energy.Instance.bulletTimeTimer = 0f;
         playerControl.canJump = false;
         ProCamera2DShake.Instance.Shake(0.2f, new Vector2(50f,50f));
+
         yield return new WaitForFixedUpdate();
-        playerBody.velocity = Vector2.zero;
+        if (!playerControl.touchingFloor())
+            playerControl.rb.velocity = new Vector2(0f, 250f);
+        else
+            playerControl.rb.velocity = Vector2.zero;
         yield return new WaitForFixedUpdate();
-        playerBody.velocity = Vector2.zero;
+        if (!playerControl.touchingFloor())
+            playerControl.rb.velocity = new Vector2(0f, 250f);
+        else
+            playerControl.rb.velocity = Vector2.zero;
         yield return new WaitForFixedUpdate();
-        
-        playerBody.velocity = Vector2.zero;
+
+        if (!playerControl.touchingFloor())
+            playerControl.rb.velocity = new Vector2(0f, 250f);
+        else
+            playerControl.rb.velocity = Vector2.zero;
     }
 
     Collider2D prevCol;
