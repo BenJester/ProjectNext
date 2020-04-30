@@ -567,7 +567,6 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void FixedUpdate() {
-        Debug.Log(Time.fixedDeltaTime);
         BetterJump();
         //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
         HandleCoyote();
