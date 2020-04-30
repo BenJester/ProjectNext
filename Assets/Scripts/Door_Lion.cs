@@ -12,6 +12,7 @@ public class Door_Lion : MonoBehaviour {
     public List<Thing> hostageList;
     public List<Mech_EnemySpawner> spawnerList;
     public List<Key> keyList;
+    public FlameGroup flameList;
     public List<MovingLaser> laserToTurnOff;
     private Animator animator;
     public bool hasUIIndicator = false;
@@ -40,7 +41,7 @@ public class Door_Lion : MonoBehaviour {
     void Update () {
 
         if (isChecking) {
-            if (checkEnemies() && checkButtons() && checkHostages() && checkSpawner() && checkKey())
+            if (checkEnemies() && checkButtons() && checkHostages() && checkSpawner() && checkKey() && checkFlame())
             {
                 active = true;
                 //anim.SetBool("Active", true);
@@ -109,6 +110,17 @@ public class Door_Lion : MonoBehaviour {
         for (int i = 0; i < keyList.Count; i++)
         {
             if (!keyList[i].activated)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool checkFlame()
+    {
+        for (int i = 0; i < flameList.flames.Length; i++)
+        {
+            if (!flameList.flames[i].active)
             {
                 return false;
             }
