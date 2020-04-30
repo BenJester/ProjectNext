@@ -298,6 +298,7 @@ public class PlayerControl1 : PlayerControl {
 
     void Awake()
     {
+        
         overhead = GetComponent<Overhead>();
         if (HasRepawnPoint)
         {
@@ -332,7 +333,7 @@ public class PlayerControl1 : PlayerControl {
 
         GlobalVariable.SetPlayer(this);
         originalScale = transform.localScale;
-        startDeltaTime = Time.fixedDeltaTime;
+        startDeltaTime = 0.008f;
         targetDeltaTime = startDeltaTime;
         targetTimeScale = 1f;
         rb = GetComponent<Rigidbody2D>();
@@ -566,6 +567,7 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void FixedUpdate() {
+        Debug.Log(Time.fixedDeltaTime);
         BetterJump();
         //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
         HandleCoyote();
