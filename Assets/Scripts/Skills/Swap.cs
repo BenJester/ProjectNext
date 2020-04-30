@@ -725,7 +725,7 @@ public class Swap : Skill {
         Smoke();
         float timer = Time.realtimeSinceStartup;
 
-        bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
+        //bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
 
 
         Collider2D target = col;
@@ -890,7 +890,7 @@ public class Swap : Skill {
         playerControl.box.enabled = true;
         busy = false;
         playerControl.invincible = false;
-        bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
+        //bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
         Energy.Instance.bulletTimeTimer = 0f;
         playerControl.canJump = false;
         ProCamera2DShake.Instance.Shake(0.2f, new Vector2(50f,50f));
