@@ -118,6 +118,7 @@ public class Door_Lion : MonoBehaviour {
     }
     bool checkFlame()
     {
+        if (flameList == null) return true;
         for (int i = 0; i < flameList.flames.Length; i++)
         {
             if (!flameList.flames[i].active)
