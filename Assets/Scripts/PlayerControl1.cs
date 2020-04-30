@@ -1170,7 +1170,7 @@ public class PlayerControl1 : PlayerControl {
 
         m_fHeight = transform.position.y;
 
-        audioSource.PlayOneShot(jumpClip);
+        audioSource.PlayOneShot(jumpClip, 0.4f);
         if(FirstJumpEffect != null)
         {
             Instantiate(FirstJumpEffect, transform.position - Vector3.up * 10, Quaternion.identity);

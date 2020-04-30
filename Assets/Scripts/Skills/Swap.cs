@@ -21,7 +21,8 @@ public class Swap : Skill {
 
     public GameObject smokeParticle;
 	public GameObject damageParticle;
-    
+
+    public SwapTrajectory swapTrajectory;
 
 	public Vector3 smokeOffset;
 	public float scanBoxHeight;
@@ -726,7 +727,7 @@ public class Swap : Skill {
         float timer = Time.realtimeSinceStartup;
 
         //bulletTime.ActiveBulletTime(true, BulletTime.BulletTimePriority.BulletTimePriority_High);
-
+        swapTrajectory.active = true;
 
         Collider2D target = col;
         Sprite targetSprite = null;
@@ -893,8 +894,11 @@ public class Swap : Skill {
         //bulletTime.ActiveBulletTime(false, BulletTime.BulletTimePriority.BulletTimePriority_High);
         Energy.Instance.bulletTimeTimer = 0f;
         playerControl.canJump = false;
+
         ProCamera2DShake.Instance.Shake(0.2f, new Vector2(50f,50f));
 
+        swapTrajectory.active = false;
+
         yield return new WaitForFixedUpdate();
         if (!playerControl.touchingFloor())
             playerControl.rb.velocity = new Vector2(0f, 250f);
@@ -911,6 +915,7 @@ public class Swap : Skill {
             playerControl.rb.velocity = new Vector2(0f, 250f);
         else
             playerControl.rb.velocity = Vector2.zero;
+        
     }
 
     Collider2D prevCol;
