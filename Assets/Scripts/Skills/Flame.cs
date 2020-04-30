@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Flame : MonoBehaviour
 {
     public bool active;
@@ -9,6 +11,8 @@ public class Flame : MonoBehaviour
     AudioSource source;
     SpriteRenderer sr;
     public GameObject particle;
+    public GameObject light;
+    
 
     void Start()
     {
@@ -22,6 +26,7 @@ public class Flame : MonoBehaviour
         active = true;
         sr.color = Color.white;
         GameObject part1 = Instantiate(particle, transform.position, Quaternion.identity);
+        light.SetActive(true);
         Destroy(part1, 1.5f);
     }
 
