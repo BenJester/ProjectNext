@@ -36,9 +36,11 @@ public class MovingLaser : MonoBehaviour
     public float offset;
     public PhysicalButton button;
     public MechTriggerArea triggerArea;
+    public AudioSource asr;
 
     void Start()
     {
+        if (GetComponent<AudioSource>() != null) asr = GetComponent<AudioSource>();
         lr = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -143,6 +145,7 @@ public class MovingLaser : MonoBehaviour
         yield return new WaitForSeconds(offset);
         while (true)
         {
+            if(asr!=null) asr.Play();
             active = true;
             yield return new WaitForSeconds(interval);
             active = false;
