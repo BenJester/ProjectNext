@@ -7,6 +7,7 @@ public class Energy : Skill
     public float maxEnergy;
     public float energy;
     public float restoreDelay;
+    float touchFloorTimer;
     public float bulletTimeSpendDelay;
     public float bulletTimeTimer;
     public float restoreSpeed;
@@ -30,9 +31,14 @@ public class Energy : Skill
     }
     public void Restore()
     {
-        energy = Mathf.Clamp(energy + restoreSpeed * Time.deltaTime, 0f, maxEnergy);
-        //Debug.Log("~");
-        freeSwap = true;
+        touchFloorTimer += Time.deltaTime;
+        if (touchFloorTimer > restoreDelay)
+        {
+            energy = Mathf.Clamp(energy + restoreSpeed * Time.deltaTime, 0f, maxEnergy);
+            //Debug.Log("~");
+            freeSwap = true;
+        }
+        
     }
     void UpdateLostHPUI(float lossHP)
     {
@@ -65,11 +71,13 @@ public class Energy : Skill
     }
     public bool Spend(float amount)
     {
+        
         if (energy >= amount)
         {
 
             energy -= amount;
             UpdateLostHPUI(amount);
+            touchFloorTimer = 0f;
             return true;
         }
         else
