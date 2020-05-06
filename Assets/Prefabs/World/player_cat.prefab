@@ -548,6 +548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 0
   beingThrown: 0
   sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
@@ -760,7 +761,7 @@ MonoBehaviour:
   JumpingHorizontalDownForce: 60000
   jumpSpeed: 600
   jumpForceAir: 800000
-  coyoteTime: 60
+  coyoteTime: 22
   cacheJumpTime: 10
   maxSpeed: 800
   groundCheckPoint1: {fileID: 2241210209661831357}
@@ -918,6 +919,7 @@ MonoBehaviour:
   box: {fileID: 0}
   playerControl: {fileID: 0}
   clip: {fileID: 8300000, guid: aa3e2746321918f4aa8496329978ec26, type: 3}
+  throwOverride: 0
   swapDamageOn: 0
   swapDamage: 1
   smokeOn: 1
