@@ -8,6 +8,7 @@ using DG.Tweening;
 
 public class Swap : Skill {
 
+    public bool throwOverride;
     public bool swapDamageOn;
 	public int swapDamage;
 	public bool smokeOn;
@@ -837,7 +838,7 @@ public class Swap : Skill {
         {
             targetSr.sprite = targetSprite;
             //targetBox.isTrigger = targetIsTrigger;
-            if (diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity)
+            if (diff.magnitude > directionSwapThreshold && (targetThing.canBeThrown || throwOverride) && startingPoint != Vector3.negativeInfinity)
             {
                 StartCoroutine(targetThing.CancelBeingThrown(0.65f));
                 if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)     
@@ -846,7 +847,7 @@ public class Swap : Skill {
                 {
                     targetRb.velocity = dir.normalized * targetV.magnitude;
                     HandleBulletAcc(targetRb.GetComponent<EnemyBullet_Transable_Forward>(), dir);
-
+                    
                 }
 
                 StartCoroutine(targetThing.SetSlippery());
@@ -937,7 +938,7 @@ public class Swap : Skill {
     {
         Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         Vector3 diff = Input.mousePosition - startingPoint;
-        if (!(col != null && diff.magnitude > directionSwapThreshold && directionSwap && startingPoint != Vector3.negativeInfinity && Input.GetMouseButton(0)))
+        if (!(col != null && diff.magnitude > directionSwapThreshold && (col.GetComponent<Thing>().canBeThrown || throwOverride) && startingPoint != Vector3.negativeInfinity && Input.GetMouseButton(0)))
         {
             lr.enabled = false;
             return;
