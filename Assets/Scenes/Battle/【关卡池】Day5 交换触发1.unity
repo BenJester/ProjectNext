@@ -902,6 +902,18 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 580465619}
+    ActiveGameObject: {fileID: 580465619}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 560333835}
     ActiveGameObject: {fileID: 560333835}
     GUIDsList: []
@@ -1156,18 +1168,6 @@ MonoBehaviour:
     list:
     - {fileID: 1823876463}
     ActiveGameObject: {fileID: 1823876463}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 576625922}
-    ActiveGameObject: {fileID: 576625922}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -4153,7 +4153,18 @@ MonoBehaviour:
       m_Calls: []
   swapTriggerMethod:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 580465625}
+        m_MethodName: SetFlyKnifeTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   dieEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -4285,7 +4296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9510ae10fd7389349801d45f90fe2565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRotate: 1
+  isRotate: 0
   speed: 500
   rotateSpeed: 1000
   speedAcc: 25
