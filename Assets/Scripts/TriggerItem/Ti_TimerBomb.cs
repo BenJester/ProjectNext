@@ -133,7 +133,7 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
         if (explodeTime <= 0)
         {
             GetComponent<BoxCollider2D>().enabled = false;
-            Destroy(gameObject, 1f);
+            Destroy(gameObject, 0.3f);
             if (!thing.dead)
                 thing.Die();
         }
