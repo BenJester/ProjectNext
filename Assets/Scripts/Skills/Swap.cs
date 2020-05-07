@@ -815,7 +815,8 @@ public class Swap : Skill {
         }
 
         curr = curr - pokerTransitionDur;
-        target.transform.position = prevPos;
+        if (target != null)
+            target.transform.position = prevPos;
 
         curr = curr - pokerTransitionDur;
         playerControl.transform.position = prevColPos;
@@ -868,8 +869,10 @@ public class Swap : Skill {
 
             else if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)
             {
-                targetRb.velocity = Vector3.zero;
-                
+                if (!targetThing.touchingFloor())
+                    targetRb.velocity = new Vector2(0f, 100f);
+                else
+                    targetRb.velocity = Vector2.zero;
             }
                 
             else

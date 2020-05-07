@@ -8,7 +8,8 @@ public class EnemyBullet : Bullet {
 //	SpriteRenderer sr;
 //	Collider2D collider;
 
-public int damage;
+    public int damage;
+    public bool friendly;
 	PlayerControl pc;
     public bool floorCollide = true;
     float startSpeed;
@@ -55,7 +56,7 @@ public int damage;
             Deactivate();
 
 
-        } else if (col.CompareTag ("player")) {
+        } else if (col.CompareTag ("player") && !friendly) {
 			
 			pc.Die ();
 			Deactivate ();
