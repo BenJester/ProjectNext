@@ -80,15 +80,17 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
         yield return new WaitForSeconds(triggerTime- explodePreloadtime);
 
 
-
-        GameObject part1 = Instantiate(exploParticle, transform.position, Quaternion.identity);
-        part1.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2, explosionRadius * 2);
-        Destroy(part1, 1f);
+        if (exploParticle != null) {
+            GameObject part1 = Instantiate(exploParticle, transform.position, Quaternion.identity);
+            part1.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2, explosionRadius * 2);
+            Destroy(part1, 1f);
+        }
+        
 
         yield return new WaitForSeconds(explodePreloadtime);
 
 
-        asr.Play();
+        if(asr!=null) asr.Play();
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
