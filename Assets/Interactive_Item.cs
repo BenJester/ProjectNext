@@ -70,6 +70,11 @@ public class Interactive_Item : MonoBehaviour
 
     }
 
+    public void Disapear() { 
+        
+    
+    }
+
 
     
 }
