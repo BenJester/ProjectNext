@@ -17,16 +17,27 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
     private float tempTimer;
     private float _triggerTime;
 
+    public float explodePreloadtime=0.1f;
+    public GameObject exploParticle;
+
     public Text timeLeft;
 
     public GameObject areaIndicator;
     Thing thing;
     bool triggered;
+    public AudioSource asr;
+
+    public int explodeTime = 1;
+    public float multiExplodeInterval = 0.5f;
+
+
+
     void Start()
     {
         thing = GetComponent<Thing>();
         thing.OnDie += Explode;
         timeLeft.text = triggerTime.ToString("F1");
+        asr = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -64,10 +75,20 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
     {
         GetComponent<SpriteRenderer>().color = Color.red;
 
-
-        _triggerTime = Time.time;
-        yield return new WaitForSeconds(triggerTime);
         
+        _triggerTime = Time.time;
+        yield return new WaitForSeconds(triggerTime- explodePreloadtime);
+
+
+
+        GameObject part1 = Instantiate(exploParticle, transform.position, Quaternion.identity);
+        part1.GetComponent<SpriteRenderer>().size = new Vector2(explosionRadius * 2, explosionRadius * 2);
+        Destroy(part1, 1f);
+
+        yield return new WaitForSeconds(explodePreloadtime);
+
+
+        asr.Play();
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity);
         area.transform.parent = null;
@@ -87,15 +108,30 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
                 col.GetComponent<Thing>().TriggerMethod.Invoke();
         }
         
-        if (!thing.dead)
-            thing.Die();
-        Destroy(gameObject);
+        
+
+
+        explodeTime -= 1;
+        if (explodeTime <= 0)
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+            Destroy(gameObject, 1f);
+            if (!thing.dead)
+                thing.Die();
+        }
+        else {
+            yield return new WaitForSeconds(multiExplodeInterval);
+            StartCoroutine(DoExplode());
+            
+        }
+        
     }
 
     public void Explode()
     {
         if (triggered) return;
         triggered = true;
+        
         StartCoroutine(DoExplode());
     }
 
