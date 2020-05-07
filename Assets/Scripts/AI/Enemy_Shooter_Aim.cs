@@ -68,7 +68,7 @@ public class Enemy_Shooter_Aim : Enemy {
                 exclamation.SetActive(false);
 				yield return new WaitForSecondsRealtime ((shootInterval - animationPreload)/Time.timeScale);
             } else {
-				yield return null;
+				yield return new WaitForEndOfFrame();
 			}
 		}
 

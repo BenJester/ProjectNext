@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 1
+  beingThrown: 0
   sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
@@ -139,6 +141,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  dieEvent:
     m_PersistentCalls:
       m_Calls: []
   type: 3
@@ -151,6 +156,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
   isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 0
@@ -165,6 +171,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   gravity: 0
+  isTouchingGround: 0
+  isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!61 &4408032869895345234
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -204,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorCollide: 1
+  friendly: 0
 --- !u!96 &-8353015478438447163
 TrailRenderer:
   serializedVersion: 2

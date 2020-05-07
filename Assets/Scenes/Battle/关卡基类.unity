@@ -878,6 +878,18 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 576625922}
+    ActiveGameObject: {fileID: 576625922}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 3005318731707339274}
     ActiveGameObject: {fileID: 3005318731707339274}
     GUIDsList: []
@@ -1166,27 +1178,6 @@ MonoBehaviour:
     - {fileID: 998239678}
     - {fileID: 989608082}
     - {fileID: 2001782359}
-    ActiveGameObject: {fileID: 2108179618}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 2108179618}
-    - {fileID: 1185845580}
-    - {fileID: 1058596714}
-    - {fileID: 625158523}
-    - {fileID: 1369100938}
-    - {fileID: 1981726820}
-    - {fileID: 2057057461}
-    - {fileID: 1583971881}
-    - {fileID: 998239678}
-    - {fileID: 989608082}
     ActiveGameObject: {fileID: 2108179618}
     GUIDsList: []
     GUIDsActiveGameObject: 
@@ -3749,6 +3740,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4756153172701116516, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
     - target: {fileID: 4868751929553179485, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: kickFloorSpeed
@@ -3876,11 +3872,6 @@ PrefabInstance:
       propertyPath: pokerTransitionDur
       value: 0.02
       objectReference: {fileID: 0}
-    - target: {fileID: 2198226801103984335, guid: b2aa5bd427ca2f24ea7085339a8125ed,
-        type: 3}
-      propertyPath: swapSpeed
-      value: 700
-      objectReference: {fileID: 0}
     - target: {fileID: 763395707, guid: b2aa5bd427ca2f24ea7085339a8125ed, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -3924,6 +3915,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873373818885497120, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 3221627865890351551, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}

@@ -544,7 +544,7 @@ public class PlayerControl1 : PlayerControl {
         while (curr <= coyoteTime)
         {
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
             curr++;
         }
         if (!isTouchingGround)
@@ -567,6 +567,7 @@ public class PlayerControl1 : PlayerControl {
     }
 
     void FixedUpdate() {
+        isTouchingGround = rb.gravityScale > 0 ? touchingFloor() : touchingWallUp();
         BetterJump();
         //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
         HandleCoyote();
@@ -665,7 +666,7 @@ public class PlayerControl1 : PlayerControl {
 
 
         //isTouchingGround = (_ray1 | _ray2 | _ray3 | _ray4 | _ray5) || (wallJump ? isTouchingGround : false);
-        isTouchingGround = rb.gravityScale > 0 ? touchingFloor() : touchingWallUp();
+        
         if (isTouchingGround == true && !wallJump)
         {
             //isTouchingGround = _isTouching(ref _ray1) | _isTouching(ref _ray2) | _isTouching(ref _ray3) | _isTouching(ref _ray4) | _isTouching(ref _ray5);

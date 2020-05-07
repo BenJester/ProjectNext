@@ -17,6 +17,7 @@ namespace Ben
     }
 }
 public class Thing : MonoBehaviour {
+    public bool canBeThrown;
     public bool beingThrown;
     public SpriteRenderer sr;
     public GameObject SpawnObjOnDie;
@@ -212,8 +213,9 @@ public class Thing : MonoBehaviour {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             obj.GetComponent<BombHolder>().thing = this;
         }
-            
-        
+        if (canBeThrown && GetComponent<EnemyBullet_Transable_Forward>() == null)
+            Instantiate(Resources.Load<GameObject>("ThrowIndicator"), new Vector3(transform.position.x + 50f, GetUpperY() + 25f, transform.position.z), Quaternion.identity, transform);
+
         if (type != Type.player) 
 		{
 			playerControl.thingList.Add (this);
