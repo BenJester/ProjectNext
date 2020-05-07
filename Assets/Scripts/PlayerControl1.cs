@@ -809,7 +809,7 @@ public class PlayerControl1 : PlayerControl {
             //h = 0;
         }
         //
-        if (disableAirControl && !isTouchingGround)
+        if (disableAirControl)
         {
 
         }

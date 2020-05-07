@@ -69,7 +69,22 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
         GetComponent<SpriteRenderer>().color = Color.red;
         tempTimer = Time.time + triggerTime;
     }
-    
+
+    public float pushSpeed;
+    public float disableAirControlTime;
+    void PushPlayer(Collider2D col)
+    {
+        Vector2 dir = (col.transform.position - transform.position).normalized;
+        PlayerControl1.Instance.rb.velocity = dir * pushSpeed;
+        StartCoroutine(DisableAirControl());
+    }
+
+    IEnumerator DisableAirControl()
+    {
+        PlayerControl1.Instance.disableAirControl = true;
+        yield return new WaitForSeconds(disableAirControlTime);
+        PlayerControl1.Instance.disableAirControl = false;
+    }
 
     IEnumerator DoExplode()
     {
@@ -100,7 +115,8 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
         {
             if (col.CompareTag("player"))
             {
-                col.GetComponent<PlayerControl1>().Die();
+                //col.GetComponent<PlayerControl1>().Die();
+                PushPlayer(col);
             }
             if (col.CompareTag("thing") && col.GetComponent<Enemy>())
             {
