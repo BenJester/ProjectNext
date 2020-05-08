@@ -70,8 +70,9 @@ public class Interactive_Item : MonoBehaviour
 
     }
 
-    public void Disapear() { 
-        
+    public void Disapear() {
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<Thing>().Die();
     
     }
 
