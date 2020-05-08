@@ -55,8 +55,11 @@ public class EnemyBullet_Transable_Forward : MonoBehaviour, TriggerItem_Base
                 col.GetComponent<Thing>().Die();
                 Deactivate();
             }
-                
-            col.GetComponent<Thing>().TriggerMethod?.Invoke();
+            else
+            {
+                col.GetComponent<Thing>().TriggerMethod?.Invoke();
+                Deactivate();
+            }
             
 
 
