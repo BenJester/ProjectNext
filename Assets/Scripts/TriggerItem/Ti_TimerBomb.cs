@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
 {
+    public bool damageEnemy;
+    public bool damagePlayer;
+    public bool pushEnemy;
+    public bool pushPlayer;
     [Header("炸弹被点燃")]
     public bool isTrigger = false;
 
@@ -115,15 +119,32 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
         {
             if (col.CompareTag("player"))
             {
-                //col.GetComponent<PlayerControl1>().Die();
-                PushPlayer(col);
+                if (damagePlayer)
+                    col.GetComponent<PlayerControl1>().Die();
+                if (pushPlayer)
+                    PushPlayer(col);
             }
             if (col.CompareTag("thing") && col.GetComponent<Enemy>())
             {
-                col.GetComponent<Enemy>().TakeDamage(damage);
+                if (damageEnemy)
+                    col.GetComponent<Enemy>().TakeDamage(damage);
+                if (pushEnemy)
+                {
+                    Vector2 dir = (col.transform.position - transform.position).normalized;
+                    col.GetComponent<Rigidbody2D>().velocity = dir * pushSpeed;
+                }
+
             }
             if (col.CompareTag("thing") && col.GetComponent<Thing>().TriggerMethod != null)
+            {
                 col.GetComponent<Thing>().TriggerMethod.Invoke();
+                if (pushEnemy)
+                {
+                    Vector2 dir = (col.transform.position - transform.position).normalized;
+                    col.GetComponent<Rigidbody2D>().velocity = dir * pushSpeed;
+                }
+            }
+                
         }
         
         

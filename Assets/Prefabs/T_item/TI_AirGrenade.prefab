@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: -756474415284776484}
   - component: {fileID: 2631690539340480745}
   m_Layer: 12
-  m_Name: TI_Grenade
+  m_Name: TI_AirGrenade
   m_TagString: thing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -319,10 +319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6185eb7eff4f23445a372aad149f4ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageEnemy: 1
-  damagePlayer: 1
-  pushEnemy: 0
-  pushPlayer: 0
+  damageEnemy: 0
+  damagePlayer: 0
+  pushEnemy: 1
+  pushPlayer: 1
   isTrigger: 0
   triggerTime: 0.5
   triggerDelay: 3
