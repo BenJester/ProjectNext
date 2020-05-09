@@ -114,52 +114,7 @@ public class Enemy_Dasher_Aim :  Enemy {
     }
 	// Update is called once per frame
 	void Update () {
-		if (thing.dead) {
-			lr.enabled = false;
-			return;
-		}
-		TimeFixedUpdate ();
-		StateFixedUpdate ();
-
-		switch (state) {
-			case PlayerState.idle:
-                if (stateActiveFrames[(int)PlayerState.idle] == 0)
-                {
-                    //animator.CrossFade()
-                    lr.enabled = false;
-                }
-				break;
-			case PlayerState.aim:
-                {
-                    _changeDir();
-                }
-				break;
-
-			case PlayerState.lockOn:
-				lr.SetPosition (0, transform.position);
-				lr.SetPosition (1, (Vector3) direction * distance + transform.position);
-				lr.startColor = Color.yellow;
-				lr.endColor = Color.yellow;
-				break;
-
-		case PlayerState.dash:
-			if (stateActiveFrames [(int)PlayerState.recover] == 0) {
-				EnemyDash ();
-				lr.enabled = false;
-			} 
-				
-				break;
-
-			case PlayerState.recover:
-                if (stateActiveFrames[(int)PlayerState.recover] == 0)
-                {
-                    lr.enabled = false;
-                }
-				break;
-			case PlayerState.isDead:
-				return;
-
-		}
+		
 
 	}
 
@@ -178,7 +133,58 @@ public class Enemy_Dasher_Aim :  Enemy {
     }
 
 	private void FixedUpdate () {
-        if(m_flipEnemy != null && state == PlayerState.aim)
+
+        if (thing.dead)
+        {
+            lr.enabled = false;
+            return;
+        }
+        TimeFixedUpdate();
+        StateFixedUpdate();
+
+        switch (state)
+        {
+            case PlayerState.idle:
+                if (stateActiveFrames[(int)PlayerState.idle] == 0)
+                {
+                    //animator.CrossFade()
+                    lr.enabled = false;
+                }
+                break;
+            case PlayerState.aim:
+                {
+                    _changeDir();
+                }
+                break;
+
+            case PlayerState.lockOn:
+                lr.SetPosition(0, transform.position);
+                lr.SetPosition(1, (Vector3)direction * distance + transform.position);
+                lr.startColor = Color.yellow;
+                lr.endColor = Color.yellow;
+                break;
+
+            case PlayerState.dash:
+                if (stateActiveFrames[(int)PlayerState.recover] == 0)
+                {
+                    EnemyDash();
+                    lr.enabled = false;
+                }
+
+                break;
+
+            case PlayerState.recover:
+                if (stateActiveFrames[(int)PlayerState.recover] == 0)
+                {
+                    lr.enabled = false;
+                }
+                break;
+            case PlayerState.isDead:
+                return;
+
+        }
+
+        if (m_flipEnemy != null && state == PlayerState.aim)
         {
             m_flipEnemy.ProcessFlip(false);
             _changeDir();
