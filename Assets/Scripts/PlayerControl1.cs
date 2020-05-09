@@ -1179,6 +1179,7 @@ public class PlayerControl1 : PlayerControl {
     }
     void BetterJump()
     {
+        if (disableAirControl) return;
         if (rb.velocity.y < 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);
