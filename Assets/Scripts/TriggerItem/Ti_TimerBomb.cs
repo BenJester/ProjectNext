@@ -138,11 +138,11 @@ public class Ti_TimerBomb : MonoBehaviour,TriggerItem_Base
             if (col.CompareTag("thing") && col.GetComponent<Thing>().TriggerMethod != null)
             {
                 col.GetComponent<Thing>().TriggerMethod.Invoke();
-                //if (pushEnemy)
-                //{
-                //    Vector2 dir = (col.transform.position - transform.position).normalized;
-                //    col.GetComponent<Rigidbody2D>().velocity = dir * pushSpeed;
-                //}
+                if (pushEnemy && col.GetComponent<Ti_TimerBomb>() == null)
+                {
+                    Vector2 dir = (col.transform.position - transform.position).normalized;
+                    col.GetComponent<Rigidbody2D>().velocity = dir * pushSpeed;
+                }
             }
                 
         }
