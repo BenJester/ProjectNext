@@ -878,6 +878,18 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 998239678}
+    ActiveGameObject: {fileID: 998239678}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 1232894854}
     - {fileID: 1723487138}
     - {fileID: 411744243}
@@ -1158,18 +1170,6 @@ MonoBehaviour:
     list:
     - {fileID: 1267564415}
     ActiveGameObject: {fileID: 1267564415}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1730353373}
-    ActiveGameObject: {fileID: 1730353373}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -3731,20 +3731,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4756153172701116516, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+    - target: {fileID: 6873373818885497120, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868751929553179485, guid: b2aa5bd427ca2f24ea7085339a8125ed,
-        type: 3}
-      propertyPath: kickFloorSpeed
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868751929553179485, guid: b2aa5bd427ca2f24ea7085339a8125ed,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 2198391889307519823, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
@@ -3863,10 +3853,6 @@ PrefabInstance:
       propertyPath: pokerTransitionDur
       value: 0.02
       objectReference: {fileID: 0}
-    - target: {fileID: 763395707, guid: b2aa5bd427ca2f24ea7085339a8125ed, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2291808695720021213, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: m_Size.y
@@ -3907,15 +3893,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6873373818885497120, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+    - target: {fileID: 4868751929553179485, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 22
+      propertyPath: kickFloorSpeed
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868751929553179485, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 763395707, guid: b2aa5bd427ca2f24ea7085339a8125ed, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3221627865890351551, guid: b2aa5bd427ca2f24ea7085339a8125ed,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 17.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756153172701116516, guid: b2aa5bd427ca2f24ea7085339a8125ed,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2aa5bd427ca2f24ea7085339a8125ed, type: 3}
@@ -4903,11 +4903,22 @@ PrefabInstance:
       propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[23]._actionId
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 6054643259385050313, guid: 9be4ff74d9e86334daeba049063b2aae,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[0].actionElementMaps.Array.data[3]._keyboardKeyCode
+      value: 115
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9be4ff74d9e86334daeba049063b2aae, type: 3}
 --- !u!4 &998239677 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 606415147721818899, guid: 9be4ff74d9e86334daeba049063b2aae,
+    type: 3}
+  m_PrefabInstance: {fileID: 998239676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &998239678 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7989965590678260637, guid: 9be4ff74d9e86334daeba049063b2aae,
     type: 3}
   m_PrefabInstance: {fileID: 998239676}
   m_PrefabAsset: {fileID: 0}

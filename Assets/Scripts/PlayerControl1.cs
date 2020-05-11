@@ -768,7 +768,7 @@ public class PlayerControl1 : PlayerControl {
             v = 0f;
             currAccV = acc;
         }
-
+        Debug.Log(player.GetAxisRaw("MoveVertical"));
         v = Mathf.Clamp(v, -1f, 1f);
 
         if (!GetComponent<Thing>().isStandardGravity)
@@ -1162,7 +1162,9 @@ public class PlayerControl1 : PlayerControl {
         StartCoroutine(DelayDisableCanJump());
         m_stateMgr.SetPlayerState(PlayerStateDefine.PlayerState_Typ.playerState_Jumping);
         box.sharedMaterial = slipperyMat;
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * rb.gravityScale / Mathf.Abs(rb.gravityScale));
+        if (Mathf.Abs(rb.gravityScale) != 0f)
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * rb.gravityScale / Mathf.Abs(rb.gravityScale));
+
         canJump = false;
         m_fCurrentKeepJumping = 0.0f;
         m_fTotalForce = 0.0f;
@@ -1179,7 +1181,7 @@ public class PlayerControl1 : PlayerControl {
     }
     void BetterJump()
     {
-        if (disableAirControl) return;
+        if (disableAirControl || rb.gravityScale == 0f) return;
         if (rb.velocity.y < 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);

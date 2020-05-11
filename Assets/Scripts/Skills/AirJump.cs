@@ -37,7 +37,7 @@ public class AirJump : Skill
 
     public override bool Check()
     {
-        return !playerControl.canJump && charge > 0;
+        return !playerControl.canJump && charge > 0 && playerControl.rb.gravityScale != 0f;
     }
 
     public override void Do()
