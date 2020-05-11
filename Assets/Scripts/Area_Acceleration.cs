@@ -21,7 +21,7 @@ public class Area_Acceleration : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "player")
+        if (collision.GetComponent<Thing>()!=null)
         {
             collision.GetComponent<Rigidbody2D>().velocity *= velocityMultiple;
         }
