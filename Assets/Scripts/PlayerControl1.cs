@@ -768,7 +768,6 @@ public class PlayerControl1 : PlayerControl {
             v = 0f;
             currAccV = acc;
         }
-        Debug.Log(player.GetAxisRaw("MoveVertical"));
         v = Mathf.Clamp(v, -1f, 1f);
 
         if (!GetComponent<Thing>().isStandardGravity)
