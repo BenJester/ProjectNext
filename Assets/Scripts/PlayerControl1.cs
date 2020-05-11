@@ -770,7 +770,7 @@ public class PlayerControl1 : PlayerControl {
         }
         v = Mathf.Clamp(v, -1f, 1f);
 
-        if (!GetComponent<Thing>().isStandardGravity)
+        if (!GetComponent<Thing>().isStandardGravity && !disableAirControl)
         {
             rb.velocity = new Vector2(h * speed, Mathf.Clamp(v * speed, -maxSpeed, 3000f));
         }
