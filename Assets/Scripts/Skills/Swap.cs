@@ -869,7 +869,7 @@ public class Swap : Skill {
 
             else if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)
             {
-                if (!targetThing.touchingFloor())
+                if (!targetThing.touchingFloor() && targetRb.gravityScale != 0f)
                     targetRb.velocity = new Vector2(0f, 100f);
                 else
                     targetRb.velocity = Vector2.zero;
