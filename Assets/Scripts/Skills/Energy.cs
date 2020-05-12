@@ -16,18 +16,21 @@ public class Energy : Skill
     public Image hpBar;
     public Image hpBg;
     public Image lossHPbar;
+    public Image fatigue;
     public bool freeSwap = true;
     public float lossHPAnimDelay;
     public float lossHPAnimDuration;
     float currDelayTimer;
     bool startTimer;
-    
+    Color fatigueColor;
+
     bool init;
     public static Energy Instance { get; private set; }
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
+        fatigueColor = fatigue.color;
     }
     public void Restore()
     {
@@ -116,10 +119,12 @@ public class Energy : Skill
         if (energy < swapCost && !freeSwap)
         {
             lossHPbar.color = new Color(1f, 0.7f, 0.7f);
+            fatigue.color = fatigueColor;
         }
         else
         {
             lossHPbar.color = Color.white;
+            fatigue.color = new Color(1f,1f,1f,0f);
         }
     }
 }
