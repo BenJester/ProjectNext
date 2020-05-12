@@ -220,7 +220,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -267,6 +267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 1
+  beingThrown: 0
+  sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
   TriggerMethod:
@@ -286,6 +289,9 @@ MonoBehaviour:
   swapTriggerMethod:
     m_PersistentCalls:
       m_Calls: []
+  dieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   type: 3
   lowerY: 0
   upperY: 0
@@ -296,6 +302,8 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
@@ -305,6 +313,16 @@ MonoBehaviour:
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  gravity: 0
+  isTouchingGround: 0
+  isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!251 &4577421538149183052
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -339,12 +357,12 @@ MonoBehaviour:
   isAddVelocity: 1
   isTrigger: 0
   target: {fileID: 0}
-  explosionDelay: 1.6
+  explosionDelay: 1
   speedAcc: 40
   startSpeed: 10
   maxSpeed: 550
   rotateSpeed: 300
-  explosionRadius: 200
+  explosionRadius: 225
   explosionAreaIndicator: {fileID: 3207476323175709750, guid: 28925a799ab85564ea3d22a82350c7ca,
     type: 3}
   damage: 2

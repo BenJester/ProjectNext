@@ -147,10 +147,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 0
+  beingThrown: 0
+  sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
     type: 3}
   TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  dieEvent:
     m_PersistentCalls:
       m_Calls: []
   type: 2
@@ -163,13 +172,27 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 0
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  gravity: 0
+  isTouchingGround: 0
+  isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!251 &3364994575088230120
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -344,7 +367,11 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
+  faceRight: 0
   sightDistance: 1000
+  invincible: 0
+  invincibleDurAfterHit: 0
+  hpText: {fileID: 0}
   state: 0
   throwSpeed: 300
   times: 5
@@ -352,7 +379,7 @@ MonoBehaviour:
   missel: {fileID: 4395374607827585422, guid: a7102f77e9c704c4aa883cdb2c5f82b2, type: 3}
   aimTime: 1
   lockTime: 0.1
-  reloadTime: 5
+  reloadTime: 4
   stateActiveTimeCounts: 
   player: {fileID: 0}
   lr: {fileID: 0}
