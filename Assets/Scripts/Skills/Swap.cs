@@ -991,7 +991,7 @@ public class Swap : Skill {
         if (hit0.collider.gameObject.GetComponent<Enemy>() != null)
         {
             
-            bullet.GetComponent<Rigidbody2D>().velocity *= 3f;
+            bullet.GetComponent<Rigidbody2D>().velocity *= 2.25f;
             //bullet.transform.localScale *= 2f;
         }
     }
