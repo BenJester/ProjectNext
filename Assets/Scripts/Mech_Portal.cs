@@ -7,6 +7,8 @@ public class Mech_Portal : MonoBehaviour {
 	public Mech_Portal target;
     public Vector2 dir;
     private Vector2 targetPos;
+
+    public bool onlyPlayer = false;
     [HideInInspector]public bool canPort = true;
 	void Start () {
         canPort = true;
@@ -17,6 +19,11 @@ public class Mech_Portal : MonoBehaviour {
 	}
 	
 	private void OnTriggerEnter2D(Collider2D col) {
+
+        if (onlyPlayer && col.tag!="player") {
+            return;
+        }
+
         if (!target || !canPort)
             return;
         if (target.dir != Vector2.zero)
