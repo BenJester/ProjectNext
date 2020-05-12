@@ -571,6 +571,9 @@ public class PlayerControl1 : PlayerControl {
         BetterJump();
         //if (rb.velocity != Vector2.zero) rb.gravityScale = 165f;
         HandleCoyote();
+
+        HandleThrowAutoSelect();
+
         if (m_bJumpingWindow == true)
         {
 
@@ -2270,5 +2273,53 @@ public class PlayerControl1 : PlayerControl {
     public bool CanPlaySound()
     {
         return m_enemySound.CanPlaySound();
+    }
+    public GameObject cacheThrowTarget;
+    float closestDistanceThrow;
+    public float throwAutoSelectSnapDistance;
+    public PlayerMarkerComponent throwMarker;
+
+    void CancelThrowAutoSelect()
+    {
+        throwMarker.CloseMarker();
+        swap.overrideDir = Vector2.zero;
+    }
+
+    void HandleThrowAutoSelect()
+    {
+        if (!Input.GetMouseButton(0))
+        {
+            CancelThrowAutoSelect();
+            return;
+        }
+
+        cacheThrowTarget = null;
+        closestDistanceThrow = Mathf.Infinity;
+        foreach (var thing in thingList)
+        {
+            if (thing != null)
+            {
+                Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                float distanceToCursor = Vector2.Distance(vecMouseWorldPos, (Vector2)thing.transform.position);
+                if (!thing.dead && distanceToCursor < closestDistanceThrow && distanceToCursor < throwAutoSelectSnapDistance && thing.enabled == true && thing.GetComponent<Rigidbody2D>().gravityScale == 0f)
+                {
+                    if (Hit(thing.gameObject))
+                    {
+                        closestDistanceThrow = distanceToCursor;
+                        cacheThrowTarget = thing.gameObject;
+                    }
+
+                }
+            }
+        }
+        if (cacheThrowTarget != null)
+        {
+            throwMarker.UpdateTarget(cacheThrowTarget.transform);
+            swap.overrideDir = (cacheThrowTarget.transform.position - transform.position).normalized;
+        }
+        else
+        {
+            CancelThrowAutoSelect();
+        }
     }
 }

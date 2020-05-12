@@ -152,6 +152,8 @@ public class Swap : Skill {
             {
                 //Vector2 dir = (Input.mousePosition - startingPoint).normalized;
                 Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+                if (overrideDir != Vector2.zero)
+                    dir = overrideDir;
                 //Vector2 dir = (playerBody.velocity).normalized;
                 dashPointer.SetActive(true);
                 dashPointer.transform.position = (Vector2)transform.position + dir * 70f;
@@ -712,11 +714,12 @@ public class Swap : Skill {
     public float pokerTransitionDur;
     public Sprite turnPokerSprite;
 
-
+    public Vector2 dir;
     public float dashReducedTimeScale;
 
     public Vector3 destinationUpdateSpeed;
     public float maxDashTime;
+    public Vector2 overrideDir;
     IEnumerator PokerDash()
     {
         if (busy) yield break;
@@ -744,7 +747,7 @@ public class Swap : Skill {
         playerControl.disableAirControl = true;
         bool playerFaceRight = playerControl.spriteRenderer.flipX;
 
-        Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         Vector3 diff = Input.mousePosition - startingPoint;
 
         
@@ -796,6 +799,9 @@ public class Swap : Skill {
         pokerTransitionDur = Vector3.Distance(prevPos, prevColPos) / speed;
         Vector3 destination = Vector3.zero;
 
+        if (overrideDir != Vector2.zero)
+            dir = overrideDir;
+
         target.transform.position = prevPos;
         while (curr < pokerTransitionDur)
         {
@@ -835,6 +841,9 @@ public class Swap : Skill {
         target.transform.localScale = targetScale;
         playerControl.rb.gravityScale = playerGravity;
         targetRb.gravityScale = targetGravity;
+
+        
+
         if (targetRb != null)
         {
             targetSr.sprite = targetSprite;
@@ -940,6 +949,8 @@ public class Swap : Skill {
     void DrawTrajectory()
     {
         Vector2 dir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        if (overrideDir != Vector2.zero)
+            dir = overrideDir;
         Vector3 diff = Input.mousePosition - startingPoint;
         if (!(col != null && diff.magnitude > directionSwapThreshold && (col.GetComponent<Thing>().canBeThrown || throwOverride) && startingPoint != Vector3.negativeInfinity && Input.GetMouseButton(0)))
         {
@@ -980,7 +991,7 @@ public class Swap : Skill {
         if (hit0.collider.gameObject.GetComponent<Enemy>() != null)
         {
             
-            bullet.GetComponent<Rigidbody2D>().velocity *= 2f;
+            bullet.GetComponent<Rigidbody2D>().velocity *= 3f;
             //bullet.transform.localScale *= 2f;
         }
     }
