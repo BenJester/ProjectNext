@@ -984,16 +984,32 @@ public class Swap : Skill {
         return results;
     }
     public LayerMask enemyMask;
+    public float bulletAccWaitTime;
+    
     void HandleBulletAcc(EnemyBullet_Transable_Forward bullet, Vector2 dir)
     {
         RaycastHit2D hit0 = Physics2D.Raycast(bullet.transform.position, dir.normalized, 3000f, enemyMask);
         if (!hit0) return;
         if (hit0.collider.gameObject.GetComponent<Enemy>() != null)
         {
-            
-            bullet.GetComponent<Rigidbody2D>().velocity *= 2.25f;
+            StartCoroutine(DoBulletAcc(bullet));
+            //bullet.GetComponent<Rigidbody2D>().velocity *= 2.25f;
             //bullet.transform.localScale *= 2f;
         }
+    }
+    IEnumerator DoBulletAcc(EnemyBullet_Transable_Forward bullet)
+    {
+
+        float timer = 0f;
+        while (timer < bulletAccWaitTime)
+        {
+            timer += Time.fixedDeltaTime;
+            if (busy)
+                timer = 0f;
+            yield return new WaitForFixedUpdate();
+        }
+        if (bullet != null)
+            bullet.GetComponent<Rigidbody2D>().velocity *= 2.75f;
     }
     void HandleBulletAutoSelect()
     {
