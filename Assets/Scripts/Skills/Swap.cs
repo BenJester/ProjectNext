@@ -1009,7 +1009,14 @@ public class Swap : Skill {
             yield return new WaitForFixedUpdate();
         }
         if (bullet != null)
-            bullet.GetComponent<Rigidbody2D>().velocity *= 2.75f;
+        {
+            bullet.GetComponent<Rigidbody2D>().velocity *= 4f;
+            //bullet.friendly = true;
+            bullet.GetComponent<TrailRenderer>().startColor = new Color(1f, 0.7f, 0.7f);
+            bullet.GetComponent<TrailRenderer>().endColor = Color.white;
+            bullet.transform.localScale = new Vector3(1.4f, 1.4f, 1f);
+        }
+            
     }
     void HandleBulletAutoSelect()
     {
