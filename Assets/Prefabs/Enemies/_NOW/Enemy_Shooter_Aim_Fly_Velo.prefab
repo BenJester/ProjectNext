@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e5b3c225f97254f43b92da0e5007b224, type: 3}
   m_Color: {r: 0.45474946, g: 1, b: 0.33333337, a: 1}
   m_FlipX: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 0
   beingThrown: 0
   sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
@@ -157,6 +158,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  dieEvent:
     m_PersistentCalls:
       m_Calls: []
   type: 2
@@ -186,6 +190,10 @@ MonoBehaviour:
   gravity: 0
   isTouchingGround: 0
   isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!251 &5532014530368362351
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -376,6 +384,7 @@ MonoBehaviour:
   player: {fileID: 0}
   isInSight: 0
   lr: {fileID: 0}
+  fearRadius: 0
   dashSpeed: 1300
   dashDur: 2
   dir: {x: 0, y: 0}
