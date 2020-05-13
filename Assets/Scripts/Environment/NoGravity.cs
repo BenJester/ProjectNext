@@ -10,7 +10,7 @@ public class NoGravity : MonoBehaviour
         {
             PlayerControl1.Instance.rb.gravityScale = 0f;
             PlayerControl1.Instance.GetComponent<Thing>().isStandardGravity = false;
-            PlayerControl1.Instance.speed = 0f;
+            PlayerControl1.Instance.speed = 350f;
         }
 
     }

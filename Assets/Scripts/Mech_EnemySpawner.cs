@@ -14,12 +14,12 @@ public class Mech_EnemySpawner : MonoBehaviour
     public bool spawning;
     public bool spawningNotFirstTime;
     bool firstTime;
-    bool finished;
+    public bool finished;
     public bool end;
     public GameObject SpawnHint;
     Vector3 nextPos;
     public float preWait;
-
+    public bool lastSpawnedDead;
     private void Start()
     {
         if (preWait != 0f)
@@ -40,6 +40,10 @@ public class Mech_EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        if ((currThing == null || currThing.dead) && finished)
+        {
+            lastSpawnedDead = true;
+        }
         if (!spawning && !finished && (currThing == null || currThing.dead))
         {
             

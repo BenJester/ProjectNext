@@ -97,7 +97,7 @@ public class Door_Lion : MonoBehaviour {
     {
         foreach (var spawner in spawnerList)
         {
-            if (!spawner.spawningNotFirstTime) return false;
+            if (!spawner.lastSpawnedDead) return false;
         }
         foreach (var spawner in spawnerList)
         {
