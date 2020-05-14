@@ -66,7 +66,8 @@ public class Spike : MonoBehaviour {
             }
             if (colThing.type == Type.box)
             {
-                collision.GetComponent<Box>().GetSpike();
+                if (collision.GetComponent<Box>() != null)
+                    collision.GetComponent<Box>().OutSpike();
                 if (destroyBox)
                 {
                     colThing.Die();
@@ -83,7 +84,8 @@ public class Spike : MonoBehaviour {
             Thing colThing = collision.gameObject.GetComponent<Thing>();
             if (colThing.type == Type.box)
             {
-                collision.GetComponent<Box>().OutSpike();
+                if (collision.GetComponent<Box>() != null)
+                    collision.GetComponent<Box>().OutSpike();
             }
         }
     }

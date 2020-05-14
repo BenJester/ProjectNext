@@ -8,6 +8,8 @@ public class Ti_Pickup_Energy : MonoBehaviour
 
     public GameObject particle;
     AudioSource asr;
+    public BoxCollider2D box;
+
     void Start()
     {
         asr = GetComponent<AudioSource>();
@@ -18,9 +20,9 @@ public class Ti_Pickup_Energy : MonoBehaviour
     {
         
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.tag == "player")
+        if (collision.tag == "player")
         {
             Energy.Instance.energy = Energy.Instance.maxEnergy;
             Energy.Instance.freeSwap = true;
@@ -28,8 +30,12 @@ public class Ti_Pickup_Energy : MonoBehaviour
             GameObject part1 = Instantiate(particle, transform.position, Quaternion.identity);
             Destroy(part1, 1f);
             GetComponent<Thing>().Die();
-
+            box.enabled = false;
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 
 }
