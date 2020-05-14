@@ -23,6 +23,7 @@ public class Energy : Skill
     float currDelayTimer;
     bool startTimer;
     Color fatigueColor;
+    public Text leftSwapNumText;
 
     bool init;
     public static Energy Instance { get; private set; }
@@ -126,5 +127,13 @@ public class Energy : Skill
             lossHPbar.color = Color.white;
             fatigue.color = new Color(1f,1f,1f,0f);
         }
+
+        if (leftSwapNumText != null)
+            HandleLeftSwapNumText();
+    }
+
+    void HandleLeftSwapNumText()
+    {
+        leftSwapNumText.text = ((int)(energy / swapCost) + (freeSwap ? 1 : 0)).ToString() + " / " + ((int)(maxEnergy / swapCost) + 1).ToString();
     }
 }

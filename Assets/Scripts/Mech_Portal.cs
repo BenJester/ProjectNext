@@ -24,6 +24,11 @@ public class Mech_Portal : MonoBehaviour {
             return;
         }
 
+        if (onlyPlayer)
+        {
+            col.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
         if (!target || !canPort)
             return;
         if (target.dir != Vector2.zero)
