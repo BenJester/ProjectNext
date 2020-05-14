@@ -18,17 +18,18 @@ public class Ti_Pickup_Energy : MonoBehaviour
     {
         
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "player") {
+        if (collision.collider.tag == "player")
+        {
             Energy.Instance.energy = Energy.Instance.maxEnergy;
             Energy.Instance.freeSwap = true;
             asr.Play();
-            GameObject part1 =  Instantiate(particle, transform.position, Quaternion.identity);
+            GameObject part1 = Instantiate(particle, transform.position, Quaternion.identity);
             Destroy(part1, 1f);
             GetComponent<Thing>().Die();
-        
+
         }
     }
+
 }
