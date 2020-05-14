@@ -36,7 +36,7 @@ public class Energy : Skill
     public void Restore()
     {
         touchFloorTimer += Time.deltaTime;
-        if (touchFloorTimer > restoreDelay)
+        if (touchFloorTimer > restoreDelay && PlayerControl1.Instance.rb.gravityScale != 0f)
         {
             energy = Mathf.Clamp(energy + restoreSpeed * Time.deltaTime, 0f, maxEnergy);
             //Debug.Log("~");
@@ -133,7 +133,8 @@ public class Energy : Skill
     }
 
     void HandleLeftSwapNumText()
-    {
+    { 
+        if (swapCost == 0) return;
         leftSwapNumText.text = ((int)(energy / swapCost) + (freeSwap ? 1 : 0)).ToString() + " / " + ((int)(maxEnergy / swapCost) + 1).ToString();
     }
 }
