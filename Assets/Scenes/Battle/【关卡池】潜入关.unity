@@ -1162,6 +1162,18 @@ MonoBehaviour:
   - FavParams: 0
     FavString: []
     list:
+    - {fileID: 1100068954}
+    ActiveGameObject: {fileID: 1100068954}
+    GUIDsList: []
+    GUIDsActiveGameObject: 
+    PATHsList: []
+    PATHsActiveGameObject: 
+    InstanceID: 0
+    wasInit: 0
+    CashedBool: 0
+  - FavParams: 0
+    FavString: []
+    list:
     - {fileID: 1454238552}
     ActiveGameObject: {fileID: 1454238552}
     GUIDsList: []
@@ -1428,18 +1440,6 @@ MonoBehaviour:
     list:
     - {fileID: 1723487138}
     ActiveGameObject: {fileID: 1723487138}
-    GUIDsList: []
-    GUIDsActiveGameObject: 
-    PATHsList: []
-    PATHsActiveGameObject: 
-    InstanceID: 0
-    wasInit: 0
-    CashedBool: 0
-  - FavParams: 0
-    FavString: []
-    list:
-    - {fileID: 1137097444}
-    ActiveGameObject: {fileID: 1137097444}
     GUIDsList: []
     GUIDsActiveGameObject: 
     PATHsList: []
@@ -6287,7 +6287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1100068955
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6345,8 +6345,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100068954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3974.7, y: 529.9, z: 0}
-  m_LocalScale: {x: 25.382784, y: 8.446619, z: 1}
+  m_LocalPosition: {x: 4815.6, y: 539.5, z: 0}
+  m_LocalScale: {x: 32.99762, y: 8.446619, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 26
