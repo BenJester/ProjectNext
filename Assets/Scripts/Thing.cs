@@ -274,20 +274,20 @@ public class Thing : MonoBehaviour {
     }
     public float GetLowerY()
     {
-        return lowerY = transform.position.y - collider.bounds.size.y / 2f;
+        return lowerY = transform.position.y - collider.bounds.size.y / 2f + collider.offset.y;
     }
     public float GetUpperY()
     {
-        return upperY = transform.position.y + collider.bounds.size.y / 2f;
+        return upperY = transform.position.y + collider.bounds.size.y / 2f + collider.offset.y;
     }
 
     public float GetLeftX()
     {
-        return leftX = transform.position.x - collider.bounds.size.x / 2f;
+        return leftX = transform.position.x - collider.bounds.size.x / 2f + collider.offset.x;
     }
     public float GetRightX()
     {
-        return rightX = transform.position.x + collider.bounds.size.x / 2f;
+        return rightX = transform.position.x + collider.bounds.size.x / 2f + collider.offset.x;
     }
     public virtual void Update () {
 		lowerY = transform.position.y - collider.bounds.size.y / 2f;

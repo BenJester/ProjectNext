@@ -111,7 +111,9 @@ public class Box : MonoBehaviour {
             //if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() <= colThing.GetUpperY() + killRange) {
             if (body.gravityScale > 0)
             {
-                if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && _boxThing.GetLowerY() >= colThing.GetUpperY())
+                float colThingUpperY = colThing.GetUpperY();
+                float boxLowerY = _boxThing.GetLowerY();
+                if (colThing.type == Type.enemy && prevVelocity.y < -killDropSpeed && boxLowerY >= colThingUpperY)
                 {
                     if (colThing.GetLowerY() > _boxThing.GetLowerY())
                     {
