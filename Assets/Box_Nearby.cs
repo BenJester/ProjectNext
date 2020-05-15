@@ -50,7 +50,7 @@ public class Box_Nearby : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(transform.position, player.position) <= distance && player.position.x<=transform.position.x)
+        if (Vector2.Distance(transform.position, player.position) <= distance)
         {
             Open();
 
