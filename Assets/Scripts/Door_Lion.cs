@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Door_Lion : MonoBehaviour {
     public bool active;
@@ -18,6 +19,10 @@ public class Door_Lion : MonoBehaviour {
     public bool hasUIIndicator = false;
     public Vector3 origin;
     public Vector3 target;
+
+
+    public UnityEvent openEvent;
+    public UnityEvent closeEvent;
 
     public float speed;
 
@@ -72,8 +77,10 @@ public class Door_Lion : MonoBehaviour {
             laser.active = false;
         }
         GetComponent<BoxCollider2D> ().enabled = false;
+        openEvent.Invoke();
 
-        
+
+
     }
 
     public void Close () {
@@ -81,6 +88,7 @@ public class Door_Lion : MonoBehaviour {
         GetComponent<BoxCollider2D> ().enabled = true;
 
         animator.CrossFade ("DoorClose", 0.01f);
+        closeEvent.Invoke();
 
     }
 

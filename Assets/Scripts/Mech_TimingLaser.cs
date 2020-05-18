@@ -6,6 +6,7 @@ public class Mech_TimingLaser : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public bool isActive = true;
     public float distance;
     public GameObject areaIndicator;
     Vector2 direction;
@@ -56,7 +57,11 @@ public class Mech_TimingLaser : MonoBehaviour
     void Update()
     {
 
-
+        if (!isActive) {
+            return;
+        
+        
+        }
         StateUpdate();
 
         switch (state)
@@ -201,5 +206,11 @@ public class Mech_TimingLaser : MonoBehaviour
         }
 
         return angle;
+    }
+
+    public void CloseLaser() {
+        isActive = false;
+        GetComponent<SpriteRenderer>().color = Color.black;
+    
     }
 }
