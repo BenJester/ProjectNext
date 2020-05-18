@@ -136,8 +136,17 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	public Transform player;
 	
 	public LineRenderer lr;
+    public bool displayRange;
+    public GameObject areaIndicator;
+    public LayerMask hitLayer;
+    void DisplayRange()
+    {
+        GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity, transform);
+        //area.transform.parent = null;
+        area.GetComponent<SpriteRenderer>().size = new Vector2(distance * 2, distance * 2);
+    }
 
-	private void Awake () {
+    private void Awake () {
         int nLengthState = stateActiveFrameCounts.Length;
         m_totalDeltaTime = new float[nLengthState];
         float fCurValue = 0;
@@ -152,6 +161,7 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	}
 	void Start () {
 		base.Start ();
+        DisplayRange();
 		//StartCoroutine (HandleShoot ());
 		//transform.rotation = Quaternion.Euler (0, 0, AngleBetween (direction, Vector2.left));
 	}
@@ -235,7 +245,7 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	void LaserShoot () {
 		if (thing.dead)
 			return;
-		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, direction, distance, (1 << 10) | (1 << 8) | (1 << 9));
+		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, direction, distance, hitLayer);
 		RaycastHit2D hitNear;
 		if (hits.Length >= 2) {
 			hitNear = hits[1];
@@ -245,7 +255,7 @@ public class Enemy_Shooter_Aim_Laser : Enemy {
 	}
 
 	public bool CheckPlayerInSight () {
-		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, (player.position - transform.position).normalized, distance, (1 << 10) | (1 << 8) | (1 << 9) | (1 << 12));
+		RaycastHit2D[] hits = Physics2D.RaycastAll (transform.position, (player.position - transform.position).normalized, distance, hitLayer);
 		RaycastHit2D hitNear;
 		if (hits.Length >= 2) {
 			hitNear = hits[1];

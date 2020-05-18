@@ -22,7 +22,8 @@ public class Enemy_Shooter_Aim : Enemy {
 	public Transform player;
 	public bool isInSight = false;
 	public LineRenderer lr;
-
+    public bool displayRange;
+    public GameObject areaIndicator;
 
     protected void Awake () {
 		animator = GetComponent<Animator> ();
@@ -32,8 +33,17 @@ public class Enemy_Shooter_Aim : Enemy {
 	void Start () {
 		base.Start ();
 		StartCoroutine (HandleShoot ());
-		//transform.rotation = Quaternion.Euler (0, 0, AngleBetween (direction, Vector2.left));
+        //transform.rotation = Quaternion.Euler (0, 0, AngleBetween (direction, Vector2.left));
+        if (displayRange)
+            DisplayRange();
 	}
+
+    void DisplayRange()
+    {
+        GameObject area = Instantiate(areaIndicator, transform.position, Quaternion.identity, transform);
+        //area.transform.parent = null;
+        area.GetComponent<SpriteRenderer>().size = new Vector2(distance * 2, distance * 2);
+    }
 
 	// Update is called once per frame
 	void Update () {

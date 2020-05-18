@@ -126,7 +126,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 83.33333, y: 83.33333}
+    oldSize: {x: 71.42857, y: 71.42857}
     newSize: {x: 29, y: 73}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -147,8 +147,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 0
+  beingThrown: 0
+  sr: {fileID: 0}
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 1760684535814648, guid: 21c227f82e9d9b345aafb6512f48c832,
     type: 3}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  dieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   type: 2
   lowerY: 0
   upperY: 0
@@ -159,13 +172,27 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 1
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 0
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  gravity: 0
+  isTouchingGround: 0
+  isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!251 &251765734672004794
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -328,6 +355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b41e6dfcc1499db46ab34f9b8a476511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeDamagedByKunaiDash: 1
+  target: {fileID: 0}
   thing: {fileID: 0}
   dropKillSpeed: 0
   goal: {fileID: 0}
@@ -338,6 +367,11 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
+  faceRight: 0
+  sightDistance: 0
+  invincible: 0
+  invincibleDurAfterHit: 0
+  hpText: {fileID: 0}
   state: 0
   aimFrame: 120
   lockFrame: 30
@@ -347,3 +381,6 @@ MonoBehaviour:
   distance: 1000
   player: {fileID: 0}
   lr: {fileID: 0}
+  displayRange: 0
+  areaIndicator: {fileID: 3207476323175709750, guid: 28925a799ab85564ea3d22a82350c7ca,
+    type: 3}
