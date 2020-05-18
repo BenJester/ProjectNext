@@ -210,6 +210,8 @@ public class Mech_TimingLaser : MonoBehaviour
 
     public void CloseLaser() {
         isActive = false;
+        lr.enabled = false;
+        countDownText.text = "Error!";
         GetComponent<SpriteRenderer>().color = Color.black;
     
     }
