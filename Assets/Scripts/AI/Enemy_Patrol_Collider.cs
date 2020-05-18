@@ -12,8 +12,10 @@ public class Enemy_Patrol_Collider : MonoBehaviour
         if (!active) return;
         if (col.CompareTag("player"))
         {
-            Debug.Log("hakken");
-            HandleDetection(col.gameObject);
+            Vector2 dir = (col.transform.position - self.transform.position).normalized;
+            RaycastHit2D hit = Physics2D.Raycast(self.transform.position + (Vector3)dir * 100f, dir, 2000f, self.hitLayer);
+            if (hit.collider.CompareTag("player"))
+                HandleDetection(col.gameObject);
         }
     }
     private void Update()

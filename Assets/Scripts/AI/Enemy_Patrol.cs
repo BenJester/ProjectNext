@@ -20,6 +20,7 @@ public class Enemy_Patrol : Enemy
 
     public Enemy_Patrol_Collider collider;
     //Vector3 originalScale;
+    public LayerMask hitLayer;
 
     void Start()
     {
@@ -52,6 +53,7 @@ public class Enemy_Patrol : Enemy
     {
         while (true)
         {
+            if (thing.dead) yield break;
             turnTimer += Time.deltaTime;
             if (turnTimer > turnInterval)
             {
@@ -68,11 +70,13 @@ public class Enemy_Patrol : Enemy
     }
     void Turn()
     {
+        if (thing.dead) return;
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
     IEnumerator HandleShoot(GameObject pos)
     {
+        if (thing.dead) yield return null;
         int count = 0;
         exclamation.SetActive(true);
         yield return new WaitForSeconds(shootPreload);

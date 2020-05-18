@@ -368,19 +368,21 @@ public class Thing : MonoBehaviour {
 		gameObject.GetComponent<BoxCollider2D>().enabled = false;
         m_spRender.enabled = false;
 		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
+        originalScale = new Vector3(Mathf.Abs(originalScale.x), Mathf.Abs(originalScale.y), Mathf.Abs(originalScale.z));
 
-		while (transform.localScale.x >= 0.02) {
-			float perc = Time.deltaTime / duration;
+        while (Mathf.Abs(transform.localScale.x) >= 0.02) {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), Mathf.Abs(transform.localScale.y), Mathf.Abs(transform.localScale.z));
+            float perc = Time.deltaTime / duration;
 			transform.localScale -= perc * originalScale;
 			yield return new WaitForEndOfFrame ();
 		}
 	}
 
 	IEnumerator ScaleUp(float duration) {
-		gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
         m_spRender.enabled = true;
 		gameObject.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Dynamic;
-		while (transform.localScale.x <= originalScale.x) {
+		while (transform.localScale.y <= originalScale.y) {
 			float perc = Time.deltaTime / duration;
 			transform.localScale += perc * originalScale;
 			yield return new WaitForEndOfFrame ();
