@@ -145,7 +145,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 0
+  beingThrown: 0
+  sr: {fileID: 0}
+  SpawnObjOnDie: {fileID: 0}
   dieParticle: {fileID: 0}
+  TriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  swapTriggerMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  dieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   type: 3
   lowerY: 0
   upperY: 0
@@ -156,13 +169,27 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
+  isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 0
   force: 25000
+  faceRight: 0
+  swapping: 0
   MomentumMass: 0
   IsSwapRotationByVelocity: 0
   distanceToCursor: Infinity
   distanceToPlayer: Infinity
+  TouchLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  gravity: 0
+  isTouchingGround: 0
+  isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!114 &114421915999999926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +204,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killDropSpeed: -1
   killRange: 40
+  damage: 0
+  useDamage: 0
   spikeColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!251 &251502878661237464
 PlatformEffector2D:
