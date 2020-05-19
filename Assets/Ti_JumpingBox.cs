@@ -8,7 +8,7 @@ public class Ti_JumpingBox : MonoBehaviour
 
     public GameObject[] SetObjects;
     public float time;
-
+    public float speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +22,14 @@ public class Ti_JumpingBox : MonoBehaviour
     }
 
     public void AddForceToPlayer() {
-        PlayerControl1.Instance.GetComponent<Rigidbody2D>().AddForce(Vector2.up * force);
+        //PlayerControl1.Instance.GetComponent<Rigidbody2D>().AddForce(Vector2.up * force);
+        StartCoroutine(DelayedJump());
     }
-
+    IEnumerator DelayedJump()
+    {
+        yield return new WaitForSeconds(0.1f);
+        PlayerControl1.Instance.GetComponent<Rigidbody2D>().velocity = new Vector2(PlayerControl1.Instance.GetComponent<Rigidbody2D>().velocity.x, speed);
+    }
     public void AddHorizontalForceToPlayer() {
         StartCoroutine(disAbleAir());
         PlayerControl1.Instance.GetComponent<Rigidbody2D>().AddForce(transform.up * force);
