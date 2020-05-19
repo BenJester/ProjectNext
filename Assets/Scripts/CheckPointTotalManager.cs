@@ -10,7 +10,7 @@ public class CheckPointTotalManager : MonoBehaviour {
 	public static CheckPointTotalManager instance;
 	private Vector3 savedPos;
 	public GameObject pivot;
-
+    public List<GameObject> checkpoints;
 	void Awake () {
 		if (instance)
         {

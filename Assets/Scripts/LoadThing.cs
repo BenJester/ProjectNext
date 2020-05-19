@@ -21,6 +21,10 @@ public class LoadThing : MonoBehaviour
     {
         if (collision.CompareTag("player"))
         {
+            foreach (var item in CheckPointTotalManager.instance.checkpoints)
+            {
+                Destroy(item);
+            }
             Destroy(CheckPointTotalManager.instance.gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         }

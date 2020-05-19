@@ -11,8 +11,11 @@ public class AreaManager : MonoBehaviour {
 	
 
 	void Start () {
-		//DontDestroyOnLoad(gameObject);
-	}
+        //DontDestroyOnLoad(gameObject);
+        if (CheckPointTotalManager.instance)
+            CheckPointTotalManager.instance.checkpoints.Add(gameObject);
+
+    }
 
 	public void HandleRestart() {
 		
