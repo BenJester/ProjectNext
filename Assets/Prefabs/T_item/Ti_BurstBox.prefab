@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3561834503241533761}
   - component: {fileID: 3561834503241533760}
   m_Layer: 12
-  m_Name: burst_box (1)
+  m_Name: Ti_BurstBox
   m_TagString: thing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dir: {x: 0, y: 0}
-  speed: 1500
+  speed: 1000
   burstParticle: {fileID: 4127290933262362154, guid: 86315287c6abcfc4bb808472b8e3755d,
     type: 3}
   Cursor: {fileID: 3561834503278528124}
@@ -301,7 +301,7 @@ Transform:
   m_GameObject: {fileID: 3561834503278528124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 93, z: 0}
-  m_LocalScale: {x: 30, y: 40, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 3561834503241533784}
   m_RootOrder: 0

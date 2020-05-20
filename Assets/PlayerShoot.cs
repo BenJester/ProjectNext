@@ -33,6 +33,7 @@ public class PlayerShoot : MonoBehaviour
 
     IEnumerator Acc(GameObject bullet) {
         yield return new WaitForSeconds(0.23f);
+        asr.Play();
               bullet.GetComponent<Rigidbody2D>().velocity *=11f;
     }
 }
