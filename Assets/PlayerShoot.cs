@@ -9,7 +9,7 @@ public class PlayerShoot : MonoBehaviour
     public GameObject bullet;
     public float speed;
     AudioSource asr;
-
+    public Vector2 spriteOffset;
 
 
     void Start()
@@ -24,7 +24,7 @@ public class PlayerShoot : MonoBehaviour
     }
 
     public void Shoot(Vector2 dir) {
-        GameObject bulletIns =  Instantiate(bullet, (Vector2)transform.position+dir*85f, Quaternion.identity);
+        GameObject bulletIns =  Instantiate(bullet, (Vector2)transform.position+ spriteOffset+dir * 85f, Quaternion.identity);
         bulletIns.transform.localScale = new Vector3(1.5f, 1.5f,1.5f);
         bulletIns.GetComponent<SpriteRenderer>().color = Color.red;
         bulletIns.GetComponent<Rigidbody2D>().velocity = 0.25f*dir * speed;

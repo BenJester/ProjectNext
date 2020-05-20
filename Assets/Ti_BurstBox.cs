@@ -7,6 +7,7 @@ public class Ti_BurstBox : MonoBehaviour
     // Start is called before the first frame update
 
     public Vector2 dir;
+    public Vector2 playerSpriteOffset;
     Thing thing;
     Vector2 originalPos;
     public float speed;
@@ -14,6 +15,7 @@ public class Ti_BurstBox : MonoBehaviour
     public GameObject Cursor;
     public bool hasCursor=false;
     public bool withPlayer=false;
+    public GameObject dashEffect;
 
     
     void Start()
@@ -31,8 +33,8 @@ public class Ti_BurstBox : MonoBehaviour
             Cursor.SetActive(true);
             if (withPlayer)
             {
-                dir = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)PlayerControl1.Instance.transform.position;
-                Cursor.transform.position = (Vector2)PlayerControl1.Instance.transform.position + dir.normalized * 70f;
+                dir = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)PlayerControl1.Instance.transform.position+ playerSpriteOffset;
+                Cursor.transform.position = (Vector2)PlayerControl1.Instance.transform.position+ playerSpriteOffset + dir.normalized * 70f;
                 Cursor.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
             }
             else
@@ -57,6 +59,7 @@ public class Ti_BurstBox : MonoBehaviour
 
         thing.hasShield = true;
         StartCoroutine(StartBurst());
+        thing.Die();
         Destroy(gameObject, 0.6f);
         
 
@@ -78,8 +81,14 @@ public class Ti_BurstBox : MonoBehaviour
 
         if (withPlayer)
         {
-            GameObject part2 = Instantiate(burstParticle, PlayerControl1.Instance.transform.position, Quaternion.identity);
-            Destroy(part2, 0.5f);
+            //GameObject part2 = Instantiate(burstParticle, (Vector2)PlayerControl1.Instance.transform.position+ playerSpriteOffset, Quaternion.identity);
+            //Destroy(part2, 0.5f);
+
+            if (dashEffect != null) {
+                GameObject part3 = Instantiate(dashEffect,(Vector2)PlayerControl1.Instance.transform.position+ playerSpriteOffset, Quaternion.identity);
+                part3.transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
+            }
+
         }
         else {
             GameObject part1 = Instantiate(burstParticle, originalPos, Quaternion.identity);
@@ -92,7 +101,7 @@ public class Ti_BurstBox : MonoBehaviour
         PlayerControl1.Instance.GetComponent<AirJump>().charge = PlayerControl1.Instance.GetComponent<AirJump>().maxCharge;
 
         if (withPlayer) {
-            dir = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)PlayerControl1.Instance.GetComponent<Transform>().position;
+            dir = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)PlayerControl1.Instance.GetComponent<Transform>().position + playerSpriteOffset;
         }else dir = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - originalPos;
         PlayerControl1.Instance.GetComponent<Rigidbody2D>().velocity = dir.normalized * speed;
         StartCoroutine(DisableAirControl());

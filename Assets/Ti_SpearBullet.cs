@@ -11,6 +11,7 @@ public class Ti_SpearBullet : MonoBehaviour
     Thing thing;
     public float speed;
     public PlayerShoot ps;
+    public Vector2 spriteOffset;
     
     void Start()
     {
@@ -28,7 +29,7 @@ public class Ti_SpearBullet : MonoBehaviour
     public void Shoot() {
 
 
-        Vector2 dir = player.position - transform.position;
+        Vector2 dir = (Vector2)player.position+ spriteOffset - (Vector2)transform.position;
         dir = -dir.normalized;
         
         
