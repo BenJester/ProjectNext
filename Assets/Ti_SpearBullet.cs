@@ -30,7 +30,9 @@ public class Ti_SpearBullet : MonoBehaviour
 
         Vector2 dir = player.position - transform.position;
         dir = -dir.normalized;
-
+        
+        
+       transform.localRotation = Quaternion.Euler(0, 0, -Dash.AngleBetween(Vector2.up, dir));
         ps.Shoot(dir);
 
 
