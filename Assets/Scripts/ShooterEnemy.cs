@@ -33,14 +33,16 @@ public class ShooterEnemy : Enemy {
 
 		}
 	}
+    public float yBulletSpeedOffset;
 
 	void Shoot() {
 		if (thing.dead)
 			return;
 		GameObject newBullet = Instantiate (bullet, faceRight ? (transform.position + 60f * Vector3.right) : (transform.position + 60f * Vector3.left), Quaternion.identity);
 		Rigidbody2D bulletBody = newBullet.GetComponent<Rigidbody2D> ();
-		bulletBody.velocity = new Vector2(faceRight ? bulletSpeed : -bulletSpeed, 0f);
-
+		bulletBody.velocity = new Vector2(faceRight ? bulletSpeed : -bulletSpeed, yBulletSpeedOffset);
+        if (yBulletSpeedOffset != 0f)
+            newBullet.GetComponent<TrailRenderer>().enabled = false;
 	}
 
     private void Update()
