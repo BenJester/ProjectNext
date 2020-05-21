@@ -16,14 +16,21 @@ public class AirJump : Skill
 
     void Update()
     {
+
+        if (active)
+        {
+            if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || playerControl.player.GetButtonDown("Jump")) && !playerControl.canJump)
+            {
+                Do();
+            }
+        }
+        else return;
+
         if (playerControl.isTouchingGround)
         {
             charge = maxCharge;
         }
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || playerControl.player.GetButtonDown("Jump")) && !playerControl.canJump)
-        {
-            Do();
-        }
+        
         if (charge == 0)
         {
             playerControl.spriteRenderer.color = new Color(1f,0.65f,0.65f);

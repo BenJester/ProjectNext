@@ -13,11 +13,18 @@ public class EnemyBullet : Bullet {
 	PlayerControl pc;
     public bool floorCollide = true;
     float startSpeed;
+
+    [Header("跟踪弹")]
+    public bool isHoming = false;
+    public float homingRadius;
+    Rigidbody2D myRb;
+    public float homingRotateSpeed;
     //	GameObject player;
     void Start () {
 		base.Start();
 //		player = GameObject.FindWithTag ("player");
 		pc = player.GetComponent<PlayerControl> ();
+        myRb = GetComponent<Rigidbody2D>();
         //		sr = GetComponent<SpriteRenderer> ();
         //		collider = GetComponent<Collider2D> ();
         startSpeed = body.velocity.magnitude;
@@ -26,7 +33,24 @@ public class EnemyBullet : Bullet {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        if (isHoming) {
+
+            return;
+
+            Collider2D[] hits =  Physics2D.OverlapCircleAll(transform.position, homingRadius);
+            foreach (Collider2D hit in hits) {
+                if (hit.tag == "Enemy") {
+                    Vector2 direcion = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
+                    float rotateAmount = Vector3.Cross(direcion, transform.up).z;
+                    myRb.angularVelocity = -rotateAmount * homingRotateSpeed;
+                    
+                }
+            }
+        
+        }
+
+
 	}
 
 //	public void Activate() {

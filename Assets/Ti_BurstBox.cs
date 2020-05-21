@@ -60,7 +60,7 @@ public class Ti_BurstBox : MonoBehaviour
         thing.hasShield = true;
         StartCoroutine(StartBurst());
         thing.Die();
-        Destroy(gameObject, 0.6f);
+        Destroy(gameObject, 1f);
         
 
 
@@ -111,9 +111,13 @@ public class Ti_BurstBox : MonoBehaviour
 
     IEnumerator DisableAirControl()
     {
+        PlayerControl1.Instance.GetComponent<AirJump>().active = false;
         PlayerControl1.Instance.disableAirControl = true;
-        yield return new WaitForSeconds(0.1f);
-        PlayerControl1.Instance.disableAirControl = false;
+        yield return new WaitForSeconds(0.2f);
+        
+        PlayerControl1.Instance.GetComponent<AirJump>().active = true;
+        yield return new WaitForSeconds(0.5f);
+            PlayerControl1.Instance.disableAirControl = false;
     }
 
 
