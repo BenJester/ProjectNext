@@ -20,7 +20,7 @@ public class AirJump : Skill
         {
             charge = maxCharge;
         }
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || playerControl.player.GetButtonDown("Jump")) && !playerControl.canJump)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || playerControl.player.GetButtonDown("Jump")) && !playerControl.canJump && active)
         {
             Do();
         }
