@@ -13,6 +13,19 @@ public class Mech_ThingRespawner : MonoBehaviour {
     private GameObject respawnedThingInstance;
     public bool hasRespawn = false;
 
+
+    private void Start()
+    {
+        respawnedThingInstance = Instantiate(respawnThing, transform.position, Quaternion.identity) as GameObject;
+
+        // DestroyNotify _notify = respawnedThingInstance.gameObject.GetComponent<DestroyNotify>();
+        // if(_notify != null)
+        // {
+        //     _notify.RegisteNotifyTarget(_spawnObjectDestroy);
+        // }
+        hasRespawn = true;
+        nowEnergy = 0;
+    }
     void Update () {
 
 
