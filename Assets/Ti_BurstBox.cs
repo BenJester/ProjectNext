@@ -16,6 +16,7 @@ public class Ti_BurstBox : MonoBehaviour
     public bool hasCursor=false;
     public bool withPlayer=false;
     public GameObject dashEffect;
+    public float burstDelay=0.5f;
 
     
     void Start()
@@ -77,7 +78,7 @@ public class Ti_BurstBox : MonoBehaviour
         else PlayerControl1.Instance.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(burstDelay);
 
         if (withPlayer)
         {
@@ -113,10 +114,10 @@ public class Ti_BurstBox : MonoBehaviour
     {
         PlayerControl1.Instance.GetComponent<AirJump>().active = false;
         PlayerControl1.Instance.disableAirControl = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         
         PlayerControl1.Instance.GetComponent<AirJump>().active = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
             PlayerControl1.Instance.disableAirControl = false;
     }
 
