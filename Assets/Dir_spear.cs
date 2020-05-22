@@ -39,25 +39,7 @@ public class Dir_spear : MonoBehaviour
 
     // Update is called once per frame
     void Update() { 
-    //{
-    //    if (AimingPlayer && !isTrigger) {
-    //        Vector2 direction = (Vector2)target.position - rb.position;
-    //        direction.Normalize();
-    //        float rotateAmount = Vector3.Cross(direction, transform.up).z;
-    //        rb.angularVelocity = -rotateAmount * rotateSpeed;
-    //        //if (isAddVelocity)
-    //        //{
-    //        rb.velocity += (Vector2)transform.up * speedAcc;
-    //        rb.velocity = Mathf.Clamp(rb.velocity.magnitude, 0f, maxSpeed) * rb.velocity.normalized;
-    //        //}
 
-
-
-
-
-
-
-        
         CheckSpeed();
 
        
@@ -124,30 +106,26 @@ public class Dir_spear : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "floor" && rb.velocity.magnitude >= floorBouncingThreshold) {
+        if (collision.gameObject.tag == "floor") {
             //JumpOffFloor();
+            rb.velocity = Vector2.zero;
+            rb.freezeRotation = true;
+            rb.constraints=RigidbodyConstraints2D.FreezePosition;
         }
     }
-
-
-
-
-    //public void FlyToPlayer()
-    //{
-    //    StopAllCoroutines();
-    //    StartCoroutine(Fly());
-
-    //}
-
-
-    //IEnumerator Fly()
-    //{
-    //    Vector2 dir = target.transform.position - transform.position;
-    //    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-    //    transform.rotation = Quaternion.AngleAxis(angle - 90, new Vector3(0, 0, 1));
-    //    yield return new WaitForSeconds(0.3f);
-    //    transform.DOMove(target.position, 0.5f, true).SetEase(Ease.InSine);
-    //}
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "floor")
+        {
+            rb.freezeRotation = false;
+            rb.constraints = RigidbodyConstraints2D.None;
+        }
+    }
+    public void Unfreeze()
+    {
+        rb.freezeRotation = false;
+        rb.constraints = RigidbodyConstraints2D.None;
+    }
 
 
 

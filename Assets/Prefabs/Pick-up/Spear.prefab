@@ -221,7 +221,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 800
-  m_LinearDrag: 2
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: ca93cb096b32a43ebbaf090cae3e7552, type: 2}
@@ -242,7 +242,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 1.3800659, y: -2.06987}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -253,7 +253,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 69.76013, y: 71.13974}
+  m_Size: {x: 25, y: 25}
   m_EdgeRadius: 0
 --- !u!114 &7136354710031094098
 MonoBehaviour:
@@ -267,6 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c3566018e984894a2560aa1d365f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeThrown: 0
+  overrideThrowSpeed: 2200
   beingThrown: 0
   sr: {fileID: 0}
   SpawnObjOnDie: {fileID: 0}
@@ -278,7 +280,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7136354710031094111}
-        m_MethodName: addSpeed
+        m_MethodName: Unfreeze
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -288,6 +290,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  dieEvent:
+    m_PersistentCalls:
+      m_Calls: []
   type: 3
   lowerY: 0
   upperY: 0
@@ -298,6 +303,7 @@ MonoBehaviour:
   prevVelocity: {x: 0, y: 0}
   dead: 0
   hasShield: 0
+  isHeld: 0
   isKey: 0
   shield: {fileID: 0}
   isDivedeDead: 0
@@ -312,7 +318,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   gravity: 0
+  isTouchingGround: 0
   isStandardGravity: 1
+  thrownDir: {x: 0, y: 0}
+  slippery: 0
+  slipperyTime: 0
+  slipperyDur: 0
 --- !u!251 &7136354710031094109
 PlatformEffector2D:
   m_ObjectHideFlags: 0

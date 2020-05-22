@@ -852,7 +852,7 @@ public class Swap : Skill {
             {
                 StartCoroutine(targetThing.CancelBeingThrown(0.65f));
                 if (targetThing.GetComponent<EnemyBullet_Transable_Forward>() == null)     
-                    targetRb.velocity = dir.normalized * swapSpeed;
+                    targetRb.velocity = dir.normalized * (targetThing.overrideThrowSpeed != 0f ? targetThing.overrideThrowSpeed : swapSpeed);
                 else
                 {
                     targetRb.velocity = dir.normalized * targetV.magnitude;
