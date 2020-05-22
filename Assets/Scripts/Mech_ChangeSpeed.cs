@@ -7,10 +7,12 @@ public class Mech_ChangeSpeed : MonoBehaviour
     [Header("Dir为零时原路反弹，否则按Dir方向弹出")]
     public Vector2 dir;
     public float speedFactor;
+    public float speed;
     public Animator anim;
     public Vector3 DstPosition;
     AudioSource audioSource;
     public AudioClip bounceClip;
+
 
     private void Start()
     {
@@ -26,7 +28,7 @@ public class Mech_ChangeSpeed : MonoBehaviour
             return;
         if (col.GetComponent<Rigidbody2D>() != null) {
             Rigidbody2D rb = col.GetComponent<Rigidbody2D>();
-            float speed = rb.velocity.magnitude;
+            
             if (dir != Vector2.zero)
             {
                 rb.velocity = dir * speed * speedFactor;
@@ -34,7 +36,7 @@ public class Mech_ChangeSpeed : MonoBehaviour
             }
             else if (speedFactor != 0)
             {
-                rb.velocity = -rb.velocity * speedFactor;
+                rb.velocity = -rb.velocity.normalized * speedFactor* speed;
                 if (anim != null) anim.CrossFade("Mech_Tanhuang", 0.01f);
             }
 
@@ -49,6 +51,10 @@ public class Mech_ChangeSpeed : MonoBehaviour
 
         if (col.gameObject.CompareTag("player"))
         {
+
+            col.GetComponent<AirJump>().charge = col.GetComponent<AirJump>().maxCharge;
+
+
             PlayerStateManager _stateMgr = col.gameObject.GetComponent<PlayerStateManager>();
             if (_stateMgr != null)
             {
