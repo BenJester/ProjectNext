@@ -22,9 +22,10 @@ public class BombHolder : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "thing" && other.GetComponent<EnemyBullet_Transable_Forward>()!=null){
+        if(other.tag == "thing" && (other.GetComponent<EnemyBullet_Transable_Forward>()!=null || other.GetComponent<Dir_spear>()!=null)){
             thing.Fall();
             lineRenderer.enabled = false;
+            thing.hasShield = false;
         }
     }
 }
