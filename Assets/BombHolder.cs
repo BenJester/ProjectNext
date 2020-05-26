@@ -7,6 +7,7 @@ public class BombHolder : MonoBehaviour
     // Start is called before the first frame update
     public Thing thing;
     LineRenderer lineRenderer;
+    public bool cancleShield = true;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -25,7 +26,7 @@ public class BombHolder : MonoBehaviour
         if(other.tag == "thing" && (other.GetComponent<EnemyBullet_Transable_Forward>()!=null || other.GetComponent<Dir_spear>()!=null)){
             thing.Fall();
             lineRenderer.enabled = false;
-            thing.hasShield = false;
+            if(cancleShield)    thing.hasShield = false;
         }
     }
 }
