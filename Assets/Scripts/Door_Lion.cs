@@ -15,6 +15,12 @@ public class Door_Lion : MonoBehaviour {
     public List<Key> keyList;
     public FlameGroup flameList;
     public List<MovingLaser> laserToTurnOff;
+
+    public bool isHostageCountdownDoor;
+    public float hostageCountdown;
+    float currHostageTimer;
+    public MechTriggerArea triggerArea;
+
     private Animator animator;
     public bool hasUIIndicator = false;
     public Vector3 origin;
@@ -43,10 +49,13 @@ public class Door_Lion : MonoBehaviour {
         }
     }
 
+
     void Update () {
+        if (triggerArea != null && triggerArea.activated)
+            currHostageTimer += Time.deltaTime;
 
         if (isChecking) {
-            if (checkEnemies() && checkButtons() && checkHostages() && checkSpawner() && checkKey() && checkFlame())
+            if ((isHostageCountdownDoor && currHostageTimer > hostageCountdown && checkHostages()) || (!isHostageCountdownDoor && checkEnemies() && checkButtons() && checkHostages() && checkSpawner() && checkKey() && checkFlame()))
             {
                 active = true;
                 //anim.SetBool("Active", true);
