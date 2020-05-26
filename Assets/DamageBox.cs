@@ -22,6 +22,9 @@ public class DamageBox : MonoBehaviour
         }
         if (collision.CompareTag("thing") && collision.GetComponent<Thing>().TriggerMethod != null)
             collision.GetComponent<Thing>().TriggerMethod.Invoke();
+        if (collision.GetComponent<EnemyBullet>() != null) {
+            collision.GetComponent<Rigidbody2D>().velocity = -2.5f * collision.GetComponent<Rigidbody2D>().velocity;
+        }
     }
 
 }
