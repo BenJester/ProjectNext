@@ -19,6 +19,7 @@ namespace Ben
 public class Thing : MonoBehaviour {
     public bool canBeThrown;
     public float overrideThrowSpeed;
+    public bool cancleShieldWhenRopeCut = true;
     public bool beingThrown;
     public SpriteRenderer sr;
     public GameObject SpawnObjOnDie;

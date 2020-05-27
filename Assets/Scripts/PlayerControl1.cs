@@ -2301,7 +2301,7 @@ public class PlayerControl1 : PlayerControl {
             {
                 Vector2 vecMouseWorldPos = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 float distanceToCursor = Vector2.Distance(vecMouseWorldPos, (Vector2)thing.transform.position);
-                if (closestObjectToCursor != null && !thing.dead && distanceToCursor < closestDistanceThrow && distanceToCursor < throwAutoSelectSnapDistance && thing.enabled == true && closestObjectToCursor.GetComponent<EnemyBullet_Transable_Forward>() != null && closestObjectToCursor.GetComponent<Rigidbody2D>().gravityScale == 0f && closestObjectToCursor.GetComponent<Thing>().canBeThrown)
+                if (closestObjectToCursor != null && !thing.dead && thing.GetComponent<Hostage>() == null && distanceToCursor < closestDistanceThrow && distanceToCursor < throwAutoSelectSnapDistance && thing.enabled == true && closestObjectToCursor.GetComponent<EnemyBullet_Transable_Forward>() != null && closestObjectToCursor.GetComponent<Rigidbody2D>().gravityScale == 0f && closestObjectToCursor.GetComponent<Thing>().canBeThrown)
                 {
                     if (Hit(thing.gameObject))
                     {
