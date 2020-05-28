@@ -33,14 +33,17 @@ public class AreaManager : MonoBehaviour {
                 Destroy(part1,1.5f);
             }
 
-
+            
             checkedAfterEvent.Invoke();
             checkited =true;
 			//print("enter!");
 			if(CheckPointTotalManager.instance)
-			CheckPointTotalManager.instance.SetPlayerPos (transform.position);
-		}
-	}
-
-
+            {
+                CheckPointTotalManager.instance.SetPlayerPos(transform.position);
+                CheckPointTotalManager.instance.index = CheckPointTotalManager.instance.checkpointsByOrderList.IndexOf(this);
+            }
+        }
+     }
+			
 }
+
