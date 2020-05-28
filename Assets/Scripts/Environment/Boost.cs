@@ -13,6 +13,7 @@ public class Boost : MonoBehaviour
     SpriteRenderer sr;
     Rigidbody2D mrb;
     bool originallyHasShield;
+    public float delay;
     void Start()
     {
         pc = PlayerControl1.Instance;
@@ -35,6 +36,7 @@ public class Boost : MonoBehaviour
     {
         if (collision.CompareTag("player"))
         {
+            yield return new WaitForSeconds(delay);
             ProCamera2DShake.Instance.Shake(0.2f, new Vector2(80f, 80f));
             sr.enabled = false;
             box.enabled = false;

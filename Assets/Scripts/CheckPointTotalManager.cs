@@ -11,6 +11,9 @@ public class CheckPointTotalManager : MonoBehaviour {
 	private Vector3 savedPos;
 	public GameObject pivot;
     public List<GameObject> checkpoints;
+    public AreaManager[] checkpointsByOrder;
+    public List<AreaManager> checkpointsByOrderList;
+    public int index;
 	void Awake () {
 		if (instance)
         {
@@ -31,6 +34,15 @@ public class CheckPointTotalManager : MonoBehaviour {
                 PlayerControl1.Instance.transform.position = savedPos;
             }
         }
+        if (checkpointsByOrder.Length == 0)
+        {
+            checkpointsByOrder = pivot.transform.parent.GetComponentsInChildren<AreaManager>();
+            foreach (var item in checkpointsByOrder)
+            {
+                checkpointsByOrderList.Add(item);
+            }
+        }
+        
     }
     private void Start()
     {
@@ -39,8 +51,25 @@ public class CheckPointTotalManager : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        HandleSkipLevel();
+
+    }
+
+    void HandleSkipLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if (index == 0) return;
+            index -= 1;
+            PlayerControl1.Instance.transform.position = checkpointsByOrderList[index].transform.position;
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (index == checkpointsByOrderList.Count - 1) return;
+            index += 1;
+            PlayerControl1.Instance.transform.position = checkpointsByOrderList[index].transform.position;
+        }
+    }
 
 	public void SaveRespawnPosition(Vector3 playerArrive){
 		savedPos=playerArrive;
