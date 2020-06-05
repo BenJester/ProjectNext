@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEditor;
+using System.Linq;
 using System.Text;
 using System.Xml;
 [System.Serializable]
@@ -16,10 +18,13 @@ public class CountTilemap : MonoBehaviour
     public List<ReplaceString> LstReplaceString;
     public bool NeedReplace;
     public string GenerateFileName;
+    public string TsxFileName;
 
     private Dictionary<string, string> m_dicReplace;
     private int m_nMaxWidth;
     private int m_nMaxHeight;
+    public static Dictionary<string, int> m_dicSpriteIndex = new Dictionary<string, int>();
+    public static bool s_InitSprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +74,7 @@ public class CountTilemap : MonoBehaviour
     }
     //width="1312" height="96" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
 
-    private void makeXml(int width, int height, string strContent, string strFileName,int tilewidth = 16, int tileheight = 16, int infinite = 0, int nextlayerid = 2, int nextobjectid = 1)
+    private void makeXml(int width, int height, string strContent, string strFileName,string strTsxFileName = "MeowTileSet", int tilewidth = 16, int tileheight = 16, int infinite = 0, int nextlayerid = 2, int nextobjectid = 1)
     {
 
         XmlWriterSettings settings = new XmlWriterSettings();
@@ -139,7 +144,8 @@ public class CountTilemap : MonoBehaviour
         writer.WriteEndAttribute();
 
         writer.WriteStartAttribute("source");
-        writer.WriteValue("MeowTileSet.tsx");
+        string strTsx = string.Format("{0}.tsx", strTsxFileName);
+        writer.WriteValue(strTsx);
         writer.WriteEndAttribute();
 
         writer.WriteEndElement();//tileset end
@@ -182,7 +188,6 @@ public class CountTilemap : MonoBehaviour
     {
         BoundsInt bounds = _tile.cellBounds;
         TileBase[] allTiles = _tile.GetTilesBlock(bounds);
-
         StringBuilder strBuf = new StringBuilder();
         StringBuilder strNotInclude = new StringBuilder();
         HashSet<string> setNotInclude = new HashSet<string>();
@@ -192,46 +197,69 @@ public class CountTilemap : MonoBehaviour
             {
                 int nIdx = y * bounds.size.x + x;
                 TileBase _base = allTiles[nIdx];
-                if(_base != null)
+                Vector3Int vecPos = new Vector3Int(x + _tile.origin.x, y + _tile.origin.y, 0);
+                Sprite sp = _tile.GetSprite(vecPos);
+                if( sp != null )
                 {
-                    if( _base is RuleTile)
-                    {
-                        if(NeedReplace == true)
-                        {
-                            RuleTile _rule = _base as RuleTile;
-                            if (m_dicReplace.ContainsKey(_base.name) == true)
-                            {
-                                strBuf.Append(string.Format("{0}", m_dicReplace[_base.name]));
-                            }
-                            else
-                            {
-                                //Debug.Assert(false);
-                                setNotInclude.Add(_rule.name);
-                                strBuf.Append(string.Format("{0}", _rule.name));
-                                //strNotInclude.Append(string.Format("{0}, ", _rule.name));
-                            }
-                        }
-                        else
-                        {
-                            strBuf.Append("1");
-                        }
-                    }
-                    else
-                    {
-                        if( _base is Tile)
-                        {
-                            strBuf.Append("1");
-                        }
-                        else
-                        {
-                            Debug.Assert(false);
-                        }
-                    }
+                    int nIdxSprite = _getIndex(sp) + 1;
+                    string str = string.Format("{0}", nIdxSprite);
+                    strBuf.Append(str);
+                    Debug.Log(sp.name);
                 }
                 else
                 {
                     strBuf.Append("0");
                 }
+                //if (_base != null)
+                //{
+                //    if( _base is RuleTile)
+                //    {
+                //        RuleTile _ruleSpec = _base as RuleTile;
+                //        //_rule.m_DefaultSprite;
+                //        if (NeedReplace == true)
+                //        {
+                //            RuleTile _rule = _base as RuleTile;
+                //            if (m_dicReplace.ContainsKey(_base.name) == true)
+                //            {
+                //                strBuf.Append(string.Format("{0}", m_dicReplace[_base.name]));
+                //            }
+                //            else
+                //            {
+                //                //Debug.Assert(false);
+                //                setNotInclude.Add(_rule.name);
+                //                strBuf.Append(string.Format("{0}", _rule.name));
+                //                //strNotInclude.Append(string.Format("{0}, ", _rule.name));
+                //            }
+                //        }
+                //        else
+                //        {
+                //            int nIdxSp = GetSpriteIndexFromDic(_ruleSpec.m_DefaultSprite);
+                //            //Debug.Log(_ruleSpec.m_DefaultSprite.name);
+                //            string str = string.Format("{0}", nIdxSp);
+                //            int nIdxSprite = _getIndex(_ruleSpec.m_DefaultSprite);
+                //            str = string.Format("{0}", nIdxSprite);
+                //            strBuf.Append(str);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        if( _base is Tile)
+                //        {
+                //            Tile _tileIns = _base as Tile;
+                //            int nIdxSprite = _getIndex(_tileIns.sprite);
+                //            string str = string.Format("{0}", nIdxSprite);
+                //            strBuf.Append(str);
+                //        }
+                //        else
+                //        {
+                //            Debug.Assert(false);
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    strBuf.Append("0");
+                //}
 
                 if (x == bounds.size.x - 1 && y == 0)
                 {
@@ -251,9 +279,42 @@ public class CountTilemap : MonoBehaviour
         }
         Debug.Log(strNotInclude.ToString());
 
-        makeXml(bounds.size.x, bounds.size.y, strBuf.ToString(), strGenerateFileName);
+        string strTsxFile = "";
+        if(TsxFileName.Length > 0)
+        {
+            strTsxFile = TsxFileName + ".tsx";
+        }
+        else
+        {
+            strTsxFile = "MeowTileSet";
+        }
+        makeXml(bounds.size.x, bounds.size.y, strBuf.ToString(), strGenerateFileName, TsxFileName);
     }
-
+    private int _getIndex(Sprite sp)
+    {
+        int nRowCounts = (int)(sp.texture.width / sp.textureRect.width);
+        int nRow = (int)((sp.texture.height - sp.textureRect.min.y) / (sp.textureRect.height) - 1);
+        int nCol = (int)((sp.textureRect.min.x) / (sp.textureRect.width));
+        int nIdxSprite = nRowCounts * nRow + nCol;
+        return nIdxSprite;
+    }
+    public static int GetSpriteIndexFromDic(Sprite spIns)
+    {
+        if(s_InitSprite == false)
+        {
+            s_InitSprite = true;
+            string spriteSheet = AssetDatabase.GetAssetPath(spIns.texture);
+            Object[] _objArray = AssetDatabase.LoadAllAssetRepresentationsAtPath(spriteSheet);
+            Sprite[] sprites = _objArray.OfType<Sprite>().ToArray();
+            int nIdxSp = 0;
+            foreach(Sprite _sp in sprites)
+            {
+                m_dicSpriteIndex[_sp.name] = nIdxSp;
+                nIdxSp++;
+            }
+        }
+        return m_dicSpriteIndex[spIns.name];
+    }
     // Update is called once per frame
     void Update()
     {
